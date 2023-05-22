@@ -1,58 +1,42 @@
-/* Basic styling */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 header, nav, main, footer {
-    padding: 20px;
+  padding: 20px;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
+  background-color: #f2f2f2;
+}
+
+nav {
+  background-color: #333;
 }
 
 nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-nav li {
-    display: inline;
-    margin-right: 10px;
+nav ul li {
+  display: inline;
 }
 
-nav a {
-    color: #333;
-    text-decoration: none;
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
 }
 
-    nav a:hover {
-        text-decoration: underline;
-    }
+nav ul li a:hover {
+  background-color: #666;
+}
 
 footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-}
-
-/* Login form styling */
-form {
-    margin-top: 20px;
-}
-
-label, input[type="submit"] {
-    display: block;
-    margin-bottom: 10px;
-}
-
-input[type="text"],
-input[type="password"] {
-    width: 200px;
-    padding: 5px;
+  background-color: #f2f2f2;
+  text-align: center;
 }
