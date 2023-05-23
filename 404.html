@@ -1,29 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="TheLoL2.png" type="image/x-icon">
-    <title>404 - Page Not Found</title>
-</head>
-<body>
-    <header>
-        <h1>404 - Page Not Found</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="/thelol">Home</a></li>
-            <li><a href="/thelol/login.html">Login</a></li>
-            <li><a href="/thelol/#about">About</a></li>
-            <li><a href="/thelol/#contact">Contact</a></li>
-        </ul>
-    </nav>
-    <main>
-        <p>The page you are looking for does not exist. Please check the URL and try again.</p>
-    </main>
-    <footer>
-        <p>&copy; 2023 The LoL. All rights reserved.</p>
-    </footer>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="style.css">
+
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
+        <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
+
+        <!-- =====BOX ICONS===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+        <title>The LoL - 404</title>
+        <meta name="description" content="The Legend Of Legiona (The LoL)">
+        <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
+        
+        <meta property="og:title" content="The Legend Of Legiona"/>
+        <meta property="og:url" content="https://faizzzlol.github.io/thelol/"/>
+        <meta property="og:image" content="TheLoL2.png"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:description" content="The Legend Of Legiona (The LoL)"/>
+
+    </head>
+    <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div>
+                    <a href="/thelol" class="nav__logo">The LoL</a>
+                </div>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="/thelol" class="nav__link active">Home</a></li>
+                        <li class="nav__item"><a href="/thelol/#thelol_pack" class="nav__link">Texture Pack</a></li>
+                        <li class="nav__item"><a href="/thelol/#contact" class="nav__link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--===== HOME =====-->
+            <section class="home bd-grid" id="home">
+                <div class="home__data">
+                    <h1 class="home__title"><br><span class="home__title-color"></span>404<br>- Page Not Found</h1>
+
+            <!--===== SKILLS =====-->
+            <section class="skills section" id="thelol_pack">
+                <h2 class="section-title">The page you are looking for does not exist. Please check the URL and try again.</h2>
+                <div class="skills__container bd-grid">  
+                </div>
+            </section>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+        
+            <p class="footer__title">The Legend Of Legiona</p>
+            <div class="footer__social">
+                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
+                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+            </div>
+            <p>&#169; 2023 Copyright All Right Reserved</p>
+            
+        </footer>
+
+        <!--===== MAIN JS =====-->
+        <script src="assets/js/main.js"></script>
+    </body>
 </html>
+<!--====Made By FaizGG====-->
