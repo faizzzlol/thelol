@@ -1,32 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Login - The LoL</title>
-</head>
-<body>
-    <header>
-        <h1>Login to The LoL Minecraft Server</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="https://faizzzlol.github.io/thelol/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-        </ul>
-    </nav>
-    <main>
-        <form action="/login" method="post" id="login-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
-            <input type="submit" value="Login">
-        </form>
-    </main>
-    <footer>
-        <p>&copy; 2023 The LoL. All rights reserved.</p>
-    </footer>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="style.css">
+
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
+        <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
+
+        <!-- =====BOX ICONS===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+        <title>The LoL - Login/Sign Up</title>
+        <meta name="description" content="The LoL Login/Sign Up">
+        <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
+        
+        <meta property="og:title" content="The Legend Of Legiona - Login/Sign Up"/>
+        <meta property="og:url" content="https://faizzzlol.github.io/thelol/login"/>
+        <meta property="og:image" content="TheLoL.png"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:description" content="The LoL Login/Sign Up"/>
+
+    </head>
+    <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div>
+                    <a href="/thelol" class="nav__logo">The LoL</a>
+                </div>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#thelol_pack" class="nav__link active">Login/Sign Up</a></li>
+                        <li class="nav__item"><a href="/thelol" class="nav__link">Home</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--===== SKILLS =====-->
+            <section class="skills section" id="thelol_pack">
+                <h2 class="section-title">Make an account</h2>
+
+                <div class="skills__container bd-grid">          
+                    <div>
+                        <h2 class="skills__subtitle">Login/Sign Up</h2>
+                        <p class="skills__text">Make an account to access all features! </p>
+                        <div class="skills__data">
+                            <div class="skills__names">
+                                <i class='bx bxl-download skills__icon'></i>
+                                <span class="skills__name"><a href="url">The LoL Pack Version -.-.-</a></span>
+                            </div>
+                            <div class="skills__bar skills__download">
+
+                            </div>
+                            <div>
+                                <span class="skills__percentage">0 downloads</span>
+                            </div>
+                        </div>
+                        <div class="skills__data">
+                            <div class="skills__names">
+                                <i class='bx bxl-download skills__icon'></i>
+                                <span class="skills__name"><a href="url">The LoL Pack Version -.-.-</a></span>
+                            </div>
+                            <div class="skills__bar skills__download">
+                                
+                            </div>
+                            <div>
+                                <span class="skills__percentage">0 downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+        
+            <p class="footer__title">The Legend Of Legiona</p>
+            <div class="footer__social">
+                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
+                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+            </div>
+            <p>&#169; 2023 Copyright All Right Reserved</p>
+            
+        </footer>
+
+        <!--===== MAIN JS =====-->
+        <script src="assets/js/main.js"></script>
+    </body>
 </html>
+<!--====Made By FaizGG====-->
