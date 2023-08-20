@@ -1,58 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css">
-    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
-    <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png">
-    <title>The LoL - Login/Sign Up</title>
-    <meta name="description" content="The LoL Login/Sign Up">
-    <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
-    <meta property="og:title" content="The Legend Of Legiona - Login/Sign Up">
-    <meta property="og:url" content="https://faizzzlol.github.io/thelol/login">
-    <meta property="og:image" content="TheLoL.png">
-    <meta property="og:type" content="website">
-    <meta property="og:description" content="The LoL Login/Sign Up">
-    <style>
-        /* Add your custom styles here */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-        /* Add more styles as needed */
-    </style>
-</head>
-<body>
-    <header class="l-header">
-        <!-- Your header content -->
-    </header>
-    <main class="l-main">
-        <section class="skills section" id="thelol_pack">
-            <h2 class="section-title">Make an Account</h2>
-            <div class="skills__container bd-grid">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="style.css">
+
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
+        <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
+
+        <!-- =====BOX ICONS===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+        <title>The LoL - Login/Sign Up</title>
+        <meta name="description" content="The LoL Login/Sign Up">
+        <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
+        
+        <meta property="og:title" content="The Legend Of Legiona - Login/Sign Up"/>
+        <meta property="og:url" content="https://faizzzlol.github.io/thelol/login"/>
+        <meta property="og:image" content="TheLoL.png"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:description" content="The LoL Login/Sign Up"/>
+
+    </head>
+    <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
                 <div>
-                    <h2 class="skills__subtitle">Login/Sign Up</h2>
-                    <p class="skills__text">Create an account to access all features!</p>
-                    <div class="home__social">
-                        <a href="https://discord.com/api/oauth2/authorize?client_id=923931729503350814&redirect_uri=https%3A%2F%2Ffaizzzlol.github.io%2Fthelol&response_type=code&scope=identify%20email" alt="Discord" class="home__social-icon">
-                            <i class='bx bxl-discord'></i>Login using Discord</a>
-                    </div>
+                    <a href="/thelol" class="nav__logo">The LoL</a>
                 </div>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#thelol_pack" class="nav__link active">Login/Sign Up</a></li>
+                        <li class="nav__item"><a href="/thelol" class="nav__link">Home</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--===== SKILLS =====-->
+            <section class="skills section" id="thelol_pack">
+                <h2 class="section-title">Make an account</h2>
+
+                <div class="skills__container bd-grid">          
+                    <div>
+                        <h2 class="skills__subtitle">Login/Sign Up</h2>
+                        <p class="skills__text">Make an account to access all features! </p>
+                        
+                        <div class="home__social">
+                        <a href="https://discord.com/api/oauth2/authorize?client_id=923931729503350814&redirect_uri=https%3A%2F%2Ffaizzzlol.github.io%2Fthelol&response_type=code&scope=identify%20email" alt="Discord" class="home__social-icon"><i class='bx bxl-discord' ></i>Login using Discord</a>
+                        </div>
+                </div>
+
+                    </div>
+                    
+                </div>
+            </section>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+        
+            <p class="footer__title">The Legend Of Legiona</p>
+            <div class="footer__social">
+                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
+                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
             </div>
-        </section>
-    </main>
-    <footer class="footer">
-        <!-- Your footer content -->
-    </footer>
-    <script src="assets/js/main.js"></script>
-</body>
+            <p>&#169; 2023 Copyright All Right Reserved</p>
+            <p><a href="https://forms.gle/mF1a6Eerjb3f3nkD8" target="_blank">Feedback</a></p>
+        </footer>
+
+        <!--===== MAIN JS =====-->
+        <script src="assets/js/main.js"></script>
+    </body>
 </html>
 <!--====Made By FaizGG====-->
