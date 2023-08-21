@@ -1,4 +1,4 @@
-var downloadCount = 6;
+var downloadCount = 7;
 
 function trackDownload() {
   downloadCount++;
