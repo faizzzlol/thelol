@@ -55,6 +55,35 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        /* ... Your previous styles ... */
+
+        /* New styles for animations and transitions */
+        .logo {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .logo img {
+            max-width: 150px;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            flex: 1;
+            margin: 0 5px;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        .button-container button:hover {
+            background-color: #3367d6;
+            color: #fff;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/currency-flags@1.0.5/dist/currency-flags.min.js"></script>
 </head>
