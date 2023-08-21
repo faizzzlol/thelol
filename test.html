@@ -56,37 +56,51 @@
         <p>Your support makes a difference!</p>
         
         <h2>Choose Your Donation Method</h2>
-        <div>
-            <h3>PayPal</h3>
-            <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                <input type="hidden" name="cmd" value="_donations">
-                <input type="hidden" name="business" value="your_paypal_email@example.com">
-                <input type="hidden" name="currency_code" value="USD">
-                <input type="hidden" name="item_name" value="Donation">
-                <input type="text" id="paypalAmount" name="amount" placeholder="Enter amount">
-                <button type="button" onclick="submitPayPalForm()">Donate with PayPal</button>
-            </form>
-        </div>
+<!-- ... Previous HTML and script code ... -->
 
-        <div>
-            <h3>eWallets</h3>
-            <p>Select your preferred eWallet:</p>
-            <button onclick="donateWithEwallet('venmo')">Donate with Venmo</button>
-            <button onclick="donateWithEwallet('cashapp')">Donate with Cash App</button>
-        </div>
+<div>
+    <h3>PayPal</h3>
+    <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+        <input type="hidden" name="cmd" value="_donations">
+        <input type="hidden" name="business" value="your_paypal_email@example.com">
+        <input type="hidden" name="item_name" value="Donation">
+        <label for="paypalAmount">Donation Amount:</label>
+        <input type="text" id="paypalAmount" name="amount" placeholder="Enter amount">
+        <label for="paypalCurrency">Select Currency:</label>
+        <select id="paypalCurrency" name="currency_code">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <!-- Add more currency options as needed -->
+        </select>
+        <button type="button" onclick="submitPayPalForm()">Donate with PayPal</button>
+    </form>
+</div>
 
-        <div>
-            <h3>Credit/Debit Card</h3>
-            <form id="cardForm" action="https://your-payment-processor-url.com" method="post">
-                <!-- Your payment processor's fields and inputs will go here -->
-                <input type="text" id="cardNumber" name="card_number" placeholder="Card Number">
-                <input type="text" id="expiryDate" name="expiry_date" placeholder="Expiry Date">
-                <input type="text" id="cvv" name="cvv" placeholder="CVV">
-                <input type="text" id="cardAmount" name="amount" placeholder="Amount">
-                <button type="button" onclick="submitCardForm()">Donate with Card</button>
-            </form>
-        </div>
-    </div>
+<div>
+    <h3>Credit/Debit Card</h3>
+    <form id="cardForm" action="https://your-payment-processor-url.com" method="post">
+        <!-- Your payment processor's fields and inputs will go here -->
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" name="card_number" placeholder="Card Number">
+        <label for="expiryDate">Expiry Date:</label>
+        <input type="text" id="expiryDate" name="expiry_date" placeholder="Expiry Date">
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" placeholder="CVV">
+        <label for="cardAmount">Donation Amount:</label>
+        <input type="text" id="cardAmount" name="amount" placeholder="Amount">
+        <label for="cardCurrency">Select Currency:</label>
+        <select id="cardCurrency" name="currency_code">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <!-- Add more currency options as needed -->
+        </select>
+        <button type="button" onclick="submitCardForm()">Donate with Card</button>
+    </form>
+</div>
+
+<!-- ... Rest of the HTML and script code ... -->
 
     <script>
         function submitPayPalForm() {
