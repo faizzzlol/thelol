@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate to Our Cause</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+        }
+        h3 {
+            color: #666;
+        }
+        form, button {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Donate to Our Cause</h1>
+        <p>Your support makes a difference!</p>
+        
+        <h2>Choose Your Donation Method</h2>
+        <div>
+            <h3>PayPal</h3>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                <input type="hidden" name="cmd" value="_donations">
+                <input type="hidden" name="business" value="your_paypal_email@example.com">
+                <input type="hidden" name="currency_code" value="USD">
+                <input type="hidden" name="item_name" value="Donation">
+                <input type="text" name="amount" placeholder="Enter amount">
+                <input type="submit" value="Donate with PayPal">
+            </form>
+        </div>
+
+        <div>
+            <h3>eWallets</h3>
+            <p>Select your preferred eWallet:</p>
+            <button onclick="donateWithEwallet('venmo')">Donate with Venmo</button>
+            <button onclick="donateWithEwallet('cashapp')">Donate with Cash App</button>
+        </div>
+
+        <div>
+            <h3>Credit/Debit Card</h3>
+            <form action="https://your-payment-processor-url.com" method="post">
+                <!-- Your payment processor's fields and inputs will go here -->
+                <input type="text" name="card_number" placeholder="Card Number">
+                <input type="text" name="expiry_date" placeholder="Expiry Date">
+                <input type="text" name="cvv" placeholder="CVV">
+                <input type="text" name="amount" placeholder="Amount">
+                <input type="submit" value="Donate with Card">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function donateWithEwallet(wallet) {
+            // Redirect to the eWallet's donation page or provide necessary instructions
+            if (wallet === 'venmo') {
+                window.location.href = 'https://venmo.com/your-username';
+            } else if (wallet === 'cashapp') {
+                window.location.href = 'https://cash.app/$yourusername';
+            }
+        }
+    </script>
+</body>
+</html>
