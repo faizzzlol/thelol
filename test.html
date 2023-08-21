@@ -83,7 +83,7 @@
         <div>
             <h3>eWallets</h3>
             <p>Select your preferred eWallet:</p>
-            <button onclick="donateWithEwallet('venmo')">Donate with Venmo</button>
+            <button onclick="donateWithEwallet('tng')">Donate with Touch 'N Go</button>
             <button onclick="donateWithEwallet('cashapp')">Donate with Cash App</button>
         </div>
 
@@ -131,8 +131,9 @@
         }
 
         function donateWithEwallet(wallet) {
-            if (wallet === 'venmo') {
-                window.location.href = 'https://venmo.com/your-username';
+            if (wallet === 'tng') {
+                // Replace this URL with the actual URL for donating using Touch 'N Go eWallet
+                window.location.href = 'https://www.example.com/tng-donation';
             } else if (wallet === 'cashapp') {
                 window.location.href = 'https://cash.app/$yourusername';
             }
