@@ -58,13 +58,13 @@
         <h2>Choose Your Donation Method</h2>
         <div>
             <h3>PayPal</h3>
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                 <input type="hidden" name="cmd" value="_donations">
                 <input type="hidden" name="business" value="your_paypal_email@example.com">
                 <input type="hidden" name="currency_code" value="USD">
                 <input type="hidden" name="item_name" value="Donation">
-                <input type="text" name="amount" placeholder="Enter amount">
-                <input type="submit" value="Donate with PayPal">
+                <input type="text" id="paypalAmount" name="amount" placeholder="Enter amount">
+                <button type="button" onclick="submitPayPalForm()">Donate with PayPal</button>
             </form>
         </div>
 
@@ -77,20 +77,41 @@
 
         <div>
             <h3>Credit/Debit Card</h3>
-            <form action="https://your-payment-processor-url.com" method="post">
+            <form id="cardForm" action="https://your-payment-processor-url.com" method="post">
                 <!-- Your payment processor's fields and inputs will go here -->
-                <input type="text" name="card_number" placeholder="Card Number">
-                <input type="text" name="expiry_date" placeholder="Expiry Date">
-                <input type="text" name="cvv" placeholder="CVV">
-                <input type="text" name="amount" placeholder="Amount">
-                <input type="submit" value="Donate with Card">
+                <input type="text" id="cardNumber" name="card_number" placeholder="Card Number">
+                <input type="text" id="expiryDate" name="expiry_date" placeholder="Expiry Date">
+                <input type="text" id="cvv" name="cvv" placeholder="CVV">
+                <input type="text" id="cardAmount" name="amount" placeholder="Amount">
+                <button type="button" onclick="submitCardForm()">Donate with Card</button>
             </form>
         </div>
     </div>
 
     <script>
+        function submitPayPalForm() {
+            const amount = document.getElementById("paypalAmount").value;
+            if (amount.trim() !== "") {
+                document.getElementById("paypalForm").submit();
+            } else {
+                alert("Please enter a valid donation amount.");
+            }
+        }
+
+        function submitCardForm() {
+            const cardNumber = document.getElementById("cardNumber").value;
+            const expiryDate = document.getElementById("expiryDate").value;
+            const cvv = document.getElementById("cvv").value;
+            const amount = document.getElementById("cardAmount").value;
+            
+            if (cardNumber.trim() === "" || expiryDate.trim() === "" || cvv.trim() === "" || amount.trim() === "") {
+                alert("Please fill in all the required fields.");
+            } else {
+                document.getElementById("cardForm").submit();
+            }
+        }
+
         function donateWithEwallet(wallet) {
-            // Redirect to the eWallet's donation page or provide necessary instructions
             if (wallet === 'venmo') {
                 window.location.href = 'https://venmo.com/your-username';
             } else if (wallet === 'cashapp') {
