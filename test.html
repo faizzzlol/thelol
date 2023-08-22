@@ -21,7 +21,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f8f8f8;
+            color: #333;
         }
         .container {
             max-width: 800px;
@@ -44,15 +45,16 @@
             transform: scale(1.1);
         }
         h1 {
-            color: #333;
             text-align: center;
         }
         p {
-            color: #666;
             text-align: center;
+            color: #666;
+            margin-bottom: 30px;
         }
         h2 {
             color: #555;
+            margin-top: 30px;
         }
         h3 {
             color: #666;
@@ -95,6 +97,28 @@
         </div>
         <h1>Donate to Our Cause</h1>
         <p>Your support makes a difference!</p>
+
+        <!-- Language Change Options -->
+        <div class="language-options">
+            <label for="languageSelect">Select Language:</label>
+            <select id="languageSelect" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="de">Deutsch</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="hi">हिन्दी</option>
+                <option value="bn">বাংলা</option>
+                <option value="ur">اردو</option>
+                <option value="ta">தமிழ்</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="th">ไทย</option>
+                <option value="ms">Bahasa Melayu</option>
+                <option value="fil">Filipino</option>
+            </select>
+        </div>
         
         <h2>Choose Your Donation Method</h2>
         <div class="button-container">
@@ -143,6 +167,48 @@
         </div>
     </div>
 
+    <script>
+        function changeLanguage() {
+            const selectedLanguage = document.getElementById("languageSelect").value;
+            
+            // Replace the following lines with logic to change content based on selected language
+            if (selectedLanguage === "en") {
+                // Set English content
+            } else if (selectedLanguage === "zh") {
+                // Set Chinese content
+            } else if (selectedLanguage === "ja") {
+                // Set Japanese content
+            } else if (selectedLanguage === "ko") {
+                // Set Korean content
+            } else if (selectedLanguage === "de") {
+                // Set German content
+            } else if (selectedLanguage === "fr") {
+                // Set French content
+            } else if (selectedLanguage === "es") {
+                // Set Spanish content
+            } else if (selectedLanguage === "hi") {
+                // Set Hindi content
+            } else if (selectedLanguage === "bn") {
+                // Set Bengali content
+            } else if (selectedLanguage === "ur") {
+                // Set Urdu content
+            } else if (selectedLanguage === "ta") {
+                // Set Tamil content
+            } else if (selectedLanguage === "vi") {
+                // Set Vietnamese content
+            } else if (selectedLanguage === "th") {
+                // Set Thai content
+            } else if (selectedLanguage === "ms") {
+                // Set Malay content
+                document.querySelector("h1").textContent = "Sumbang untuk Sokongan";
+                document.querySelector("p").textContent = "Sokongan anda membuat perbezaan!";
+                // Update content for other elements as needed
+            } else if (selectedLanguage === "fil") {
+                // Set Filipino content
+            }
+            // Add more language cases as needed
+        }
+    </script>
     <script>
         function submitPayPalForm() {
             const amount = document.getElementById("paypalAmount").value;
