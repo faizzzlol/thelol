@@ -181,6 +181,31 @@
         <button onclick="closeDuitNowQRPopup()">Close</button>
     </div>
 
+        <!-- Settings Popup -->
+    <div id="settingsPopup" class="popup">
+        <h3>Settings</h3>
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="en" selected>English</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="de">Deutsch</option>
+            <option value="fr">Français</option>
+            <option value="es">Español</option>
+            <option value="hi">हिन्दी</option>
+            <option value="bn">বাংলা</option>
+            <option value="ur">اردو</option>
+            <option value="ta">தமிழ்</option>
+            <option value="vi">Tiếng Việt</option>
+            <option value="th">ไทย</option>
+            <option value="ms">Bahasa Melayu</option>
+            <option value="fil">Filipino</option>
+            <!-- Add more language options here -->
+        </select>
+        <button onclick="closeSettingsPopup()">Close</button>
+    </div>
+
     <script>
         function openDuitNowQRPopup() {
             document.getElementById("duitNowQRPopup").style.display = "block";
@@ -246,6 +271,14 @@
                 // Set Filipino content
             }
             // Add more language cases as needed
+        }
+            // Settings Popup Script
+                function openSettingsPopup() {
+            document.getElementById("settingsPopup").style.display = "block";
+        }
+
+        function closeSettingsPopup() {
+            document.getElementById("settingsPopup").style.display = "none";
         }
     </script>
     <script>
