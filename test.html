@@ -138,20 +138,22 @@
         <h2>Choose Your Donation Method</h2>
         <div class="button-container">
             <div>
-                <h3>PayPal</h3>
-                <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                    <input type="hidden" name="cmd" value="_donations">
-                    <input type="hidden" name="business" value="your_paypal_email@example.com">
-                    <input type="hidden" name="item_name" value="Donation">
-                    <label for="paypalAmount">Donation Amount:</label>
-                    <input type="text" id="paypalAmount" name="amount" placeholder="Enter amount">
-                    <label for="paypalCurrency">Select Currency:</label>
-                    <select id="paypalCurrency" name="currency_code">
-                        <!-- JavaScript will populate the options -->
-                    </select>
-                    <button type="button" onclick="submitPayPalForm()">Donate with PayPal</button>
-                </form>
-            </div>
+                <h3>Google Pay</h3>
+                <!-- html fragment -->
+                <div id="container" style="width: 160px; height: 40px;"></div>
+
+                // javascript fragment
+                const container = document.getElementById('container');
+                const button = googlePayClient.createButton({
+                  buttonColor: 'default',
+                  buttonType: 'donate',
+                  buttonSizeMode: 'fill',
+                  onClick: () => {},
+                  allowedPaymentMethods: [] // use the same payment methods as for the loadPaymentData() API call
+                });
+
+                container.appendChild(button);
+                </div>
 
             <div>
                 <h3>eWallets</h3>
