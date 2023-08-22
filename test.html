@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donate to support</title>
+    <title>Donate to Support</title>
+    <meta name="description" content="Support our server/website by making a donation. Your contribution makes a difference. Choose from PayPal, eWallets, and Credit/Debit Card options.">
+    <meta name="keywords" content="donation, support, charity, eWallet, PayPal, Credit Card, Debit Card, GrabPay, Touch 'N Go">
+    <meta name="author" content="Faiz Gaming">
+    <meta property="og:title" content="Donate to Support - FaizGG">
+    <meta property="og:description" content="Support our server/website by making a donation. Your contribution makes a difference. Choose from PayPal, eWallets, and Credit/Debit Card options.">
+    <meta property="og:image" content="assets/avatarFaizGG.png"> <!-- Replace with the actual URL of your image -->
+    <meta property="og:url" content="https://faizzzlol.github.io/thelol/test">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Donate to Support - FaizGG">
+    <meta name="twitter:description" content="Support our server/website by making a donation. Your contribution makes a difference. Choose from PayPal, eWallets, and Credit/Debit Card options.">
+    <meta name="twitter:image" content="assets/avatarFaizGG.png"> <!-- Replace with the actual URL of your image -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,9 +29,27 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 200px;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
         }
         h1 {
             color: #333;
+            text-align: center;
+        }
+        p {
+            color: #666;
+            text-align: center;
         }
         h2 {
             color: #555;
@@ -36,18 +66,13 @@
             color: #fff;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
         }
         button:hover {
             background-color: #3367d6;
         }
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+        input[type="text"],
         select {
             width: 100%;
             padding: 10px;
@@ -55,34 +80,10 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        /* ... Your previous styles ... */
-
-        /* New styles for animations and transitions */
-        .logo {
-            text-align: center;
-            padding: 20px 0;
-        }
-        .logo img {
-            max-width: 150px;
-            height: auto;
-            transition: transform 0.3s ease-in-out;
-        }
-        .logo img:hover {
-            transform: scale(1.1);
-        }
         .button-container {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-        }
-        .button-container button {
-            flex: 1;
-            margin: 0 5px;
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-        }
-        .button-container button:hover {
-            background-color: #3367d6;
-            color: #fff;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/currency-flags@1.0.5/dist/currency-flags.min.js"></script>
@@ -96,47 +97,49 @@
         <p>Your support makes a difference!</p>
         
         <h2>Choose Your Donation Method</h2>
-        <div>
-            <h3>PayPal</h3>
-            <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                <input type="hidden" name="cmd" value="_donations">
-                <input type="hidden" name="business" value="your_paypal_email@example.com">
-                <input type="hidden" name="item_name" value="Donation">
-                <label for="paypalAmount">Donation Amount:</label>
-                <input type="text" id="paypalAmount" name="amount" placeholder="Enter amount">
-                <label for="paypalCurrency">Select Currency:</label>
-                <select id="paypalCurrency" name="currency_code">
-                    <!-- JavaScript will populate the options -->
-                </select>
-                <button type="button" onclick="submitPayPalForm()">Donate with PayPal</button>
-            </form>
-        </div>
+        <div class="button-container">
+            <div>
+                <h3>PayPal</h3>
+                <form id="paypalForm" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                    <input type="hidden" name="cmd" value="_donations">
+                    <input type="hidden" name="business" value="your_paypal_email@example.com">
+                    <input type="hidden" name="item_name" value="Donation">
+                    <label for="paypalAmount">Donation Amount:</label>
+                    <input type="text" id="paypalAmount" name="amount" placeholder="Enter amount">
+                    <label for="paypalCurrency">Select Currency:</label>
+                    <select id="paypalCurrency" name="currency_code">
+                        <!-- JavaScript will populate the options -->
+                    </select>
+                    <button type="button" onclick="submitPayPalForm()">Donate with PayPal</button>
+                </form>
+            </div>
 
-        <div>
-            <h3>eWallets</h3>
-            <p>Select your preferred eWallet:</p>
-            <img src="ewallet.png" alt="eWallet Options">
-            <button onclick="donateWithEwallet('tng')">Donate with Touch 'N Go</button>
-            <button onclick="donateWithEwallet('cashapp')">Donate with Cash App</button>
-        </div>
+            <div>
+                <h3>eWallets</h3>
+                <p>Select your preferred eWallet:</p>
+                <img src="ewallet.png" alt="eWallet Options">
+                <button onclick="donateWithEwallet('tng')">Donate with Touch 'N Go</button>
+                <button onclick="donateWithEwallet('grabpay')">Donate with GrabPay</button>
+            </div>
 
-        <div>
-            <h3>Credit/Debit Card</h3>
-            <form id="cardForm" action="https://your-payment-processor-url.com" method="post">
-                <label for="cardNumber">Card Number:</label>
-                <input type="text" id="cardNumber" name="card_number" placeholder="Card Number">
-                <label for="expiryDate">Expiry Date:</label>
-                <input type="text" id="expiryDate" name="expiry_date" placeholder="Expiry Date">
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" name="cvv" placeholder="CVV">
-                <label for="cardAmount">Donation Amount:</label>
-                <input type="text" id="cardAmount" name="amount" placeholder="Amount">
-                <label for="cardCurrency">Select Currency:</label>
-                <select id="cardCurrency" name="currency_code">
-                    <!-- JavaScript will populate the options -->
-                </select>
-                <button type="button" onclick="submitCardForm()">Donate with Card</button>
-            </form>
+            <div>
+                <h3>Credit/Debit Card</h3>
+                <form id="cardForm" action="https://your-payment-processor-url.com" method="post">
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" id="cardNumber" name="card_number" placeholder="Card Number">
+                    <label for="expiryDate">Expiry Date:</label>
+                    <input type="text" id="expiryDate" name="expiry_date" placeholder="Expiry Date">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="CVV">
+                    <label for="cardAmount">Donation Amount:</label>
+                    <input type="text" id="cardAmount" name="amount" placeholder="Amount">
+                    <label for="cardCurrency">Select Currency:</label>
+                    <select id="cardCurrency" name="currency_code">
+                        <!-- JavaScript will populate the options -->
+                    </select>
+                    <button type="button" onclick="submitCardForm()">Donate with Card</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -167,8 +170,8 @@
             if (wallet === 'tng') {
                 // Replace this URL with the actual URL for donating using Touch 'N Go eWallet
                 window.location.href = 'https://www.example.com/tng-donation';
-            } else if (wallet === 'cashapp') {
-                window.location.href = 'https://cash.app/$yourusername';
+            } else if (wallet === 'grabpay') {
+                window.location.href = 'https://www.example.com/grabpay-donation';
             }
         }
 
