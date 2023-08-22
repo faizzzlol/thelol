@@ -219,6 +219,21 @@
                 // Set Malay content
                 document.querySelector("h1").textContent = "Sumbang untuk Sokongan";
                 document.querySelector("p").textContent = "Sokongan anda membuat perbezaan!";
+                document.querySelector("h2").textContent = "Pilih Kaedah Sumbangan Anda";
+                document.querySelector(".language-options label").textContent = "Pilih Bahasa:";
+                document.querySelector(".language-options option[value='en']").textContent = "Bahasa Inggeris";
+                document.querySelector(".language-options option[value='ms']").textContent = "Bahasa Melayu";
+                document.querySelector("h3:nth-child(1)").textContent = "PayPal";
+                document.querySelector("label[for='paypalAmount']").textContent = "Jumlah Sumbangan:";
+                document.querySelector("label[for='paypalCurrency']").textContent = "Pilih Mata Wang:";
+                document.querySelector("button[onclick='submitPayPalForm()']").textContent = "Sumbang melalui PayPal";
+                document.querySelector("h3:nth-child(2)").textContent = "eWallets";
+                document.querySelector("p:nth-child(7)").textContent = "Pilih eWallet pilihan anda:";
+                document.querySelector("button[onclick='donateWithEwallet('tng')']").textContent = "Sumbang melalui Touch 'N Go";
+                document.querySelector("button[onclick='donateWithEwallet('grabpay')']").textContent = "Sumbang melalui GrabPay";
+                document.querySelector("button[onclick='openDuitNowQRPopup()']").textContent = "Sumbang melalui DuitNow QR";
+                document.querySelector("#duitNowQRPopup h3").textContent = "Imbas Kod QR DuitNow untuk Sumbangan";
+                document.querySelector("#duitNowQRPopup button").textContent = "Tutup";
                 // Update content for other elements as needed
             } else if (selectedLanguage === "fil") {
                 // Set Filipino content
