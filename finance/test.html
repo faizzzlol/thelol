@@ -7,41 +7,61 @@
     <title>Finance Page</title>
 </head>
 <body>
-
-    <header>
-        <h1>Finance Page</h1>
+    <header class="l-header">
+        <nav class="nav bd-grid">
+            <div>
+                <a href="/thelol" class="nav__logo">The LoL</a>
+            </div>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#thelol_pack" class="nav__link">Texture Pack</a></li>
+                    <li class="nav__item"><a href="/thelol" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="/thelol/#contact" class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+        </nav>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Markets</a></li>
-            <li><a href="#">News</a></li>
-            <li><a href="#">Portfolios</a></li>
-            <li><a href="#">Watchlists</a></li>
-            <li><a href="#">Screeners</a></li>
-            <li><a href="#">More</a></li>
-        </ul>
-    </nav>
+    <main class="l-main">
+        <section class="finance-page section">
+            <h2 class="section-title">Finance Page</h2>
 
-    <main>
-        <section class="quote">
-            <h2>Diamond/TL$</h2>
-            <p id="exchange-rate">Loading...</p>
+            <!-- Add your financial data here -->
+            <div class="finance-data">
+                <!-- Example: -->
+                <p>Stock: Diamond</p>
+                <p>Current Price: $50</p>
+                <p>Change: +$5 (10%)</p>
+            </div>
+
+            <div id="chart-container" class="chart-container">Loading chart...</div>
         </section>
 
-        <section class="charts">
-            <h2>Price Chart</h2>
-            <div id="chart-container">Loading chart...</div>
+        <!-- Add other sections as needed -->
+
+        <!-- DONATE BUTTON SECTION -->
+        <section class="donate section">
+            <h2 class="section-title">Donate</h2>
+            <p>If you are happy with this site, consider supporting us through a donation!</p>
+            <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023 Finance Page. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p class="footer__title">The Legend Of Legiona</p>
+        <div class="footer__social">
+            <a href="#" class="footer__icon"><i class='bx bxl-facebook'></i></a>
+            <a href="#" class="footer__icon"><i class='bx bxl-instagram'></i></a>
+            <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter'></i></a>
+        </div>
+        <p>&#169; 2021 - 2024 Copyright All Right Reserved</p>
     </footer>
-
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="script.js"></script>
-
 </body>
+
 </html>
