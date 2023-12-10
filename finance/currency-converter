@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Minecraft Currency Converter</title>
+</head>
+<body>
+    <!--===== HEADER =====-->
+    <header class="l-header">
+        <nav class="nav bd-grid">
+            <div>
+                <a href="#" class="nav__logo">Server Name</a>
+            </div>
+        </nav>
+    </header>
+
+    <!--===== MAIN CONTENT =====-->
+    <main class="l-main">
+        <!--===== CURRENCY CONVERTER SECTION =====-->
+        <section class="section currency-converter">
+            <div class="bd-grid">
+                <h2 class="section-title">Minecraft Currency Converter</h2>
+                <div class="currency-form">
+                    <label for="gold">Gold Ingot:</label>
+                    <input type="number" id="gold" placeholder="Enter amount">
+                    
+                    <label for="emerald">Emerald:</label>
+                    <input type="number" id="emerald" placeholder="Enter amount">
+
+                    <label for="diamond">Diamond:</label>
+                    <input type="number" id="diamond" placeholder="Enter amount">
+
+                    <button onclick="convertCurrency()">Convert</button>
+                </div>
+
+                <div class="result">
+                    <h3>Conversion Result:</h3>
+                    <p id="result"></p>
+                </div>
+            </div>
+        </section>
+
+        <!--===== DONATE BUTTON =====-->
+        <section class="donate section">
+            <h2 class="section-title">Donate</h2>
+            <p>If you find this converter helpful, consider supporting us through a donation!</p>
+            <button class="button donate-button" onclick="window.location.href='https://your-donation-link.com'">Donate</button>
+        </section>
+    </main>
+
+    <!--===== FOOTER =====-->
+    <footer class="footer">
+        <p class="footer__title">Server Name</p>
+        <div class="footer__social">
+            <!-- Add your social media links here -->
+        </div>
+        <p>&#169; 2023 - 2024 Copyright All Right Reserved</p>
+    </footer>
+
+    <!--===== MAIN JS =====-->
+    <script src="assets/js/main.js"></script>
+
+    <!--===== CUSTOM JS FOR CURRENCY CONVERTER =====-->
+    <script>
+        function convertCurrency() {
+            // Fetch input values
+            var goldAmount = document.getElementById("gold").value;
+            var emeraldAmount = document.getElementById("emerald").value;
+            var diamondAmount = document.getElementById("diamond").value;
+
+            // Conversion rates
+            var goldToTL = 20;
+            var emeraldToTL = 15;
+            var diamondToTL = 10;
+
+            // Perform conversion
+            var totalTL = (goldAmount * goldToTL) + (emeraldAmount * emeraldToTL) + (diamondAmount * diamondToTL);
+
+            // Display result
+            document.getElementById("result").innerHTML = totalTL + " TL$";
+        }
+    </script>
+</body>
+</html>
