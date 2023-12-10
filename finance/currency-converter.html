@@ -38,37 +38,35 @@
 
     <!--===== MAIN CONTENT =====-->
     <main class="l-main">
-        <!--===== CURRENCY CONVERTER SECTION =====-->
-        <section class="section currency-converter">
-            <div class="bd-grid">
-                <h2 class="section-title">The LoL Dollar ( TL$ ) Currency Converter</h2>
-                <div class="currency-form">
-                    <label for="gold">Gold Ingot:</label>
-                    <input type="number" id="gold" placeholder="Enter amount">
-                    
-                    <label for="emerald">Emerald:</label>
-                    <input type="number" id="emerald" placeholder="Enter amount">
-
-                    <label for="diamond">Diamond:</label>
-                    <input type="number" id="diamond" placeholder="Enter amount">
-
-                    <button onclick="convertCurrency()">Convert</button>
-                </div>
-
-                <div class="result">
-                    <h3>Conversion Result:</h3>
-                    <p id="result"></p>
-                </div>
+<!--===== CURRENCY CONVERTER SECTION =====-->
+<section class="section currency-converter">
+    <div class="bd-grid">
+        <h2 class="section-title">The LoL Dollar ( TL$ ) Currency Converter</h2>
+        <div class="currency-form">
+            <div class="input-container">
+                <label for="gold">Gold Ingot:</label>
+                <input type="number" id="gold" placeholder="Enter amount" class="input-field">
             </div>
-        </section>
+            
+            <div class="input-container">
+                <label for="emerald">Emerald:</label>
+                <input type="number" id="emerald" placeholder="Enter amount" class="input-field">
+            </div>
 
-        <!--===== DONATE BUTTON =====-->
-        <section class="donate section">
-            <h2 class="section-title">Donate</h2>
-            <p>If you find this converter helpful, consider supporting us through a donation!</p>
-            <button class="button donate-button" onclick="window.location.href='https://your-donation-link.com'">Donate</button>
-        </section>
-    </main>
+            <div class="input-container">
+                <label for="diamond">Diamond:</label>
+                <input type="number" id="diamond" placeholder="Enter amount" class="input-field">
+            </div>
+
+            <button onclick="convertCurrency()" class="convert-button">Convert</button>
+        </div>
+
+        <div class="result">
+            <h3>Conversion Result:</h3>
+            <p id="result"></p>
+        </div>
+    </div>
+</section>
 
     <!--===== FOOTER =====-->
     <footer class="footer">
