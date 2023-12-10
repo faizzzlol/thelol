@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="style.css">
     <title>Finance Page</title>
 </head>
 <body>
@@ -27,18 +27,21 @@
     <main>
         <section class="quote">
             <h2>USD/MYR</h2>
-            <p>1 USD = 4.17 MYR</p>
+            <p id="exchange-rate">Loading...</p>
         </section>
 
         <section class="charts">
             <h2>Price Chart</h2>
-            <!-- Placeholder for chart image or chart component -->
+            <div id="chart-container">Loading chart...</div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2023 Finance Page. All rights reserved.</p>
+        <p>&copy; 2023 The LoL Finance Page. All rights reserved.</p>
     </footer>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
