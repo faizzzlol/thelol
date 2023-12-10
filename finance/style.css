@@ -451,3 +451,37 @@ img{
     right: 10%;
   }
 }
+/* Add these styles to your existing CSS */
+
+.currency-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.input-container {
+    margin-bottom: 1rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.convert-button {
+    background-color: var(--first-color);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-weight: var(--font-semi);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.convert-button:hover {
+    background-color: #3054a4; /* Adjust the hover background color as needed */
+}
