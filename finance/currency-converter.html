@@ -44,11 +44,14 @@
         <h2 class="section-title">Minecraft Currency Converter</h2>
         <div class="currency-form">
             <div class="input-container">
-                <label for="currencyType">Convert:</label>
-                <select id="currencyType">
+                <label for="fromCurrency">Convert from:</label>
+                <select id="fromCurrency">
                     <option value="gold">Gold Ingot</option>
+                    <option value="iron">Iron</option>
                     <option value="emerald">Emerald</option>
                     <option value="diamond">Diamond</option>
+                    <option value="netherite">Netherite</option>
+                    <option value="tl">TL$</option>
                 </select>
             </div>
 
@@ -57,12 +60,19 @@
                 <input type="number" id="amount" placeholder="Enter amount" class="input-field">
             </div>
 
-            <button onclick="convertCurrency()" class="convert-button">Convert</button>
-
-            <div class="toggle-container">
-                <label for="toggleSwitch">Switch to:</label>
-                <input type="checkbox" id="toggleSwitch" onclick="toggleCurrencyDirection()">
+            <div class="input-container">
+                <label for="toCurrency">Convert to:</label>
+                <select id="toCurrency">
+                    <option value="tl">TL$</option>
+                    <option value="gold">Gold Ingot</option>
+                    <option value="iron">Iron</option>
+                    <option value="emerald">Emerald</option>
+                    <option value="diamond">Diamond</option>
+                    <option value="netherite">Netherite</option>
+                </select>
             </div>
+
+            <button onclick="convertCurrency()" class="convert-button">Convert</button>
         </div>
 
         <div class="result">
@@ -71,6 +81,7 @@
         </div>
     </div>
 </section>
+
 
     <!--===== FOOTER =====-->
     <footer class="footer">
@@ -86,84 +97,27 @@
 
     <!--===== JS FOR CURRENCY CONVERTER =====-->
     <script>
-        function convertCurrency() {
-            // Fetch input values
-            var goldAmount = document.getElementById("gold").value;
-            var emeraldAmount = document.getElementById("emerald").value;
-            var diamondAmount = document.getElementById("diamond").value;
+    // Add this function to your existing <script> or in a separate script file
+    function convertCurrency() {
+        var fromCurrency = document.getElementById("fromCurrency").value;
+        var toCurrency = document.getElementById("toCurrency").value;
+        var amount = parseFloat(document.getElementById("amount").value);
 
-            // Conversion rates
-            var goldToTL = 20;
-            var emeraldToTL = 15;
-            var diamondToTL = 10;
+        var conversionRates = {
+            gold: 20,
+            iron: 10,
+            emerald: 15,
+            diamond: 10,
+            netherite: 5,
+            tl: 1 / 20 // 1 TL$ = 20 of any Minecraft currency
+        };
 
-            // Perform conversion
-            var totalTL = (goldAmount * goldToTL) + (emeraldAmount * emeraldToTL) + (diamondAmount * diamondToTL);
+        var result = (amount * conversionRates[fromCurrency]) / conversionRates[toCurrency];
 
-            // Display result
-            document.getElementById("result").innerHTML = totalTL + " TL$";
-        }
-        // Add this function to your existing <script> or in a separate script file
-function toggleCurrencyDirection() {
-    var toggleSwitch = document.getElementById("toggleSwitch");
-    var convertButton = document.querySelector(".convert-button");
-    var currencyTypeLabel = document.querySelector("label[for='currencyType']");
-
-    if (toggleSwitch.checked) {
-        // Switch to TL$ to Minecraft currency
-        convertButton.textContent = "Convert to TL$";
-        currencyTypeLabel.textContent = "Convert to:";
-    } else {
-        // Switch to Minecraft currency to TL$
-        convertButton.textContent = "Convert to Minecraft currency";
-        currencyTypeLabel.textContent = "Convert from:";
-    }
-}
-
-function convertCurrency() {
-    var currencyType = document.getElementById("currencyType").value;
-    var amount = parseFloat(document.getElementById("amount").value);
-    var toggleSwitch = document.getElementById("toggleSwitch");
-
-    var conversionRate;
-
-    if (toggleSwitch.checked) {
-        // Convert TL$ to Minecraft currency
-        switch (currencyType) {
-            case "gold":
-                conversionRate = 1 / 20; // 1 Gold Ingot = 20 TL$
-                break;
-            case "emerald":
-                conversionRate = 1 / 15; // 1 Emerald = 15 TL$
-                break;
-            case "diamond":
-                conversionRate = 1 / 10; // 1 Diamond = 10 TL$
-                break;
-            default:
-                conversionRate = 1;
-        }
-    } else {
-        // Convert Minecraft currency to TL$
-        switch (currencyType) {
-            case "gold":
-                conversionRate = 20; // 20 TL$ = 1 Gold Ingot
-                break;
-            case "emerald":
-                conversionRate = 15; // 15 TL$ = 1 Emerald
-                break;
-            case "diamond":
-                conversionRate = 10; // 10 TL$ = 1 Diamond
-                break;
-            default:
-                conversionRate = 1;
-        }
+        // Display result
+        document.getElementById("result").innerHTML = result + " " + toCurrency;
     }
 
-    var total = amount * conversionRate;
-
-    // Display result
-    document.getElementById("result").innerHTML = total + (toggleSwitch.checked ? " TL$" : " Minecraft currency");
-}
     </script>
 </body>
 </html>
