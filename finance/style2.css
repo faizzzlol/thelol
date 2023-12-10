@@ -45,3 +45,18 @@ footer {
     text-align: center;
     padding: 10px;
 }
+/* Add or update styles for the finance page */
+.finance-page {
+    padding: 3rem;
+}
+
+.finance-data {
+    margin-top: 1rem;
+}
+
+.chart-container {
+    margin-top: 1rem;
+    height: 300px; /* Set an appropriate height for your chart */
+}
+
+/* Update other styles as needed */
