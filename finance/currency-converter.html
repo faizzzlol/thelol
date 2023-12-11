@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/thelol/finance/style.css">
+        <link rel="stylesheet" href="/thelol/finance/themes.css">
 
         <link rel="icon" type="image/png" href="/thelol/TheLoL2.png" sizes="16x16">
         <link rel="icon" type="image/png" href="/thelol/TheLoL2.png" sizes="32x32">
@@ -25,6 +26,18 @@
         <meta property="og:image" content="/thelol/TheLoL.png"/>
         <meta property="og:type" content="website"/>
         <meta property="og:description" content="The LoL Dollar ( TL$ ) Currency Converter"/>
+
+        <!--===== JS FOR THEME SWITCHING =====-->
+    <script>
+        function toggleTheme() {
+            var currentTheme = document.documentElement.getAttribute("data-theme");
+            var newTheme = currentTheme === "light" ? "dark" : "light";
+
+            // Update the HTML class and data-theme attribute
+            document.documentElement.setAttribute("class", "theme-" + newTheme);
+            document.documentElement.setAttribute("data-theme", newTheme);
+        }
+    </script>
 </head>
 <body>
     <!--===== HEADER =====-->
@@ -38,6 +51,14 @@
 
     <!--===== MAIN CONTENT =====-->
     <main class="l-main">
+    <!--===== THEME SWITCH BUTTON =====-->
+    <div class="theme-switch-container">
+        <label class="theme-switch" for="theme-checkbox">
+            <input type="checkbox" id="theme-checkbox" onclick="toggleTheme()">
+            <div class="slider round"></div>
+        </label>
+        <span class="theme-switch-label">Switch Theme</span>
+    </div>
 <!--===== CURRENCY CONVERTER SECTION =====-->
 <section class="section currency-converter">
     <div class="bd-grid">
