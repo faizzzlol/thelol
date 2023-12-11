@@ -72,7 +72,7 @@
                     <option value="emerald">Emerald</option>
                     <option value="diamond">Diamond</option>
                     <option value="netherite">Netherite</option>
-                    <option value="TL$">TL$</option>
+                    <option value="TL$">TL$ (TL Dollar)</option>
                 </select>
             </div>
 
@@ -84,7 +84,7 @@
             <div class="input-container">
                 <label for="toCurrency">Convert to:</label>
                 <select id="toCurrency">
-                    <option value="TL$">TL$</option>
+                    <option value="TL$">TL$ (TL Dollar)</option>
                     <option value="gold">Gold Ingot</option>
                     <option value="iron">Iron</option>
                     <option value="emerald">Emerald</option>
@@ -98,7 +98,7 @@
 
         <div class="result">
             <h3>Conversion Result:</h3>
-            <p id="result"></p>
+            <h2 id="result"></h2>
         </div>
     </div>
 </section>
@@ -153,11 +153,11 @@
         var amount = parseFloat(document.getElementById("amount").value);
 
         var conversionRates = {
-            gold: 20,
-            iron: 10,
-            emerald: 15,
+            gold: 25,
+            iron: 50,
+            emerald: 10,
             diamond: 10,
-            netherite: 5,
+            netherite: 3,
             TL$: 1,
         };
 
