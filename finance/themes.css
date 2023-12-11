@@ -74,3 +74,35 @@ input:checked + .slider:before {
     color: #555;
     pointer-events: none;
 }
+/* Dropdown Styles */
+.input-container select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.input-container select:hover,
+.input-container select:focus {
+    background-color: #e0e0e0;
+    outline: none;
+}
+
+/* Arrow Styles */
+.input-container select::after {
+    content: '\25BC'; /* Unicode character for down arrow */
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #555;
+    pointer-events: none;
+}
