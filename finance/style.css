@@ -485,29 +485,3 @@ img{
 .convert-button:hover {
     background-color: #3054a4; /* Adjust the hover background color as needed */
 }
-/* Result Styling */
-.result {
-    margin-top: 20px;
-}
-
-.result h3 {
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.result h1 {
-    font-size: 2rem;
-    color: #007BFF; /* You can change the color to your preference */
-    margin-top: 10px;
-}
-
-/* Add some additional styling to make the result more visually appealing */
-.result::after {
-    content: '';
-    display: block;
-    height: 2px;
-    width: 50px;
-    background-color: #007BFF; /* Same color as the h1 text */
-    margin: 10px 0;
-}
-
