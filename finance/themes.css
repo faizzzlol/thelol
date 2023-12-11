@@ -2,14 +2,12 @@
 
 /* Light Theme Styles */
 .theme-light {
-    /* Add your light theme styles here */
     background-color: #fff;
-    color: #000;
+    color: #333; /* Dark text for light background */
 }
 
 /* Dark Theme Styles */
 .theme-dark {
-    /* Add your dark theme styles here */
     background-color: #333;
     color: #fff;
 }
