@@ -61,3 +61,7 @@ footer {
     z-index: 2;
     text-align: center;
 }
+.right-logo {
+    float: right;
+    margin-left: 20px; /* Adjust as needed */
+}
