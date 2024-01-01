@@ -1,7 +1,5 @@
 body {
-    background-image: url('/thelol/gov/TLIO_LOGO.png');
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-color: #1f1f1f; /* Replace with your desired background color */
     color: #fff;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -15,17 +13,10 @@ body {
 }
 
 header {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #333;
     padding: 20px 0;
     width: 100%;
     z-index: 2;
-}
-
-header img {
-    width: 80px;
-    height: 80px;
-    display: block;
-    margin: 0 auto;
 }
 
 h1 {
@@ -62,7 +53,7 @@ h2 {
 }
 
 footer {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #333;
     padding: 10px 0;
     position: fixed;
     bottom: 0;
