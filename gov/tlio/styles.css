@@ -1,5 +1,5 @@
 body {
-    background-color: #1f1f1f; /* Replace with your desired background color */
+    background-color: #1f1f1f;
     color: #fff;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -8,28 +8,27 @@ body {
 .container {
     width: 80%;
     margin: 0 auto;
-    position: relative;
-    z-index: 1;
 }
 
 header {
     background-color: #333;
     padding: 20px 0;
-    width: 100%;
-    z-index: 2;
+}
+
+header img {
+    width: 80px;
+    height: 80px;
 }
 
 h1 {
     font-size: 24px;
     margin: 0;
-    text-align: center;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    text-align: center;
 }
 
 nav ul li {
@@ -58,6 +57,4 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 2;
-    text-align: center;
 }
