@@ -25,7 +25,36 @@
         <meta property="og:image" content="TheLoL.png"/>
         <meta property="og:type" content="website"/>
         <meta property="og:description" content="The Legend Of Legiona (The LoL)"/>
-
+        <style>
+        .home__data {
+            position: relative;
+            text-align: center;
+        }
+        .home__data iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .home__title {
+            position: relative;
+            z-index: 1;
+        }
+        .home__img img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: auto;
+            z-index: 0;
+            opacity: 0.5;
+        }
+    </style>
     </head>
     <body>
         <!--===== HEADER =====-->
@@ -53,23 +82,18 @@
             </nav>
         </header>
         <main class="l-main">
-            <!--===== HOME =====-->
             <section class="home bd-grid" id="home">
                 <div class="home__data">
                     <h1 class="home__title"><br><span class="home__title-color"></span><br>The LoL</h1>
-
                     <a href="#contact" class="button">Contact</a>
+                    <iframe src="https://www.youtube.com/embed/drnxdd0ocxU?autoplay=1" title="???" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <div class="home__img">
+                        <img src="TheLoL.png" alt="The LoL Logo">
+                    </div>
                 </div>
-
-                <iframe width="560" height="340" src="https://www.youtube.com/embed/drnxdd0ocxU?autoplay=1" title="???" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
                 <div class="home__social">
-                    <a href="https://discord.gg/FsxXBpUZ5A" alt="Discord" class="home__social-icon"><i class='bx bxl-discord' ></i></a>
-                    <a href="https://github.com/faizzzlol" alt="Github" class="home__social-icon"><i class='bx bxl-github' ></i></a>
-                </div>
-                
-                <div class="home__img">    
-                    <img src="TheLoL.png" alt="The LoL Logo">
+                    <a href="https://discord.gg/FsxXBpUZ5A" alt="Discord" class="home__social-icon"><i class='bx bxl-discord'></i></a>
+                    <a href="https://github.com/faizzzlol" alt="Github" class="home__social-icon"><i class='bx bxl-github'></i></a>
                 </div>
             </section>
 
