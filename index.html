@@ -252,6 +252,19 @@
                 var navMenu = document.getElementById('nav-menu');
                 navMenu.classList.toggle('show');
             });
+                        // JavaScript for toggling the theme
+            document.getElementById('theme-switch').addEventListener('click', function() {
+                var htmlElement = document.documentElement;
+                if (htmlElement.classList.contains('theme-light')) {
+                    htmlElement.classList.remove('theme-light');
+                    htmlElement.classList.add('theme-dark');
+                    htmlElement.setAttribute('data-theme', 'dark');
+                } else {
+                    htmlElement.classList.remove('theme-dark');
+                    htmlElement.classList.add('theme-light');
+                    htmlElement.setAttribute('data-theme', 'light');
+                }
+            });
         </script>
     </body>
 </html>
