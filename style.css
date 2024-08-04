@@ -451,3 +451,52 @@ img{
     right: 10%;
   }
 }
+/* Light & Dark Theme switcher */
+:root {
+  --first-color-light: #4070F4;
+  --second-color-light: #0E2431;
+  --background-color-light: #ffffff;
+  --text-color-light: #000000;
+
+  --first-color-dark: #1a73e8;
+  --second-color-dark: #202124;
+  --background-color-dark: #121212;
+  --text-color-dark: #ffffff;
+}
+
+.theme-light {
+  --first-color: var(--first-color-light);
+  --second-color: var(--second-color-light);
+  --background-color: var(--background-color-light);
+  --text-color: var(--text-color-light);
+}
+
+.theme-dark {
+  --first-color: var(--first-color-dark);
+  --second-color: var(--second-color-dark);
+  --background-color: var(--background-color-dark);
+  --text-color: var(--text-color-dark);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.nav {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.nav__link {
+  color: var(--text-color);
+}
+
+.nav__link:hover::after {
+  background: var(--first-color);
+}
+
+/* Additional styling to handle transitions */
+html {
+  transition: background-color 0.3s, color 0.3s;
+}
