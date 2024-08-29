@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,37 +10,74 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f0f0f0;
+            background-color: #f4f4f4;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
+            background-color: #ffffff;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
+
         h1, h2, h3 {
             text-align: center;
-            color: #333;
+            color: #2c3e50;
+            margin-bottom: 15px;
         }
-        .info {
-            margin-bottom: 20px;
+
+        .info, .services, .ticketing, .facilities, .contact-info {
+            margin-bottom: 30px;
         }
-        p {
+
+        p, ul {
             line-height: 1.6;
-            color: #666;
+            color: #34495e;
         }
+
         ul {
             padding-left: 20px;
-            color: #666;
+        }
+
+        a.nav__logo {
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a.nav__logo:hover {
+            text-decoration: underline;
+        }
+
+        .map-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .map-container img {
+            max-width: 100%;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #7f8c8d;
         }
     </style>
 </head>
+
 <body>
     <a href="/thelol" class="nav__logo">The LoL</a>
     <div class="container">
         <h1>The LoL - Spawn Railway Link (TLSRL)</h1>
+
         <div class="info">
             <p><strong>Maintained by:</strong> TL Railways</p>
             <p><strong>Contractors:</strong> Paiz™ Construction</p>
@@ -47,34 +85,53 @@
             <p><strong>Time duration:</strong> The LoL - Spawn & Spawn - The LoL: 10 minutes</p>
             <p><strong>Suggested by:</strong> Faiz4224</p>
         </div>
+
         <h2>Railway Information</h2>
         <p>The LoL - Spawn Railway Link (TLSRL) is a vital transportation route connecting The LoL and Spawn areas. It serves as a convenient mode of travel for residents and visitors.</p>
-        <h3>Services</h3>
-        <ul>
-            <li>Regular train services</li>
-            <li>Express train services</li>
-            <li>Cargo transportation</li>
-        </ul>
-        <h3>Ticketing</h3>
-        <p>Passengers can purchase tickets at designated ticket counters or through online booking platforms.</p>
-        <h3>Facilities</h3>
-        <ul>
-            <li>Modern train stations equipped with waiting areas</li>
-            <li>Escalator</li>
-            <li>Ender Chest / E Chest</li>
-            <li>Restrooms</li>
-            <li>Refreshment stalls</li>
-        </ul>
-        <h3>Contact Information</h3>
-        <p>For inquiries and assistance, please contact:</p>
-        <ul>
-            <li>TL Railways: [Contact Information]</li>
-            <li>Paiz™ Construction: [Contact Information]</li>
-        </ul>
-        <p></p>For website developer:</p>
-        <ul>
-            <li>The LoL:</li>
-        </ul>
+
+        <div class="services">
+            <h3>Services</h3>
+            <ul>
+                <li>Regular train services</li>
+                <li>Express train services</li>
+                <li>Cargo transportation</li>
+            </ul>
+        </div>
+
+        <div class="ticketing">
+            <h3>Ticketing</h3>
+            <p>Passengers can purchase tickets at designated ticket counters or through online booking platforms.</p>
+        </div>
+
+        <div class="facilities">
+            <h3>Facilities</h3>
+            <ul>
+                <li>Modern train stations equipped with waiting areas</li>
+                <li>Escalator</li>
+                <li>Ender Chest / E Chest</li>
+                <li>Restrooms</li>
+                <li>Refreshment stalls</li>
+            </ul>
+        </div>
+
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p>For inquiries and assistance, please contact:</p>
+            <ul>
+                <li>TL Railways: [Contact Information]</li>
+                <li>Paiz™ Construction: [Contact Information]</li>
+            </ul>
+        </div>
+
+        <div class="map-container">
+            <h2>Transit Map</h2>
+            <img src="your-map-image-path.png" alt="TLSRL Transit Map">
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 The LoL - Spawn Railway Link. All rights reserved.</p>
+        </div>
     </div>
 </body>
+
 </html>
