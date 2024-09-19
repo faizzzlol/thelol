@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="style.css">
+
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
+        <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
+        <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
+
+        <!-- =====BOX ICONS===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+        <title>About The LoL</title>
+        <meta name="description" content="Learn more about The Legend Of Legiona">
+        <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL Server, About The LoL">
+        
+        <meta property="og:title" content="About The Legend Of Legiona"/>
+        <meta property="og:url" content="https://faizzzlol.github.io/thelol/about"/>
+        <meta property="og:image" content="TheLoL.png"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:description" content="About The Legend Of Legiona"/>
+
+    </head>
+    <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div>
+                    <a href="/thelol" class="nav__logo">The LoL</a>
+                </div>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="/thelol/about" class="nav__link active">About</a></li>
+                        <li class="nav__item"><a href="/thelol" class="nav__link">Home</a></li>
+                        <li class="nav__item"><a href="/thelol/#contact" class="nav__link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--===== ABOUT SECTION =====-->
+            <section class="about section" id="about">
+                <h2 class="section-title">About The Legend Of Legiona</h2>
+
+                <div class="about__container bd-grid">          
+                    <div>
+                        <h2 class="about__subtitle">Our Mission</h2>
+                        <p class="about__text">
+                            The Legend Of Legiona (The LoL) is a creative community and Minecraft server built to bring players together in a unique and immersive world. 
+                            We strive to create a one-of-a-kind gaming experience, where players can express their creativity, participate in events, and enjoy a dynamic and ever-evolving virtual world.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h2 class="about__subtitle">History</h2>
+                        <p class="about__text">
+                            Founded in 2023, The LoL began as a small server but quickly grew into a large community of passionate Minecraft players. Our goal is to continually push the boundaries of what a Minecraft server can offer, with custom-built features, events, and player-driven content.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h2 class="about__subtitle">Meet the Team</h2>
+                        <p class="about__text">
+                            The LoL is led by a group of dedicated individuals who are passionate about Minecraft and server development. Our team works around the clock to ensure that players have a fun and smooth experience, with regular updates and community events.
+                        </p>
+                    </div>
+
+                    <div class="donate section">
+                        <h2 class="section-title">Support Us</h2>
+                        <p>If you enjoy our community, consider supporting us through a donation. Your contributions help us keep the server running and allow us to create even more amazing content.</p>
+                        <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+            <p class="footer__title">The Legend Of Legiona</p>
+            <div class="footer__social">
+                <a href="#" class="footer__icon"><i class='bx bxl-facebook'></i></a>
+                <a href="#" class="footer__icon"><i class='bx bxl-instagram'></i></a>
+                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter'></i></a>
+            </div>
+            <p>&#169; 2024 Copyright All Right Reserved</p>
+            <p><a href="https://forms.gle/mF1a6Eerjb3f3nkD8" target="_blank">Feedback</a></p>
+            <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
+        </footer>
+
+        <!--===== MAIN JS =====-->
+        <script src="assets/js/main.js"></script>
+
+        <script>
+            // JavaScript for toggling the mobile menu
+            document.getElementById('nav-toggle').addEventListener('click', function() {
+                var navMenu = document.getElementById('nav-menu');
+                navMenu.classList.toggle('show');
+            });
+        </script>
+            
+    </body>
+</html>
