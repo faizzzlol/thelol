@@ -3,34 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The History of The LoL</title>
+    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
+    <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
+    <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
+    <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
+
+    <!-- =====BOX ICONS===== -->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>About The LoL</title>
+    <meta name="description" content="About The LoL History">
+    <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
+        
+    <meta property="og:title" content="The Legend Of Legiona - About The LoL"/>
+    <meta property="og:url" content="https://faizzzlol.github.io/thelol/about"/>
+    <meta property="og:image" content="TheLoL.png"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="About The LoL History"/>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        h1, h2 {
-            text-align: center;
-        }
+        /* Additional styles specifically for the history timeline */
         .timeline {
             width: 90%;
-            margin: 0 auto;
+            margin: 40px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: var(--background-color); /* Using your theme background */
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: var(--text-color); /* Using your theme text color */
         }
         .event {
             margin-bottom: 20px;
+            padding: 10px;
+            border-left: 4px solid var(--accent-color); /* Accent color from your theme */
+        }
+        .event h2 {
+            margin-bottom: 10px;
+            font-size: 1.6em;
+            color: var(--accent-color);
         }
         .event h3 {
-            margin: 10px 0;
-            color: #007BFF;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+            color: var(--secondary-text-color); /* Secondary text color from your theme */
         }
         .event p {
-            margin: 5px 0;
             line-height: 1.6;
         }
         .history-image {
@@ -41,64 +59,140 @@
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .donate {
+        text-align: center;
+        margin-top: 50px; /* Adjust the margin-top value as needed */
+        }
+
+        .donate-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            background-color: #4CAF50; /* Change the background color as needed */
+            color: #ffffff; /* Change the text color as needed */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .donate-button:hover {
+            background-color: #45a049; /* Change the hover background color as needed */
         }
     </style>
 </head>
 <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div>
+                    <a href="/thelol" class="nav__logo">The LoL</a>
+                </div>
 
-    <h1>The History of The LoL</h1>
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="/thelol/about" class="nav__link active">About</a></li>
+                        <li class="nav__item"><a href="/thelol" class="nav__link">Home</a></li>
+                        <li class="nav__item"><a href="/thelol/#contact" class="nav__link">Contact</a></li>
+                    </ul>
+                </div>
 
-    <!-- History Image -->
-    <div class="history-image">
-        <img src="history-image-placeholder.jpg" alt="History of The LoL">
-        <!-- Replace 'history-image-placeholder.jpg' with your actual image file -->
-    </div>
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
 
-    <!-- Timeline Section -->
-    <div class="timeline">
-        <!-- Event 1 -->
-        <div class="event">
-            <h2>1. The Founding (Early Days)</h2>
-            <h3>Original Name: The Sus</h3>
-            <p>The LoL was originally called "The Sus", founded by Faiz4224, alongside ItzDynozz and Imii kun. During its inception, the nation was small, but the collaboration between these founders laid the groundwork for future developments.</p>
-        </div>
+    <!-- History Page Content -->
+    <main>
+        <section class="history-section">
+            <h1>The History of The LoL</h1>
 
-        <!-- Event 2 -->
-        <div class="event">
-            <h2>2. The Renaming and Expansion</h2>
-            <h3>Renaming to The Legend of Legiona (The LoL)</h3>
-            <p>As the nation grew, the founders decided to rename it "The Legend of Legiona", abbreviated as The LoL. The LoL rapidly transformed into the most modern and wealthiest nation in Skyxion, a region known for its diverse cultures and nations. Under President Faiz4224, The LoL thrived in terms of economy, infrastructure, and innovation.</p>
-        </div>
+            <!-- History Image -->
+            <div class="history-image">
+                <img src="history-image-placeholder.jpg" alt="History of The LoL">
+                <!-- Replace 'history-image-placeholder.jpg' with your actual image file -->
+            </div>
 
-        <!-- Event 3 -->
-        <div class="event">
-            <h2>3. The First Presidential Election (May 6, 2023)</h2>
-            <h3>Election Announcement</h3>
-            <p>On May 6, 2023, The LoL held its first democratic election, marking a significant turning point in its governance. Despite Faiz4224’s strong leadership, UltraX2020 and the PHRTL party won the election, making him the 2nd President of The LoL.</p>
-        </div>
+            <!-- Timeline Section -->
+            <div class="timeline">
+                <!-- Event 1 -->
+                <div class="event">
+                    <h2>1. The Founding (Early Days)</h2>
+                    <h3>Original Name: The Sus</h3>
+                    <p>The LoL was originally called "The Sus", founded by Faiz4224, alongside ItzDynozz and Imii kun. During its inception, the nation was small, but the collaboration between these founders laid the groundwork for future developments.</p>
+                </div>
 
-        <!-- Event 4 -->
-        <div class="event">
-            <h2>4. UltraX2020's Presidency (2023)</h2>
-            <h3>Division and Chaos</h3>
-            <p>Under UltraX2020's rule, internal strife and divisions surfaced. The iconic LoL City sign was bombed, TLCC (The LoL City Center) was attacked by drones, and political conflicts gripped the city.</p>
-        </div>
+                <!-- Event 2 -->
+                <div class="event">
+                    <h2>2. The Renaming and Expansion</h2>
+                    <h3>Renaming to The Legend of Legiona (The LoL)</h3>
+                    <p>As the nation grew, the founders decided to rename it "The Legend of Legiona", abbreviated as The LoL. The LoL rapidly transformed into the most modern and wealthiest nation in Skyxion, a region known for its diverse cultures and nations. Under President Faiz4224, The LoL thrived in terms of economy, infrastructure, and innovation.</p>
+                </div>
 
-        <!-- Event 5 -->
-        <div class="event">
-            <h2>5. The Resignation of UltraX2020 (2023)</h2>
-            <h3>Leadership Crisis and Resignation</h3>
-            <p>UltraX2020 resigned from the presidency following the chaos. He returned full power back to Faiz4224, who resumed leadership of The LoL and worked to restore unity and stability.</p>
-        </div>
+                <!-- Event 3 -->
+                <div class="event">
+                    <h2>3. The First Presidential Election (May 6, 2023)</h2>
+                    <h3>Election Announcement</h3>
+                    <p>On May 6, 2023, The LoL held its first democratic election, marking a significant turning point in its governance. Despite Faiz4224’s strong leadership, UltraX2020 and the PHRTL party won the election, making him the 2nd President of The LoL.</p>
+                </div>
 
-        <!-- Event 6 -->
-        <div class="event">
-            <h2>6. The LoL Today</h2>
-            <h3>Stability Restored</h3>
-            <p>Since Faiz4224's return, The LoL has been on a path to restoring its former glory, aiming for a brighter future while healing from the past's divisions.</p>
-        </div>
-    </div>
+                <!-- Event 4 -->
+                <div class="event">
+                    <h2>4. UltraX2020's Presidency (2023)</h2>
+                    <h3>Division and Chaos</h3>
+                    <p>Under UltraX2020's rule, internal strife and divisions surfaced. The iconic LoL City sign was bombed, TLCC (The LoL City Center) was attacked by drones, and political conflicts gripped the city.</p>
+                </div>
 
+                <!-- Event 5 -->
+                <div class="event">
+                    <h2>5. The Resignation of UltraX2020 (2023)</h2>
+                    <h3>Leadership Crisis and Resignation</h3>
+                    <p>UltraX2020 resigned from the presidency following the chaos. He returned full power back to Faiz4224, who resumed leadership of The LoL and worked to restore unity and stability.</p>
+                </div>
+
+                <!-- Event 6 -->
+                <div class="event">
+                    <h2>6. The LoL Today</h2>
+                    <h3>Stability Restored</h3>
+                    <p>Since Faiz4224's return, The LoL has been on a path to restoring its former glory, aiming for a brighter future while healing from the past's divisions.</p>
+                </div>
+            </div>
+        </section>
+        <!--===== DONATE BUTTON =====-->
+        <section class="donate section">
+            <h2 class="section-title">Donate</h2>
+            <p>If you are happy with this site, consider supporting us through a donation!</p>
+            <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
+        </section>
+    </main>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+        
+            <p class="footer__title">The Legend Of Legiona</p>
+            <div class="footer__social">
+                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
+                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+            </div>
+            <p>&#169; 2024 Copyright All Right Reserved</p>
+            <p><a href="https://forms.gle/mF1a6Eerjb3f3nkD8" target="_blank">Feedback</a></p>
+            <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
+        </footer>
+        <!--===== MAIN JS =====-->
+        <script src="assets/js/main.js"></script>
+
+        <script>
+            // JavaScript for toggling the mobile menu
+            document.getElementById('nav-toggle').addEventListener('click', function() {
+                var navMenu = document.getElementById('nav-menu');
+                navMenu.classList.toggle('show');
+            });
+        </script>
 </body>
 </html>
