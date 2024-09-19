@@ -24,6 +24,28 @@
     <meta property="og:type" content="website"/>
     <meta property="og:description" content="About The LoL History"/>
     <style>
+        :root {
+            --background-color: #fff;
+            --text-color: #333;
+            --accent-color: #4CAF50;
+            --secondary-text-color: #555;
+        }
+
+        /* Dark Mode Variables */
+        body.dark-mode {
+            --background-color: #181818;
+            --text-color: #e0e0e0;
+            --accent-color: #76ff03;
+            --secondary-text-color: #b0b0b0;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
         /* Additional styles specifically for the history timeline */
         .timeline {
             width: 90%;
@@ -84,6 +106,20 @@
         .donate-button:hover {
             background-color: #45a049; /* Change the hover background color as needed */
         }
+        /* Dark mode switch styles */
+        .dark-mode-switch {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .dark-mode-switch i {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -106,6 +142,11 @@
                     <i class='bx bx-menu'></i>
                 </div>
             </nav>
+            <!-- Dark Mode Switcher -->
+            <div class="dark-mode-switch" id="dark-mode-toggle">
+                <span>Dark Mode</span>
+                <i class='bx bx-moon'></i>
+            </div>
         </header>
 
     <!-- History Page Content -->
@@ -194,6 +235,24 @@
                 var navMenu = document.getElementById('nav-menu');
                 navMenu.classList.toggle('show');
             });
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+
+        // Check the saved mode from localStorage
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            body.classList.add('dark-mode');
+        }
+
+        // Toggle dark mode
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('dark-mode', 'enabled');
+            } else {
+                localStorage.setItem('dark-mode', 'disabled');
+            }
+        });
+    </script>
         </script>
 </body>
 </html>
