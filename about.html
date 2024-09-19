@@ -85,8 +85,8 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .donate {
-        text-align: center;
-        margin-top: 50px; /* Adjust the margin-top value as needed */
+            text-align: center;
+            margin-top: 50px; /* Adjust the margin-top value as needed */
         }
 
         .donate-button {
@@ -194,65 +194,44 @@
                 <div class="event">
                     <h2>5. The Resignation of UltraX2020 (2023)</h2>
                     <h3>Leadership Crisis and Resignation</h3>
-                    <p>UltraX2020 resigned from the presidency following the chaos. He returned full power back to Faiz4224, who resumed leadership of The LoL and worked to restore unity and stability.</p>
+                    <p>UltraX2020 resigned from the presidency following the chaos. He returned full power back to Faiz4224, restoring peace to The LoL. Faiz4224 continued to lead with a vision of progress and unity.</p>
                 </div>
 
                 <!-- Event 6 -->
                 <div class="event">
-                    <h2>6. The LoL Today</h2>
-                    <h3>Stability Restored</h3>
-                    <p>Since Faiz4224's return, The LoL has been on a path to restoring its former glory, aiming for a brighter future while healing from the past's divisions.</p>
+                    <h2>6. The Post-Chaos Recovery</h2>
+                    <h3>Rebuilding and Moving Forward</h3>
+                    <p>After the political turmoil, The LoL began a rebuilding phase. Faiz4224’s government initiated several infrastructure projects, improved security, and focused on uniting the nation under one banner.</p>
+                </div>
+
+                <!-- Event 7 -->
+                <div class="event">
+                    <h2>7. The Modern Era</h2>
+                    <h3>Looking Ahead</h3>
+                    <p>Today, The LoL stands as a symbol of perseverance and innovation. With its leadership firmly in place, The LoL is poised to continue its legacy of being one of the most modern and successful nations in Skyxion.</p>
                 </div>
             </div>
-        </section>
-        <!--===== DONATE BUTTON =====-->
-        <section class="donate section">
-            <h2 class="section-title">Donate</h2>
-            <p>If you are happy with this site, consider supporting us through a donation!</p>
-            <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
+
+            <!-- Donate Section -->
+            <div class="donate">
+                <p>If you'd like to support The LoL's development, consider donating.</p>
+                <a href="https://www.buymeacoffee.com/faizlol" class="donate-button">Donate Now</a>
+            </div>
         </section>
     </main>
 
-        <!--===== FOOTER =====-->
-        <footer class="footer">
-        
-            <p class="footer__title">The Legend Of Legiona</p>
-            <div class="footer__social">
-                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
-            </div>
-            <p>&#169; 2024 Copyright All Right Reserved</p>
-            <p><a href="https://forms.gle/mF1a6Eerjb3f3nkD8" target="_blank">Feedback</a></p>
-            <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
-        </footer>
-        <!--===== MAIN JS =====-->
-        <script src="assets/js/main.js"></script>
+    <!--===== FOOTER =====-->
+    <footer class="footer">
+        <div class="footer__container">
+            <p>&copy; 2024 The Legend of Legiona. All rights reserved.</p>
+        </div>
+    </footer>
 
-        <script>
-            // JavaScript for toggling the mobile menu
-            document.getElementById('nav-toggle').addEventListener('click', function() {
-                var navMenu = document.getElementById('nav-menu');
-                navMenu.classList.toggle('show');
-            });
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const body = document.body;
-
-        // Check the saved mode from localStorage
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            body.classList.add('dark-mode');
-        }
-
-        // Toggle dark mode
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('dark-mode', 'enabled');
-            } else {
-                localStorage.setItem('dark-mode', 'disabled');
-            }
+    <!-- Script Section -->
+    <script>
+        document.getElementById('dark-mode-toggle').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
         });
     </script>
-        </script>
 </body>
 </html>
