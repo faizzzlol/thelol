@@ -120,6 +120,33 @@
             color: var(--text-color);
             margin-left: 10px;
         }
+        /* Positioning Dark Mode Switcher */
+        #dark-mode-toggle {
+            position: absolute;
+            top: 20px; /* Adjust to your needs */
+            right: 20px; /* Adjust the distance from the right */
+            z-index: 1000; /* Ensure it's on top of other elements */
+        }
+        
+        nav {
+            position: relative;
+            height: 60px; /* Ensure space is given for the dark mode toggle */
+            display: flex;
+            justify-content: space-between; /* Spreads out nav elements */
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        /* Optional: Media query for mobile screens */
+        @media (max-width: 768px) {
+            #dark-mode-toggle {
+                top: 10px;
+                right: 10px;
+            }
+            nav {
+                height: 80px; /* More space for mobile */
+            }
+        }
     </style>
 </head>
 <body>
