@@ -191,10 +191,14 @@
                     return;
                 }
         
-                // Example: Sending feedback data to Discord using webhook
+                // Example: Sending feedback data to Discord using embed format
                 const webhookUrl = 'https://discord.com/api/webhooks/1287024897251344407/ISdKj5taPRclppElAR8lLYZUX_UCPK4Ifql7FHNM9DIMIVdZb2K1mOPe7QZTmnEfSYKP';
                 const feedbackData = {
-                    content: `**New Feedback Submission**\n\n**Name:** ${name}\n**Feedback:** ${message}\n**Rating:** ${selectedRating}/5`
+                    embeds: [{
+                        title: "New Feedback Submission",
+                        description: `**Name:** ${name}\n**Feedback:** ${message}\n**Rating:** ${selectedRating}/5`,
+                        color: 15844367 // Gold color for embed
+                    }]
                 };
         
                 fetch(webhookUrl, {
@@ -209,14 +213,13 @@
                         document.getElementById('feedback-form').reset(); // Clear the form after submission
                         highlightStars(0); // Reset stars after form submission
                     } else {
-                        alert('There was an issue submitting your feedback. Please try again later.');
+                        alert('There was an error submitting your feedback.');
                     }
                 }).catch(error => {
-                    alert('Error:', error);
+                    console.error('Error:', error);
+                    alert('There was an error submitting your feedback.');
                 });
             });
         </script>
-            
     </body>
 </html>
-<!--====Made By FaizGG====-->
