@@ -76,34 +76,57 @@
         </header>
 
         <main class="l-main">
-            <!--===== SKILLS =====-->
+            <!--===== FEEDBACK =====-->
             <section class="skills section" id="feedback">
                 <h2 class="section-title">Feedback</h2>
-
-                <div class="skills__container bd-grid">          
+            
+                <div class="feedback__container bd-grid">
+                    <form id="feedback-form">
+                        <div class="form-group">
+                            <label for="name">Name (Optional):</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your name">
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="email">Email (Optional):</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email">
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="message">Your Feedback:</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Write your feedback here" required></textarea>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="rating">Rating (1-5):</label>
+                            <input type="number" id="rating" name="rating" min="1" max="5" required>
+                        </div>
+            
+                        <button type="submit" class="button donate-button">Submit Feedback</button>
+                    </form>
                 </div>
             </section>
 
-<!--===== DONATE BUTTON =====-->
-<section class="donate section">
-    <h2 class="section-title">Donate</h2>
-    <p>If you are happy with this site, consider supporting us through a donation!</p>
-    <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
-</section>
+            <!--===== DONATE BUTTON =====-->
+            <section class="donate section">
+                <h2 class="section-title">Donate</h2>
+                <p>If you are happy with this site, consider supporting us through a donation!</p>
+                <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
+            </section>
 
-        <!--===== FOOTER =====-->
-        <footer class="footer">
-        
-            <p class="footer__title">The Legend Of Legiona</p>
-            <div class="footer__social">
-                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
-            </div>
-            <p>&#169; 2024 Copyright All Right Reserved</p>
-            <p><a href="https://forms.gle/mF1a6Eerjb3f3nkD8" target="_blank">Feedback</a></p>
-            <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
-        </footer>
+            <!--===== FOOTER =====-->
+            <footer class="footer">
+            
+                <p class="footer__title">The Legend Of Legiona</p>
+                <div class="footer__social">
+                    <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
+                    <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                    <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+                </div>
+                <p>&#169; 2024 Copyright All Right Reserved</p>
+                <p><a href="https://forms.gle/mF1a6Eerjb3f3nkD8" target="_blank">Feedback</a></p>
+                <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
+            </footer>
 
         <!--===== MAIN JS =====-->
         <script src="assets/js/main.js"></script>
@@ -114,6 +137,39 @@
                 var navMenu = document.getElementById('nav-menu');
                 navMenu.classList.toggle('show');
             });
+            document.getElementById('feedback-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload on form submission
+    
+            // Gather form data
+            const name = document.getElementById('name').value || 'Anonymous';
+            const email = document.getElementById('email').value || 'Not Provided';
+            const message = document.getElementById('message').value;
+            const rating = document.getElementById('rating').value;
+    
+            // Optional: Send feedback data to a server, a Google Form, or a Discord webhook
+            // Example: Sending feedback data to Discord using webhook
+            const webhookUrl = 'https://discord.com/api/webhooks/1287024897251344407/ISdKj5taPRclppElAR8lLYZUX_UCPK4Ifql7FHNM9DIMIVdZb2K1mOPe7QZTmnEfSYKP';
+            const feedbackData = {
+                content: `**New Feedback Submission**\n\n**Name:** ${name}\n**Rating:** ${rating}/5`
+            };
+    
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(feedbackData)
+            }).then(response => {
+                if (response.ok) {
+                    alert('Thank you for your feedback!');
+                    document.getElementById('feedback-form').reset(); // Clear the form after submission
+                } else {
+                    alert('There was an issue submitting your feedback. Please try again later.');
+                }
+            }).catch(error => {
+                alert('Error:', error);
+            });
+        });
         </script>
             
     </body>
