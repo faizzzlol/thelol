@@ -50,6 +50,24 @@
         .donate-button:hover {
             background-color: #45a049; /* Change the hover background color as needed */
         }
+        /* Star */
+        .star-rating {
+            display: inline-block;
+        }
+    
+        .star {
+            font-size: 30px;
+            color: gray;
+            cursor: pointer;
+        }
+    
+        .star.active {
+            color: gold;
+        }
+    
+        .form-group {
+            margin-bottom: 20px;
+        }
         </style>
 
     </head>
@@ -93,8 +111,14 @@
                         </div>
             
                         <div class="form-group">
-                            <label for="rating">Rating (1-5):</label>
-                            <input type="number" id="rating" name="rating" min="1" max="5" required>
+                            <label for="rating">Rating:</label>
+                            <div class="star-rating">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
                         </div>
             
                         <button type="submit" class="button donate-button">Submit Feedback</button>
@@ -132,38 +156,65 @@
                 var navMenu = document.getElementById('nav-menu');
                 navMenu.classList.toggle('show');
             });
-            document.getElementById('feedback-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent page reload on form submission
-    
-            // Gather form data
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value || 'Anonymous';
-            const rating = document.getElementById('rating').value;
-    
-            // Optional: Send feedback data to a server, a Google Form, or a Discord webhook
-            // Example: Sending feedback data to Discord using webhook
-            const webhookUrl = 'https://discord.com/api/webhooks/1287024897251344407/ISdKj5taPRclppElAR8lLYZUX_UCPK4Ifql7FHNM9DIMIVdZb2K1mOPe7QZTmnEfSYKP';
-            const feedbackData = {
-                content: `**New Feedback Submission**\n\n**Name:** ${name}\n**Rating:** ${rating}/5`
-            };
-    
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(feedbackData)
-            }).then(response => {
-                if (response.ok) {
-                    alert('Thank you for your feedback!');
-                    document.getElementById('feedback-form').reset(); // Clear the form after submission
-                } else {
-                    alert('There was an issue submitting your feedback. Please try again later.');
-                }
-            }).catch(error => {
-                alert('Error:', error);
+            let selectedRating = 0;
+        
+            // Add event listener to each star
+            document.querySelectorAll('.star').forEach(function(star) {
+                star.addEventListener('click', function() {
+                    selectedRating = this.getAttribute('data-value'); // Get the star value
+                    highlightStars(selectedRating);
+                });
             });
-        });
+        
+            // Highlight stars based on selected rating
+            function highlightStars(rating) {
+                document.querySelectorAll('.star').forEach(function(star, index) {
+                    if (index < rating) {
+                        star.classList.add('active');
+                    } else {
+                        star.classList.remove('active');
+                    }
+                });
+            }
+        
+            // Handle form submission
+            document.getElementById('feedback-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent page reload on form submission
+        
+                // Gather form data
+                const name = document.getElementById('name').value;
+                const message = document.getElementById('message').value || 'Anonymous';
+        
+                // Validate rating selection
+                if (selectedRating === 0) {
+                    alert('Please select a rating.');
+                    return;
+                }
+        
+                // Example: Sending feedback data to Discord using webhook
+                const webhookUrl = 'https://discord.com/api/webhooks/1287024897251344407/ISdKj5taPRclppElAR8lLYZUX_UCPK4Ifql7FHNM9DIMIVdZb2K1mOPe7QZTmnEfSYKP';
+                const feedbackData = {
+                    content: `**New Feedback Submission**\n\n**Name:** ${name}\n**Feedback:** ${message}\n**Rating:** ${selectedRating}/5`
+                };
+        
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(feedbackData)
+                }).then(response => {
+                    if (response.ok) {
+                        alert('Thank you for your feedback!');
+                        document.getElementById('feedback-form').reset(); // Clear the form after submission
+                        highlightStars(0); // Reset stars after form submission
+                    } else {
+                        alert('There was an issue submitting your feedback. Please try again later.');
+                    }
+                }).catch(error => {
+                    alert('Error:', error);
+                });
+            });
         </script>
             
     </body>
