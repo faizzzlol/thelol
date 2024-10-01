@@ -32,40 +32,142 @@
         function toggleTheme() {
             var currentTheme = document.documentElement.getAttribute("data-theme");
             var newTheme = currentTheme === "light" ? "dark" : "light";
-
-            // Update the HTML class and data-theme attribute
             document.documentElement.setAttribute("class", "theme-" + newTheme);
             document.documentElement.setAttribute("data-theme", newTheme);
         }
     </script>
         <style>
-                /* CSS to center the donate button */
-            .donate {
-                text-align: center;
-                margin-top: 50px; /* Adjust the margin-top value as needed */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f9;
             }
-        
-            .donate-button {
-                display: inline-block;
-                padding: 10px 20px;
-                font-size: 16px;
-                text-align: center;
+
+            /* Header */
+            .nav__logo {
+                font-size: 1.5rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #333;
                 text-decoration: none;
-                cursor: pointer;
-                background-color: #4CAF50; /* Change the background color as needed */
-                color: #ffffff; /* Change the text color as needed */
+            }
+
+            header {
+                padding: 20px;
+                background-color: #333;
+                color: white;
+                text-align: center;
+            }
+
+            /* Section Title */
+            .section-title {
+                text-align: center;
+                font-size: 2rem;
+                color: #4CAF50;
+                margin-bottom: 30px;
+            }
+
+            /* Center Content */
+            .bd-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                padding: 20px;
+                margin: 0 auto;
+            }
+
+            /* Input Containers */
+            .input-container {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+
+            label {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            select, input {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 1rem;
+                outline: none;
+            }
+
+            /* Button */
+            .convert-button {
+                width: 100%;
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
                 border: none;
                 border-radius: 5px;
-                transition: background-color 0.3s;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
             }
-        
+
+            .convert-button:hover {
+                background-color: #45a049;
+            }
+
+            /* Result Styling */
+            .result h3 {
+                text-align: center;
+                margin-top: 40px;
+                font-size: 1.5rem;
+                color: #333;
+            }
+
+            .result h1 {
+                text-align: center;
+                font-size: 3rem;
+                color: #333;
+            }
+
+            /* Donate Section */
+            .donate-button {
+                display: inline-block;
+                padding: 12px 25px;
+                font-size: 18px;
+                background-color: #ff6f61;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                text-align: center;
+                transition: background-color 0.3s ease;
+            }
+
             .donate-button:hover {
-                background-color: #45a049; /* Change the hover background color as needed */
+                background-color: #ff5f50;
+            }
+
+            /* Footer */
+            .footer {
+                background-color: #333;
+                color: white;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .footer__title {
+                font-size: 1.25rem;
+                margin-bottom: 10px;
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .currency-form {
+                    display: block;
+                    width: 100%;
+                }
             }
         </style>
-</head>
+    </head>
 <body>
-    <!--===== HEADER =====-->
     <header class="l-header">
         <nav class="nav bd-grid">
             <div>
@@ -74,8 +176,8 @@
         </nav>
     </header>
 
-        <!--===== THEME SWITCH BUTTON =====-->
-    <div class="theme-switch-container">
+    <!--===== THEME SWITCH BUTTON =====-->
+    <div class="theme-switch-container" style="text-align: center; margin: 20px 0;">
         <label class="theme-switch" for="theme-checkbox">
             <input type="checkbox" id="theme-checkbox" onclick="toggleTheme()">
             <div class="slider round"></div>
@@ -85,121 +187,64 @@
     
     <!--===== MAIN CONTENT =====-->
     <main class="l-main">
+        <!-- Currency Converter -->
+        <section class="section currency-converter">
+            <div class="bd-grid">
+                <h2 class="section-title">Currency Converter</h2>
+                <div class="currency-form">
+                    <div class="input-container">
+                        <label for="fromCurrency">Convert from:</label>
+                        <select id="fromCurrency">
+                            <option value="gold">Gold Ingot</option>
+                            <option value="iron">Iron Ingot</option>
+                            <option value="emerald">Emerald</option>
+                            <option value="diamond">Diamond</option>
+                            <option value="netherite">Netherite</option>
+                            <option value="TL$">TL$ (TL Dollar)</option>
+                        </select>
+                    </div>
 
-<!--===== CURRENCY CONVERTER SECTION =====-->
-<section class="section currency-converter">
-    <div class="bd-grid">
-        <h2 class="section-title">Currency Converter</h2>
-        <div class="currency-form">
-            <div class="input-container">
-                <label for="fromCurrency">Convert from:</label>
-                <select id="fromCurrency">
-                    <option value="gold">Gold Ingot</option>
-                    <option value="iron">Iron Ingot</option>
-                    <option value="emerald">Emerald</option>
-                    <option value="diamond">Diamond</option>
-                    <option value="netherite">Netherite</option>
-                    <option value="TL$">TL$ (TL Dollar)</option>
-                </select>
+                    <div class="input-container">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" placeholder="Enter amount" class="input-field">
+                    </div>
+
+                    <div class="input-container">
+                        <label for="toCurrency">Convert to:</label>
+                        <select id="toCurrency">
+                            <option value="TL$">TL$ (TL Dollar)</option>
+                            <option value="gold">Gold Ingot</option>
+                            <option value="iron">Iron Ingot</option>
+                            <option value="emerald">Emerald</option>
+                            <option value="diamond">Diamond</option>
+                            <option value="netherite">Netherite</option>
+                        </select>
+                    </div>
+
+                    <button onclick="convertCurrency()" class="convert-button">Convert</button>
+                </div>
+
+                <div class="result">
+                    <h3>Conversion Result:</h3>
+                    <h1 id="result"></h1>
+                </div>
             </div>
+        </section>
 
-            <div class="input-container">
-                <label for="amount">Amount:</label>
-                <input type="number" id="amount" placeholder="Enter amount" class="input-field">
-            </div>
+        <!-- Donation Section -->
+        <section class="donate section">
+            <h2 class="section-title">Donate</h2>
+            <p>If you are happy with the service, consider supporting us:</p>
+            <a href="sociaabuzz.com/donate/faizgg" class="donate-button" target="_blank">Donate Now</a>
+        </section>
+    </main>
 
-            <div class="input-container">
-                <label for="toCurrency">Convert to:</label>
-                <select id="toCurrency">
-                    <option value="TL$">TL$ (TL Dollar)</option>
-                    <option value="gold">Gold Ingot</option>
-                    <option value="iron">Iron Ingot</option>
-                    <option value="emerald">Emerald</option>
-                    <option value="diamond">Diamond</option>
-                    <option value="netherite">Netherite</option>
-                </select>
-            </div>
-
-            <button onclick="convertCurrency()" class="convert-button">Convert</button>
-        </div>
-
-        <div class="result">
-            <h3>Conversion Result:</h3>
-            <h1 id="result"></h1>
-        </div>
-    </div>
-</section>
-
-<section class="how to use">
-    <div class="bd-grid">
-        <h2 class="section-title">How to use?</h2>
-        <div class="how-to-use">
-            <h4>Step 1: Choose the Conversion Direction</h4>
-            <p>1. Convert from: Use the first dropdown menu labeled "Convert from" to select the currency you want to convert from. Options include Gold Ingot, Iron, Emerald, Diamond, Netherite, and TL$ (TL$ stands for The LoL Dollar).</p>
-            <p>2. Amount: Enter the amount of the selected currency you want to convert in the "Amount" input field.</p>
-
-            <h4>Step 2: Choose the Target Currency</h4>
-            <p>1. Convert to: Use the second dropdown menu labeled "Convert to" to select the currency you want to convert to. Again, the options include Gold Ingot, Iron, Emerald, Diamond, Netherite, and TL$.</p>
-
-            <h4>Step 3: Perform the Conversion</h4>
-            <p>1. After selecting the source currency, entering the amount, and choosing the target currency, click the "Convert" button. The webpage will display the converted amount in the selected target currency.</p>
-
-            <h4>Example Scenario:</h4>
-            <p>• If you want to convert 10 Gold Ingots to TL$, you would select "Gold Ingot" in the "Convert from" menu, enter "10" in the "Amount" field, select "TL$" in the "Convert to" menu, and then click "Convert." The result will show you how many TL$ you get for 10 Gold Ingots.</p>
-
-            <h4>Notes:</h4>
-            <p>• The conversion rates are predefined: 1 Gold Ingots = 5 TL$, 1 Iron Ingots = 0 TL$, 1 Emeralds = 10 TL$, 1 Diamonds = 30 TL$, 1 Netherite Ingots = 50 TL$.</p>
-            <p>• The "TL$" currency can also be converted back to any of the Minecraft currencies using the same process.</p>
-
-            <h4>Step 4: Additional Features</h4>
-            <p>1. If you want to switch the direction of the conversion (e.g., convert from TL$ to Gold Ingot), you can use the dropdown menus to choose the desired conversion direction.</p>
-
-            <h4>Step 5: Explore Other Sections</h4>
-            <p>Feel free to explore other sections of the webpage, such as downloading texture packs or accessing additional information about our Minecraft server.</p>
-</section>
-
-    <!--===== DONATE BUTTON =====-->
-    <section class="donate section">
-        <h2 class="section-title">Donate</h2>
-        <p>If you are happy with this site, consider supporting us through a donation!</p>
-        <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
-    </section>
-
-    <!--===== FOOTER =====-->
+    <!-- Footer -->
     <footer class="footer">
-        <p class="footer__title">The Legend Of Legiona</p>
-        <div class="footer__social">
-            <!-- Add your social media links here -->
-        </div>
-        <p>&#169; 2024 Copyright All Right Reserved</p>
+        <h2 class="footer__title">Currency Converter</h2>
+        <p>Convert your currency with ease</p>
     </footer>
 
-    <!--===== MAIN JS =====-->
-    <script src="assets/js/main.js"></script>
-
-    <!--===== JS FOR CURRENCY CONVERTER =====-->
-    <script>
-    // Add this function to your existing <script> or in a separate script file
-    function convertCurrency() {
-        var fromCurrency = document.getElementById("fromCurrency").value;
-        var toCurrency = document.getElementById("toCurrency").value;
-        var amount = parseFloat(document.getElementById("amount").value);
-
-        var conversionRates = {
-            gold: 5,
-            iron: 0,
-            emerald: 10,
-            diamond: 30,
-            netherite: 50,
-            TL$: 1,
-        };
-
-        var result = (amount * conversionRates[fromCurrency]) / conversionRates[toCurrency];
-
-        // Display result
-        document.getElementById("result").innerHTML = result + " " + toCurrency;
-    }
-
-    </script>
+    <script src="/thelol/finance/script.js"></script>
 </body>
 </html>
