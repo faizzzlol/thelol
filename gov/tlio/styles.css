@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(to right, #fff 50%, #000 50%);
+    background: linear-gradient(to right, #000 50%, #000 50%);
     color: #fff;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -89,7 +89,7 @@ nav a {
 
 section#content {
     padding: 40px 0;
-    background: linear-gradient(to right, #fff 50%, #000 50%);
+    background: linear-gradient(to right, #000 50%, #000 50%);
 }
 
 h2 {
