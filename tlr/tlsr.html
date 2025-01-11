@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TLSRL: The LoL-Spawn Railway Link - Seamlessly connecting cities in The LoL Nation.">
-    <meta name="keywords" content="TLSRL, The LoL-Spawn Railway Link, Train Service, Connectivity, LoL Nation">
-    <meta name="author" content="TLSRL">
+    <meta name="description" content="TLSRL - Bridging Cities with Modern Railways.">
     <title>TLSRL | Bridging Cities, Uniting People</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="TLSRL_LOGO.png" type="image/png">
     <script src="scripts.js" defer></script>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo" style="display: flex; align-items: center;">
-            <img src="TLSRL_LOGO.png" alt="TLSRL Logo" style="width: 50px; height: auto; margin-right: 10px;">
-            <h1 style="font-size: 1.5rem;">TLSRL</h1>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="TLSRL_Logo.png" alt="TLSRL Logo">
         </div>
         <nav>
             <ul>
@@ -32,52 +29,48 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>Efficient Intercity Connectivity at Your Fingertips</h2>
+        <div class="hero-overlay">
+            <h1>Efficient Intercity Connectivity at Your Fingertips</h1>
             <p>Experience unparalleled convenience and reliability with TLSRL.</p>
             <div class="cta-buttons">
-                <a href="#ticketing" class="btn">Book Tickets</a>
-                <a href="#routes" class="btn">Explore Routes</a>
+                <a href="#ticketing" class="btn primary">Book Tickets</a>
+                <a href="#routes" class="btn secondary">Explore Routes</a>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <h2>Why Choose TLSRL?</h2>
-        <div class="feature-grid">
-            <div class="feature">
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>About TLSRL</h2>
+        <p>TLSRL is the backbone of intercity transportation within The LoL Nation, offering seamless connectivity and modern rail solutions.</p>
+        <p>As part of PaizCorp, TLSRL prioritises safety, efficiency, and customer satisfaction.</p>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-grid">
+            <div class="service">
                 <h3>Modern Trains</h3>
                 <p>State-of-the-art trains ensuring comfort and speed.</p>
             </div>
-            <div class="feature">
-                <h3>Reliable Service</h3>
-                <p>Timely departures and arrivals across all destinations.</p>
+            <div class="service">
+                <h3>Comprehensive Network</h3>
+                <p>Extensive routes connecting all major cities.</p>
             </div>
-            <div class="feature">
-                <h3>Eco-Friendly</h3>
-                <p>Sustainable travel reducing your carbon footprint.</p>
-            </div>
-            <div class="feature">
-                <h3>Affordable</h3>
-                <p>Competitive pricing for all your travel needs.</p>
+            <div class="service">
+                <h3>High-Speed Travel</h3>
+                <p>Swift and efficient travel for intercity journeys.</p>
             </div>
         </div>
     </section>
 
-    <!-- About Us Section -->
-    <section id="about" class="about">
-        <h2>About TLSRL</h2>
-        <p>TLSRL, an integral part of TL Railways, connects major cities within The LoL Nation. We prioritise safety, efficiency, and exceptional service quality for our passengers.</p>
-        <p>Our mission is to provide seamless intercity travel while fostering economic and social connectivity.</p>
-    </section>
-
-    <!-- Routes & Schedule Section -->
+    <!-- Routes Section -->
     <section id="routes" class="routes">
-        <h2>Network Routes & Timetable</h2>
-        <p>Explore our extensive network connecting key urban centres:</p>
+        <h2>Routes & Schedule</h2>
+        <p>Explore our extensive network and plan your journey with ease.</p>
         <div id="map-container">
-            <!-- Placeholder for an interactive map -->
+            <!-- Interactive map placeholder -->
         </div>
     </section>
 
@@ -86,41 +79,41 @@
         <h2>Book Your Tickets</h2>
         <form id="booking-form">
             <label for="from">Origin:</label>
-            <input type="text" id="from" name="from" required>
+            <input type="text" id="from" name="from" placeholder="Enter your starting point" required>
 
             <label for="to">Destination:</label>
-            <input type="text" id="to" name="to" required>
+            <input type="text" id="to" name="to" placeholder="Enter your destination" required>
 
-            <label for="date">Date of Travel:</label>
+            <label for="date">Travel Date:</label>
             <input type="date" id="date" name="date" required>
 
-            <label for="passengers">Number of Passengers:</label>
+            <label for="passengers">Passengers:</label>
             <input type="number" id="passengers" name="passengers" min="1" required>
 
-            <button type="submit">Confirm Booking</button>
+            <button type="submit" class="btn primary">Confirm Booking</button>
         </form>
     </section>
 
     <!-- Support Section -->
     <section id="support" class="support">
         <h2>Customer Support</h2>
-        <p>Need assistance? We are here to help you with your travel needs.</p>
+        <p>Need help? Contact our support team for assistance.</p>
         <form id="support-form">
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required>
 
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Your email address" required>
 
             <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
+            <textarea id="message" name="message" placeholder="How can we help you?" required></textarea>
 
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn secondary">Submit</button>
         </form>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <p>&copy; 2025 TLSRL. All Rights Reserved.</p>
         <div class="social-links">
             <a href="#">Facebook</a>
