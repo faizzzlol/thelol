@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Legend Of Legiona</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    :root {
+      --primary-color: #5a00e0;
+      --accent-color: #00e0ff;
+      --text-color: #333;
+      --bg-color: #f8f8fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    header {
+      background-color: white;
+      border-bottom: 2px solid #eee;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #5a00e0, #00e0ff);
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero iframe {
+      margin: 2rem auto;
+      width: 90%;
+      max-width: 900px;
+      height: 450px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    .cta {
+      margin-top: 1.5rem;
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      background-color: white;
+      color: var(--primary-color);
+      font-weight: bold;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .card h3 {
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .card p {
+      line-height: 1.6;
+    }
+
+    .downloads a {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .social-icons {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .social-icons a {
+      margin: 0 1rem;
+      font-size: 1.8rem;
+      color: var(--primary-color);
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    footer a {
+      color: #00e0ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 Header -->
+  <header>
+    <div class="logo">The LoL</div>
+    <nav>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#join">Join</a></li>
+        <li><a href="#packs">Packs</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 🎬 Hero -->
+  <section class="hero" id="hero">
+    <h1>The Legend Of Legiona</h1>
+    <iframe src="https://www.youtube.com/embed/drnxdd0ocxU?autoplay=1&mute=0" allowfullscreen></iframe>
+    <a href="#about" class="cta">Learn More</a>
+  </section>
+
+  <!-- 🤝 Join Section -->
+  <section class="section" id="join">
+    <h2>Join Our Discord</h2>
+    <div class="card-grid">
+      <div class="card">
+        <iframe src="https://discord.com/widget?id=907898025211469884&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0"></iframe>
+      </div>
+      <div class="card">
+        <h3>Why Join?</h3>
+        <p>✅ Connect with community<br>✅ Get help & support<br>✅ Join giveaways & contests<br>✅ Share your ideas & creations<br>✅ Meet the devs!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📦 Packs Section -->
+  <section class="section" id="packs">
+    <h2>Texture Packs</h2>
+    <div class="card downloads">
+      <h3>The LoL Pack Downloads</h3>
+      <a href="/thelol">v2.0.0 - Coming Soon</a>
+      <a href="https://github.com/faizzzlol/thelolpack/raw/main/The%20LoL%20Pack%20%5Bv1.0.0%20ALPHA%5D.mcpack">v1.0.0 - ALPHA</a>
+      <a href="/thelol/download-tlolpack">More versions...</a>
+    </div>
+  </section>
+
+  <!-- 🌍 About Section -->
+  <section class="section" id="about">
+    <h2>About The LoL</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Our Story</h3>
+        <p>The Legend of Legiona is a community-driven experience with creativity, fun, and exploration at its core.</p>
+      </div>
+      <div class="card">
+        <img src="/thelol/assets/tlolWasFounded.png" style="width:100%; border-radius: 8px;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 📬 Contact -->
+  <section class="section" id="contact">
+    <h2>Contact Us</h2>
+    <div class="card">
+      <p>Email us at <a href="mailto:thelegendoflegiona@gmail.com">thelegendoflegiona@gmail.com</a></p>
+      <p>or give us feedback <a href="/feedback">here</a>.</p>
+    </div>
+    <div class="social-icons">
+      <a href="https://discord.gg/FsxXBpUZ5A"><i class='bx bxl-discord'></i></a>
+      <a href="https://github.com/faizzzlol"><i class='bx bxl-github'></i></a>
+      <a href="https://twitter.com/tlol_gg"><i class='bx bxl-twitter'></i></a>
+    </div>
+  </section>
+
+  <!-- ⚙️ Footer -->
+  <footer>
+    <p>&copy; 2025 The Legend Of Legiona. All rights reserved.</p>
+    <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
+  </footer>
+
+</body>
+</html>
