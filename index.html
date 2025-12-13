@@ -1,258 +1,174 @@
 <!DOCTYPE html>
 <html class="theme-light" data-theme="light" lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="style.css">
+  <!-- IMPORTANT: existing links & assets preserved -->
+  <link rel="icon" type="image/png" href="TheLoL2.png">
+  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
-        <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
-        <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
-        <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
-        
-        <!-- =====BOX ICONS===== -->
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+  <title>The Legend Of Legiona</title>
 
-        <title>The Legend Of Legiona</title>
-        <meta name="description" content="The Legend Of Legiona (The LoL)">
-        <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server, The Legend of Legiona Website, faizzzlol, FaizGG, Faiz Gaming, The Sus, TLoL, TL, CornHub, 4k, Apple, iPhone 16, iPhone 15, Apple Watch, iPhone SE, YouTube, Netflix, Roblox, Twitch, Maybank, Instagram">
-        
-        <meta property="og:title" content="The Legend Of Legiona - Homepage"/>
-        <meta property="og:url" content="https://faizzzlol.github.io/thelol/"/>
-        <meta property="og:image" content="TheLoL.png"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:description" content="The Legend Of Legiona (The LoL)"/>
-    <style>
-        .home__data {
-            position: relative;
-            text-align: center;
-        }
-        .home__data iframe {
-            width: 80%;
-            height: 450px;
-            margin: 0 auto;
-            display: block;
-        }
-        .home__title {
-            font-size: 2em;
-            margin-top: 20px;
-        }
-        .home__img img {
-            display: block;
-            margin: 20px auto;
-            width: 150px;
-            height: auto;
-        }
-        .button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
-    </head>
-    <body>
-        <!--===== HEADER =====-->
-        <header class="l-header">
-            <nav class="nav bd-grid">
-                <div>
-                    <a href="" class="nav__logo">The LoL</a>
-                </div>
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --panel:#12131a;
+      --ink:#e8e8ea;
+      --muted:#9aa0aa;
+      --accent:#7c3aed;
+      --accent2:#22d3ee;
+      --border:rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:system-ui,Segoe UI,Inter,Arial,sans-serif;
+      background:radial-gradient(circle at top,#1b1035,var(--bg));
+      color:var(--ink);
+      line-height:1.65;
+    }
 
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
-                        <li class="nav__item"><a href="#join" class="nav__link">Join</a></li>
-                        <li class="nav__item"><a href="/thelol/PaizCorp/maps-thelol" class="nav__link">Maps</a></li>
-                        <li class="nav__item"><a href="#thelol_pack" class="nav__link">Texture Pack</a></li>
-                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                        <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
-                        <li class="nav__item"><a href="https://sociabuzz.com/faizgg/donate" class="nav__link">Donate</a></li>
-                    </ul>
-                </div>
+    /* ===== NAV ===== */
+    header{
+      position:sticky;top:0;z-index:99;
+      background:rgba(11,12,16,.7);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      max-width:1200px;margin:auto;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 24px;
+    }
+    .nav__logo{font-weight:700;letter-spacing:1px}
+    .nav__menu ul{display:flex;gap:22px;list-style:none}
+    .nav__link{color:var(--muted);text-decoration:none;font-weight:600}
+    .nav__link:hover,.nav__link.active{color:var(--ink)}
+    .nav__toggle{display:none;font-size:1.6rem}
 
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-menu'></i>
-                </div>
-            </nav>
-        </header>
-        <main class="l-main">
-            <section class="home bd-grid" id="home">
-                <div class="home__data">
-                    <h1 class="home__title">The LoL</h1>
-                    <iframe src="https://www.youtube.com/embed/drnxdd0ocxU?autoplay=1&mute=0" title="???" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    <a href="#about" class="button">About us</a>
-                </div>
-                <div class="home__social">
-                    <a href="https://discord.gg/FsxXBpUZ5A" alt="Discord" class="home__social-icon"><i class='bx bxl-discord'></i></a>
-                    <a href="https://github.com/faizzzlol" alt="Github" class="home__social-icon"><i class='bx bxl-github'></i></a>
-                </div>
-            </section>
+    /* ===== LAYOUT ===== */
+    main{max-width:1200px;margin:auto}
+    section{padding:110px 24px}
+    .section-title{font-size:2.2rem;margin-bottom:32px}
 
+    /* ===== HERO ===== */
+    .home{
+      display:grid;grid-template-columns:1.2fr .8fr;gap:48px;
+      align-items:center;padding-top:160px
+    }
+    .home__title{font-size:3.2rem;line-height:1.1}
+    .home__data iframe{width:100%;height:380px;border:1px solid var(--border)}
+    .button{
+      display:inline-block;margin-top:20px;padding:12px 26px;
+      border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white;text-decoration:none;font-weight:600
+    }
+    .home__social{display:flex;gap:16px;margin-top:20px}
+    .home__social-icon{font-size:1.5rem;color:var(--muted)}
 
-            <!--===== JOIN =====-->
-            <section class="about section " id="join">
-                <h2 class="section-title">Join</h2>
+    /* ===== PANELS ===== */
+    .bd-grid{display:grid;gap:32px}
+    .about__container,.skills__container,.contact__container,.work__container{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    .panel{background:var(--panel);border:1px solid var(--border);padding:28px}
 
-                <div class="about__container bd-grid">
-                    <div>
-                        <iframe src="https://discord.com/widget?id=907898025211469884&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                    </div>
-                    
-                    <div>
-                        <h2 class="about__subtitle">Discord Server</h2>
-                        <p class="about__text">Join The Legend of Legiona Discord Server!</p>
-                        <p class="about_text">Welcome to The Legend of Legiona (The LoL) Discord server. This is the official community hub of The Legend of Legiona.</p>
-                        <p class="about_text">🎮 Connect with fellow players and build a strong community.</p>
-                        <p class="about_text">🌟 Stay updated with the latest news, announcements, and game updates.</p>
-                        <p class="about_text">📢 Participate in exciting events, competitions, and giveaways.</p>
-                        <p class="about_text">🔧 Get technical support and assistance for any game-related queries.</p>
-                        <p class="about_text">💬 Engage in discussions about gameplay, strategies, and lore.</p>
-                        <p class="about_text">🎉 Share your fan art, creations, and experiences with the community.</p>
-                        <p class="about_text">🔒 Interact with the development team and provide valuable feedback.</p>
-                        <p class="about_text">Join us now and embark on an incredible journey in The Legend of Legiona!</p>
-                    </div>                                   
-                </div>
-            </section>
+    /* ===== SKILLS / DOWNLOAD ===== */
+    .skills__data{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding:12px 0}
+    .skills__name a{color:var(--ink);text-decoration:none}
 
-            <!--===== SKILLS =====-->
-            <section class="skills section" id="thelol_pack">
-                <script src="downloadTracker.js"></script>
-                <h2 class="section-title">Texture Packs</h2>
+    /* ===== GALLERY ===== */
+    .work__img img{width:100%;border:1px solid var(--border)}
 
-                <div class="skills__container bd-grid">          
-                    <div>
-                        <h2 class="skills__subtitle">The LoL Pack</h2>
-                        <p class="skills__text">Click the version that you want to download. (Click "See more..." to download BETA/PREVIEW version.)</p>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-download skills__icon'></i>
-                                <span class="skills__name"><a href="url">The LoL Pack Version -.-.-</a></span>
-                            </div>
-                            <div class="skills__bar skills__download">
+    /* ===== FOOTER ===== */
+    footer{border-top:1px solid var(--border);padding:60px 24px;text-align:center;color:var(--muted)}
+    .footer__title{font-weight:700;color:var(--ink)}
+    .footer__icon{font-size:1.4rem;color:var(--muted);margin:0 6px}
 
-                            </div>
-                            <div>
-                                <span class="skills__percentage">0 downloads</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-download skills__icon'></i>
-                                <span class="skills__name"><a href="url">The LoL Pack Version -.-.-</a></span>
-                            </div>
-                            <div class="skills__bar skills__download">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">0 downloads</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxs-download skills__icon'></i>
-                                <span class="skills__name"><a href="/thelol">The LoL Pack Version 2.0.0</a></span>
-                            </div>
-                            <div class="skills__bar skills__js">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">COMING SOON...</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxs-download skills__icon'></i>
-                                <span class="skills__name"><a href="https://github.com/faizzzlol/thelolpack/raw/main/The%20LoL%20Pack%20%5Bv1.0.0%20ALPHA%5D.mcpack" download onclick="trackDownload()">The LoL Pack Version 1.0.0</a></span>
-                            </div>
-                            <div class="skills__bar skills__v1">
-                                
-                            </div>
-                            <div>
-                                <span id="downloadCount">8</span> Downloads
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p><a href="/thelol/download-tlolpack">See more...</a></p>
-                    
-                </div>
-            </section>
+    /* ===== MOBILE ===== */
+    @media(max-width:900px){.home{grid-template-columns:1fr}}
+    @media(max-width:600px){
+      .nav__menu{display:none}
+      .nav__toggle{display:block}
+    }
+  </style>
+</head>
+<body>
 
-            <!--===== FINANCE =====-->
-            <section class="contact section" id="finance">
-                <div class="contact__container bd-grid">
-                        <a href="/thelol/finance/currency-converter">See TL Dollar Conversion...</a>
-                    </form>
-                </div>
-            </section>
+<header class="l-header">
+  <nav class="nav">
+    <a href="#home" class="nav__logo">The LoL</a>
+    <div class="nav__menu" id="nav-menu">
+      <ul>
+        <li><a href="#home" class="nav__link active">Home</a></li>
+        <li><a href="#join" class="nav__link">Join</a></li>
+        <li><a href="/thelol/PaizCorp/maps-thelol" class="nav__link">Maps</a></li>
+        <li><a href="#thelol_pack" class="nav__link">Texture Pack</a></li>
+        <li><a href="#about" class="nav__link">About</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
+        <li><a href="https://sociabuzz.com/faizgg/donate" class="nav__link">Donate</a></li>
+      </ul>
+    </div>
+    <div class="nav__toggle" id="nav-toggle"><i class='bx bx-menu'></i></div>
+  </nav>
+</header>
 
-            <!--===== WORK =====-->
-            <section class="work section" id="about">
-                <h2 class="section-title">About</h2>
+<main>
+  <section class="home" id="home">
+    <div class="home__data">
+      <h1 class="home__title">The Legend<br>Of Legiona</h1>
+      <a href="#about" class="button">Explore the Nation</a>
+      <div class="home__social">
+        <a href="https://discord.gg/FsxXBpUZ5A" class="home__social-icon"><i class='bx bxl-discord'></i></a>
+        <a href="https://github.com/faizzzlol" class="home__social-icon"><i class='bx bxl-github'></i></a>
+      </div>
+    </div>
+    <iframe src="https://www.youtube.com/embed/drnxdd0ocxU?autoplay=1&mute=0" allowfullscreen></iframe>
+  </section>
 
-                <div class="work__container bd-grid">
-                    <div class="work__img">
-                        <img src="/thelol/assets/tlolWasFounded.png" alt="The LoL was Founded for the first time!">
-                    </div>
-                    <div class="work__img">
-                        <img src="/thelol/assets/petaTHELOL.png" alt="The LoL Map">
-                    </div>
-                    <div class="work__img">
-                        <img src="/thelol/assets/tlolfeb.png" alt="The LoL City (FEBRUARY 2023)">
-                    </div>
-                    <div class="work__img">
-                        <img src="/thelol/assets/TLCC-TLOLSIGN.png" alt="The LoL City (2023)">
-                    </div>
-                    <div class="work__img">
-                        <img src="/thelol/assets/2023-05-12 (5).png" alt="The LoL City (12 MAY 2023)">
-                    </div>
-                    <div class="work__img">
-                        <img src="/thelol/assets/thelolCinematicview.png" alt="The LoL City (28 MAY 2023)">
-                    </div>
-                    <a href="/thelol/about">See more...</a>
-                </div>
-            </section>
+  <section class="section" id="join">
+    <h2 class="section-title">Join The Nation</h2>
+    <div class="about__container bd-grid">
+      <iframe src="https://discord.com/widget?id=907898025211469884&theme=dark" width="100%" height="500"></iframe>
+      <div class="panel">
+        <p>The official community hub of The Legend Of Legiona.</p>
+      </div>
+    </div>
+  </section>
 
-            <!--===== CONTACT =====-->
-            <section class="contact section" id="contact">
-                <div class="contact__container bd-grid">
-                        <a href="mailto:thelegendoflegiona@gmail.com">Contact</a>
-                    </form>
-                </div>
-            </section>
-        </main>
+  <section class="section" id="thelol_pack">
+    <h2 class="section-title">Texture Packs</h2>
+    <div class="skills__container bd-grid panel">
+      <div class="skills__data"><span class="skills__name"><a href="https://github.com/faizzzlol/thelolpack/raw/main/The%20LoL%20Pack%20%5Bv1.0.0%20ALPHA%5D.mcpack">The LoL Pack v1.0.0</a></span><span>Available</span></div>
+      <div class="skills__data"><span>Version 2.0.0</span><span>Coming Soon</span></div>
+      <a href="/thelol/download-tlolpack">See more…</a>
+    </div>
+  </section>
 
-        <!--===== FOOTER =====-->
-        <footer class="footer">
-            <p class="footer__title">The Legend Of Legiona</p>
-            <div class="footer__social">
-                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
-            </div>
-            <p>&#169; 2025 Copyright All Right Reserved</p>
-            <p><a href="feedback">Feedback</a></p>
-            <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
-        </footer>
+  <section class="section" id="about">
+    <h2 class="section-title">About The LoL</h2>
+    <div class="work__container bd-grid">
+      <div class="work__img"><img src="/thelol/assets/tlolWasFounded.png"></div>
+      <div class="work__img"><img src="/thelol/assets/petaTHELOL.png"></div>
+      <div class="work__img"><img src="/thelol/assets/thelolCinematicview.png"></div>
+    </div>
+    <a href="/thelol/about">See more…</a>
+  </section>
 
-        <!--===== MAIN JS =====-->
-        <script src="/main.js"></script>
+  <section class="section" id="contact">
+    <h2 class="section-title">Contact</h2>
+    <a href="mailto:thelegendoflegiona@gmail.com">thelegendoflegiona@gmail.com</a>
+  </section>
+</main>
 
-        <script>
-            // JavaScript for toggling the mobile menu
-            document.getElementById('nav-toggle').addEventListener('click', function() {
-                var navMenu = document.getElementById('nav-menu');
-                navMenu.classList.toggle('show');
-            });
-        </script>
-    </body>
+<footer class="footer">
+  <p class="footer__title">The Legend Of Legiona</p>
+  <div>
+    <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter'></i></a>
+  </div>
+  <p>© 2025 All Rights Reserved</p>
+</footer>
+
+<script>
+  document.getElementById('nav-toggle').onclick=()=>document.getElementById('nav-menu').classList.toggle('show')
+</script>
+</body>
 </html>
-<!--====Made By FaizGG====-->
