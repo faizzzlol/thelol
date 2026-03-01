@@ -1,22 +1,338 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Minecraft World Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Minecraft Nation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        #map {
-            height: 600px;
+        /* CSS Variables for Light/Dark Mode */
+        :root {
+            --bg-color: #f4f4f5;
+            --text-color: #18181b;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #09090b;
+            --text-color: #fafafa;
+            --accent-color: #3b82f6;
+            --accent-hover: #60a5fa;
+            --card-bg: #18181b;
+            --nav-bg: rgba(9, 9, 11, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .settings-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Trailer Section */
+        .trailer-section {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .trailer-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .video-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Settings Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            width: 100%;
+            margin-top: 1rem;
+            background-color: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* In a real app, add a hamburger menu here */
+            }
         }
     </style>
 </head>
 <body>
 
-<div id="map"></div>
+    <nav>
+        <div class="logo">NATION.</div>
+        <div class="nav-links">
+            <a href="#" class="track-action" data-action="Viewed Home">Home</a>
+            <a href="#trailer" class="track-action" data-action="Viewed Trailer">Trailer</a>
+            <a href="#" class="track-action" data-action="Viewed Map">Map</a>
+            <button class="settings-btn" id="openSettings">⚙️</button>
+        </div>
+    </nav>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="app.js"></script>
+    <header class="hero">
+        <h1>Forge Your<br>Legacy</h1>
+        <p>Join the most advanced and dynamic Minecraft nation. Build, trade, conquer, and shape the world.</p>
+        <a href="#trailer" class="btn track-action" data-action="Clicked Watch Trailer">Watch Trailer</a>
+    </header>
 
+    <section id="trailer" class="trailer-section">
+        <h2>Nation Introduction</h2>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h3>Preferences</h3>
+            
+            <div class="setting-item">
+                <span>Dark Mode</span>
+                <input type="checkbox" id="themeToggle">
+            </div>
+
+            <div class="setting-item">
+                <span>Last Action:</span>
+                <span id="lastActionDisplay" style="font-size: 0.8rem; opacity: 0.7;">None</span>
+            </div>
+
+            <button class="btn" id="clearDataBtn" style="width: 100%; background-color: #ef4444;">Clear My Data</button>
+            <button class="btn close-modal" id="closeSettings">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const htmlElement = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const settingsModal = document.getElementById('settingsModal');
+        const openSettingsBtn = document.getElementById('openSettings');
+        const closeSettingsBtn = document.getElementById('closeSettings');
+        const clearDataBtn = document.getElementById('clearDataBtn');
+        const lastActionDisplay = document.getElementById('lastActionDisplay');
+        const trackableElements = document.querySelectorAll('.track-action');
+
+        // 1. Initialize Preferences from Local Storage
+        function initPreferences() {
+            // Theme setup (default to dark)
+            const savedTheme = localStorage.getItem('nationTheme') || 'dark';
+            htmlElement.setAttribute('data-theme', savedTheme);
+            themeToggle.checked = savedTheme === 'dark';
+
+            // Last action setup
+            const lastAction = localStorage.getItem('nationLastAction');
+            if (lastAction) {
+                lastActionDisplay.textContent = lastAction;
+            }
+        }
+
+        // 2. Event Listeners for Settings Modal
+        openSettingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+        });
+
+        // Close modal if clicking outside of it
+        window.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.style.display = 'none';
+            }
+        });
+
+        // 3. Theme Toggle Logic
+        themeToggle.addEventListener('change', (e) => {
+            const newTheme = e.target.checked ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('nationTheme', newTheme);
+            logAction(`Changed theme to ${newTheme}`);
+        });
+
+        // 4. Action Tracking Logic (Remember what user did last)
+        function logAction(actionName) {
+            const timestamp = new Date().toLocaleTimeString();
+            const actionString = `${actionName} at ${timestamp}`;
+            localStorage.setItem('nationLastAction', actionString);
+            lastActionDisplay.textContent = actionString;
+        }
+
+        // Attach tracker to specific buttons/links
+        trackableElements.forEach(el => {
+            el.addEventListener('click', function() {
+                logAction(this.getAttribute('data-action'));
+            });
+        });
+
+        // 5. Clear Data Logic
+        clearDataBtn.addEventListener('click', () => {
+            if(confirm('Are you sure you want to clear your preferences and history?')) {
+                localStorage.removeItem('nationTheme');
+                localStorage.removeItem('nationLastAction');
+                alert('Data cleared. Reloading page...');
+                window.location.reload(); // Reload to reset everything to default
+            }
+        });
+
+        // Run initialization on load
+        initPreferences();
+    </script>
 </body>
 </html>
