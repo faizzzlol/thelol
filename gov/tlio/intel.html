@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISC | The Legend of Legiona</title>
+    <title>ISC PORTAL | The Legend of Legiona</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -25,7 +25,35 @@
             line-height: 1.6;
             background-image: radial-gradient(var(--gold-light) 0.5px, transparent 0.5px);
             background-size: 30px 30px;
+            overflow-x: hidden;
         }
+
+        /* --- LOGIN OVERLAY --- */
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 9999; display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .login-box { text-align: center; max-width: 400px; width: 90%; }
+        .login-box img { height: 100px; margin-bottom: 2rem; }
+        .login-box h2 { font-family: 'Fira Code', monospace; font-size: 0.8rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 1.5rem; }
+        
+        input[type="password"] {
+            width: 100%; padding: 12px; border: 1px solid #eee; background: #fafafa;
+            font-family: 'Fira Code', monospace; text-align: center; outline: none; transition: 0.3s;
+        }
+        input[type="password"]:focus { border-color: var(--gold); background: #fff; }
+        
+        .login-btn { 
+            margin-top: 20px; padding: 10px 30px; border: 1px solid var(--gold); 
+            background: none; color: var(--gold); cursor: pointer; font-family: 'Fira Code', monospace; font-size: 0.7rem;
+            transition: 0.3s;
+        }
+        .login-btn:hover { background: var(--gold); color: #fff; }
+        #error-msg { color: #e74c3c; font-size: 0.7rem; font-family: 'Fira Code', monospace; margin-top: 15px; display: none; }
+
+        /* --- MAIN CONTENT (Hidden by default) --- */
+        #main-content { display: none; }
 
         /* --- Navigation --- */
         header {
@@ -131,107 +159,146 @@
 </head>
 <body>
 
-    <header>
-        <div class="brand">
-            <img src="ISC_LOGO.png" alt="ISC LOGO">
-            <h1>Internal Security Control</h1>
+    <div id="login-overlay">
+        <div class="login-box">
+            <img src="ISC_LOGO.png" alt="ISC Logo">
+            <h2>INTERNAL SECURITY CONTROL<br>AUTHORIZATION REQUIRED</h2>
+            <input type="password" id="passcode" placeholder="ENTER CLEARANCE CODE" onkeypress="handleEnter(event)">
+            <br>
+            <button class="login-btn" onclick="checkCode()">AUTHENTICATE</button>
+            <p id="error-msg">ACCESS DENIED. INVALID CREDENTIALS.</p>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#database">Database</a></li>
-                <li><a href="#personnel">Personnel</a></li>
-            </ul>
-        </nav>
-        <a href="../index.html" class="btn-portal">EXIT TO MAIN_NET</a>
-    </header>
+    </div>
 
-    <main>
-        <section class="hero">
-            <h2>Sovereignty Through Oversight.</h2>
-            <p>Official intelligence branch of <strong>The Legend of Legiona</strong>. We document the past to protect the equality of the future within the Skyxion sectors.</p>
-        </section>
-
-        <div class="grid">
-            
-            <div class="col">
-                <div class="panel" style="margin-bottom: 2rem;">
-                    <div class="panel-header">
-                        <span>[ SYSTEM_CORE ]</span>
-                        <span id="clock">00:00:00</span>
-                    </div>
-                    <div class="status-row"><span>NODE: SKYXION_RAGNAROK</span> <span class="online">CONNECTED</span></div>
-                    <div class="status-row"><span>ISC_ENCRYPTION</span> <span class="online">ACTIVE</span></div>
-                    <div class="status-row"><span>ARCHIVE_SYNC</span> <span class="sync">98.2%</span></div>
-                    <div class="status-row"><span>THREAT_LEVEL</span> <span style="color:var(--accent-blue)">MODERATE</span></div>
-                </div>
-
-                <div class="panel" id="personnel">
-                    <div class="panel-header"><span>[ ACTIVE_OPERATIVES ]</span></div>
-                    <ul class="personnel-list">
-                        <li class="person">
-                            <div class="person-info"><span>Director of Intel</span><small>Oversight & Strategy</small></div>
-                            <div class="clearance">L-5</div>
-                        </li>
-                        <li class="person">
-                            <div class="person-info"><span>Lead Archivist</span><small>Lore Preservation</small></div>
-                            <div class="clearance">L-4</div>
-                        </li>
-                        <li class="person">
-                            <div class="person-info"><span>Field Agent</span><small>Skyxion Reconnaissance</small></div>
-                            <div class="clearance">L-3</div>
-                        </li>
-                        <li class="person">
-                            <div class="person-info"><span>Systems Tech</span><small>Encryption & UI</small></div>
-                            <div class="clearance">L-3</div>
-                        </li>
-                    </ul>
-                </div>
+    <div id="main-content">
+        <header>
+            <div class="brand">
+                <img src="ISC_LOGO.png" alt="ISC LOGO">
+                <h1>Internal Security Control</h1>
             </div>
+            <nav>
+                <ul>
+                    <li><a href="#database">Database</a></li>
+                    <li><a href="#personnel">Personnel</a></li>
+                </ul>
+            </nav>
+            <a href="/thelol/gov/tlio/" class="btn-portal">EXIT TO MAIN_NET</a>
+        </header>
 
-            <div class="col">
-                <div class="panel" id="database">
-                    <div class="panel-header"><span>[ CLASSIFIED_LOGS ]</span></div>
-                    
-                    <div class="log-entry">
-                        <span class="log-id">LOG-001-GEN</span>
-                        <span class="log-title">The Genesis Protocol (Sus Squad)</span>
-                        <p class="log-body">Documentation of the initial unit formation. Established core bonds before the rise of Legiona sovereignty.</p>
+        <main>
+            <section class="hero">
+                <h2>Sovereignty Through Oversight.</h2>
+                <p>Official intelligence branch of <strong>The Legend of Legiona</strong>. We document the past to protect the equality of the future within the Skyxion sectors.</p>
+            </section>
+
+            <div class="grid">
+                
+                <div class="col">
+                    <div class="panel" style="margin-bottom: 2rem;">
+                        <div class="panel-header">
+                            <span>[ SYSTEM_CORE ]</span>
+                            <span id="clock">00:00:00</span>
+                        </div>
+                        <div class="status-row"><span>NODE: SKYXION_RAGNAROK</span> <span class="online">CONNECTED</span></div>
+                        <div class="status-row"><span>ISC_ENCRYPTION</span> <span class="online">ACTIVE</span></div>
+                        <div class="status-row"><span>ARCHIVE_SYNC</span> <span class="sync">98.2%</span></div>
+                        <div class="status-row"><span>THREAT_LEVEL</span> <span style="color:var(--accent-blue)">MODERATE</span></div>
                     </div>
 
-                    <div class="log-entry">
-                        <span class="log-id">LOG-014-RST</span>
-                        <span class="log-title">Operation: Silent Quill</span>
-                        <p class="log-body">Record of the covert rebellion against authoritarian overreach. Utilized Book & Quill assets for undetected data relay.</p>
+                    <div class="panel" id="personnel">
+                        <div class="panel-header"><span>[ ACTIVE_OPERATIVES ]</span></div>
+                        <ul class="personnel-list">
+                            <li class="person">
+                                <div class="person-info"><span>Director of Intel</span><small>Oversight & Strategy</small></div>
+                                <div class="clearance">L-5</div>
+                            </li>
+                            <li class="person">
+                                <div class="person-info"><span>Lead Archivist</span><small>Lore Preservation</small></div>
+                                <div class="clearance">L-4</div>
+                            </li>
+                            <li class="person">
+                                <div class="person-info"><span>Field Agent</span><small>Skyxion Reconnaissance</small></div>
+                                <div class="clearance">L-3</div>
+                            </li>
+                            <li class="person">
+                                <div class="person-info"><span>Systems Tech</span><small>Encryption & UI</small></div>
+                                <div class="clearance">L-3</div>
+                            </li>
+                        </ul>
                     </div>
-
-                    <div class="log-entry">
-                        <span class="log-id">LOG-022-RBR</span>
-                        <span class="log-title">The Skyxion Rebirth</span>
-                        <p class="log-body">Transition of ISC assets from espionage to infrastructure protection following the fall of the old regime.</p>
-                    </div>
-
-                    <div class="log-entry">
-                        <span class="log-id">LOG-030-EQA</span>
-                        <span class="log-title">Directive: Eternal Equality</span>
-                        <p class="log-body">Current ISC mandate. Monitoring centralized power spikes to ensure the survival of the Egalitarian Model.</p>
-                    </div>
-
                 </div>
+
+                <div class="col">
+                    <div class="panel" id="database">
+                        <div class="panel-header"><span>[ CLASSIFIED_LOGS ]</span></div>
+                        
+                        <div class="log-entry">
+                            <span class="log-id">LOG-001-GEN</span>
+                            <span class="log-title">The Genesis Protocol (Sus Squad)</span>
+                            <p class="log-body">Documentation of the initial unit formation. Established core bonds before the rise of Legiona sovereignty.</p>
+                        </div>
+
+                        <div class="log-entry">
+                            <span class="log-id">LOG-014-RST</span>
+                            <span class="log-title">Operation: Silent Quill</span>
+                            <p class="log-body">Record of the covert rebellion against authoritarian overreach. Utilized Book & Quill assets for undetected data relay.</p>
+                        </div>
+
+                        <div class="log-entry">
+                            <span class="log-id">LOG-022-RBR</span>
+                            <span class="log-title">The Skyxion Rebirth</span>
+                            <p class="log-body">Transition of ISC assets from espionage to infrastructure protection following the fall of the old regime.</p>
+                        </div>
+
+                        <div class="log-entry">
+                            <span class="log-id">LOG-030-EQA</span>
+                            <span class="log-title">Directive: Eternal Equality</span>
+                            <p class="log-body">Current ISC mandate. Monitoring centralized power spikes to ensure the survival of the Egalitarian Model.</p>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
+        </main>
 
-        </div>
-    </main>
-
-    <footer>
-        &copy; 2026 INTERNAL SECURITY CONTROL | THE LEGEND OF LEGIONA <br>
-        <span style="letter-spacing: 2px;">CONFIDENTIAL // NO DISSEMINATION WITHOUT AUTHORIZATION</span>
-    </footer>
+        <footer>
+            &copy; 2026 INTERNAL SECURITY CONTROL | THE LEGEND OF LEGIONA <br>
+            <span style="letter-spacing: 2px;">CONFIDENTIAL // NO DISSEMINATION WITHOUT AUTHORIZATION</span>
+        </footer>
+    </div>
 
     <script>
+        // Authentication Logic
+        function checkCode() {
+            const input = document.getElementById('passcode').value;
+            const error = document.getElementById('error-msg');
+            const overlay = document.getElementById('login-overlay');
+            const content = document.getElementById('main-content');
+
+            // Passcode check
+            if (input.toUpperCase() === "LEGIONA2026") {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    content.style.display = 'block';
+                }, 500);
+            } else {
+                error.style.display = 'block';
+                document.getElementById('passcode').value = '';
+            }
+        }
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') checkCode();
+        }
+
+        // Live Clock
         function updateClock() {
             const now = new Date();
             const time = now.toLocaleTimeString('en-US', { hour12: false });
-            document.getElementById('clock').textContent = time + " UTC";
+            const clockEl = document.getElementById('clock');
+            if (clockEl) clockEl.textContent = time + " UTC";
         }
         setInterval(updateClock, 1000);
         updateClock();
