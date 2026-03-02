@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISC | The Legend of Legiona</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c6a664; 
+            --gold-light: #e8dcc4;
+            --bg-color: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --accent-blue: #3498db; 
+            --border-val: 1px solid #eee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            background-image: radial-gradient(var(--gold-light) 0.5px, transparent 0.5px);
+            background-size: 30px 30px;
+        }
+
+        /* --- Navigation --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 3px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand img { height: 50px; width: auto; }
+        .brand h1 { font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+
+        nav ul { display: flex; list-style: none; gap: 25px; }
+        nav a { 
+            text-decoration: none; color: var(--text-main); 
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase; 
+            letter-spacing: 1px; transition: 0.3s;
+        }
+        nav a:hover { color: var(--gold); }
+
+        .btn-portal {
+            border: 1px solid var(--gold);
+            padding: 6px 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: var(--gold);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .btn-portal:hover { background: var(--gold); color: white; }
+
+        /* --- Main Layout --- */
+        main { max-width: 1100px; margin: 3rem auto; padding: 0 20px; }
+
+        .hero { text-align: left; margin-bottom: 4rem; border-left: 4px solid var(--gold); padding-left: 20px; }
+        .hero h2 { font-size: 2.2rem; font-weight: 300; margin-bottom: 0.5rem; }
+        .hero p { color: var(--text-muted); font-size: 1rem; max-width: 700px; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+        .panel {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .panel-header {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- Database Styling --- */
+        .log-entry { margin-bottom: 1.5rem; }
+        .log-id { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--gold); display: block; }
+        .log-title { font-weight: 600; font-size: 0.95rem; display: block; margin: 2px 0; }
+        .log-body { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* --- Personnel Styling --- */
+        .personnel-list { list-style: none; }
+        .person { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 10px 0; border-bottom: 1px solid #f9f9f9;
+        }
+        .person-info span { display: block; font-size: 0.9rem; font-weight: 600; }
+        .person-info small { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; }
+        .clearance { 
+            font-family: 'Fira Code', monospace; font-size: 0.7rem; 
+            background: #f4f4f4; padding: 2px 8px; border-radius: 3px;
+        }
+
+        /* --- System Status --- */
+        .status-row { display: flex; justify-content: space-between; font-family: 'Fira Code', monospace; font-size: 0.8rem; margin-bottom: 10px; }
+        .online { color: #27ae60; font-weight: bold; }
+        .sync { color: #f39c12; }
+
+        footer {
+            margin-top: 5rem;
+            padding: 2rem;
+            text-align: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: #999;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 850px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <img src="ISC_LOGO.png" alt="ISC LOGO">
+            <h1>Internal Security Control</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#database">Database</a></li>
+                <li><a href="#personnel">Personnel</a></li>
+            </ul>
+        </nav>
+        <a href="../index.html" class="btn-portal">EXIT TO MAIN_NET</a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Sovereignty Through Oversight.</h2>
+            <p>Official intelligence branch of <strong>The Legend of Legiona</strong>. We document the past to protect the equality of the future within the Skyxion sectors.</p>
+        </section>
+
+        <div class="grid">
+            
+            <div class="col">
+                <div class="panel" style="margin-bottom: 2rem;">
+                    <div class="panel-header">
+                        <span>[ SYSTEM_CORE ]</span>
+                        <span id="clock">00:00:00</span>
+                    </div>
+                    <div class="status-row"><span>NODE: SKYXION_RAGNAROK</span> <span class="online">CONNECTED</span></div>
+                    <div class="status-row"><span>ISC_ENCRYPTION</span> <span class="online">ACTIVE</span></div>
+                    <div class="status-row"><span>ARCHIVE_SYNC</span> <span class="sync">98.2%</span></div>
+                    <div class="status-row"><span>THREAT_LEVEL</span> <span style="color:var(--accent-blue)">MODERATE</span></div>
+                </div>
+
+                <div class="panel" id="personnel">
+                    <div class="panel-header"><span>[ ACTIVE_OPERATIVES ]</span></div>
+                    <ul class="personnel-list">
+                        <li class="person">
+                            <div class="person-info"><span>Director of Intel</span><small>Oversight & Strategy</small></div>
+                            <div class="clearance">L-5</div>
+                        </li>
+                        <li class="person">
+                            <div class="person-info"><span>Lead Archivist</span><small>Lore Preservation</small></div>
+                            <div class="clearance">L-4</div>
+                        </li>
+                        <li class="person">
+                            <div class="person-info"><span>Field Agent</span><small>Skyxion Reconnaissance</small></div>
+                            <div class="clearance">L-3</div>
+                        </li>
+                        <li class="person">
+                            <div class="person-info"><span>Systems Tech</span><small>Encryption & UI</small></div>
+                            <div class="clearance">L-3</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="panel" id="database">
+                    <div class="panel-header"><span>[ CLASSIFIED_LOGS ]</span></div>
+                    
+                    <div class="log-entry">
+                        <span class="log-id">LOG-001-GEN</span>
+                        <span class="log-title">The Genesis Protocol (Sus Squad)</span>
+                        <p class="log-body">Documentation of the initial unit formation. Established core bonds before the rise of Legiona sovereignty.</p>
+                    </div>
+
+                    <div class="log-entry">
+                        <span class="log-id">LOG-014-RST</span>
+                        <span class="log-title">Operation: Silent Quill</span>
+                        <p class="log-body">Record of the covert rebellion against authoritarian overreach. Utilized Book & Quill assets for undetected data relay.</p>
+                    </div>
+
+                    <div class="log-entry">
+                        <span class="log-id">LOG-022-RBR</span>
+                        <span class="log-title">The Skyxion Rebirth</span>
+                        <p class="log-body">Transition of ISC assets from espionage to infrastructure protection following the fall of the old regime.</p>
+                    </div>
+
+                    <div class="log-entry">
+                        <span class="log-id">LOG-030-EQA</span>
+                        <span class="log-title">Directive: Eternal Equality</span>
+                        <p class="log-body">Current ISC mandate. Monitoring centralized power spikes to ensure the survival of the Egalitarian Model.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 INTERNAL SECURITY CONTROL | THE LEGEND OF LEGIONA <br>
+        <span style="letter-spacing: 2px;">CONFIDENTIAL // NO DISSEMINATION WITHOUT AUTHORIZATION</span>
+    </footer>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('clock').textContent = time + " UTC";
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
