@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Access | ISC Public Records</title>
+    <link rel="icon" type="image/png" href="ISC_LOGO.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #c6a664; --text: #1a1a1a; --muted: #666; --light-bg: #fafafa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #fff; color: var(--text); line-height: 1.7; }
+
+        header { 
+            padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #eee; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 100;
+        }
+        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+        .logo-area img { height: 40px; }
+        .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.8rem; font-family: 'Fira Code', monospace; margin-left: 20px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+
+        .page-header { padding: 5rem 5% 3rem; background: var(--light-bg); border-bottom: 1px solid #eee; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .page-header h1 { font-size: 2.5rem; font-weight: 300; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; color: var(--muted); max-width: 700px; }
+
+        section { padding: 4rem 5%; }
+        .section-title { font-family: 'Fira Code', monospace; color: var(--gold); font-size: 0.9rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 15px; }
+        .section-title::after { content: ""; height: 1px; flex: 1; background: #eee; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .doc-box { background: #fff; border: 1px solid #eee; padding: 2rem; position: relative; }
+        .doc-box::before { content: "OFFICIAL_RECORD"; position: absolute; top: 10px; right: 10px; font-size: 0.6rem; font-family: 'Fira Code', monospace; color: #ddd; }
+
+        .citation-text { font-style: italic; border-left: 2px solid var(--gold); padding-left: 15px; color: var(--muted); font-size: 0.95rem; }
+
+        footer { padding: 3rem 5%; background: #1a1a1a; color: #666; font-size: 0.75rem; text-align: center; font-family: 'Fira Code', monospace; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-area">
+            <img src="ISC_LOGO.png" alt="ISC Logo">
+            <h2 style="font-weight: 400; letter-spacing: 2px; font-size: 0.9rem;">ISC</h2>
+        </a>
+        <nav class="nav-links">
+            <a href="index.html">RETURN_HOME</a>
+            <a href="#foundations">FOUNDATIONS</a>
+            <a href="#declassified">DECLASSIFIED</a>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>National Transparency Portal</h1>
+            <p>Archiving the journey from the original <strong>Declaration of Establishment</strong> to the current <strong>Internal Security Control</strong> mandate.</p>
+        </div>
+    </div>
+
+    <section id="foundations">
+        <div class="container">
+            <h3 class="section-title">01 // THE_FOUNDATION</h3>
+            <div class="grid">
+                <div>
+                    <h4>Sovereignty & Unity</h4>
+                    <p>Building upon the original <strong>Declaration of Establishment</strong>, the ISC continues to uphold the core principle that the Legiona is a sovereign entity. As originally decreed, our existence is a "testament to the strength of a united community."</p>
+                    <br>
+                    <p>The ISC remains the primary executor of the mandate to protect our digital and social borders from external destabilization.</p>
+                </div>
+                <div class="doc-box">
+                    <p class="citation-text">"We hereby establish this collective to ensure the longevity of our culture, the safety of our sectors, and the preservation of our history."</p>
+                    <p style="font-size: 0.75rem; margin-top: 15px; font-family: 'Fira Code', monospace;">— Excerpt from the Declaration of Establishment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="declassified" style="background: var(--light-bg);">
+        <div class="container">
+            <h3 class="section-title">02 // THE_EVOLUTION_FROM_TLIO</h3>
+            <div class="grid">
+                <div class="doc-box" style="border-color: #ddd;">
+                    <h4 style="font-family: 'Fira Code', monospace; color: var(--gold); font-size: 0.8rem;">[ ARCHIVE_FILE: TLIO_ABOUT ]</h4>
+                    <br>
+                    <p style="font-size: 0.85rem;">The organization formerly known as <strong>The Legend of Legiona Intelligence Organization (TLIO)</strong> has been integrated into the ISC. While the branding has evolved, the mission of "Lore Preservation and Strategic Oversight" remains unchanged.</p>
+                </div>
+                <div>
+                    <h4>From "Sus Squad" to ISC</h4>
+                    <p>As documented in our heritage records, the transition was sparked by the need for a more robust defense line. What was once a community-led intelligence group (TLIO) has now been reborn as a formal agency to handle the complex threats of the Skyxion era.</p>
+                    <br>
+                    <p><strong>Status:</strong> All previous TLIO documentation is now classified under ISC Jurisdiction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 INTERNAL SECURITY CONTROL // REPLACING TLIO SECTOR 07 <br>
+        HONORING THE ORIGINAL DECLARATION OF ESTABLISHMENT.
+    </footer>
+
+</body>
+</html>
