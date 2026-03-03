@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL OVERRIDE | ISC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #c6a664;
+            font-family: 'Fira Code', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .terminal {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            border: 1px solid #c6a664;
+            background: rgba(198, 166, 100, 0.05);
+            box-shadow: 0 0 20px rgba(198, 166, 100, 0.2);
+        }
+
+        .line {
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.3s forwards;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: #c6a664;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .warning { color: #e74c3c; font-weight: bold; }
+        .success { color: #27ae60; }
+
+        #progress-bar {
+            width: 0%;
+            height: 2px;
+            background: #c6a664;
+            margin-top: 20px;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+        <div id="log"></div>
+        <div id="progress-bar"></div>
+    </div>
+
+    <script>
+        const logs = [
+            { t: "> DETECTING LEGACY ASSETS...", d: 500 },
+            { t: "> TARGET: THE_LEGEND_OF_LEGIONA_INDEX", d: 1000 },
+            { t: "> <span class='warning'>[!] UNAUTHORIZED BRANDING DETECTED</span>", d: 1500 },
+            { t: "> INITIATING RECLASSIFICATION PROTOCOL...", d: 2000 },
+            { t: "> ASSET MAPPING: TLIO -> ISC_CORE", d: 2500 },
+            { t: "> WIPING CACHE... <span class='success'>DONE</span>", d: 3000 },
+            { t: "> ESTABLISHING SECURE HANDOVER...", d: 3500 },
+            { t: "> REDIRECTING TO ISC PORTAL...", d: 4000 }
+        ];
+
+        const logContainer = document.getElementById('log');
+        const progressBar = document.getElementById('progress-bar');
+        
+        // Change this to the actual URL of your new ISC Portal
+        const REDIRECT_URL = "/thelol/gov/isc"; 
+
+        async function runTerminal() {
+            for (let i = 0; i < logs.length; i++) {
+                await new Promise(resolve => setTimeout(resolve, logs[i].d - (i > 0 ? logs[i-1].d : 0)));
+                const div = document.createElement('div');
+                div.className = 'line';
+                div.innerHTML = logs[i].t;
+                logContainer.appendChild(div);
+                
+                // Update progress bar
+                progressBar.style.width = ((i + 1) / logs.length) * 100 + "%";
+            }
+
+            // Final blink before redirect
+            const cursorDiv = document.createElement('div');
+            cursorDiv.innerHTML = "SYSTEM HANDOVER COMPLETE <span class='cursor'></span>";
+            logContainer.appendChild(cursorDiv);
+
+            setTimeout(() => {
+                window.location.href = REDIRECT_URL;
+            }, 1500);
+        }
+
+        runTerminal();
+
+        // Security: Block right-click on intercept page too
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
+</body>
+</html>
