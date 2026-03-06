@@ -5,27 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Public Archive Search | ISC</title>
     <link rel="icon" type="image/png" href="ISC_LOGO.png">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c6a664;
-            --gold-dim: rgba(198,166,100,0.15);
+            --gold-dim: rgba(198,166,100,0.12);
             --gold-glow: rgba(198,166,100,0.06);
-            --text: #0f0f0f;
-            --muted: #777;
-            --faint: #bbb;
-            --bg: #f8f7f5;
-            --card-bg: #ffffff;
-            --border: #e8e5e0;
+            --bg: #0e0d0b;
+            --bg2: #121110;
+            --bg3: #161412;
+            --surface: #1a1815;
+            --border: rgba(198,166,100,0.18);
+            --border-dim: rgba(255,255,255,0.06);
+            --text: #e8e0d0;
+            --text-muted: #7a7060;
+            --text-dim: #3a342c;
+            --red: rgba(139,32,32,0.25);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Barlow', sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Grain */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.6;
         }
 
         /* ── HEADER ── */
@@ -34,8 +53,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fff;
-            border-bottom: 1px solid var(--border);
+            background: rgba(14,13,11,0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dim);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -44,105 +64,118 @@
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             text-decoration: none;
             color: inherit;
         }
 
-        .logo-area img { height: 34px; }
+        .logo-area img { height: 34px; opacity: 0.9; }
 
         .logo-text {
             display: flex;
             flex-direction: column;
-            gap: 1px;
+            gap: 2px;
         }
 
         .logo-text span:first-child {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
             letter-spacing: 3px;
             color: var(--gold);
         }
 
         .logo-text span:last-child {
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            color: #444;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
         }
 
         .back-link {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.68rem;
             color: var(--gold);
             text-decoration: none;
             letter-spacing: 1.5px;
-            padding: 6px 14px;
-            border: 1px solid var(--gold-dim);
-            transition: all 0.2s;
+            padding: 7px 16px;
+            border: 1px solid var(--border);
+            transition: background 0.2s, border-color 0.2s;
         }
 
         .back-link:hover {
             background: var(--gold-dim);
+            border-color: var(--gold);
         }
 
         /* ── HERO ── */
         .hero {
-            padding: 5rem 5% 3rem;
+            padding: 5rem 5% 3.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            background: #fff;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-dim);
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: -60px;
-            left: 50%;
+            top: -80px; left: 50%;
             transform: translateX(-50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(198,166,100,0.08) 0%, transparent 70%);
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(198,166,100,0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(198,166,100,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(198,166,100,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 100% at center, black 0%, transparent 100%);
             pointer-events: none;
         }
 
         .hero-eyebrow {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Fira Code', monospace;
             font-size: 0.65rem;
             letter-spacing: 3px;
             color: var(--gold);
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             opacity: 0;
-            animation: slideUp 0.5s ease 0.1s forwards;
+            animation: fadeUp 0.5s ease 0.1s forwards;
+            position: relative;
         }
 
         .hero h1 {
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 300;
-            letter-spacing: -0.5px;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            font-weight: 400;
             color: var(--text);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             opacity: 0;
-            animation: slideUp 0.5s ease 0.2s forwards;
+            animation: fadeUp 0.5s ease 0.2s forwards;
+            position: relative;
         }
 
         .hero-sub {
-            font-size: 0.85rem;
-            color: var(--muted);
+            font-size: 0.88rem;
+            color: var(--text-muted);
             margin-bottom: 2.5rem;
+            font-weight: 300;
             opacity: 0;
-            animation: slideUp 0.5s ease 0.3s forwards;
+            animation: fadeUp 0.5s ease 0.3s forwards;
+            position: relative;
         }
 
         /* ── SEARCH BAR ── */
         .search-wrapper {
-            max-width: 580px;
+            max-width: 600px;
             margin: 0 auto;
             position: relative;
             opacity: 0;
-            animation: slideUp 0.5s ease 0.4s forwards;
+            animation: fadeUp 0.5s ease 0.4s forwards;
         }
 
         .search-icon {
@@ -150,137 +183,185 @@
             left: 18px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--faint);
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-size: 1rem;
             pointer-events: none;
-            font-family: 'DM Mono', monospace;
+            font-family: 'Fira Code', monospace;
+            z-index: 1;
         }
 
         #archive-search {
             width: 100%;
-            padding: 14px 18px 14px 44px;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.85rem;
-            border: 1px solid var(--border);
-            background: var(--bg);
+            padding: 16px 18px 16px 48px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            border: 1px solid var(--border-dim);
+            background: var(--surface);
             color: var(--text);
             outline: none;
-            transition: border-color 0.25s, box-shadow 0.25s;
+            transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
             letter-spacing: 0.5px;
         }
 
-        #archive-search::placeholder { color: var(--faint); }
+        #archive-search::placeholder { color: var(--text-dim); }
 
         #archive-search:focus {
-            border-color: var(--gold);
-            background: #fff;
-            box-shadow: 0 4px 24px rgba(198,166,100,0.08);
+            border-color: var(--border);
+            background: var(--bg3);
+            box-shadow: 0 0 0 3px rgba(198,166,100,0.05), 0 8px 30px rgba(0,0,0,0.3);
         }
 
         .search-hint {
-            margin-top: 0.75rem;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--faint);
-            letter-spacing: 1px;
+            margin-top: 0.8rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 1.5px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hint-tag {
+            padding: 3px 8px;
+            border: 1px solid var(--border-dim);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .hint-tag:hover {
+            border-color: var(--border);
+            color: var(--gold);
         }
 
         /* ── STATS BAR ── */
         .stats-bar {
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            padding: 1.5rem 5%;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
+            gap: 0;
+            background: var(--bg2);
+            border-bottom: 1px solid var(--border-dim);
         }
 
         .stat-item {
             text-align: center;
+            padding: 1.4rem 3.5rem;
+            border-right: 1px solid var(--border-dim);
         }
 
+        .stat-item:last-child { border-right: none; }
+
         .stat-item .num {
-            font-family: 'DM Mono', monospace;
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.3rem;
+            font-weight: 400;
             color: var(--gold);
+            display: block;
         }
 
         .stat-item .label {
-            font-size: 0.65rem;
-            color: var(--muted);
-            letter-spacing: 1.5px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.58rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 4px;
+            display: block;
         }
 
         /* ── RESULTS ── */
         .results-wrapper {
-            max-width: 860px;
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
             margin: 0 auto;
-            padding: 3rem 5% 5rem;
+            padding: 2.5rem 5% 5rem;
         }
 
         .results-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-dim);
         }
 
         .results-count {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--muted);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.68rem;
+            color: var(--text-muted);
             letter-spacing: 1px;
         }
 
         .results-count span { color: var(--gold); }
 
         /* Category group */
-        .category-group {
-            margin-bottom: 2.5rem;
-        }
+        .category-group { margin-bottom: 2.5rem; }
 
         .category-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.6rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.58rem;
             letter-spacing: 3px;
-            color: var(--faint);
+            color: var(--text-dim);
             text-transform: uppercase;
             margin-bottom: 0.75rem;
-            padding-left: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .category-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-dim);
         }
 
         /* Result card */
         .result-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 1.4rem 1.6rem;
-            margin-bottom: 0.6rem;
+            background: var(--surface);
+            border: 1px solid var(--border-dim);
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 0.5rem;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            align-items: center;
+            gap: 1.5rem;
+            transition: border-color 0.2s, background 0.2s, transform 0.2s;
             cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--gold);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
         }
 
         .result-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 4px 20px rgba(198,166,100,0.07);
-            transform: translateX(3px);
+            border-color: var(--border);
+            background: var(--bg3);
+            transform: translateX(4px);
         }
+
+        .result-card:hover::before { transform: scaleY(1); }
 
         .card-body { flex: 1; }
 
         .card-tag {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.6rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.58rem;
             letter-spacing: 2px;
             color: var(--gold);
+            opacity: 0.7;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
             display: flex;
@@ -291,14 +372,14 @@
         .card-tag::before {
             content: '';
             display: inline-block;
-            width: 6px;
-            height: 6px;
+            width: 5px; height: 5px;
             border-radius: 50%;
             background: var(--gold);
             opacity: 0.6;
         }
 
         .result-card h3 {
+            font-family: 'Barlow', sans-serif;
             font-size: 0.95rem;
             font-weight: 500;
             color: var(--text);
@@ -307,26 +388,24 @@
         }
 
         .result-card p {
-            font-size: 0.8rem;
-            color: var(--muted);
+            font-size: 0.82rem;
+            color: var(--text-muted);
             line-height: 1.6;
+            font-weight: 300;
         }
 
-        .card-action {
-            flex-shrink: 0;
-            align-self: center;
-        }
+        .card-action { flex-shrink: 0; }
 
         .result-link {
             display: inline-block;
-            font-family: 'DM Mono', monospace;
+            font-family: 'Fira Code', monospace;
             font-size: 0.65rem;
             color: var(--gold);
             text-decoration: none;
-            border: 1px solid var(--gold-dim);
-            padding: 6px 12px;
+            border: 1px solid var(--border);
+            padding: 7px 14px;
             letter-spacing: 1px;
-            transition: all 0.2s;
+            transition: background 0.2s, border-color 0.2s;
             white-space: nowrap;
         }
 
@@ -335,7 +414,7 @@
             border-color: var(--gold);
         }
 
-        /* ── EMPTY / NO RESULTS ── */
+        /* ── EMPTY STATE ── */
         #no-results {
             display: none;
             text-align: center;
@@ -343,89 +422,103 @@
         }
 
         #no-results .no-icon {
-            font-family: 'DM Mono', monospace;
-            font-size: 2rem;
-            color: var(--border);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
             margin-bottom: 1rem;
+            border: 1px solid var(--border-dim);
+            display: inline-block;
+            padding: 10px 20px;
         }
 
         #no-results p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--faint);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* ── DEFAULT (pre-search) STATE ── */
+        /* ── DEFAULT STATE ── */
         .pre-search {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 4rem 0;
+            padding: 5rem 0;
             text-align: center;
+            gap: 1.5rem;
         }
 
-        .pre-search .big-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.15;
+        .pre-search-icon {
+            width: 60px; height: 60px;
+            border: 1px solid var(--border-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+        }
+
+        .pre-search-icon-inner {
+            transform: rotate(-45deg);
+            font-size: 1.2rem;
+            opacity: 0.3;
         }
 
         .pre-search p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--faint);
-            letter-spacing: 2px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            letter-spacing: 2.5px;
         }
 
         /* ── ANIMATIONS ── */
-        @keyframes slideUp {
+        @keyframes fadeUp {
             from { opacity: 0; transform: translateY(14px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
         .card-animate {
-            animation: cardIn 0.25s ease both;
+            animation: cardIn 0.2s ease both;
         }
 
         @keyframes cardIn {
-            from { opacity: 0; transform: translateX(-8px); }
+            from { opacity: 0; transform: translateX(-10px); }
             to   { opacity: 1; transform: translateX(0); }
         }
 
         /* ── FOOTER ── */
         footer {
-            border-top: 1px solid var(--border);
-            padding: 1.5rem 5%;
+            border-top: 1px solid var(--border-dim);
+            padding: 1.4rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fff;
+            background: var(--bg);
         }
 
         footer p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--faint);
-            letter-spacing: 1px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 1.5px;
         }
 
         .classification-badge {
-            font-family: 'DM Mono', monospace;
+            font-family: 'Fira Code', monospace;
             font-size: 0.6rem;
             letter-spacing: 2px;
             color: var(--gold);
-            border: 1px solid var(--gold-dim);
-            padding: 3px 10px;
+            border: 1px solid var(--border);
+            padding: 4px 12px;
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 600px) {
-            .stats-bar { gap: 1.5rem; }
-            .result-card { flex-direction: column; }
-            .card-action { align-self: flex-start; }
+        @media (max-width: 640px) {
+            .stats-bar { flex-wrap: wrap; }
+            .stat-item { flex: 1; min-width: 100px; border-right: none; border-bottom: 1px solid var(--border-dim); }
+            .result-card { flex-direction: column; align-items: flex-start; }
             footer { flex-direction: column; gap: 0.75rem; text-align: center; }
         }
     </style>
@@ -444,6 +537,7 @@
     </header>
 
     <div class="hero">
+        <div class="bg-grid"></div>
         <p class="hero-eyebrow">DECLASSIFIED // PUBLIC ACCESS</p>
         <h1>Global Asset Discovery</h1>
         <p class="hero-sub">Search missions, legal documents, and historical intelligence files.</p>
@@ -458,40 +552,50 @@
                 autocomplete="off"
                 spellcheck="false"
             >
-            <p class="search-hint">TRY: "TLIO" · "ATTACK" · "OPERATION" · "LEGAL"</p>
+            <div class="search-hint">
+                <span class="hint-tag" onclick="setQuery('TLIO')">TLIO</span>
+                <span class="hint-tag" onclick="setQuery('ATTACK')">ATTACK</span>
+                <span class="hint-tag" onclick="setQuery('OPERATION')">OPERATION</span>
+                <span class="hint-tag" onclick="setQuery('LEGAL')">LEGAL</span>
+                <span class="hint-tag" onclick="setQuery('HISTORY')">HISTORY</span>
+            </div>
         </div>
     </div>
 
     <div class="stats-bar">
         <div class="stat-item">
-            <div class="num" id="total-count">6</div>
-            <div class="label">Total Assets</div>
+            <span class="num" id="total-count">6</span>
+            <span class="label">Total Assets</span>
         </div>
         <div class="stat-item">
-            <div class="num">4</div>
-            <div class="label">Categories</div>
+            <span class="num">4</span>
+            <span class="label">Categories</span>
         </div>
         <div class="stat-item">
-            <div class="num">2026</div>
-            <div class="label">Archive Year</div>
+            <span class="num">2026</span>
+            <span class="label">Archive Year</span>
         </div>
     </div>
 
     <div class="results-wrapper">
         <div class="results-header">
-            <p class="results-count" id="results-count">ENTER A QUERY TO SEARCH <span id="count-num">6</span> DECLASSIFIED ASSETS</p>
+            <p class="results-count" id="results-count">
+                ENTER A QUERY TO SEARCH <span id="count-num">6</span> DECLASSIFIED ASSETS
+            </p>
         </div>
 
         <div id="default-state" class="pre-search">
-            <div class="big-icon">🗂</div>
+            <div class="pre-search-icon">
+                <span class="pre-search-icon-inner">🗂</span>
+            </div>
             <p>TYPE TO BEGIN SEARCHING THE ARCHIVE</p>
         </div>
 
         <div id="results-list" style="display:none;"></div>
 
         <div id="no-results">
-            <div class="no-icon">◌</div>
-            <p>NO DECLASSIFIED ASSETS MATCH YOUR QUERY</p>
+            <div class="no-icon">NO_MATCH</div>
+            <p>No declassified assets match your query</p>
         </div>
     </div>
 
@@ -552,8 +656,13 @@
             }
         ];
 
-        const totalCount = document.getElementById('total-count');
-        totalCount.textContent = ASSETS.length;
+        document.getElementById('total-count').textContent = ASSETS.length;
+        document.getElementById('count-num').textContent = ASSETS.length;
+
+        function setQuery(q) {
+            document.getElementById('archive-search').value = q;
+            filterResults();
+        }
 
         function filterResults() {
             const query = document.getElementById('archive-search').value.toLowerCase().trim();
@@ -561,7 +670,6 @@
             const noResults = document.getElementById('no-results');
             const defaultState = document.getElementById('default-state');
             const countEl = document.getElementById('results-count');
-            const countNum = document.getElementById('count-num');
 
             if (query.length === 0) {
                 defaultState.style.display = 'flex';
@@ -583,15 +691,14 @@
             if (filtered.length === 0) {
                 resultsList.style.display = 'none';
                 noResults.style.display = 'block';
-                countEl.innerHTML = `SHOWING <span id="count-num">0</span> RESULTS FOR "${query.toUpperCase()}"`;
+                countEl.innerHTML = `SHOWING <span>0</span> RESULTS FOR "${query.toUpperCase()}"`;
                 return;
             }
 
             noResults.style.display = 'none';
             resultsList.style.display = 'block';
-            countEl.innerHTML = `SHOWING <span id="count-num">${filtered.length}</span> RESULT${filtered.length !== 1 ? 'S' : ''} FOR "${query.toUpperCase()}"`;
+            countEl.innerHTML = `SHOWING <span>${filtered.length}</span> RESULT${filtered.length !== 1 ? 'S' : ''} FOR "${query.toUpperCase()}"`;
 
-            // Group by category
             const groups = {};
             filtered.forEach(a => {
                 if (!groups[a.category]) groups[a.category] = [];
@@ -627,5 +734,6 @@
             });
         }
     </script>
+
 </body>
 </html>
