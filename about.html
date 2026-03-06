@@ -3,268 +3,708 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
-    <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
-    <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
-    <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
-
-    <!-- =====BOX ICONS===== -->
-    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-
-    <title>About The LoL</title>
-    <meta name="description" content="About The LoL History">
-    <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
-        
-    <meta property="og:title" content="The Legend Of Legiona - About The LoL"/>
-    <meta property="og:url" content="https://faizzzlol.github.io/thelol/about"/>
-    <meta property="og:image" content="TheLoL.png"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:description" content="About The LoL History"/>
+    <title>About The LoL — The Legend of Legiona</title>
+    <link rel="icon" type="image/png" href="/thelol/TheLoL2.png">
+    <meta name="description" content="The full history of The Legend of Legiona — from The Sus to a sovereign nation.">
+    <meta property="og:title" content="About The LoL — The Legend of Legiona">
+    <meta property="og:url" content="https://faizzzlol.github.io/thelol/about">
+    <meta property="og:image" content="/thelol/TheLoL.png">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="The full history of The Legend of Legiona.">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #fff;
-            --text-color: #333;
-            --accent-color: #4CAF50;
-            --secondary-text-color: #555;
+            --green:       #1d5c3c;
+            --green-dark:  #0f2e1e;
+            --green-light: #2d7a52;
+            --emerald:     #34a06a;
+            --emerald-dim: rgba(52,160,106,0.1);
+            --gold:        #c8962a;
+            --gold-light:  #e0b045;
+            --charcoal:    #0f110e;
+            --charcoal2:   #141812;
+            --charcoal3:   #1a1f17;
+            --surface:     #1e2419;
+            --off-white:   #f5f2eb;
+            --border-dark: rgba(255,255,255,0.07);
+            --border-green: rgba(52,160,106,0.2);
         }
 
-        /* Dark Mode Variables */
-        body.dark-mode {
-            --background-color: #181818;
-            --text-color: #e0e0e0;
-            --accent-color: #76ff03;
-            --secondary-text-color: #b0b0b0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
+        /* ── LIGHT / DARK MODE ── */
         body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            font-family: Arial, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Outfit', sans-serif;
+            background: var(--charcoal);
+            color: var(--off-white);
+            line-height: 1.75;
+            overflow-x: hidden;
+            transition: background 0.35s, color 0.35s;
         }
-        /* Additional styles specifically for the history timeline */
+
+        body.light {
+            --charcoal:    #f5f2eb;
+            --charcoal2:   #edeade;
+            --charcoal3:   #e5e0d4;
+            --surface:     #ddd9ce;
+            --off-white:   #1a1c18;
+            --border-dark: rgba(26,28,24,0.1);
+            --border-green: rgba(29,92,60,0.2);
+        }
+
+        /* Grain */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky; top: 0; z-index: 200;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 62px;
+            background: rgba(15,17,14,0.93);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dark);
+            transition: background 0.35s;
+        }
+
+        body.light nav {
+            background: rgba(245,242,235,0.95);
+        }
+
+        .nav-logo {
+            font-family: 'Fraunces', serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--off-white);
+            text-decoration: none;
+        }
+
+        .nav-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
+
+        .nav-center {
+            display: flex;
+            gap: 4px;
+        }
+
+        .nav-center a {
+            padding: 6px 14px;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.45);
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        body.light .nav-center a { color: rgba(26,28,24,0.5); }
+
+        .nav-center a.active { color: var(--emerald); }
+
+        .nav-center a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 14px; right: 14px;
+            height: 2px;
+            background: var(--emerald);
+        }
+
+        .nav-center a:hover { color: var(--emerald); }
+
+        .nav-right { display: flex; align-items: center; gap: 10px; }
+
+        .theme-btn {
+            width: 36px; height: 36px;
+            border: 1px solid var(--border-dark);
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        body.light .theme-btn { color: rgba(26,28,24,0.5); }
+        .theme-btn:hover { color: var(--emerald); border-color: var(--border-green); }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            padding: 5rem 5% 4rem;
+            background: var(--green-dark);
+            border-bottom: 1px solid var(--border-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 50% 80% at 80% 50%, rgba(52,160,106,0.08) 0%, transparent 70%),
+                repeating-linear-gradient(-55deg, transparent, transparent 38px, rgba(255,255,255,0.012) 38px, rgba(255,255,255,0.012) 39px);
+        }
+
+        .ph-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .ph-eyebrow {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            color: var(--emerald);
+            opacity: 0.75;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ph-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--emerald); opacity: 0.6; }
+
+        .page-header h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            color: #fff;
+            margin-bottom: 1.2rem;
+        }
+
+        .page-header h1 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+
+        .page-header p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.45);
+            max-width: 560px;
+            font-weight: 300;
+            line-height: 1.85;
+        }
+
+        /* Proclamation buttons in header */
+        .proc-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .proc-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border: 1px solid;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 1.5px;
+            transition: background 0.2s;
+        }
+
+        .proc-btn.green {
+            border-color: rgba(52,160,106,0.4);
+            color: var(--emerald);
+        }
+        .proc-btn.green:hover { background: var(--emerald-dim); }
+
+        .proc-btn.gold {
+            border-color: rgba(200,150,42,0.35);
+            color: var(--gold);
+        }
+        .proc-btn.gold:hover { background: rgba(200,150,42,0.08); }
+
+        /* ── CONTENT WRAPPER ── */
+        .content-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 5%;
+        }
+
+        /* ── TIMELINE ── */
+        .timeline-label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-label h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--off-white);
+        }
+
+        .timeline-label h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
+
+        .timeline-label span {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.57rem;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border: 1px solid var(--border-dark);
+        }
+
+        body.light .timeline-label span { color: rgba(26,28,24,0.3); }
+
         .timeline {
-            width: 90%;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: var(--background-color); /* Using your theme background */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: var(--text-color); /* Using your theme text color */
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 96px;
+            top: 8px; bottom: 8px;
+            width: 1px;
+            background: var(--border-dark);
+        }
+
         .event {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-left: 4px solid var(--accent-color); /* Accent color from your theme */
+            display: grid;
+            grid-template-columns: 96px 1fr;
+            gap: 32px;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-dark);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
-        .event h2 {
-            margin-bottom: 10px;
-            font-size: 1.6em;
-            color: var(--accent-color);
-        }
-        .event h3 {
-            margin-bottom: 8px;
-            font-size: 1.2em;
-            color: var(--secondary-text-color); /* Secondary text color from your theme */
-        }
-        .event p {
+
+        .event.in { opacity: 1; transform: translateY(0); }
+        .event:last-child { border-bottom: none; }
+
+        .event-year {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.22);
+            text-align: right;
+            padding-top: 5px;
             line-height: 1.6;
         }
-        .history-image {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .history-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .donate {
-            text-align: center;
-            margin-top: 50px; /* Adjust the margin-top value as needed */
+
+        body.light .event-year { color: rgba(26,28,24,0.3); }
+
+        .event-dot {
+            position: absolute;
+            left: 89px;
+            top: 2.3rem;
+            width: 14px; height: 14px;
+            border: 1px solid var(--border-green);
+            background: var(--charcoal);
+            transform: rotate(45deg);
+            transition: border-color 0.2s, background 0.2s;
         }
 
-        .donate-button {
+        .event:hover .event-dot {
+            border-color: var(--emerald);
+            background: var(--emerald-dim);
+        }
+
+        .event-dot.highlight {
+            border-color: var(--emerald);
+            background: var(--emerald-dim);
+        }
+
+        .event-dot.gold {
+            border-color: rgba(200,150,42,0.5);
+            background: rgba(200,150,42,0.08);
+        }
+
+        .event-dot.red {
+            border-color: rgba(180,60,60,0.5);
+            background: rgba(180,60,60,0.06);
+        }
+
+        .event-content {
+            padding-left: 24px;
+        }
+
+        .event-num {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            color: var(--emerald);
+            opacity: 0.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-content h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--off-white);
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .event-content h3 {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 0.9rem;
+            font-weight: 300;
+        }
+
+        body.light .event-content h3 { color: rgba(26,28,24,0.45); }
+
+        .event-content p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.85;
+            font-weight: 300;
+            max-width: 680px;
+        }
+
+        body.light .event-content p { color: rgba(26,28,24,0.6); }
+
+        .event-badge {
             display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            text-align: center;
+            margin-top: 0.8rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 1.5px;
+            padding: 3px 10px;
+            border: 1px solid;
+        }
+
+        .event-badge.green { border-color: rgba(52,160,106,0.3); color: rgba(52,160,106,0.7); }
+        .event-badge.gold  { border-color: rgba(200,150,42,0.3); color: rgba(200,150,42,0.7); }
+        .event-badge.red   { border-color: rgba(180,60,60,0.3);  color: rgba(200,100,100,0.7); }
+        .event-badge.white { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.4); }
+
+        /* ── DIVIDER ── */
+        .section-divider {
+            height: 1px;
+            background: var(--border-dark);
+            margin: 4rem 0;
+        }
+
+        /* ── DONATE ── */
+        .donate-block {
+            background: var(--charcoal3);
+            border: 1px solid var(--border-dark);
+            padding: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .donate-block h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--off-white);
+            margin-bottom: 0.4rem;
+        }
+
+        .donate-block p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.38);
+            font-weight: 300;
+        }
+
+        body.light .donate-block p { color: rgba(26,28,24,0.45); }
+
+        .donate-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--green-light);
+            color: #fff;
             text-decoration: none;
-            cursor: pointer;
-            background-color: #4CAF50; /* Change the background color as needed */
-            color: #ffffff; /* Change the text color as needed */
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            flex-shrink: 0;
+            transition: background 0.25s;
         }
-        
-        .donate-button:hover {
-            background-color: #45a049; /* Change the hover background color as needed */
-        }
-        /* Dark mode switch styles */
-        .dark-mode-switch {
-            position: fixed;
-            top: 10px;
-            right: 10px;
+
+        .donate-btn:hover { background: var(--emerald); }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border-dark);
+            padding: 1.4rem 5%;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            cursor: pointer;
+            background: var(--charcoal2);
         }
-        .dark-mode-switch i {
-            font-size: 1.5rem;
-            color: var(--text-color);
-            margin-left: 10px;
+
+        footer p {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.2);
         }
-        /* Positioning Dark Mode Switcher */
-        #dark-mode-toggle {
-            position: absolute;
-            top: 20px; /* Adjust to your needs */
-            right: 20px; /* Adjust the distance from the right */
-            z-index: 1000; /* Ensure it's on top of other elements */
+
+        body.light footer p { color: rgba(26,28,24,0.3); }
+
+        .footer-links { display: flex; gap: 18px; }
+
+        .footer-links a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.57rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.2);
+            text-decoration: none;
+            transition: color 0.2s;
         }
-        
-        nav {
-            position: relative;
-            height: 60px; /* Ensure space is given for the dark mode toggle */
-            display: flex;
-            justify-content: space-between; /* Spreads out nav elements */
-            align-items: center;
-            padding: 0 20px;
-        }
-        
-        /* Optional: Media query for mobile screens */
-        @media (max-width: 768px) {
-            #dark-mode-toggle {
-                top: 10px;
-                right: 10px;
-            }
-            nav {
-                height: 80px; /* More space for mobile */
-            }
+
+        .footer-links a:hover { color: var(--emerald); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .timeline::before { left: 60px; }
+            .event { grid-template-columns: 60px 1fr; gap: 16px; }
+            .event-dot { left: 53px; }
+            .nav-center { display: none; }
+            footer { flex-direction: column; gap: 0.6rem; text-align: center; }
         }
     </style>
 </head>
-<body>
-        <!--===== HEADER =====-->
-        <header class="l-header">
-            <nav class="nav bd-grid">
-                <div>
-                    <a href="/thelol" class="nav__logo">The LoL</a>
-                </div>
+<body id="body">
 
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item"><a href="/thelol/about" class="nav__link active">About</a></li>
-                        <li class="nav__item"><a href="/thelol" class="nav__link">Home</a></li>
-                        <li class="nav__item"><a href="/thelol/#contact" class="nav__link">Contact</a></li>
-                    </ul>
-                </div>
+    <!-- NAV -->
+    <nav>
+        <a href="/thelol" class="nav-logo">The <em>LoL</em></a>
+        <div class="nav-center">
+            <a href="/thelol/about" class="active">ABOUT</a>
+            <a href="/thelol">HOME</a>
+            <a href="/thelol/#contact">CONTACT</a>
+        </div>
+        <div class="nav-right">
+            <button class="theme-btn" id="theme-btn" title="Toggle theme" onclick="toggleTheme()">☽</button>
+        </div>
+    </nav>
 
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-menu'></i>
-                </div>
-            </nav>
-            <!-- Dark Mode Switcher -->
-            <div class="dark-mode-switch" id="dark-mode-toggle">
-                <i class='bx bx-moon'></i>
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <div class="ph-inner">
+            <div class="ph-eyebrow">THE LEGEND OF LEGIONA // OFFICIAL HISTORY</div>
+            <h1>The History of<br><em>The LoL.</em></h1>
+            <p>
+                From a squad of three to the most sovereign nation in Skyxion — 
+                this is the full story of The Legend of Legiona.
+            </p>
+            <div class="proc-btns">
+                <a href="assets/The_LoL_Proclamation.pdf" class="proc-btn green" target="_blank">
+                    ↓ PROCLAMATION (EN)
+                </a>
+                <a href="assets/Proklamasi_The_LoL.pdf" class="proc-btn gold" target="_blank">
+                    ↓ PROKLAMASI (BM)
+                </a>
             </div>
-        </header>
+        </div>
+    </div>
 
-    <!-- History Page Content -->
+    <!-- MAIN CONTENT -->
     <main>
-        <section class="history-section">
-            <h1>The History of The LoL</h1>
+        <div class="content-wrap">
 
-            <!-- History Image -->
-            <div class="history-image">
-                <img src="history-image-placeholder.jpg" alt="History of The LoL">
-                <!-- Replace 'history-image-placeholder.jpg' with your actual image file -->
+            <div class="timeline-label">
+                <h2>National <em>Timeline</em></h2>
+                <span>7 CHAPTERS</span>
             </div>
-            
-            <center>
-                <h1>The LoL Proclamation Document:</h1>
-                    <a href="assets/The_LoL_Proclamation.pdf">The_LoL_Proclamation.pdf</a>
-                <h1>Dokumen Proklamasi/Pemasyhuran The LoL:</h1>
-                    <a href="assets/Proklamasi_The_LoL.pdf">Proklamasi_The_LoL.pdf</a>
-            </center>
-            
-            <!-- Timeline Section -->
+
             <div class="timeline">
-                <!-- Event 1 -->
+
+                <!-- 1 -->
                 <div class="event">
-                    <h2>1. The Founding (Early Days)</h2>
-                    <h3>Original Name: The Sus</h3>
-                    <p>The LoL was originally called "The Sus", founded by Faiz4224, alongside ItzDynozz and Imii kun. During its inception, the nation was small, but the collaboration between these founders laid the groundwork for future developments.</p>
+                    <div class="event-year">2023<br>EARLY</div>
+                    <div class="event-dot highlight"></div>
+                    <div class="event-content">
+                        <div class="event-num">CHAPTER 01</div>
+                        <h2>The Founding</h2>
+                        <h3>ORIGINAL NAME: THE SUS</h3>
+                        <p>
+                            The LoL was originally called "The Sus", founded by <strong>Faiz4224</strong>, 
+                            alongside <strong>ItzDynozz</strong> and <strong>Imii Kun</strong>. During its inception, 
+                            the nation was small, but the collaboration between these three founders laid the 
+                            groundwork for future developments.
+                        </p>
+                        <span class="event-badge green">ORIGIN ERA</span>
+                    </div>
                 </div>
 
-                <!-- Event 2 -->
+                <!-- 2 -->
                 <div class="event">
-                    <h2>2. The Renaming and Expansion</h2>
-                    <h3>Renaming to The Legend of Legiona (The LoL)</h3>
-                    <p>As the nation grew, the founders decided to rename it "The Legend of Legiona", abbreviated as The LoL. The LoL rapidly transformed into the most modern and wealthiest nation in Skyxion, a region known for its diverse cultures and nations. Under President Faiz4224, The LoL thrived in terms of economy, infrastructure, and innovation.</p>
+                    <div class="event-year">2023</div>
+                    <div class="event-dot highlight"></div>
+                    <div class="event-content">
+                        <div class="event-num">CHAPTER 02</div>
+                        <h2>Renaming &amp; Expansion</h2>
+                        <h3>THE LEGEND OF LEGIONA IS BORN</h3>
+                        <p>
+                            As the nation grew, the founders decided to rename it <strong>"The Legend of Legiona"</strong>, 
+                            abbreviated as The LoL. The LoL rapidly transformed into the most modern and wealthiest 
+                            nation in Skyxion — a region known for its diverse cultures and nations. Under President 
+                            Faiz4224, The LoL thrived in economy, infrastructure, and innovation.
+                        </p>
+                        <span class="event-badge gold">GOLDEN ERA</span>
+                    </div>
                 </div>
 
-                <!-- Event 3 -->
+                <!-- 3 -->
                 <div class="event">
-                    <h2>3. The First Presidential Election (May 6, 2023)</h2>
-                    <h3>Election Announcement</h3>
-                    <p>On May 6, 2023, The LoL held its first democratic election, marking a significant turning point in its governance. Despite Faiz4224’s strong leadership, UltraX2020 and the PHRTL party won the election, making him the 2nd President of The LoL.</p>
+                    <div class="event-year">MAY 6<br>2023</div>
+                    <div class="event-dot gold"></div>
+                    <div class="event-content">
+                        <div class="event-num">CHAPTER 03</div>
+                        <h2>The First Presidential Election</h2>
+                        <h3>ELECTION ANNOUNCEMENT</h3>
+                        <p>
+                            On May 6, 2023, The LoL held its first democratic election — marking a significant 
+                            turning point in its governance. Despite Faiz4224's strong leadership, 
+                            <strong>UltraX2020</strong> and the <strong>PHRTL party</strong> won the election, 
+                            making UltraX2020 the 2nd President of The LoL.
+                        </p>
+                        <span class="event-badge white">DEMOCRATIC MILESTONE</span>
+                    </div>
                 </div>
 
-                <!-- Event 4 -->
+                <!-- 4 -->
                 <div class="event">
-                    <h2>4. UltraX2020's Presidency (2023)</h2>
-                    <h3>Division and Chaos</h3>
-                    <p>Under UltraX2020's rule, internal strife and divisions surfaced. The iconic LoL City sign was bombed, TLCC (The LoL City Center) was attacked by drones, and political conflicts gripped the city.</p>
+                    <div class="event-year">2023<br>CRISIS</div>
+                    <div class="event-dot red"></div>
+                    <div class="event-content">
+                        <div class="event-num">CHAPTER 04</div>
+                        <h2>UltraX2020's Presidency</h2>
+                        <h3>DIVISION AND CHAOS</h3>
+                        <p>
+                            Under UltraX2020's rule, internal strife and divisions surfaced. The iconic 
+                            <strong>LoL City sign was bombed</strong>, <strong>TLCC was attacked by drones</strong>, 
+                            and political conflicts gripped the city. The nation's stability was tested like never before.
+                        </p>
+                        <span class="event-badge red">CONFLICT ERA</span>
+                    </div>
                 </div>
 
-                <!-- Event 5 -->
+                <!-- 5 -->
                 <div class="event">
-                    <h2>5. The Resignation of UltraX2020 (2023)</h2>
-                    <h3>Leadership Crisis and Resignation</h3>
-                    <p>UltraX2020 resigned from the presidency following the chaos. He returned full power back to Faiz4224, restoring peace to The LoL. Faiz4224 continued to lead with a vision of progress and unity.</p>
+                    <div class="event-year">2023<br>LATE</div>
+                    <div class="event-dot"></div>
+                    <div class="event-content">
+                        <div class="event-num">CHAPTER 05</div>
+                        <h2>The Resignation of UltraX2020</h2>
+                        <h3>LEADERSHIP CRISIS AND RESIGNATION</h3>
+                        <p>
+                            UltraX2020 resigned from the presidency following the chaos. He returned full power 
+                            back to <strong>Faiz4224</strong>, restoring peace to The LoL. Faiz4224 continued 
+                            to lead with a renewed vision of progress and unity.
+                        </p>
+                        <span class="event-badge white">RESTORATION</span>
+                    </div>
                 </div>
 
-                <!-- Event 6 -->
+                <!-- 6 -->
                 <div class="event">
-                    <h2>6. The Post-Chaos Recovery</h2>
-                    <h3>Rebuilding and Moving Forward</h3>
-                    <p>After the political turmoil, The LoL began a rebuilding phase. Faiz4224’s government initiated several infrastructure projects, improved security, and focused on uniting the nation under one banner.</p>
+                    <div class="event-year">NOV 8<br>2023</div>
+                    <div class="event-dot highlight"></div>
+                    <div class="event-content">
+                        <div class="event-num">CHAPTER 06</div>
+                        <h2>Post-Chaos Recovery</h2>
+                        <h3>REBUILDING AND MOVING FORWARD</h3>
+                        <p>
+                            After the political turmoil, The LoL began a rebuilding phase. Faiz4224's government 
+                            initiated several infrastructure projects, improved security with the founding of 
+                            <strong>TLIO</strong> (later reborn as ISC), and focused on uniting the nation under 
+                            one banner once again.
+                        </p>
+                        <span class="event-badge green">REBIRTH</span>
+                    </div>
                 </div>
 
-                <!-- Event 7 -->
+                <!-- 7 -->
                 <div class="event">
-                    <h2>7. The Modern Era</h2>
-                    <h3>Looking Ahead</h3>
-                    <p>Today, The LoL stands as a symbol of perseverance and innovation. With its leadership firmly in place, The LoL is poised to continue its legacy of being one of the most modern and successful nations in Skyxion.</p>
+                    <div class="event-year">2025–<br>2026</div>
+                    <div class="event-dot gold"></div>
+                    <div class="event-content">
+                        <div class="event-num">CHAPTER 07</div>
+                        <h2>The Modern Era</h2>
+                        <h3>SKYXION: RAGNAROK // LOOKING AHEAD</h3>
+                        <p>
+                            Today, The LoL stands as a symbol of perseverance and innovation. TLIO has been 
+                            reborn as <strong>ISC (Internal Security Control)</strong>. With its leadership firmly 
+                            in place, The LoL is poised to continue its legacy as one of the most modern 
+                            and successful nations in Skyxion.
+                        </p>
+                        <span class="event-badge gold">CURRENT ERA</span>
+                    </div>
                 </div>
+
             </div>
 
-            <!-- Donate Section -->
-            <div class="donate">
-                <p>If you'd like to support The LoL's development, consider donating.</p>
-                <a href="https://faizgg.carrd.co/" class="donate-button">Donate Now</a>
+            <div class="section-divider"></div>
+
+            <!-- DONATE -->
+            <div class="donate-block">
+                <div>
+                    <h3>Support The LoL</h3>
+                    <p>If you'd like to support The LoL's continued development and growth, consider donating.</p>
+                </div>
+                <a href="https://tr.ee/FU_4QuJ-U5" class="donate-btn" target="_blank">DONATE NOW →</a>
             </div>
-        </section>
+
+        </div>
     </main>
 
-    <!--===== FOOTER =====-->
-    <footer class="footer">
-        <div class="footer__container">
-            <p>&copy; 2025 The Legend of Legiona. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 THE LEGEND OF LEGIONA — ALL RIGHTS RESERVED</p>
+        <div class="footer-links">
+            <a href="/thelol">HOME</a>
+            <a href="/thelol/gov/">GOV</a>
+            <a href="/thelol/gov/isc/">ISC</a>
+            <a href="/thelol/tlr/">TLR</a>
         </div>
     </footer>
 
-    <!-- Script Section -->
     <script>
-        document.getElementById('dark-mode-toggle').addEventListener('click', function () {
-            document.body.classList.toggle('dark-mode');
-        });
+        // Timeline reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('in'), i * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.event').forEach(el => observer.observe(el));
+
+        // Theme toggle
+        const btn = document.getElementById('theme-btn');
+        let light = false;
+
+        function toggleTheme() {
+            light = !light;
+            document.body.classList.toggle('light', light);
+            btn.textContent = light ? '☀' : '☽';
+        }
     </script>
+
 </body>
 </html>
