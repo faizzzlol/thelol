@@ -1,83 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | The Legend of Legiona</title>
+    <link rel="icon" type="image/png" href="/thelol/TheLoL2.png">
+    <meta name="robots" content="noindex">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green:       #1d5c3c;
+            --green-dark:  #0f2e1e;
+            --green-light: #2d7a52;
+            --emerald:     #34a06a;
+            --emerald-dim: rgba(52,160,106,0.1);
+            --gold:        #c8962a;
+            --gold-light:  #e0b045;
+            --charcoal:    #0f110e;
+            --charcoal2:   #141812;
+            --charcoal3:   #1a1f17;
+            --off-white:   #f5f2eb;
+            --border-dark: rgba(255,255,255,0.07);
+            --border-green: rgba(52,160,106,0.18);
+        }
 
-        <link rel="stylesheet" href="style.css">
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
 
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
-        <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
-        <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
-        <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--charcoal);
+            color: var(--off-white);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-        <!-- =====BOX ICONS===== -->
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        /* ── Grain ── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999;
+        }
 
-        <title>The LoL - 404</title>
-        <meta name="description" content="The Legend Of Legiona (The LoL)">
-        <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
-        
-        <meta property="og:title" content="The Legend Of Legiona"/>
-        <meta property="og:url" content="https://faizzzlol.github.io/thelol/"/>
-        <meta property="og:image" content="TheLoL2.png"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:description" content="The Legend Of Legiona (The LoL)"/>
+        /* ── Background glows ── */
+        .bg-glow-1 {
+            position: fixed;
+            top: -20%; left: -15%;
+            width: 70vw; height: 70vw;
+            background: radial-gradient(circle, rgba(29,92,60,0.14) 0%, transparent 65%);
+            pointer-events: none;
+        }
 
-    </head>
-    <body>
-        <!--===== HEADER =====-->
-        <header class="l-header">
-            <nav class="nav bd-grid">
-                <div>
-                    <a href="/thelol" class="nav__logo">The LoL</a>
-                </div>
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -20%; right: -10%;
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(200,150,42,0.06) 0%, transparent 65%);
+            pointer-events: none;
+        }
 
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item"><a href="/thelol" class="nav__link active">Home</a></li>
-                        <li class="nav__item"><a href="/thelol/#thelol_pack" class="nav__link">Texture Pack</a></li>
-                        <li class="nav__item"><a href="/thelol/#contact" class="nav__link">Contact</a></li>
-                    </ul>
-                </div>
+        /* ── Grid pattern ── */
+        .bg-grid {
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(52,160,106,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(52,160,106,0.03) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: radial-gradient(ellipse 80% 80% at 40% 40%, black 0%, transparent 100%);
+            pointer-events: none;
+        }
 
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-menu'></i>
-                </div>
-            </nav>
-        </header>
+        /* ── NAV ── */
+        nav {
+            position: relative; z-index: 10;
+            padding: 0 5%;
+            height: 62px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-dark);
+            flex-shrink: 0;
+        }
 
-        <main class="l-main">
-            <!--=====  =====-->
-            <section class="home bd-grid" id="home">
-                <div class="home__data">
-                    <h1 class="home__title"><br><span class="home__title-color"></span>404<br>- Page Not Found</h1>
+        .nav-logo {
+            font-family: 'Fraunces', serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--off-white);
+            text-decoration: none;
+        }
 
-            <!--=====  =====-->
-            <section class="skills section" id="thelol_pack">
-                <h2 class="section-title">The page you are looking for does not exist. Please check the URL and try again.</h2>
-                <div class="skills__container bd-grid">  
-                </div>
-            <p><input class="item-btn back" type="button" value="Go Back" onclick="history.back()"></p>
-            </section>
+        .nav-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
 
-        <!--===== FOOTER =====-->
-        <footer class="footer">
-        
-            <p class="footer__title">The Legend Of Legiona</p>
-            <div class="footer__social">
-                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+        .nav-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.2);
+        }
+
+        /* ── MAIN ── */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 5%;
+            position: relative; z-index: 5;
+        }
+
+        .container {
+            max-width: 760px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Big 404 */
+        .big-num {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(7rem, 22vw, 18rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -6px;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(52,160,106,0.25);
+            position: relative;
+            margin-bottom: 2rem;
+            animation: fadeDown 0.7s ease 0.1s both;
+            user-select: none;
+        }
+
+        /* Glowing overlay text */
+        .big-num::after {
+            content: '404';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-size: inherit;
+            font-weight: 900;
+            letter-spacing: inherit;
+            color: transparent;
+            -webkit-text-stroke: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(52,160,106,0.08) 0%,
+                rgba(200,150,42,0.05) 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            filter: blur(8px);
+        }
+
+        .eyebrow {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            color: var(--emerald);
+            opacity: 0.75;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            animation: fadeUp 0.7s ease 0.3s both;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: '';
+            width: 20px; height: 1px;
+            background: var(--emerald);
+            opacity: 0.5;
+        }
+
+        .container h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-weight: 700;
+            color: var(--off-white);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            animation: fadeUp 0.7s ease 0.4s both;
+        }
+
+        .container h1 em {
+            font-style: italic;
+            color: var(--gold-light);
+            font-weight: 400;
+        }
+
+        .container p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.38);
+            line-height: 1.85;
+            font-weight: 300;
+            max-width: 440px;
+            margin: 0 auto 2.5rem;
+            animation: fadeUp 0.7s ease 0.5s both;
+        }
+
+        /* Path display */
+        .path-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-dark);
+            padding: 10px 20px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 0.7s ease 0.55s both;
+        }
+
+        .path-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+
+        .path-val {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.5px;
+        }
+
+        .path-val .err { color: rgba(200,100,100,0.7); }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.7s ease 0.6s both;
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--green-light);
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            transition: background 0.22s, transform 0.18s;
+        }
+        .btn-home:hover { background: var(--emerald); transform: translateY(-2px); }
+
+        .btn-back {
+            display: inline-block;
+            padding: 12px 28px;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            transition: all 0.22s;
+            cursor: pointer;
+            background: none;
+        }
+        .btn-back:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: var(--off-white);
+        }
+
+        /* Quick links */
+        .quick-links {
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-dark);
+            animation: fadeUp 0.7s ease 0.75s both;
+        }
+
+        .ql-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.18);
+            margin-bottom: 1rem;
+        }
+
+        .ql-grid {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .ql-btn {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--border-dark);
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 1.5px;
+            transition: all 0.2s;
+        }
+        .ql-btn:hover {
+            border-color: var(--border-green);
+            color: var(--emerald);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            flex-shrink: 0;
+            border-top: 1px solid var(--border-dark);
+            padding: 1rem 5%;
+            position: relative; z-index: 5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer p {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.15);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 500px) {
+            body { overflow-y: auto; }
+            .big-num { font-size: clamp(6rem, 28vw, 8rem); margin-bottom: 1.5rem; }
+            .actions { flex-direction: column; align-items: center; }
+            footer { flex-direction: column; gap: 6px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid"></div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="/thelol/" class="nav-logo">The <em>LoL</em></a>
+        <span class="nav-tag">THE LEGEND OF LEGIONA</span>
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+        <div class="container">
+            <div class="big-num">404</div>
+
+            <div class="eyebrow">PAGE NOT FOUND</div>
+
+            <h1>Lost in <em>Legiona.</em></h1>
+
+            <p>
+                This page doesn't exist within The LoL's territory. 
+                It may have been moved, deleted, or never existed at all.
+            </p>
+
+            <!-- Dynamic path display -->
+            <div class="path-display">
+                <span class="path-label">REQUESTED PATH</span>
+                <span class="path-val" id="path-display">
+                    <span class="err">/ not found</span>
+                </span>
             </div>
-            <p>&#169; 2025 Copyright All Right Reserved</p>
-            
-        </footer>
 
-        <!--===== MAIN JS =====-->
-        <script src="assets/js/main.js"></script>
-    </body>
+            <!-- Actions -->
+            <div class="actions">
+                <a href="/thelol/" class="btn-home">← RETURN TO THE LOL</a>
+                <button class="btn-back" onclick="history.back()">GO BACK</button>
+            </div>
+
+            <!-- Quick links -->
+            <div class="quick-links">
+                <div class="ql-label">OR NAVIGATE TO</div>
+                <div class="ql-grid">
+                    <a href="/thelol/" class="ql-btn">HOME</a>
+                    <a href="/thelol/about" class="ql-btn">HISTORY</a>
+                    <a href="/thelol/gov/" class="ql-btn">GOVERNMENT</a>
+                    <a href="/thelol/gov/isc/" class="ql-btn">ISC</a>
+                    <a href="/thelol/tlr/" class="ql-btn">TL RAILWAYS</a>
+                    <a href="/thelol/PaizCorp/tlsrl" class="ql-btn">TLSRL</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 THE LEGEND OF LEGIONA</p>
+        <p>ERROR 404 // SKYXION: RAGNAROK</p>
+    </footer>
+
+    <script>
+        // Show the actual path the user tried to visit
+        const pathEl = document.getElementById('path-display');
+        const p = window.location.pathname;
+        if (p && p !== '/') {
+            pathEl.innerHTML = `<span style="color:rgba(255,255,255,0.3)">/thelol</span><span class="err">${p.replace('/thelol','') || '/'}</span>`;
+        }
+    </script>
+
+</body>
 </html>
-<!--====Made By FaizGG====-->
