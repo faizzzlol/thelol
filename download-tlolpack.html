@@ -1,176 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download TLoL Pack - thelol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ensuring consistency with index.html design language */
+        :root {
+            --primary-color: #007bff;
+            --bg-dark: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text-main: #ffffff;
+            --text-dim: #b3b3b3;
+        }
 
-        <link rel="stylesheet" href="style.css">
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="16x16">
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="TheLoL2.png" sizes="96x96">
-        <link rel="apple-touch-icon" sizes="72x72" href="TheLoL2.png" >
-        <link rel="apple-touch-icon" sizes="114x114" href="TheLoL2.png" >
-        <link rel="apple-touch-icon" sizes="152x152" href="TheLoL2.png" >
+        /* Navbar style matching index.html */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-        <!-- =====BOX ICONS===== -->
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
 
-        <title>The LoL Pack - Download</title>
-        <meta name="description" content="The LoL Pack">
-        <meta name="keywords" content="The Legend Of Legiona, TheLoL, TheLoL Website, The LoL, TheLol Server, The LoL Server">
-        
-        <meta property="og:title" content="The Legend Of Legiona - Texture Packs Download"/>
-        <meta property="og:url" content="https://faizzzlol.github.io/thelol/download-tlolpack"/>
-        <meta property="og:image" content="TheLoL.png"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:description" content="The LoL Pack Downloads"/>
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
 
-<style>
-        /* Add this CSS to center the donate button */
-.donate {
-    text-align: center;
-    margin-top: 50px; /* Adjust the margin-top value as needed */
-}
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            transition: color 0.3s;
+        }
 
-.donate-button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    background-color: #4CAF50; /* Change the background color as needed */
-    color: #ffffff; /* Change the text color as needed */
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
 
-.donate-button:hover {
-    background-color: #45a049; /* Change the hover background color as needed */
-}
-</style>
+        /* Download Section Styling */
+        .download-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+        }
 
-    </head>
-    <body>
-        <!--===== HEADER =====-->
-        <header class="l-header">
-            <nav class="nav bd-grid">
-                <div>
-                    <a href="/thelol" class="nav__logo">The LoL</a>
-                </div>
+        .download-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #333;
+        }
 
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item"><a href="#thelol_pack" class="nav__link active">Texture Pack</a></li>
-                        <li class="nav__item"><a href="/thelol" class="nav__link">Home</a></li>
-                        <li class="nav__item"><a href="/thelol/#contact" class="nav__link">Contact</a></li>
-                    </ul>
-                </div>
+        .pack-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
 
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-menu'></i>
-                </div>
-            </nav>
-        </header>
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
 
-        <main class="l-main">
-            <!--===== SKILLS =====-->
-            <section class="skills section" id="thelol_pack">
-                <h2 class="section-title">Texture Packs</h2>
+        p {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
 
-                <div class="skills__container bd-grid">          
-                    <div>
-                        <h2 class="skills__subtitle">The LoL Pack</h2>
-                        <p class="skills__text">Click the version that you want to download. </p>
-                        <div class="skills__data">
-                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9292886498853120"
-                            crossorigin="anonymous"></script>
-                            <div class="skills__names">
-                                <i class='bx bxl-download skills__icon'></i>
-                                <span class="skills__name"><a href="url">The LoL Pack Version -.-.-</a></span>
-                            </div>
-                            <div class="skills__bar skills__download">
+        .btn-download {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.3s;
+        }
 
-                            </div>
-                            <div>
-                                <span class="skills__percentage">0 downloads</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-download skills__icon'></i>
-                                <span class="skills__name"><a href="url" download="The LoL Pack [v2.0.0].mcpack">The LoL Pack Version 2.0.0</a></span>
-                            </div>
-                            <div class="skills__bar skills__download">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">COMING SOON...</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxs-download skills__icon'></i>
-                                <span class="skills__name"><a href="https://github.com/faizzzlol/thelolpack/raw/main/The%20LoL%20Pack%20%5B1.1.0%5D.mcpack" download="The LoL Pack [v1.1.0].mcpack">The LoL Pack Version 1.1.0</a></span>
-                            </div>
-                            <div class="skills__bar skills__js">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">3 downloads</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxs-download skills__icon'></i>
-                                <span class="skills__name"><a href="https://github.com/faizzzlol/thelolpack/raw/main/The%20LoL%20Pack%20%5Bv1.0.0%20ALPHA%5D.mcpack" download="The LoL Pack [v1.0.0 ALPHA].mcpack">The LoL Pack Version 1.0.0</a></span>
-                            </div>
-                            <div class="skills__bar skills__v1">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">10 downloads</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-            </section>
+        .btn-download:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
 
-<!--===== DONATE BUTTON =====-->
-<section class="donate section">
-    <h2 class="section-title">Donate</h2>
-    <p>If you are happy with this site, consider supporting us through a donation!</p>
-    <button class="button donate-button" onclick="window.location.href='https://faizgg.carrd.co/'">Donate</button>
-</section>
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
 
-        <!--===== FOOTER =====-->
-        <footer class="footer">
-        
-            <p class="footer__title">The Legend Of Legiona</p>
-            <div class="footer__social">
-                <a href="#" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="#" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="https://twitter.com/tlol_gg" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
-            </div>
-            <p>&#169; 2025 Copyright All Right Reserved</p>
-            <p><a href="https://forms.gle/mF1a6Eerjb3f3nkD8" target="_blank">Feedback</a></p>
-            <p><a href="https://thelolstatus.statuspage.io/">Status</a></p>
-        </footer>
+    <nav>
+        <a href="index.html" class="logo">thelol</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="download-tlolpack.html" style="color: var(--primary-color);">Downloads</a></li>
+            <li><a href="https://github.com/faizzzlol/thelol" target="_blank">GitHub</a></li>
+        </ul>
+    </nav>
 
-        <!--===== MAIN JS =====-->
-        <script src="assets/js/main.js"></script>
-
-        <script>
-            // JavaScript for toggling the mobile menu
-            document.getElementById('nav-toggle').addEventListener('click', function() {
-                var navMenu = document.getElementById('nav-menu');
-                navMenu.classList.toggle('show');
-            });
-        </script>
+    <div class="download-container">
+        <div class="download-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3074/3074061.png" alt="TLoL Pack" class="pack-icon">
+            <h1>TLoL Pack</h1>
+            <p>Download the latest version of the TLoL Minecraft Resource Pack for the best experience on our server.</p>
             
-    </body>
+            <a href="#" class="btn-download">Download .zip</a>
+            
+            <div style="margin-top: 20px; font-size: 0.8rem; color: #666;">
+                Version 1.0.0 | Compatible with Minecraft 1.20+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 thelol. All rights reserved.
+    </footer>
+
+</body>
 </html>
-<!--====Made By FaizGG====-->
