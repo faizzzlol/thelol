@@ -31,6 +31,7 @@
             --text-faint:  #b0b39e;
             --border-light: rgba(26,28,24,0.1);
             --border-dark:  rgba(255,255,255,0.07);
+            --netbar-h: 30px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,24 +55,124 @@
             z-index: 9999;
         }
 
+        /* ─── PAIZ® CORP NETWORK BAR ─── */
+        .network-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 600;
+            height: var(--netbar-h);
+            background: var(--green-dark);
+            border-bottom: 1px solid rgba(52,160,106,0.2);
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            gap: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .network-bar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .netbar-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .netbar-brand {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.56rem;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.3);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .netbar-brand a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .netbar-brand a:hover { color: var(--gold-light); }
+
+        .netbar-sep {
+            width: 1px;
+            height: 14px;
+            background: rgba(255,255,255,0.1);
+            margin: 0 14px;
+            flex-shrink: 0;
+        }
+
+        .netbar-links {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .netbar-links a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.28);
+            text-decoration: none;
+            padding: 0 10px;
+            height: var(--netbar-h);
+            display: flex;
+            align-items: center;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .netbar-links a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
+
+        .netbar-links a:hover {
+            color: var(--emerald);
+            background: rgba(52,160,106,0.07);
+        }
+
+        .netbar-links a.active {
+            color: var(--emerald);
+            background: rgba(52,160,106,0.1);
+        }
+
+        .netbar-right {
+            margin-left: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.18);
+            white-space: nowrap;
+        }
+
         /* ─── NAV ─── */
         nav {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: var(--netbar-h);
+            left: 0; right: 0;
             z-index: 500;
             padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 64px;
-            transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
-            border-bottom: 1px solid transparent;
+            transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s, top 0.3s ease;
+        }
+
+        nav.netbar-gone {
+            top: 0;
         }
 
         nav.scrolled {
             background: rgba(15,17,14,0.92);
             backdrop-filter: blur(20px);
-            border-bottom-color: var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
         }
 
         .nav-logo {
@@ -128,7 +229,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 100px 5% 5rem;
+            padding: calc(100px + var(--netbar-h)) 5% 5rem;
             position: relative;
             overflow: hidden;
         }
@@ -332,8 +433,6 @@
             align-items: center;
         }
 
-        .about-left {}
-
         .section-eyebrow {
             font-family: 'Fira Code', monospace;
             font-size: 0.6rem;
@@ -456,7 +555,7 @@
             line-height: 1.7;
         }
 
-        /* Horizontal scrolling timeline */
+        /* Timeline */
         .timeline-track {
             max-width: 1200px;
             margin: 0 auto;
@@ -708,6 +807,13 @@
             border-color: rgba(52,160,106,0.25);
         }
 
+        .proj-card a {
+            display: block;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
         .proj-id {
             font-family: 'Fira Code', monospace;
             font-size: 0.55rem;
@@ -763,9 +869,7 @@
             gap: 30px;
         }
 
-        .tlr-brand {
-            flex-shrink: 0;
-        }
+        .tlr-brand { flex-shrink: 0; }
 
         .tlr-name {
             font-family: 'Fraunces', serif;
@@ -796,9 +900,7 @@
             flex-wrap: wrap;
         }
 
-        .tlr-line {
-            text-align: center;
-        }
+        .tlr-line { text-align: center; }
 
         .tlr-line-code {
             font-family: 'Fira Code', monospace;
@@ -909,12 +1011,150 @@
             font-size: 0.65rem;
             letter-spacing: 1.5px;
             color: var(--emerald);
-            transition: gap 0.2s;
+            transition: letter-spacing 0.2s;
         }
 
         .portal-card.gold-accent .portal-arrow { color: var(--gold); }
-
         .portal-card:hover .portal-arrow { letter-spacing: 3px; }
+
+        /* ─── PAIZ® CORP NETWORK SECTION ─── */
+        .network-section {
+            padding: 5rem 5%;
+            background: var(--charcoal);
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .network-inner { max-width: 1200px; margin: 0 auto; }
+
+        .network-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2.5rem;
+        }
+
+        .network-header h2 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.15;
+        }
+
+        .network-header h2 em {
+            font-style: italic;
+            color: var(--gold-light);
+            font-weight: 400;
+        }
+
+        .network-header-link {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(200,150,42,0.3);
+            padding-bottom: 2px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .network-header-link:hover {
+            color: var(--gold-light);
+            border-color: var(--gold-light);
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2px;
+            background: var(--border-dark);
+        }
+
+        .network-card {
+            background: var(--charcoal2);
+            padding: 1.8rem 1.6rem;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.2s;
+        }
+
+        .network-card:hover { background: var(--charcoal3); }
+
+        .network-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .network-card:hover::after { transform: scaleX(1); }
+
+        .network-card.active-site {
+            background: rgba(200,150,42,0.06);
+            border: 1px solid rgba(200,150,42,0.15);
+            cursor: default;
+        }
+
+        .network-card.active-site::after { transform: scaleX(1); }
+
+        .nc-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            color: var(--gold);
+            opacity: 0.6;
+        }
+
+        .network-card.active-site .nc-tag { opacity: 1; }
+
+        .nc-name {
+            font-family: 'Fraunces', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .nc-desc {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.3);
+            line-height: 1.6;
+            font-weight: 300;
+            flex: 1;
+        }
+
+        .nc-arrow {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 1.5px;
+            color: rgba(200,150,42,0.5);
+            transition: letter-spacing 0.2s, color 0.2s;
+        }
+
+        .network-card:hover .nc-arrow {
+            color: var(--gold);
+            letter-spacing: 2.5px;
+        }
+
+        .nc-you {
+            display: inline-block;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.45rem;
+            letter-spacing: 1.5px;
+            padding: 2px 7px;
+            background: rgba(200,150,42,0.15);
+            border: 1px solid rgba(200,150,42,0.3);
+            color: var(--gold);
+        }
 
         /* ─── FOUNDERS ─── */
         .founders-section {
@@ -1026,8 +1266,8 @@
             margin: 0 auto;
             padding: 4rem 5% 3rem;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 50px;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
         }
 
         .f-logo {
@@ -1046,7 +1286,41 @@
             color: rgba(255,255,255,0.3);
             line-height: 1.75;
             font-weight: 300;
-            max-width: 280px;
+            max-width: 260px;
+            margin-bottom: 1rem;
+        }
+
+        /* PaizCorp badge in footer */
+        .f-corp-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border: 1px solid rgba(200,150,42,0.25);
+            background: rgba(200,150,42,0.06);
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .f-corp-badge:hover {
+            background: rgba(200,150,42,0.12);
+            border-color: rgba(200,150,42,0.4);
+        }
+
+        .f-corp-badge-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.3);
+            line-height: 1.3;
+        }
+
+        .f-corp-badge-name {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 1px;
+            color: var(--gold);
+            font-weight: 500;
         }
 
         .f-col h5 {
@@ -1056,6 +1330,10 @@
             color: var(--emerald);
             opacity: 0.6;
             margin-bottom: 1.2rem;
+        }
+
+        .f-col.f-col-network h5 {
+            color: var(--gold);
         }
 
         .f-col a {
@@ -1069,6 +1347,8 @@
         }
 
         .f-col a:hover { color: rgba(255,255,255,0.75); }
+
+        .f-col.f-col-network a:hover { color: var(--gold-light); }
 
         .footer-bottom {
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -1089,6 +1369,14 @@
             letter-spacing: 1.5px;
             color: rgba(255,255,255,0.2);
         }
+
+        .footer-bottom a {
+            color: rgba(200,150,42,0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover { color: var(--gold); }
 
         /* ─── ANIMATIONS ─── */
         @keyframes fadeUp {
@@ -1125,6 +1413,7 @@
         @media (max-width: 1100px) {
             .hero-stats { display: none; }
             .timeline-track { grid-template-columns: repeat(3, 1fr); }
+            .network-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         @media (max-width: 900px) {
@@ -1137,6 +1426,9 @@
             .founders-header { grid-template-columns: 1fr; gap: 20px; }
             .footer-main { grid-template-columns: 1fr 1fr; }
             .nav-links { display: none; }
+            .network-grid { grid-template-columns: 1fr 1fr; }
+            .network-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .netbar-links { display: none; }
         }
 
         @media (max-width: 600px) {
@@ -1148,10 +1440,34 @@
             .hero-actions { flex-direction: column; }
             .tlr-strip { flex-direction: column; align-items: flex-start; }
             .founders-grid { grid-template-columns: 1fr; }
+            .network-grid { grid-template-columns: 1fr; }
+            .network-bar { display: none; }
+            nav { top: 0 !important; }
+            .hero { padding-top: 100px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- PAIZ® CORP NETWORK BAR -->
+    <div class="network-bar" id="networkBar">
+        <div class="netbar-inner">
+            <span class="netbar-brand">
+                PART OF THE <a href="/PaizCorp/">PAIZ® CORP</a> NETWORK
+            </span>
+            <div class="netbar-sep"></div>
+            <div class="netbar-links">
+                <a href="/PaizCorp/" >HUB</a>
+                <a href="/thelol/" class="active">THE LOL</a>
+                <a href="/PaizCorp/shop/">PAIZSHOP</a>
+                <a href="/thelol/tlr/">TL RAILWAYS</a>
+                <a href="/thelol/gov/isc/">ISC</a>
+                <a href="/PaizCorp/chicken/">PAIZCHICKEN</a>
+                <a href="/PaizCorp/productions/">PAIZPRODUCTIONS</a>
+            </div>
+            <span class="netbar-right">SKYXION: RAGNAROK ERA</span>
+        </div>
+    </div>
 
     <!-- NAV -->
     <nav id="navbar">
@@ -1327,8 +1643,8 @@
                     <p>
                         From a 4,800-block railway to twin towers that dominate The LoL City skyline — 
                         every megaproject is a testament to what The LoL builds when its people are united 
-                        under a shared vision. Constructed by <strong style="color:rgba(255,255,255,0.7)">Paiz® Corp</strong> and 
-                        operated by <strong style="color:rgba(255,255,255,0.7)">TL Railways</strong>.
+                        under a shared vision. Constructed by <a href="/PaizCorp/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(200,150,42,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>Paiz® Corp</strong></a> and 
+                        operated by <a href="/thelol/tlr/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(52,160,106,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>TL Railways</strong></a>.
                     </p>
                 </div>
             </div>
@@ -1375,7 +1691,7 @@
                     </div>
                     <div class="spec-item">
                         <span class="sk">PARENT CORP</span>
-                        <span class="sv">Paiz® Corp</span>
+                        <span class="sv"><a href="/PaizCorp/" style="color:var(--emerald); text-decoration:none;">Paiz® Corp</a></span>
                     </div>
                 </div>
             </div>
@@ -1423,16 +1739,20 @@
                     <span class="proj-status">OPERATIONAL</span>
                 </div>
                 <div class="proj-card">
-                    <div class="proj-id">MEGAPROJECT-04 // DEFENCE</div>
-                    <h4>Internal Security Control</h4>
-                    <p>The LoL's CIA-inspired agency. Successor to TLIO, protecting national sovereignty across all Skyxion territories since 2025.</p>
-                    <span class="proj-status">ACTIVE</span>
+                    <a href="/thelol/gov/isc/">
+                        <div class="proj-id">MEGAPROJECT-04 // DEFENCE</div>
+                        <h4>Internal Security Control</h4>
+                        <p>The LoL's CIA-inspired agency. Successor to TLIO, protecting national sovereignty across all Skyxion territories since 2025.</p>
+                        <span class="proj-status">ACTIVE</span>
+                    </a>
                 </div>
                 <div class="proj-card">
-                    <div class="proj-id">MEGAPROJECT-05 // CORPORATE</div>
-                    <h4>Paiz® Corp</h4>
-                    <p>The national conglomerate behind all construction and transport. Parent of TL Railways, Paiz™ Construction, and more.</p>
-                    <span class="proj-status">ACTIVE</span>
+                    <a href="/PaizCorp/">
+                        <div class="proj-id">MEGAPROJECT-05 // CORPORATE</div>
+                        <h4>Paiz® Corp</h4>
+                        <p>The national conglomerate behind all construction and transport. Parent of TL Railways, Paiz™ Construction, and more.</p>
+                        <span class="proj-status">ACTIVE</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1477,6 +1797,59 @@
                     <h3>About The LoL</h3>
                     <p>The full story, proclamation documents, and founding documents.</p>
                     <span class="portal-arrow">READ MORE →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAIZ® CORP NETWORK SECTION -->
+    <section class="network-section" id="network">
+        <div class="network-inner">
+            <div class="network-header reveal">
+                <div>
+                    <div class="section-eyebrow" style="color:var(--gold);">
+                        <span style="background:var(--gold); opacity:0.6; display:inline-block; width:20px; height:1px; margin-right:12px;"></span>
+                        PAIZ® CORP CONGLOMERATE
+                    </div>
+                    <h2>Part of the<br><em>Paiz® Corp</em> network.</h2>
+                </div>
+                <a href="/PaizCorp/" class="network-header-link">VISIT PAIZ® CORP HUB →</a>
+            </div>
+            <div class="network-grid reveal">
+                <!-- The LoL — active/current -->
+                <div class="network-card active-site">
+                    <span class="nc-tag">THE LOL // NATION</span>
+                    <span class="nc-name">The Legend of Legiona</span>
+                    <span class="nc-desc">The sovereign nation at the heart of the Paiz® Corp ecosystem. You are here.</span>
+                    <span class="nc-you">YOU ARE HERE</span>
+                </div>
+                <!-- PaizCorp Hub -->
+                <a href="/PaizCorp/" class="network-card">
+                    <span class="nc-tag">CORP HUB</span>
+                    <span class="nc-name">Paiz® Corp</span>
+                    <span class="nc-desc">The conglomerate homepage. Explore all subsidiaries and projects.</span>
+                    <span class="nc-arrow">VISIT HUB →</span>
+                </a>
+                <!-- PaizShop -->
+                <a href="/PaizCorp/shop/" class="network-card">
+                    <span class="nc-tag">STOREFRONT</span>
+                    <span class="nc-name">PaizShop</span>
+                    <span class="nc-desc">The official Paiz® Corp in-game item shop. Browse and order resources.</span>
+                    <span class="nc-arrow">SHOP NOW →</span>
+                </a>
+                <!-- TL Railways -->
+                <a href="/thelol/tlr/" class="network-card">
+                    <span class="nc-tag">TRANSPORT</span>
+                    <span class="nc-name">TL Railways</span>
+                    <span class="nc-desc">National rail network serving all LoL territories. Routes, timetables &amp; info.</span>
+                    <span class="nc-arrow">VIEW ROUTES →</span>
+                </a>
+                <!-- ISC -->
+                <a href="/thelol/gov/isc/" class="network-card">
+                    <span class="nc-tag">SECURITY // GOV</span>
+                    <span class="nc-name">ISC Archive</span>
+                    <span class="nc-desc">Declassified intelligence files and national security records.</span>
+                    <span class="nc-arrow">ACCESS →</span>
                 </a>
             </div>
         </div>
@@ -1556,8 +1929,14 @@
                 <div class="f-logo">The <em>LoL</em></div>
                 <p class="f-desc">
                     The Legend of Legiona. A sovereign nation in Skyxion, built on unity, freedom, 
-                    innovation, and honour since 2023. Built for peace.
+                    innovation, and honour since 2023.
                 </p>
+                <a href="/PaizCorp/" class="f-corp-badge">
+                    <div>
+                        <div class="f-corp-badge-label">PART OF THE</div>
+                        <div class="f-corp-badge-name">PAIZ® CORP NETWORK</div>
+                    </div>
+                </a>
             </div>
             <div class="f-col">
                 <h5>NATION</h5>
@@ -1579,20 +1958,45 @@
                 <a href="/thelol/assets/Proklamasi_The_LoL.pdf" target="_blank">Proklamasi (BM)</a>
                 <a href="/thelol/PaizCorp/tlsrl">TLSRL Info</a>
             </div>
+            <div class="f-col f-col-network">
+                <h5>NETWORK</h5>
+                <a href="/PaizCorp/">Paiz® Corp Hub</a>
+                <a href="/PaizCorp/shop/">PaizShop</a>
+                <a href="/PaizCorp/chicken/">PaizChicken</a>
+                <a href="/PaizCorp/productions/">PaizProductions</a>
+            </div>
         </div>
         <div class="footer-bottom">
             <div class="footer-bottom-inner">
                 <p>© 2026 THE LEGEND OF LEGIONA — ALL RIGHTS RESERVED</p>
-                <p>SKYXION: RAGNAROK ERA // BUILT FOR PEACE</p>
+                <p>PART OF THE <a href="/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: RAGNAROK ERA</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Navbar scroll effect
+        // Network bar + navbar scroll logic
         const navbar = document.getElementById('navbar');
+        const networkBar = document.getElementById('networkBar');
+        const NETBAR_H = 30;
+        let lastScroll = 0;
+
         window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 60);
+            const scrollY = window.scrollY;
+
+            // Scrolled nav style
+            navbar.classList.toggle('scrolled', scrollY > 60);
+
+            // Hide network bar after scrolling past it, slide nav up
+            if (scrollY > NETBAR_H) {
+                networkBar.classList.add('hidden');
+                navbar.classList.add('netbar-gone');
+            } else {
+                networkBar.classList.remove('hidden');
+                navbar.classList.remove('netbar-gone');
+            }
+
+            lastScroll = scrollY;
         });
 
         // Scroll reveal
@@ -1610,4 +2014,3 @@
 
 </body>
 </html>
-
