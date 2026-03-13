@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 — Page Not Found | The Legend of Legiona</title>
-    <link rel="icon" type="image/png" href="/thelol/TheLoL2.png">
+    <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
     <meta name="robots" content="noindex">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --green:       #1d5c3c;
-            --green-dark:  #0f2e1e;
-            --green-light: #2d7a52;
-            --emerald:     #34a06a;
-            --emerald-dim: rgba(52,160,106,0.1);
-            --gold:        #c8962a;
-            --gold-light:  #e0b045;
-            --charcoal:    #0f110e;
-            --charcoal2:   #141812;
-            --charcoal3:   #1a1f17;
-            --off-white:   #f5f2eb;
-            --border-dark: rgba(255,255,255,0.07);
+            --green:        #1d5c3c;
+            --green-dark:   #0f2e1e;
+            --green-light:  #2d7a52;
+            --emerald:      #34a06a;
+            --emerald-dim:  rgba(52,160,106,0.1);
+            --gold:         #c8962a;
+            --gold-light:   #e0b045;
+            --charcoal:     #0f110e;
+            --charcoal2:    #141812;
+            --charcoal3:    #1a1f17;
+            --off-white:    #f5f2eb;
+            --border-dark:  rgba(255,255,255,0.07);
             --border-green: rgba(52,160,106,0.18);
+            --netbar-h:     30px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -72,6 +73,95 @@
             pointer-events: none;
         }
 
+        /* ── PAIZ® CORP NETWORK BAR ── */
+        .network-bar {
+            position: relative;
+            z-index: 20;
+            height: var(--netbar-h);
+            background: var(--green-dark);
+            border-bottom: 1px solid rgba(52,160,106,0.2);
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            flex-shrink: 0;
+        }
+
+        .netbar-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .netbar-brand {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.56rem;
+            letter-spacing: 2.5px;
+            color: rgba(255,255,255,0.3);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .netbar-brand a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .netbar-brand a:hover { color: var(--gold-light); }
+
+        .netbar-sep {
+            width: 1px;
+            height: 14px;
+            background: rgba(255,255,255,0.1);
+            margin: 0 14px;
+            flex-shrink: 0;
+        }
+
+        .netbar-links {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .netbar-links a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.28);
+            text-decoration: none;
+            padding: 0 10px;
+            height: var(--netbar-h);
+            display: flex;
+            align-items: center;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .netbar-links a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
+        .netbar-links a:hover {
+            color: var(--emerald);
+            background: rgba(52,160,106,0.07);
+        }
+
+        .netbar-links a.active {
+            color: var(--emerald);
+            background: rgba(52,160,106,0.1);
+        }
+
+        .netbar-right {
+            margin-left: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.18);
+            white-space: nowrap;
+        }
+
         /* ── NAV ── */
         nav {
             position: relative; z-index: 10;
@@ -109,6 +199,7 @@
             justify-content: center;
             padding: 3rem 5%;
             position: relative; z-index: 5;
+            overflow: hidden;
         }
 
         .container {
@@ -132,7 +223,6 @@
             user-select: none;
         }
 
-        /* Glowing overlay text */
         .big-num::after {
             content: '404';
             position: absolute;
@@ -146,11 +236,7 @@
             letter-spacing: inherit;
             color: transparent;
             -webkit-text-stroke: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(52,160,106,0.08) 0%,
-                rgba(200,150,42,0.05) 100%
-            );
+            background: linear-gradient(135deg, rgba(52,160,106,0.08) 0%, rgba(200,150,42,0.05) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             filter: blur(8px);
@@ -312,6 +398,15 @@
             color: var(--emerald);
         }
 
+        .ql-btn.corp {
+            border-color: rgba(200,150,42,0.15);
+            color: rgba(200,150,42,0.45);
+        }
+        .ql-btn.corp:hover {
+            border-color: rgba(200,150,42,0.4);
+            color: var(--gold);
+        }
+
         /* ── FOOTER ── */
         footer {
             flex-shrink: 0;
@@ -330,6 +425,13 @@
             color: rgba(255,255,255,0.15);
         }
 
+        footer a {
+            color: rgba(200,150,42,0.45);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        footer a:hover { color: var(--gold); }
+
         /* ── ANIMATIONS ── */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -342,11 +444,16 @@
         }
 
         /* ── RESPONSIVE ── */
+        @media (max-width: 800px) {
+            .netbar-links { display: none; }
+        }
+
         @media (max-width: 500px) {
             body { overflow-y: auto; }
             .big-num { font-size: clamp(6rem, 28vw, 8rem); margin-bottom: 1.5rem; }
             .actions { flex-direction: column; align-items: center; }
             footer { flex-direction: column; gap: 6px; text-align: center; }
+            .network-bar { display: none; }
         }
     </style>
 </head>
@@ -355,6 +462,26 @@
     <div class="bg-glow-1"></div>
     <div class="bg-glow-2"></div>
     <div class="bg-grid"></div>
+
+    <!-- PAIZ® CORP NETWORK BAR -->
+    <div class="network-bar">
+        <div class="netbar-inner">
+            <span class="netbar-brand">
+                PART OF THE <a href="/PaizCorp/">PAIZ® CORP</a> NETWORK
+            </span>
+            <div class="netbar-sep"></div>
+            <div class="netbar-links">
+                <a href="/PaizCorp/">HUB</a>
+                <a href="/thelol/" class="active">THE LOL</a>
+                <a href="/PaizCorp/PaizShop/">PAIZSHOP</a>
+                <a href="/thelol/tlr/">TL RAILWAYS</a>
+                <a href="/thelol/gov/isc/">ISC</a>
+                <a href="/PaizCorp/PaizChicken/">PAIZCHICKEN</a>
+                <a href="/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+            </div>
+            <span class="netbar-right">SKYXION: ALTAER ERA</span>
+        </div>
+    </div>
 
     <!-- NAV -->
     <nav>
@@ -400,6 +527,8 @@
                     <a href="/thelol/gov/isc/" class="ql-btn">ISC</a>
                     <a href="/thelol/tlr/" class="ql-btn">TL RAILWAYS</a>
                     <a href="/thelol/PaizCorp/tlsrl" class="ql-btn">TLSRL</a>
+                    <a href="/PaizCorp/" class="ql-btn corp">PAIZ® CORP HUB</a>
+                    <a href="/PaizCorp/PaizShop/" class="ql-btn corp">PAIZSHOP</a>
                 </div>
             </div>
         </div>
@@ -408,7 +537,7 @@
     <!-- FOOTER -->
     <footer>
         <p>© 2026 THE LEGEND OF LEGIONA</p>
-        <p>ERROR 404 // SKYXION: RAGNAROK</p>
+        <p>ERROR 404 // SKYXION: ALTAER</p>
     </footer>
 
     <script>
