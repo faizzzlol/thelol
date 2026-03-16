@@ -7,7 +7,7 @@
     <meta property="og:title" content="The Legend of Legiona">
     <meta property="og:description" content="A sovereign nation forged in vision, courage, and camaraderie. Welcome to The LoL.">
     <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100;0,9..144,700;0,9..144,900;1,9..144,100;1,9..144,700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --green:       #1d5c3c;
@@ -45,7 +45,6 @@
             line-height: 1.7;
         }
 
-        /* Grain texture */
         body::before {
             content: '';
             position: fixed;
@@ -55,7 +54,7 @@
             z-index: 9999;
         }
 
-        /* ─── PAIZ® CORP NETWORK BAR ─── */
+        /* ─── NETWORK BAR ─── */
         .network-bar {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -66,25 +65,21 @@
             display: flex;
             align-items: center;
             padding: 0 5%;
-            gap: 0;
             transition: transform 0.3s ease;
         }
 
-        .network-bar.hidden {
-            transform: translateY(-100%);
-        }
+        .network-bar.hidden { transform: translateY(-100%); }
 
         .netbar-inner {
             display: flex;
             align-items: center;
-            gap: 0;
             width: 100%;
             max-width: 1300px;
             margin: 0 auto;
         }
 
         .netbar-brand {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.56rem;
             letter-spacing: 2.5px;
             color: rgba(255,255,255,0.3);
@@ -112,12 +107,11 @@
         .netbar-links {
             display: flex;
             align-items: center;
-            gap: 2px;
             flex: 1;
         }
 
         .netbar-links a {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.52rem;
             letter-spacing: 1.5px;
             color: rgba(255,255,255,0.28);
@@ -131,20 +125,12 @@
         }
 
         .netbar-links a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
-
-        .netbar-links a:hover {
-            color: var(--emerald);
-            background: rgba(52,160,106,0.07);
-        }
-
-        .netbar-links a.active {
-            color: var(--emerald);
-            background: rgba(52,160,106,0.1);
-        }
+        .netbar-links a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
+        .netbar-links a.active { color: var(--emerald); background: rgba(52,160,106,0.1); }
 
         .netbar-right {
             margin-left: auto;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.5rem;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.18);
@@ -165,9 +151,7 @@
             transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s, top 0.3s ease;
         }
 
-        nav.netbar-gone {
-            top: 0;
-        }
+        nav.netbar-gone { top: 0; }
 
         nav.scrolled {
             background: rgba(15,17,14,0.92);
@@ -186,23 +170,19 @@
         .nav-logo img { height: 34px; opacity: 0.9; }
 
         .nav-logo-text {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.7rem;
             font-weight: 500;
             letter-spacing: 3px;
             color: var(--emerald);
         }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .nav-links { display: flex; align-items: center; gap: 4px; }
 
         .nav-links a {
             padding: 6px 14px;
             text-decoration: none;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.62rem;
             letter-spacing: 1.5px;
             color: rgba(255,255,255,0.5);
@@ -234,7 +214,6 @@
             overflow: hidden;
         }
 
-        /* Radial glows */
         .hero-glow-1 {
             position: absolute;
             top: -10%; left: -10%;
@@ -251,7 +230,6 @@
             pointer-events: none;
         }
 
-        /* Animated grid lines */
         .hero-grid {
             position: absolute;
             inset: 0;
@@ -270,7 +248,7 @@
         }
 
         .hero-eyebrow {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.65rem;
             letter-spacing: 4px;
             color: var(--emerald);
@@ -290,7 +268,7 @@
         }
 
         .hero h1 {
-            font-family: 'Fraunces', serif;
+            font-family: 'Playfair Display', serif;
             font-size: clamp(4rem, 9vw, 10rem);
             font-weight: 900;
             line-height: 0.92;
@@ -333,7 +311,7 @@
             background: var(--green-light);
             color: #fff;
             text-decoration: none;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.68rem;
             letter-spacing: 2px;
             transition: background 0.25s, transform 0.2s;
@@ -347,23 +325,18 @@
             border: 1px solid rgba(255,255,255,0.2);
             color: rgba(255,255,255,0.7);
             text-decoration: none;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.68rem;
             letter-spacing: 2px;
             transition: all 0.25s;
         }
 
-        .btn-outline-white:hover {
-            border-color: rgba(255,255,255,0.5);
-            color: #fff;
-        }
+        .btn-outline-white:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
 
-        /* Hero scroll indicator */
         .hero-scroll {
             position: absolute;
             bottom: 2.5rem;
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             display: flex;
             justify-content: center;
             opacity: 0;
@@ -377,7 +350,6 @@
             animation: scrollPulse 2s ease infinite;
         }
 
-        /* Nation stats */
         .hero-stats {
             position: absolute;
             right: 0;
@@ -399,7 +371,7 @@
         }
 
         .hero-stat .num {
-            font-family: 'Fraunces', serif;
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--emerald);
@@ -408,7 +380,7 @@
         }
 
         .hero-stat .lbl {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.55rem;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.3);
@@ -434,7 +406,7 @@
         }
 
         .section-eyebrow {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.6rem;
             letter-spacing: 3px;
             color: var(--emerald);
@@ -452,7 +424,7 @@
         }
 
         .about-left h2 {
-            font-family: 'Fraunces', serif;
+            font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 3.5vw, 3.2rem);
             font-weight: 700;
             line-height: 1.15;
@@ -460,28 +432,12 @@
             margin-bottom: 1.5rem;
         }
 
-        .about-left h2 em {
-            font-style: italic;
-            color: var(--gold-light);
-            font-weight: 400;
-        }
+        .about-left h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
 
-        .about-left p {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.45);
-            line-height: 1.85;
-            font-weight: 300;
-            margin-bottom: 1.2rem;
-        }
-
+        .about-left p { font-size: 1rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; margin-bottom: 1.2rem; }
         .about-left p strong { color: rgba(255,255,255,0.75); font-weight: 500; }
 
-        /* Principles */
-        .principles {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
+        .principles { display: flex; flex-direction: column; gap: 1px; }
 
         .principle {
             display: flex;
@@ -493,13 +449,10 @@
             transition: background 0.2s, border-color 0.2s;
         }
 
-        .principle:hover {
-            background: rgba(52,160,106,0.06);
-            border-color: rgba(52,160,106,0.2);
-        }
+        .principle:hover { background: rgba(52,160,106,0.06); border-color: rgba(52,160,106,0.2); }
 
         .principle-num {
-            font-family: 'Fraunces', serif;
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
             font-weight: 900;
             color: transparent;
@@ -509,26 +462,11 @@
             width: 36px;
         }
 
-        .principle-info h4 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 0.2rem;
-        }
-
-        .principle-info p {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.38);
-            line-height: 1.5;
-            margin: 0;
-        }
+        .principle-info h4 { font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
+        .principle-info p { font-size: 0.8rem; color: rgba(255,255,255,0.38); line-height: 1.5; margin: 0; }
 
         /* ─── HISTORY ─── */
-        .history-section {
-            padding: 6rem 5%;
-            background: var(--charcoal);
-        }
+        .history-section { padding: 6rem 5%; background: var(--charcoal); }
 
         .section-header {
             max-width: 1200px;
@@ -538,24 +476,10 @@
             align-items: flex-end;
         }
 
-        .section-header h2 {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(2rem, 3.5vw, 3rem);
-            font-weight: 700;
-            color: #fff;
-        }
-
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #fff; }
         .section-header h2 em { font-style: italic; color: var(--emerald); }
+        .section-header p { font-size: 0.85rem; color: rgba(255,255,255,0.3); max-width: 300px; text-align: right; line-height: 1.7; }
 
-        .section-header p {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.3);
-            max-width: 300px;
-            text-align: right;
-            line-height: 1.7;
-        }
-
-        /* Timeline */
         .timeline-track {
             max-width: 1200px;
             margin: 0 auto;
@@ -566,72 +490,18 @@
             border: 1px solid var(--border-dark);
         }
 
-        .t-card {
-            background: var(--charcoal2);
-            padding: 2rem 1.5rem;
-            position: relative;
-            transition: background 0.25s;
-        }
-
+        .t-card { background: var(--charcoal2); padding: 2rem 1.5rem; position: relative; transition: background 0.25s; }
         .t-card:hover { background: var(--charcoal3); }
-
-        .t-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--border-dark);
-            transition: background 0.25s;
-        }
-
+        .t-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--border-dark); transition: background 0.25s; }
         .t-card:hover::before { background: var(--emerald); }
 
-        .t-card .era {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            color: var(--emerald);
-            opacity: 0.6;
-            margin-bottom: 0.8rem;
-            display: block;
-        }
+        .t-card .era { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.6; margin-bottom: 0.8rem; display: block; }
+        .t-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; line-height: 1.3; }
+        .t-card p { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.65; font-weight: 300; }
 
-        .t-card h4 {
-            font-family: 'Fraunces', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.6rem;
-            line-height: 1.3;
-        }
-
-        .t-card p {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.35);
-            line-height: 1.65;
-            font-weight: 300;
-        }
-
-        .t-badge {
-            display: inline-block;
-            margin-top: 1rem;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.5rem;
-            letter-spacing: 1.5px;
-            padding: 2px 8px;
-            border: 1px solid rgba(52,160,106,0.2);
-            color: rgba(52,160,106,0.6);
-        }
-
-        .t-badge.chaos {
-            border-color: rgba(180,60,60,0.25);
-            color: rgba(200,100,100,0.6);
-        }
-
-        .t-badge.current {
-            border-color: rgba(200,150,42,0.3);
-            color: rgba(224,176,69,0.7);
-        }
+        .t-badge { display: inline-block; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px; padding: 2px 8px; border: 1px solid rgba(52,160,106,0.2); color: rgba(52,160,106,0.6); }
+        .t-badge.chaos { border-color: rgba(180,60,60,0.25); color: rgba(200,100,100,0.6); }
+        .t-badge.current { border-color: rgba(200,150,42,0.3); color: rgba(224,176,69,0.7); }
 
         /* ─── MEGAPROJECTS ─── */
         .projects-section {
@@ -645,11 +515,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(
-                -45deg,
-                transparent, transparent 60px,
-                rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px
-            );
+            background: repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px);
         }
 
         .projects-inner { max-width: 1200px; margin: 0 auto; position: relative; }
@@ -662,24 +528,10 @@
             margin-bottom: 4rem;
         }
 
-        .projects-intro h2 {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(2.2rem, 4vw, 3.5rem);
-            font-weight: 900;
-            color: #fff;
-            line-height: 1.1;
-        }
-
+        .projects-intro h2 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; color: #fff; line-height: 1.1; }
         .projects-intro h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+        .projects-intro-right p { font-size: 0.95rem; color: rgba(255,255,255,0.4); line-height: 1.85; font-weight: 300; }
 
-        .projects-intro-right p {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.4);
-            line-height: 1.85;
-            font-weight: 300;
-        }
-
-        /* Featured TLSRL */
         .project-featured {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.1);
@@ -693,16 +545,10 @@
             overflow: hidden;
         }
 
-        .project-featured::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 4px; height: 100%;
-            background: linear-gradient(to bottom, var(--emerald), var(--gold));
-        }
+        .project-featured::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--emerald), var(--gold)); }
 
         .pf-tag {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.58rem;
             letter-spacing: 2px;
             color: var(--emerald);
@@ -712,88 +558,21 @@
             gap: 10px;
         }
 
-        .pf-tag::before {
-            content: 'FLAGSHIP';
-            padding: 2px 8px;
-            background: var(--emerald-dim);
-            border: 1px solid rgba(52,160,106,0.3);
-            font-size: 0.5rem;
-            letter-spacing: 1.5px;
-        }
+        .pf-tag::before { content: 'FLAGSHIP'; padding: 2px 8px; background: var(--emerald-dim); border: 1px solid rgba(52,160,106,0.3); font-size: 0.5rem; letter-spacing: 1.5px; }
 
-        .project-featured h3 {
-            font-family: 'Fraunces', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
+        .project-featured h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
+        .project-featured p { font-size: 0.92rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; margin-bottom: 1.5rem; }
 
-        .project-featured p {
-            font-size: 0.92rem;
-            color: rgba(255,255,255,0.45);
-            line-height: 1.85;
-            font-weight: 300;
-            margin-bottom: 1.5rem;
-        }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .project-tag { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 1.5px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.45); }
 
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
+        .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
+        .spec-item { padding: 1.2rem 1.4rem; background: rgba(255,255,255,0.03); }
+        .spec-item .sk { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: rgba(255,255,255,0.25); display: block; margin-bottom: 0.4rem; }
+        .spec-item .sv { font-size: 0.9rem; color: rgba(255,255,255,0.8); font-weight: 500; }
+        .spec-item .sv .big { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--emerald); }
 
-        .project-tag {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 1.5px;
-            padding: 4px 10px;
-            border: 1px solid rgba(255,255,255,0.12);
-            color: rgba(255,255,255,0.45);
-        }
-
-        .spec-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .spec-item {
-            padding: 1.2rem 1.4rem;
-            background: rgba(255,255,255,0.03);
-        }
-
-        .spec-item .sk {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.25);
-            display: block;
-            margin-bottom: 0.4rem;
-        }
-
-        .spec-item .sv {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.8);
-            font-weight: 500;
-        }
-
-        .spec-item .sv .big {
-            font-family: 'Fraunces', serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--emerald);
-        }
-
-        /* Small project cards */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-        }
+        .projects-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
 
         .proj-card {
             background: rgba(255,255,255,0.03);
@@ -802,63 +581,16 @@
             transition: background 0.2s, border-color 0.2s;
         }
 
-        .proj-card:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(52,160,106,0.25);
-        }
+        .proj-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(52,160,106,0.25); }
+        .proj-card a { display: block; height: 100%; text-decoration: none; color: inherit; }
 
-        .proj-card a {
-            display: block;
-            height: 100%;
-            text-decoration: none;
-            color: inherit;
-        }
+        .proj-id { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.6; margin-bottom: 1rem; }
+        .proj-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; line-height: 1.3; }
+        .proj-card p { font-size: 0.82rem; color: rgba(255,255,255,0.35); line-height: 1.65; font-weight: 300; }
 
-        .proj-id {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: var(--emerald);
-            opacity: 0.6;
-            margin-bottom: 1rem;
-        }
+        .proj-status { display: inline-flex; align-items: center; gap: 6px; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 1.5px; color: rgba(52,160,106,0.7); }
+        .proj-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--emerald); animation: pulse 2s infinite; }
 
-        .proj-card h4 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
-        }
-
-        .proj-card p {
-            font-size: 0.82rem;
-            color: rgba(255,255,255,0.35);
-            line-height: 1.65;
-            font-weight: 300;
-        }
-
-        .proj-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 1rem;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 1.5px;
-            color: rgba(52,160,106,0.7);
-        }
-
-        .proj-status::before {
-            content: '';
-            width: 5px; height: 5px;
-            border-radius: 50%;
-            background: var(--emerald);
-            animation: pulse 2s infinite;
-        }
-
-        /* TL Railways strip */
         .tlr-strip {
             background: var(--charcoal3);
             border: 1px solid rgba(255,255,255,0.07);
@@ -870,82 +602,21 @@
         }
 
         .tlr-brand { flex-shrink: 0; }
-
-        .tlr-name {
-            font-family: 'Fraunces', serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .tlr-sub {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.3);
-            margin-top: 2px;
-        }
-
-        .tlr-divider {
-            width: 1px;
-            height: 50px;
-            background: rgba(255,255,255,0.1);
-            flex-shrink: 0;
-        }
-
-        .tlr-lines {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-            flex-wrap: wrap;
-        }
-
+        .tlr-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: #fff; }
+        .tlr-sub { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+        .tlr-divider { width: 1px; height: 50px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+        .tlr-lines { display: flex; gap: 20px; flex: 1; flex-wrap: wrap; }
         .tlr-line { text-align: center; }
-
-        .tlr-line-code {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--emerald);
-            display: block;
-        }
-
-        .tlr-line-name {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.4);
-            display: block;
-            margin-top: 2px;
-        }
-
-        .tlr-cta {
-            flex-shrink: 0;
-            display: inline-block;
-            padding: 9px 20px;
-            border: 1px solid rgba(52,160,106,0.3);
-            color: var(--emerald);
-            text-decoration: none;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 1.5px;
-            transition: background 0.2s;
-        }
-
+        .tlr-line-code { font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; color: var(--emerald); display: block; }
+        .tlr-line-name { font-size: 0.75rem; color: rgba(255,255,255,0.4); display: block; margin-top: 2px; }
+        .tlr-cta { flex-shrink: 0; display: inline-block; padding: 9px 20px; border: 1px solid rgba(52,160,106,0.3); color: var(--emerald); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 1.5px; transition: background 0.2s; }
         .tlr-cta:hover { background: var(--emerald-dim); }
 
         /* ─── PORTALS ─── */
-        .portals-section {
-            padding: 6rem 5%;
-            background: var(--charcoal2);
-        }
-
+        .portals-section { padding: 6rem 5%; background: var(--charcoal2); }
         .portals-inner { max-width: 1200px; margin: 0 auto; }
 
-        .portals-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 2px;
-            background: var(--border-dark);
-        }
+        .portals-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2px; background: var(--border-dark); }
 
         .portal-card {
             background: var(--charcoal3);
@@ -961,94 +632,29 @@
         }
 
         .portal-card:hover { background: rgba(52,160,106,0.06); }
-
-        .portal-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--emerald);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.35s ease;
-        }
-
+        .portal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--emerald); transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
         .portal-card:hover::before { transform: scaleX(1); }
-
         .portal-card.gold-accent::before { background: var(--gold-light); }
         .portal-card.gold-accent:hover { background: rgba(200,150,42,0.05); }
 
-        .portal-num {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: var(--emerald);
-            opacity: 0.6;
-            margin-bottom: auto;
-        }
-
+        .portal-num { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.6; margin-bottom: auto; }
         .portal-card.gold-accent .portal-num { color: var(--gold); }
-
-        .portal-card h3 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #fff;
-            margin: auto 0 0.5rem;
-            line-height: 1.2;
-        }
-
-        .portal-card p {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.38);
-            line-height: 1.65;
-            font-weight: 300;
-            margin-bottom: 1.5rem;
-        }
-
-        .portal-arrow {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 1.5px;
-            color: var(--emerald);
-            transition: letter-spacing 0.2s;
-        }
-
+        .portal-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #fff; margin: auto 0 0.5rem; line-height: 1.2; }
+        .portal-card p { font-size: 0.85rem; color: rgba(255,255,255,0.38); line-height: 1.65; font-weight: 300; margin-bottom: 1.5rem; }
+        .portal-arrow { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 1.5px; color: var(--emerald); transition: letter-spacing 0.2s; }
         .portal-card.gold-accent .portal-arrow { color: var(--gold); }
         .portal-card:hover .portal-arrow { letter-spacing: 3px; }
 
-        /* ─── PAIZ® CORP NETWORK SECTION ─── */
-        .network-section {
-            padding: 5rem 5%;
-            background: var(--charcoal);
-            border-top: 1px solid var(--border-dark);
-        }
-
+        /* ─── NETWORK SECTION ─── */
+        .network-section { padding: 5rem 5%; background: var(--charcoal); border-top: 1px solid var(--border-dark); }
         .network-inner { max-width: 1200px; margin: 0 auto; }
 
-        .network-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 2.5rem;
-        }
-
-        .network-header h2 {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.15;
-        }
-
-        .network-header h2 em {
-            font-style: italic;
-            color: var(--gold-light);
-            font-weight: 400;
-        }
+        .network-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
+        .network-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #fff; line-height: 1.15; }
+        .network-header h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
 
         .network-header-link {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.6rem;
             letter-spacing: 2px;
             color: var(--gold);
@@ -1058,14 +664,12 @@
             transition: border-color 0.2s, color 0.2s;
         }
 
-        .network-header-link:hover {
-            color: var(--gold-light);
-            border-color: var(--gold-light);
-        }
+        .network-header-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
 
+        /* 4-column grid so 7 cards wrap to 2 rows */
         .network-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 2px;
             background: var(--border-dark);
         }
@@ -1084,316 +688,71 @@
         }
 
         .network-card:hover { background: var(--charcoal3); }
-
-        .network-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--gold);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
+        .network-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
         .network-card:hover::after { transform: scaleX(1); }
-
-        .network-card.active-site {
-            background: rgba(200,150,42,0.06);
-            border: 1px solid rgba(200,150,42,0.15);
-            cursor: default;
-        }
-
+        .network-card.active-site { background: rgba(200,150,42,0.06); border: 1px solid rgba(200,150,42,0.15); cursor: default; }
         .network-card.active-site::after { transform: scaleX(1); }
 
-        .nc-tag {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.5rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            opacity: 0.6;
-        }
-
+        .nc-tag { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 2px; color: var(--gold); opacity: 0.6; }
         .network-card.active-site .nc-tag { opacity: 1; }
-
-        .nc-name {
-            font-family: 'Fraunces', serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.2;
-        }
-
-        .nc-desc {
-            font-size: 0.78rem;
-            color: rgba(255,255,255,0.3);
-            line-height: 1.6;
-            font-weight: 300;
-            flex: 1;
-        }
-
-        .nc-arrow {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 1.5px;
-            color: rgba(200,150,42,0.5);
-            transition: letter-spacing 0.2s, color 0.2s;
-        }
-
-        .network-card:hover .nc-arrow {
-            color: var(--gold);
-            letter-spacing: 2.5px;
-        }
-
-        .nc-you {
-            display: inline-block;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.45rem;
-            letter-spacing: 1.5px;
-            padding: 2px 7px;
-            background: rgba(200,150,42,0.15);
-            border: 1px solid rgba(200,150,42,0.3);
-            color: var(--gold);
-        }
+        .nc-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.2; }
+        .nc-desc { font-size: 0.78rem; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; flex: 1; }
+        .nc-arrow { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 1.5px; color: rgba(200,150,42,0.5); transition: letter-spacing 0.2s, color 0.2s; }
+        .network-card:hover .nc-arrow { color: var(--gold); letter-spacing: 2.5px; }
+        .nc-you { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.45rem; letter-spacing: 1.5px; padding: 2px 7px; background: rgba(200,150,42,0.15); border: 1px solid rgba(200,150,42,0.3); color: var(--gold); }
 
         /* ─── FOUNDERS ─── */
-        .founders-section {
-            padding: 6rem 5%;
-            background: var(--charcoal);
-        }
-
+        .founders-section { padding: 6rem 5%; background: var(--charcoal); }
         .founders-inner { max-width: 1200px; margin: 0 auto; }
 
-        .founders-header {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 60px;
-            align-items: center;
-            margin-bottom: 4rem;
-        }
-
-        .founders-header h2 {
-            font-family: 'Fraunces', serif;
-            font-size: 3rem;
-            font-weight: 900;
-            color: #fff;
-            line-height: 1.1;
-        }
-
+        .founders-header { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: center; margin-bottom: 4rem; }
+        .founders-header h2 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: #fff; line-height: 1.1; }
         .founders-header h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
+        .founders-header p { font-size: 0.95rem; color: rgba(255,255,255,0.4); line-height: 1.85; font-weight: 300; }
 
-        .founders-header p {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.4);
-            line-height: 1.85;
-            font-weight: 300;
-        }
+        .founders-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border-dark); }
 
-        .founders-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-            background: var(--border-dark);
-        }
-
-        .founder-card {
-            background: var(--charcoal2);
-            padding: 2.5rem 2rem 2rem;
-            position: relative;
-            transition: background 0.2s;
-        }
-
+        .founder-card { background: var(--charcoal2); padding: 2.5rem 2rem 2rem; position: relative; transition: background 0.2s; }
         .founder-card:hover { background: var(--charcoal3); }
 
-        .founder-index {
-            font-family: 'Fraunces', serif;
-            font-size: 4rem;
-            font-weight: 900;
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(52,160,106,0.15);
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            line-height: 1;
-        }
+        .founder-index { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.15); position: absolute; top: 1.5rem; right: 1.5rem; line-height: 1; }
 
-        .founder-initial {
-            width: 52px; height: 52px;
-            border: 1px solid rgba(52,160,106,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Fraunces', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--emerald);
-            margin-bottom: 1.5rem;
-            background: rgba(52,160,106,0.06);
-        }
+        .founder-initial { width: 52px; height: 52px; border: 1px solid rgba(52,160,106,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--emerald); margin-bottom: 1.5rem; background: rgba(52,160,106,0.06); }
 
-        .founder-card h3 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.4rem;
-        }
-
-        .founder-role {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.57rem;
-            letter-spacing: 2px;
-            color: var(--emerald);
-            opacity: 0.7;
-            margin-bottom: 1rem;
-        }
-
-        .founder-card p {
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.38);
-            line-height: 1.75;
-            font-weight: 300;
-        }
+        .founder-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+        .founder-role { font-family: 'DM Mono', monospace; font-size: 0.57rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.7; margin-bottom: 1rem; }
+        .founder-card p { font-size: 0.88rem; color: rgba(255,255,255,0.38); line-height: 1.75; font-weight: 300; }
 
         /* ─── FOOTER ─── */
-        .footer {
-            background: var(--green-dark);
-            border-top: 1px solid rgba(52,160,106,0.15);
-        }
+        .footer { background: var(--green-dark); border-top: 1px solid rgba(52,160,106,0.15); }
 
-        .footer-main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 5% 3rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 40px;
-        }
+        .footer-main { max-width: 1200px; margin: 0 auto; padding: 4rem 5% 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
 
-        .f-logo {
-            font-family: 'Fraunces', serif;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 0.8rem;
-            line-height: 1.2;
-        }
-
+        .f-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: #fff; margin-bottom: 0.8rem; line-height: 1.2; }
         .f-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
+        .f-desc { font-size: 0.88rem; color: rgba(255,255,255,0.3); line-height: 1.75; font-weight: 300; max-width: 260px; margin-bottom: 1rem; }
 
-        .f-desc {
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.3);
-            line-height: 1.75;
-            font-weight: 300;
-            max-width: 260px;
-            margin-bottom: 1rem;
-        }
+        .f-corp-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid rgba(200,150,42,0.25); background: rgba(200,150,42,0.06); text-decoration: none; transition: background 0.2s, border-color 0.2s; }
+        .f-corp-badge:hover { background: rgba(200,150,42,0.12); border-color: rgba(200,150,42,0.4); }
+        .f-corp-badge-label { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); line-height: 1.3; }
+        .f-corp-badge-name { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 1px; color: var(--gold); font-weight: 500; }
 
-        /* PaizCorp badge in footer */
-        .f-corp-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 7px 12px;
-            border: 1px solid rgba(200,150,42,0.25);
-            background: rgba(200,150,42,0.06);
-            text-decoration: none;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .f-corp-badge:hover {
-            background: rgba(200,150,42,0.12);
-            border-color: rgba(200,150,42,0.4);
-        }
-
-        .f-corp-badge-label {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.5rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.3);
-            line-height: 1.3;
-        }
-
-        .f-corp-badge-name {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 1px;
-            color: var(--gold);
-            font-weight: 500;
-        }
-
-        .f-col h5 {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.57rem;
-            letter-spacing: 2.5px;
-            color: var(--emerald);
-            opacity: 0.6;
-            margin-bottom: 1.2rem;
-        }
-
-        .f-col.f-col-network h5 {
-            color: var(--gold);
-        }
-
-        .f-col a {
-            display: block;
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.35);
-            text-decoration: none;
-            margin-bottom: 0.6rem;
-            font-weight: 300;
-            transition: color 0.2s;
-        }
-
+        .f-col h5 { font-family: 'DM Mono', monospace; font-size: 0.57rem; letter-spacing: 2.5px; color: var(--emerald); opacity: 0.6; margin-bottom: 1.2rem; }
+        .f-col.f-col-network h5 { color: var(--gold); }
+        .f-col a { display: block; font-size: 0.88rem; color: rgba(255,255,255,0.35); text-decoration: none; margin-bottom: 0.6rem; font-weight: 300; transition: color 0.2s; }
         .f-col a:hover { color: rgba(255,255,255,0.75); }
-
         .f-col.f-col-network a:hover { color: var(--gold-light); }
 
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 1.2rem 5%;
-        }
-
-        .footer-bottom-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-bottom p {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.56rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.2);
-        }
-
-        .footer-bottom a {
-            color: rgba(200,150,42,0.5);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 1.2rem 5%; }
+        .footer-bottom-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.2); }
+        .footer-bottom a { color: rgba(200,150,42,0.5); text-decoration: none; transition: color 0.2s; }
         .footer-bottom a:hover { color: var(--gold); }
 
         /* ─── ANIMATIONS ─── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         @keyframes scrollPulse {
             0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
             40%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
@@ -1401,12 +760,7 @@
             100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .reveal.in { opacity: 1; transform: translateY(0); }
 
         /* ─── RESPONSIVE ─── */
@@ -1453,17 +807,19 @@
     <div class="network-bar" id="networkBar">
         <div class="netbar-inner">
             <span class="netbar-brand">
-                PART OF THE <a href="/PaizCorp/">PAIZ® CORP</a> NETWORK
+                PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK
             </span>
             <div class="netbar-sep"></div>
             <div class="netbar-links">
-                <a href="/PaizCorp/" >HUB</a>
-                <a href="/thelol/" class="active">THE LOL</a>
-                <a href="/PaizCorp/shop/">PAIZSHOP</a>
-                <a href="/thelol/tlr/">TL RAILWAYS</a>
-                <a href="/thelol/gov/isc/">ISC</a>
-                <a href="/PaizCorp/chicken/">PAIZCHICKEN</a>
-                <a href="/PaizCorp/productions/">PAIZPRODUCTIONS</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+                <a href="https://faizzzlol.github.io/thelol/" class="active">THE LOL</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
+                <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+                <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+                <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
             </div>
             <span class="netbar-right">SKYXION: RAGNAROK ERA</span>
         </div>
@@ -1472,8 +828,7 @@
     <!-- NAV -->
     <nav id="navbar">
         <a href="#" class="nav-logo">
-            <img src="/thelol/favicon-96x96.png" alt="LoL Logo"
-                 onerror="this.style.display='none'">
+            <img src="/thelol/favicon-96x96.png" alt="LoL Logo" onerror="this.style.display='none'">
             <span class="nav-logo-text">THE LOL</span>
         </a>
         <div class="nav-links">
@@ -1509,22 +864,10 @@
         </div>
 
         <div class="hero-stats">
-            <div class="hero-stat">
-                <span class="num">2023</span>
-                <span class="lbl">YEAR FOUNDED</span>
-            </div>
-            <div class="hero-stat">
-                <span class="num">3</span>
-                <span class="lbl">FOUNDING MEMBERS</span>
-            </div>
-            <div class="hero-stat">
-                <span class="num">4,800+</span>
-                <span class="lbl">BLOCKS // TLSRL</span>
-            </div>
-            <div class="hero-stat">
-                <span class="num">6+</span>
-                <span class="lbl">MEGAPROJECTS</span>
-            </div>
+            <div class="hero-stat"><span class="num">2023</span><span class="lbl">YEAR FOUNDED</span></div>
+            <div class="hero-stat"><span class="num">3</span><span class="lbl">FOUNDING MEMBERS</span></div>
+            <div class="hero-stat"><span class="num">4,800+</span><span class="lbl">BLOCKS // TLSRL</span></div>
+            <div class="hero-stat"><span class="num">6+</span><span class="lbl">MEGAPROJECTS</span></div>
         </div>
 
         <div class="hero-scroll"><div class="scroll-line"></div></div>
@@ -1643,13 +986,12 @@
                     <p>
                         From a 4,800-block railway to twin towers that dominate The LoL City skyline — 
                         every megaproject is a testament to what The LoL builds when its people are united 
-                        under a shared vision. Constructed by <a href="/PaizCorp/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(200,150,42,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>Paiz® Corp</strong></a> and 
-                        operated by <a href="/thelol/tlr/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(52,160,106,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>TL Railways</strong></a>.
+                        under a shared vision. Constructed by <a href="https://faizzzlol.github.io/PaizCorp/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(200,150,42,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>Paiz® Corp</strong></a> and 
+                        operated by <a href="https://faizzzlol.github.io/thelol/tlr/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(52,160,106,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>TL Railways</strong></a>.
                     </p>
                 </div>
             </div>
 
-            <!-- TLSRL Featured -->
             <div class="project-featured reveal">
                 <div>
                     <div class="pf-tag">MEGAPROJECT-01 // TRANSPORT</div>
@@ -1666,37 +1008,18 @@
                         <span class="project-tag">ENDER CHEST</span>
                         <span class="project-tag">ESCALATOR</span>
                     </div>
-                    <a href="/thelol/PaizCorp/tlsrl" style="display:inline-block; margin-top:1.5rem; font-family:'Fira Code',monospace; font-size:0.62rem; letter-spacing:2px; color:var(--emerald); text-decoration:none; border-bottom:1px solid rgba(52,160,106,0.3); padding-bottom:2px;">VIEW TLSRL PAGE →</a>
+                    <a href="/thelol/PaizCorp/tlsrl" style="display:inline-block; margin-top:1.5rem; font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:2px; color:var(--emerald); text-decoration:none; border-bottom:1px solid rgba(52,160,106,0.3); padding-bottom:2px;">VIEW TLSRL PAGE →</a>
                 </div>
                 <div class="spec-grid">
-                    <div class="spec-item">
-                        <span class="sk">DISTANCE</span>
-                        <span class="sv"><span class="big">4,800+</span> blocks</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="sk">TRAVEL TIME</span>
-                        <span class="sv"><span class="big">~10</span> minutes</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="sk">OPERATOR</span>
-                        <span class="sv">TL Railways</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="sk">CONTRACTOR</span>
-                        <span class="sv">Paiz™ Construction</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="sk">ROUTE</span>
-                        <span class="sv">The LoL ↔ Spawn</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="sk">PARENT CORP</span>
-                        <span class="sv"><a href="/PaizCorp/" style="color:var(--emerald); text-decoration:none;">Paiz® Corp</a></span>
-                    </div>
+                    <div class="spec-item"><span class="sk">DISTANCE</span><span class="sv"><span class="big">4,800+</span> blocks</span></div>
+                    <div class="spec-item"><span class="sk">TRAVEL TIME</span><span class="sv"><span class="big">~10</span> minutes</span></div>
+                    <div class="spec-item"><span class="sk">OPERATOR</span><span class="sv">TL Railways</span></div>
+                    <div class="spec-item"><span class="sk">CONTRACTOR</span><span class="sv">Paiz™ Construction</span></div>
+                    <div class="spec-item"><span class="sk">ROUTE</span><span class="sv">The LoL ↔ Spawn</span></div>
+                    <div class="spec-item"><span class="sk">PARENT CORP</span><span class="sv"><a href="https://faizzzlol.github.io/PaizCorp/" style="color:var(--emerald); text-decoration:none;">Paiz® Corp</a></span></div>
                 </div>
             </div>
 
-            <!-- TL Railways lines -->
             <div class="tlr-strip reveal">
                 <div class="tlr-brand">
                     <div class="tlr-name">TL Railways</div>
@@ -1704,27 +1027,14 @@
                 </div>
                 <div class="tlr-divider"></div>
                 <div class="tlr-lines">
-                    <div class="tlr-line">
-                        <span class="tlr-line-code">TLSRL</span>
-                        <span class="tlr-line-name">Spawn Railway Link</span>
-                    </div>
-                    <div class="tlr-line">
-                        <span class="tlr-line-code">MONO</span>
-                        <span class="tlr-line-name">TL Monorail</span>
-                    </div>
-                    <div class="tlr-line">
-                        <span class="tlr-line-code">LRT/MRT</span>
-                        <span class="tlr-line-name">Rapid Transit</span>
-                    </div>
-                    <div class="tlr-line">
-                        <span class="tlr-line-code">HSB</span>
-                        <span class="tlr-line-name">High-Speed Boat Link</span>
-                    </div>
+                    <div class="tlr-line"><span class="tlr-line-code">TLSRL</span><span class="tlr-line-name">Spawn Railway Link</span></div>
+                    <div class="tlr-line"><span class="tlr-line-code">MONO</span><span class="tlr-line-name">TL Monorail</span></div>
+                    <div class="tlr-line"><span class="tlr-line-code">LRT/MRT</span><span class="tlr-line-name">Rapid Transit</span></div>
+                    <div class="tlr-line"><span class="tlr-line-code">HSB</span><span class="tlr-line-name">High-Speed Boat Link</span></div>
                 </div>
-                <a href="/thelol/tlr/" class="tlr-cta">VIEW TL RAILWAYS →</a>
+                <a href="https://faizzzlol.github.io/thelol/tlr/" class="tlr-cta">VIEW TL RAILWAYS →</a>
             </div>
 
-            <!-- Other projects -->
             <div class="projects-grid reveal" style="margin-top:2px;">
                 <div class="proj-card">
                     <div class="proj-id">MEGAPROJECT-02 // ARCHITECTURE</div>
@@ -1747,7 +1057,7 @@
                     </a>
                 </div>
                 <div class="proj-card">
-                    <a href="/PaizCorp/">
+                    <a href="https://faizzzlol.github.io/PaizCorp/">
                         <div class="proj-id">MEGAPROJECT-05 // CORPORATE</div>
                         <h4>Paiz® Corp</h4>
                         <p>The national conglomerate behind all construction and transport. Parent of TL Railways, Paiz™ Construction, and more.</p>
@@ -1763,7 +1073,7 @@
         <div class="portals-inner">
             <div style="margin-bottom:3rem;" class="reveal">
                 <div class="section-eyebrow">EXPLORE THE LOL UNIVERSE</div>
-                <h2 style="font-family:'Fraunces',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:700; color:#fff; margin-top:0.8rem;">
+                <h2 style="font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:700; color:#fff; margin-top:0.8rem;">
                     Every corner of<br><em style="font-style:italic; color:var(--emerald); font-weight:400;">the nation.</em>
                 </h2>
             </div>
@@ -1813,43 +1123,50 @@
                     </div>
                     <h2>Part of the<br><em>Paiz® Corp</em> network.</h2>
                 </div>
-                <a href="/PaizCorp/" class="network-header-link">VISIT PAIZ® CORP HUB →</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/" class="network-header-link">VISIT PAIZ® CORP HUB →</a>
             </div>
             <div class="network-grid reveal">
-                <!-- The LoL — active/current -->
                 <div class="network-card active-site">
                     <span class="nc-tag">THE LOL // NATION</span>
                     <span class="nc-name">The Legend of Legiona</span>
                     <span class="nc-desc">The sovereign nation at the heart of the Paiz® Corp ecosystem. You are here.</span>
                     <span class="nc-you">YOU ARE HERE</span>
                 </div>
-                <!-- PaizCorp Hub -->
-                <a href="/PaizCorp/" class="network-card">
+                <a href="https://faizzzlol.github.io/PaizCorp/" class="network-card">
                     <span class="nc-tag">CORP HUB</span>
                     <span class="nc-name">Paiz® Corp</span>
                     <span class="nc-desc">The conglomerate homepage. Explore all subsidiaries and projects.</span>
                     <span class="nc-arrow">VISIT HUB →</span>
                 </a>
-                <!-- PaizShop -->
-                <a href="/PaizCorp/shop/" class="network-card">
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="network-card">
                     <span class="nc-tag">STOREFRONT</span>
-                    <span class="nc-name">PaizShop</span>
+                    <span class="nc-name">Paiz Shop</span>
                     <span class="nc-desc">The official Paiz® Corp in-game item shop. Browse and order resources.</span>
                     <span class="nc-arrow">SHOP NOW →</span>
                 </a>
-                <!-- TL Railways -->
-                <a href="/thelol/tlr/" class="network-card">
+                <a href="https://faizzzlol.github.io/thelol/tlr/" class="network-card">
                     <span class="nc-tag">TRANSPORT</span>
                     <span class="nc-name">TL Railways</span>
                     <span class="nc-desc">National rail network serving all LoL territories. Routes, timetables &amp; info.</span>
                     <span class="nc-arrow">VIEW ROUTES →</span>
                 </a>
-                <!-- ISC -->
-                <a href="/thelol/gov/isc/" class="network-card">
+                <a href="https://faizzzlol.github.io/thelol/gov/isc/" class="network-card">
                     <span class="nc-tag">SECURITY // GOV</span>
                     <span class="nc-name">ISC Archive</span>
                     <span class="nc-desc">Declassified intelligence files and national security records.</span>
                     <span class="nc-arrow">ACCESS →</span>
+                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/" class="network-card">
+                    <span class="nc-tag">FOOD</span>
+                    <span class="nc-name">Paiz Chicken</span>
+                    <span class="nc-desc">Virtual food ordering across Skyxion. Delivery &amp; pickup. Priced in diamonds.</span>
+                    <span class="nc-arrow">ORDER NOW →</span>
+                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/" class="network-card">
+                    <span class="nc-tag">FILM &amp; MEDIA</span>
+                    <span class="nc-name">PaizProductions</span>
+                    <span class="nc-desc">Official film studio. The LoL Movie, LoL Chronicles, and ISC: Classified.</span>
+                    <span class="nc-arrow">VIEW STUDIO →</span>
                 </a>
             </div>
         </div>
@@ -1872,49 +1189,37 @@
                     <div class="founder-initial">F</div>
                     <h3>Faiz4224</h3>
                     <div class="founder-role">FIRST PRESIDENT // FOUNDING LEADER</div>
-                    <p>
-                        Whose unwavering resolve and ingenuity laid the foundation of this great nation. 
-                        Led The LoL through its golden era, survived the political chaos of 2023, 
-                        and rebuilt the nation stronger than before. Suggester of TLSRL.
-                    </p>
+                    <p>Whose unwavering resolve and ingenuity laid the foundation of this great nation. Led The LoL through its golden era, survived the political chaos of 2023, and rebuilt the nation stronger than before. Suggester of TLSRL.</p>
                 </div>
                 <div class="founder-card">
                     <span class="founder-index">02</span>
                     <div class="founder-initial">I</div>
                     <h3>Imii Kun</h3>
                     <div class="founder-role">CO-FOUNDER // VISIONARY</div>
-                    <p>
-                        The visionary who proposed renaming the nation to "The Legend of Legiona." 
-                        A pillar of strength whose dedication forged the bonds of unity that sustain 
-                        the people of Legiona to this day.
-                    </p>
+                    <p>The visionary who proposed renaming the nation to "The Legend of Legiona." A pillar of strength whose dedication forged the bonds of unity that sustain the people of Legiona to this day.</p>
                 </div>
                 <div class="founder-card">
                     <span class="founder-index">03</span>
                     <div class="founder-initial">D</div>
                     <h3>Dyno</h3>
                     <div class="founder-role">CO-FOUNDER // STRATEGIST</div>
-                    <p>
-                        Whose wisdom and determination illuminated the path toward the nation's glorious 
-                        future from its earliest days as The Sus. A strategist at heart.
-                    </p>
+                    <p>Whose wisdom and determination illuminated the path toward the nation's glorious future from its earliest days as The Sus. A strategist at heart.</p>
                 </div>
             </div>
 
-            <!-- Proclamation CTA -->
             <div style="margin-top:3rem; padding:2.5rem; border:1px solid var(--border-dark); background:var(--charcoal2); display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap;" class="reveal">
                 <div>
-                    <div style="font-family:'Fira Code',monospace; font-size:0.58rem; letter-spacing:3px; color:var(--emerald); opacity:0.7; margin-bottom:0.5rem;">FOUNDING DOCUMENT</div>
-                    <div style="font-family:'Fraunces',serif; font-size:1.4rem; font-weight:700; color:#fff;">The LoL Proclamation of Sovereignty</div>
+                    <div style="font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:3px; color:var(--emerald); opacity:0.7; margin-bottom:0.5rem;">FOUNDING DOCUMENT</div>
+                    <div style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:#fff;">The LoL Proclamation of Sovereignty</div>
                     <div style="font-size:0.85rem; color:rgba(255,255,255,0.35); margin-top:0.3rem;">Signed by all three founders. Available in English and Bahasa Melayu.</div>
                 </div>
                 <div style="display:flex; gap:10px; flex-shrink:0; flex-wrap:wrap;">
                     <a href="/thelol/assets/The_LoL_Proclamation.pdf"
-                       style="padding:10px 22px; border:1px solid rgba(52,160,106,0.4); color:var(--emerald); text-decoration:none; font-family:'Fira Code',monospace; font-size:0.62rem; letter-spacing:1.5px; transition:background 0.2s;"
+                       style="padding:10px 22px; border:1px solid rgba(52,160,106,0.4); color:var(--emerald); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; transition:background 0.2s;"
                        onmouseover="this.style.background='rgba(52,160,106,0.1)'" onmouseout="this.style.background=''"
                        target="_blank">↓ PROCLAMATION (EN)</a>
                     <a href="/thelol/assets/Proklamasi_The_LoL.pdf"
-                       style="padding:10px 22px; border:1px solid rgba(200,150,42,0.3); color:var(--gold); text-decoration:none; font-family:'Fira Code',monospace; font-size:0.62rem; letter-spacing:1.5px; transition:background 0.2s;"
+                       style="padding:10px 22px; border:1px solid rgba(200,150,42,0.3); color:var(--gold); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; transition:background 0.2s;"
                        onmouseover="this.style.background='rgba(200,150,42,0.08)'" onmouseout="this.style.background=''"
                        target="_blank">↓ PROKLAMASI (BM)</a>
                 </div>
@@ -1927,11 +1232,8 @@
         <div class="footer-main">
             <div>
                 <div class="f-logo">The <em>LoL</em></div>
-                <p class="f-desc">
-                    The Legend of Legiona. A sovereign nation in Skyxion, built on unity, freedom, 
-                    innovation, and honour since 2023.
-                </p>
-                <a href="/PaizCorp/" class="f-corp-badge">
+                <p class="f-desc">The Legend of Legiona. A sovereign nation in Skyxion, built on unity, freedom, innovation, and honour since 2023.</p>
+                <a href="https://faizzzlol.github.io/PaizCorp/" class="f-corp-badge">
                     <div>
                         <div class="f-corp-badge-label">PART OF THE</div>
                         <div class="f-corp-badge-name">PAIZ® CORP NETWORK</div>
@@ -1960,34 +1262,28 @@
             </div>
             <div class="f-col f-col-network">
                 <h5>NETWORK</h5>
-                <a href="/PaizCorp/">Paiz® Corp Hub</a>
-                <a href="/PaizCorp/shop/">PaizShop</a>
-                <a href="/PaizCorp/chicken/">PaizChicken</a>
-                <a href="/PaizCorp/productions/">PaizProductions</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/">Paiz® Corp Hub</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">Paiz Shop</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">Paiz Chicken</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PaizProductions</a>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="footer-bottom-inner">
                 <p>© 2026 THE LEGEND OF LEGIONA — ALL RIGHTS RESERVED</p>
-                <p>PART OF THE <a href="/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: RAGNAROK ERA</p>
+                <p>PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: RAGNAROK ERA</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Network bar + navbar scroll logic
         const navbar = document.getElementById('navbar');
         const networkBar = document.getElementById('networkBar');
         const NETBAR_H = 30;
-        let lastScroll = 0;
 
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
-
-            // Scrolled nav style
             navbar.classList.toggle('scrolled', scrollY > 60);
-
-            // Hide network bar after scrolling past it, slide nav up
             if (scrollY > NETBAR_H) {
                 networkBar.classList.add('hidden');
                 navbar.classList.add('netbar-gone');
@@ -1995,11 +1291,8 @@
                 networkBar.classList.remove('hidden');
                 navbar.classList.remove('netbar-gone');
             }
-
-            lastScroll = scrollY;
         });
 
-        // Scroll reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
