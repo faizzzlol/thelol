@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Currency Converter — The Legend of Legiona</title>
 <link rel="icon" href="https://faizzzlol.github.io/thelol/assets/TheLoL.png">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0e1512;--bg2:#131a10;--bg3:#192014;--bg4:#1f2a19;
@@ -13,27 +13,52 @@
   --green:#4ade80;--green-dk:#22c55e;--green-dim:rgba(74,222,128,0.08);
   --gold:#fbbf24;--gold-dim:rgba(251,191,36,0.10);
   --txt:#e8f0e2;--txt2:rgba(232,240,226,0.78);--txt3:rgba(232,240,226,0.52);--txt4:rgba(232,240,226,0.28);
+  --netbar-h:30px;
+  --emerald-nav:#34a06a;
+  --gold-nav:#c8962a;--gold-nav-lt:#e0b045;
+  --green-dark:#0f2e1e;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
 
+/* ── PAIZ® CORP NETWORK BAR ── */
+.network-bar{
+  height:var(--netbar-h);
+  background:var(--green-dark);
+  border-bottom:1px solid rgba(52,160,106,0.2);
+  display:flex;align-items:center;padding:0 5%;
+  position:sticky;top:0;z-index:200;
+}
+.netbar-inner{display:flex;align-items:center;width:100%;max-width:1300px;margin:0 auto}
+.netbar-brand{font-family:'DM Mono',monospace;font-size:0.56rem;letter-spacing:2.5px;color:rgba(255,255,255,0.3);white-space:nowrap;flex-shrink:0}
+.netbar-brand a{color:var(--gold-nav);text-decoration:none;font-weight:500;transition:color 0.2s}
+.netbar-brand a:hover{color:var(--gold-nav-lt)}
+.netbar-sep{width:1px;height:14px;background:rgba(255,255,255,0.1);margin:0 14px;flex-shrink:0}
+.netbar-links{display:flex;align-items:center;flex:1}
+.netbar-links a{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:1.5px;color:rgba(255,255,255,0.28);text-decoration:none;padding:0 10px;height:var(--netbar-h);display:flex;align-items:center;border-right:1px solid rgba(255,255,255,0.05);transition:color 0.2s,background 0.2s}
+.netbar-links a:first-child{border-left:1px solid rgba(255,255,255,0.05)}
+.netbar-links a:hover{color:var(--emerald-nav);background:rgba(52,160,106,0.07)}
+.netbar-links a.active{color:var(--emerald-nav);background:rgba(52,160,106,0.1)}
+.netbar-right{margin-left:auto;font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:2px;color:rgba(255,255,255,0.18);white-space:nowrap}
+
 /* NAV */
-nav{position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:center;padding:0 5%;gap:12px;background:rgba(14,21,18,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+nav{position:sticky;top:var(--netbar-h);z-index:100;height:56px;display:flex;align-items:center;padding:0 5%;gap:12px;background:rgba(14,21,18,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nav-img{width:28px;height:28px;object-fit:contain}
-.nav-name{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:var(--txt);letter-spacing:-0.2px}
-.nav-sep{color:var(--txt4);font-family:'IBM Plex Mono',monospace;font-size:0.6rem}
-.nav-page{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;letter-spacing:2px;color:var(--txt3)}
+.nav-name{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:900;color:var(--txt);letter-spacing:-0.2px}
+.nav-name em{font-style:italic;color:var(--emerald-nav);font-weight:400}
+.nav-sep-char{color:var(--txt4);font-family:'DM Mono',monospace;font-size:0.6rem}
+.nav-page{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:2px;color:var(--txt3)}
 .nav-right{margin-left:auto;display:flex;gap:6px}
-.nav-link{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;letter-spacing:1.5px;color:var(--txt3);text-decoration:none;padding:5px 10px;border:1px solid var(--border2);transition:all 0.2s}
+.nav-link{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:1.5px;color:var(--txt3);text-decoration:none;padding:5px 10px;border:1px solid var(--border2);transition:all 0.2s}
 .nav-link:hover{color:var(--green);border-color:rgba(74,222,128,0.2)}
 
 /* HEADER */
 .header{padding:4rem 5% 3rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
 .header::before{content:'';position:absolute;top:-40%;right:-5%;width:600px;height:600px;background:radial-gradient(circle,rgba(74,222,128,0.04) 0%,transparent 65%);pointer-events:none}
-.h-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;letter-spacing:3px;color:var(--green);opacity:0.7;margin-bottom:0.6rem}
-.h-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-1.5px;color:var(--txt);line-height:1;margin-bottom:0.5rem}
+.h-eyebrow{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:3px;color:var(--green);opacity:0.7;margin-bottom:0.6rem}
+.h-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;letter-spacing:-1.5px;color:var(--txt);line-height:1;margin-bottom:0.5rem}
 .h-sub{font-size:0.95rem;color:var(--txt3);font-weight:300;max-width:440px}
 
 /* MAIN GRID */
@@ -42,43 +67,42 @@ nav{position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:cente
 /* CONVERTER */
 .converter{background:var(--bg2);border:1px solid var(--border)}
 .conv-hd{padding:1.4rem 1.6rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.conv-hd-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--txt);letter-spacing:-0.3px}
-.conv-tag{font-family:'IBM Plex Mono',monospace;font-size:0.45rem;letter-spacing:2px;padding:3px 8px;background:var(--green-dim);border:1px solid rgba(74,222,128,0.2);color:var(--green)}
+.conv-hd-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--txt);letter-spacing:-0.3px}
+.conv-tag{font-family:'DM Mono',monospace;font-size:0.45rem;letter-spacing:2px;padding:3px 8px;background:var(--green-dim);border:1px solid rgba(74,222,128,0.2);color:var(--green)}
 .conv-body{padding:1.8rem 1.6rem}
 .conv-row{display:grid;grid-template-columns:1fr 50px 1fr;gap:12px;align-items:end;margin-bottom:1.2rem}
-.conv-field{}
-.conv-label{font-family:'IBM Plex Mono',monospace;font-size:0.48rem;letter-spacing:2px;color:var(--txt4);display:block;margin-bottom:0.45rem}
+.conv-label{font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:2px;color:var(--txt4);display:block;margin-bottom:0.45rem}
 .conv-select{width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border);color:var(--txt);font-family:'Outfit',sans-serif;font-size:0.9rem;outline:none;appearance:none;cursor:pointer;transition:border-color 0.2s}
 .conv-select:focus{border-color:var(--green)}
 .conv-arrow{text-align:center;color:var(--txt4);font-size:1.2rem;padding-bottom:8px;cursor:pointer;transition:all 0.2s;user-select:none}
 .conv-arrow:hover{color:var(--green)}
-.conv-amount{width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border);color:var(--txt);font-family:'IBM Plex Mono',monospace;font-size:1rem;outline:none;transition:border-color 0.2s;margin-bottom:1.2rem}
+.conv-amount{width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border);color:var(--txt);font-family:'DM Mono',monospace;font-size:1rem;outline:none;transition:border-color 0.2s;margin-bottom:1.2rem}
 .conv-amount:focus{border-color:var(--green)}
 .conv-amount::placeholder{color:var(--txt4)}
-.conv-btn{width:100%;padding:13px;background:var(--green);color:#000;border:none;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:0.6rem;font-weight:500;letter-spacing:2.5px;transition:background 0.2s;margin-bottom:1.2rem}
+.conv-btn{width:100%;padding:13px;background:var(--green);color:#000;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.6rem;font-weight:500;letter-spacing:2.5px;transition:background 0.2s;margin-bottom:1.2rem}
 .conv-btn:hover{background:var(--green-dk)}
 
 /* RESULT */
 .result-box{background:var(--bg3);border:1px solid var(--border);padding:1.4rem;text-align:center;display:none}
 .result-box.show{display:block}
-.result-from{font-family:'IBM Plex Mono',monospace;font-size:0.52rem;letter-spacing:1.5px;color:var(--txt4);margin-bottom:0.5rem}
+.result-from{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:1.5px;color:var(--txt4);margin-bottom:0.5rem}
 .result-arrow{color:var(--txt4);margin:0.5rem 0;font-size:1rem}
-.result-val{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:var(--green);line-height:1;margin-bottom:4px}
-.result-unit{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;letter-spacing:2px;color:var(--txt3)}
-.result-rate{font-family:'IBM Plex Mono',monospace;font-size:0.46rem;letter-spacing:1.5px;color:var(--txt4);margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--border2)}
+.result-val{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--green);line-height:1;margin-bottom:4px}
+.result-unit{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:2px;color:var(--txt3)}
+.result-rate{font-family:'DM Mono',monospace;font-size:0.46rem;letter-spacing:1.5px;color:var(--txt4);margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--border2)}
 
 /* MULTI RESULT */
 .multi-result{margin-top:1rem;display:none}
 .multi-result.show{display:block}
-.multi-hd{font-family:'IBM Plex Mono',monospace;font-size:0.48rem;letter-spacing:2px;color:var(--txt4);margin-bottom:0.5rem}
+.multi-hd{font-family:'DM Mono',monospace;font-size:0.48rem;letter-spacing:2px;color:var(--txt4);margin-bottom:0.5rem}
 .multi-row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg3);border:1px solid var(--border2);margin-bottom:2px}
 .mr-currency{font-size:0.85rem;color:var(--txt2)}
-.mr-val{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--gold)}
+.mr-val{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold)}
 
 /* RATES TABLE */
 .panel-box{background:var(--bg2);border:1px solid var(--border);overflow:hidden}
 .pb-hd{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border)}
-.pb-title{font-family:'IBM Plex Mono',monospace;font-size:0.5rem;letter-spacing:2.5px;color:var(--txt4)}
+.pb-title{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:2.5px;color:var(--txt4)}
 .rates-table{width:100%;border-collapse:collapse}
 .rates-table tr{border-bottom:1px solid var(--border2);transition:background 0.15s}
 .rates-table tr:last-child{border-bottom:none}
@@ -86,8 +110,8 @@ nav{position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:cente
 .rates-table td{padding:11px 14px;font-size:0.85rem;color:var(--txt2)}
 .rates-table .curr-icon{font-size:1.1rem;width:32px}
 .rates-table .curr-name{color:var(--txt2)}
-.rates-table .curr-val{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--gold);text-align:right}
-.rates-table .curr-tls{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:var(--txt4);text-align:right}
+.rates-table .curr-val{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--gold);text-align:right}
+.rates-table .curr-tls{font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--txt4);text-align:right}
 
 /* NOTE BOX */
 .note{background:var(--gold-dim);border:1px solid rgba(251,191,36,0.2);padding:1rem 1.2rem;margin-top:12px;font-size:0.8rem;color:var(--txt2);font-weight:300;line-height:1.8}
@@ -95,27 +119,52 @@ nav{position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:cente
 
 /* FOOTER */
 footer{border-top:1px solid var(--border);padding:1.5rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:3rem}
-.footer-brand{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:800;color:var(--txt3)}
-.footer-link{font-family:'IBM Plex Mono',monospace;font-size:0.45rem;letter-spacing:1.5px;color:var(--txt4);text-decoration:none;transition:color 0.2s}
+.footer-brand{font-family:'Playfair Display',serif;font-size:0.8rem;font-weight:700;color:var(--txt3)}
+.footer-brand em{font-style:italic;color:var(--emerald-nav);font-weight:400}
+.footer-link{font-family:'DM Mono',monospace;font-size:0.45rem;letter-spacing:1.5px;color:var(--txt4);text-decoration:none;transition:color 0.2s}
 .footer-link:hover{color:var(--green)}
-.footer-note{font-family:'IBM Plex Mono',monospace;font-size:0.45rem;letter-spacing:1.5px;color:var(--txt4)}
+.footer-note{font-family:'DM Mono',monospace;font-size:0.45rem;letter-spacing:1.5px;color:var(--txt4)}
 
 @media(max-width:900px){.main{grid-template-columns:1fr}}
+@media(max-width:800px){.netbar-links{display:none}}
 @media(max-width:560px){.conv-row{grid-template-columns:1fr;gap:8px}.conv-arrow{display:none}}
+@media(max-width:500px){.network-bar{display:none};nav{top:0}}
 </style>
 </head>
 <body>
 
+<!-- PAIZ® CORP NETWORK BAR -->
+<div class="network-bar">
+  <div class="netbar-inner">
+    <span class="netbar-brand">
+      PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK
+    </span>
+    <div class="netbar-sep"></div>
+    <div class="netbar-links">
+      <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+      <a href="https://faizzzlol.github.io/thelol/" class="active">THE LOL</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+      <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
+    </div>
+    <span class="netbar-right">SKYXION: ALTAER ERA</span>
+  </div>
+</div>
+
 <nav>
-  <a href="/thelol/" class="nav-logo">
+  <a href="https://faizzzlol.github.io/thelol/" class="nav-logo">
     <img src="https://faizzzlol.github.io/thelol/assets/TheLoL.png" class="nav-img" alt="The LoL">
-    <span class="nav-name">The LoL</span>
+    <span class="nav-name">The <em>LoL</em></span>
   </a>
-  <span class="nav-sep">/</span>
+  <span class="nav-sep-char">/</span>
   <span class="nav-page">CURRENCY CONVERTER</span>
   <div class="nav-right">
-    <a href="/thelol/" class="nav-link">HOME</a>
-    <a href="/PaizCorp/PaizShop/" class="nav-link">PAIZ SHOP</a>
+    <a href="https://faizzzlol.github.io/thelol/" class="nav-link">HOME</a>
+    <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="nav-link">PAIZ SHOP</a>
     <a href="https://sociabuzz.com/lyvwiz/donate" class="nav-link" target="_blank">DONATE</a>
   </div>
 </nav>
@@ -208,10 +257,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem 5%;display:flex;justify
       <div class="pb-hd"><div class="pb-title">QUICK REFERENCE</div></div>
       <table class="rates-table">
         <tr><td style="font-size:0.8rem;color:var(--txt2)">1 Diamond</td><td class="curr-val">30 TL$</td></tr>
-        <tr><td style="font-size:0.8rem;color:var(--txt2)">1 Stack (64) Diamonds</td><td class="curr-val">3,200 TL$</td></tr>
-        <tr><td style="font-size:0.8rem;color:var(--txt2)">1 Netherite = Diamonds?</td><td class="curr-val">= 5 ◆</td></tr>
-        <tr><td style="font-size:0.8rem;color:var(--txt2)">1 Emerald = Diamonds?</td><td class="curr-val">= 0.3 ◆</td></tr>
-        <tr><td style="font-size:0.8rem;color:var(--txt2)">100 TL$</td><td class="curr-val">= 2 ◆</td></tr>
+        <tr><td style="font-size:0.8rem;color:var(--txt2)">1 Stack (64) Diamonds</td><td class="curr-val">1,920 TL$</td></tr>
+        <tr><td style="font-size:0.8rem;color:var(--txt2)">1 Netherite = Diamonds?</td><td class="curr-val">≈ 1.67 ◆</td></tr>
+        <tr><td style="font-size:0.8rem;color:var(--txt2)">1 Emerald = Diamonds?</td><td class="curr-val">≈ 0.33 ◆</td></tr>
+        <tr><td style="font-size:0.8rem;color:var(--txt2)">100 TL$</td><td class="curr-val">≈ 3.33 ◆</td></tr>
       </table>
     </div>
 
@@ -219,17 +268,18 @@ footer{border-top:1px solid var(--border);padding:1.5rem 5%;display:flex;justify
 </div>
 
 <footer>
-  <span class="footer-brand">The Legend of Legiona</span>
+  <span class="footer-brand">The <em>LoL</em></span>
   <div style="display:flex;gap:14px">
-    <a href="/thelol/" class="footer-link">THE LOL</a>
-    <a href="/PaizCorp/PaizShop/" class="footer-link">PAIZ SHOP</a>
+    <a href="https://faizzzlol.github.io/thelol/" class="footer-link">THE LOL</a>
+    <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="footer-link">PAIZ SHOP</a>
     <a href="https://discord.gg/TB4T8qwN4R" class="footer-link" target="_blank">DISCORD</a>
   </div>
   <span class="footer-note">© 2026 THE LEGEND OF LEGIONA · ALL RIGHTS RESERVED</span>
 </footer>
 
 <script>
-const RATES = { gold:3, iron:2, emerald:15, diamond:50, netherite:250, tls:1 };
+// Rates must match the displayed table: Gold=5, Iron=1, Emerald=10, Diamond=30, Netherite=50
+const RATES = { gold:5, iron:1, emerald:10, diamond:30, netherite:50, tls:1 };
 const NAMES = { gold:'💛 Gold Ingot', iron:'🩶 Iron Ingot', emerald:'💚 Emerald', diamond:'💎 Diamond', netherite:'⬛ Netherite Ingot', tls:'💰 TL$' };
 
 function toTLS(currency, amount) { return amount * RATES[currency]; }
