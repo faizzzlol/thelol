@@ -6,7 +6,7 @@
     <title>404 — Page Not Found | The Legend of Legiona</title>
     <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
     <meta name="robots" content="noindex">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --green:        #1d5c3c;
@@ -26,13 +26,14 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; }
+        html { height: 100%; }
 
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--charcoal);
             color: var(--off-white);
-            overflow: hidden;
+            min-height: 100%;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
         }
@@ -89,14 +90,13 @@
         .netbar-inner {
             display: flex;
             align-items: center;
-            gap: 0;
             width: 100%;
             max-width: 1300px;
             margin: 0 auto;
         }
 
         .netbar-brand {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.56rem;
             letter-spacing: 2.5px;
             color: rgba(255,255,255,0.3);
@@ -124,12 +124,11 @@
         .netbar-links {
             display: flex;
             align-items: center;
-            gap: 2px;
             flex: 1;
         }
 
         .netbar-links a {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.52rem;
             letter-spacing: 1.5px;
             color: rgba(255,255,255,0.28);
@@ -143,19 +142,12 @@
         }
 
         .netbar-links a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
-        .netbar-links a:hover {
-            color: var(--emerald);
-            background: rgba(52,160,106,0.07);
-        }
-
-        .netbar-links a.active {
-            color: var(--emerald);
-            background: rgba(52,160,106,0.1);
-        }
+        .netbar-links a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
+        .netbar-links a.active { color: var(--emerald); background: rgba(52,160,106,0.1); }
 
         .netbar-right {
             margin-left: auto;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.5rem;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.18);
@@ -175,7 +167,7 @@
         }
 
         .nav-logo {
-            font-family: 'Fraunces', serif;
+            font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
             font-weight: 900;
             color: var(--off-white);
@@ -185,7 +177,7 @@
         .nav-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
 
         .nav-tag {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.55rem;
             letter-spacing: 2.5px;
             color: rgba(255,255,255,0.2);
@@ -197,28 +189,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 3rem 5%;
+            padding: 2rem 5%;
             position: relative; z-index: 5;
-            overflow: hidden;
+            min-height: 0;
         }
 
         .container {
             max-width: 760px;
             width: 100%;
             text-align: center;
+            padding: 1rem 0;
         }
 
         /* Big 404 */
         .big-num {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(7rem, 22vw, 18rem);
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(5rem, 16vw, 12rem);
             font-weight: 900;
-            line-height: 0.85;
-            letter-spacing: -6px;
+            line-height: 0.9;
+            letter-spacing: -4px;
             color: transparent;
             -webkit-text-stroke: 1.5px rgba(52,160,106,0.25);
             position: relative;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: fadeDown 0.7s ease 0.1s both;
             user-select: none;
         }
@@ -230,7 +223,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Fraunces', serif;
+            font-family: 'Playfair Display', serif;
             font-size: inherit;
             font-weight: 900;
             letter-spacing: inherit;
@@ -243,7 +236,7 @@
         }
 
         .eyebrow {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.6rem;
             letter-spacing: 3px;
             color: var(--emerald);
@@ -265,7 +258,7 @@
         }
 
         .container h1 {
-            font-family: 'Fraunces', serif;
+            font-family: 'Playfair Display', serif;
             font-size: clamp(1.6rem, 4vw, 2.8rem);
             font-weight: 700;
             color: var(--off-white);
@@ -303,7 +296,7 @@
         }
 
         .path-label {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.52rem;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.2);
@@ -311,7 +304,7 @@
         }
 
         .path-val {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.72rem;
             color: rgba(255,255,255,0.45);
             letter-spacing: 0.5px;
@@ -334,7 +327,7 @@
             background: var(--green-light);
             color: #fff;
             text-decoration: none;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.65rem;
             letter-spacing: 2px;
             transition: background 0.22s, transform 0.18s;
@@ -347,17 +340,14 @@
             border: 1px solid rgba(255,255,255,0.12);
             color: rgba(255,255,255,0.5);
             text-decoration: none;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.65rem;
             letter-spacing: 2px;
             transition: all 0.22s;
             cursor: pointer;
             background: none;
         }
-        .btn-back:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: var(--off-white);
-        }
+        .btn-back:hover { border-color: rgba(255,255,255,0.3); color: var(--off-white); }
 
         /* Quick links */
         .quick-links {
@@ -368,7 +358,7 @@
         }
 
         .ql-label {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.52rem;
             letter-spacing: 2.5px;
             color: rgba(255,255,255,0.18);
@@ -388,24 +378,15 @@
             border: 1px solid var(--border-dark);
             color: rgba(255,255,255,0.35);
             text-decoration: none;
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.55rem;
             letter-spacing: 1.5px;
             transition: all 0.2s;
         }
-        .ql-btn:hover {
-            border-color: var(--border-green);
-            color: var(--emerald);
-        }
+        .ql-btn:hover { border-color: var(--border-green); color: var(--emerald); }
 
-        .ql-btn.corp {
-            border-color: rgba(200,150,42,0.15);
-            color: rgba(200,150,42,0.45);
-        }
-        .ql-btn.corp:hover {
-            border-color: rgba(200,150,42,0.4);
-            color: var(--gold);
-        }
+        .ql-btn.corp { border-color: rgba(200,150,42,0.15); color: rgba(200,150,42,0.45); }
+        .ql-btn.corp:hover { border-color: rgba(200,150,42,0.4); color: var(--gold); }
 
         /* ── FOOTER ── */
         footer {
@@ -419,17 +400,13 @@
         }
 
         footer p {
-            font-family: 'Fira Code', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.52rem;
             letter-spacing: 1.5px;
             color: rgba(255,255,255,0.15);
         }
 
-        footer a {
-            color: rgba(200,150,42,0.45);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
+        footer a { color: rgba(200,150,42,0.45); text-decoration: none; transition: color 0.2s; }
         footer a:hover { color: var(--gold); }
 
         /* ── ANIMATIONS ── */
@@ -449,8 +426,7 @@
         }
 
         @media (max-width: 500px) {
-            body { overflow-y: auto; }
-            .big-num { font-size: clamp(6rem, 28vw, 8rem); margin-bottom: 1.5rem; }
+            .big-num { font-size: clamp(4rem, 22vw, 6rem); margin-bottom: 1rem; }
             .actions { flex-direction: column; align-items: center; }
             footer { flex-direction: column; gap: 6px; text-align: center; }
             .network-bar { display: none; }
@@ -467,19 +443,21 @@
     <div class="network-bar">
         <div class="netbar-inner">
             <span class="netbar-brand">
-                PART OF THE <a href="/PaizCorp/">PAIZ® CORP</a> NETWORK
+                PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK
             </span>
             <div class="netbar-sep"></div>
             <div class="netbar-links">
-                <a href="/PaizCorp/">HUB</a>
-                <a href="/thelol/" class="active">THE LOL</a>
-                <a href="/PaizCorp/PaizShop/">PAIZSHOP</a>
-                <a href="/thelol/tlr/">TL RAILWAYS</a>
-                <a href="/thelol/gov/isc/">ISC</a>
-                <a href="/PaizCorp/PaizChicken/">PAIZCHICKEN</a>
-                <a href="/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+                <a href="https://faizzzlol.github.io/thelol/" class="active">THE LOL</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
+                <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+                <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+                <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
             </div>
-            <span class="netbar-right">SKYXION: ALTAER ERA</span>
+            <span class="netbar-right">SKYXION: RAGNAROK ERA</span>
         </div>
     </div>
 
@@ -521,14 +499,14 @@
             <div class="quick-links">
                 <div class="ql-label">OR NAVIGATE TO</div>
                 <div class="ql-grid">
-                    <a href="/thelol/" class="ql-btn">HOME</a>
-                    <a href="/thelol/about" class="ql-btn">HISTORY</a>
-                    <a href="/thelol/gov/" class="ql-btn">GOVERNMENT</a>
-                    <a href="/thelol/gov/isc/" class="ql-btn">ISC</a>
-                    <a href="/thelol/tlr/" class="ql-btn">TL RAILWAYS</a>
-                    <a href="/thelol/PaizCorp/tlsrl" class="ql-btn">TLSRL</a>
-                    <a href="/PaizCorp/" class="ql-btn corp">PAIZ® CORP HUB</a>
-                    <a href="/PaizCorp/PaizShop/" class="ql-btn corp">PAIZSHOP</a>
+                    <a href="https://faizzzlol.github.io/thelol/" class="ql-btn">HOME</a>
+                    <a href="https://faizzzlol.github.io/thelol/about" class="ql-btn">HISTORY</a>
+                    <a href="https://faizzzlol.github.io/thelol/gov/" class="ql-btn">GOVERNMENT</a>
+                    <a href="https://faizzzlol.github.io/thelol/gov/isc/" class="ql-btn">ISC</a>
+                    <a href="https://faizzzlol.github.io/thelol/tlr/" class="ql-btn">TL RAILWAYS</a>
+                    <a href="https://faizzzlol.github.io/thelol/PaizCorp/tlsrl" class="ql-btn">TLSRL</a>
+                    <a href="https://faizzzlol.github.io/PaizCorp/" class="ql-btn corp">PAIZ® CORP HUB</a>
+                    <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="ql-btn corp">PAIZ SHOP</a>
                 </div>
             </div>
         </div>
@@ -537,11 +515,10 @@
     <!-- FOOTER -->
     <footer>
         <p>© 2026 THE LEGEND OF LEGIONA</p>
-        <p>ERROR 404 // SKYXION: ALTAER</p>
+        <p>ERROR 404 // <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: RAGNAROK</p>
     </footer>
 
     <script>
-        // Show the actual path the user tried to visit
         const pathEl = document.getElementById('path-display');
         const p = window.location.pathname;
         if (p && p !== '/') {
