@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terminal Override | ISC</title>
+  <link rel="icon" type="image/png" href="/thelol/gov/isc/ISC_LOGO.png">
+  <!-- Preconnect to optimize font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary: #c6a664;
+      --bg: #050505;
+      --error: #ff3e3e;
+      --success: #3ef193;
+      --glow: rgba(198, 166, 100, 0.4);
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--primary);
+      font-family: 'Fira Code', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      /* Removed uppercase transform for readability */
+      font-size: 14px;
+    }
+    /* Overlay effect moved to a pseudo-element for performance */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%),
+                  linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+      background-size: 100% 4px, 3px 100%;
+      pointer-events: none;
+    }
+    .terminal {
+      width: 90%;
+      max-width: 700px;
+      height: 400px;
+      padding: 30px;
+      border: 1px solid var(--primary);
+      background: rgba(10,10,10,0.9);
+      box-shadow: 0 0 30px var(--glow);
+      position: relative;
+      overflow: hidden;
+    }
+    .line {
+      margin-bottom: 8px;
+      line-height: 1.4;
+      text-shadow: 0 0 5px var(--glow);
+    }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background: var(--primary);
+      animation: blink 0.6s step-end infinite;
+      margin-left: 5px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .warning { color: var(--error); border: 1px solid var(--error); padding: 0 5px; }
+    .success { color: var(--success); }
+    .dim { opacity: 0.5; font-size: 12px; }
+    #progress-container {
+      position: absolute;
+      bottom: 20px;
+      left: 30px; right: 30px;
+      height: 4px;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+      transition: width 0.2s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <main class="terminal" aria-label="System terminal output">
+    <div id="log" aria-live="polite"></div>
+    <!-- role=progressbar for accessibility -->
+    <div id="progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const REDIRECT_URL = "/thelol/gov/isc";
+      const logs = [
+        { t: "Establishing handshake with ISC_GATEWAY...", d: 400 },
+        { t: "Status: [CONNECTED]", d: 300 },
+        { t: "Parsing legacy headers: THE_LEGEND_OF_LEGIONA...", d: 600 },
+        { t: "CRITICAL: STALE_ASSET_INDEX FOUND", d: 800, class: 'warning' },
+        { t: "Injecting reclassification script (v4.2.0)...", d: 500 },
+        { t: "Mapping 0x7F...0xAF to ISC_CORE_SERVICES", d: 400 },
+        { t: "Purging session cache... PURGED", d: 700, class: 'success' },
+        { t: "Relinking secure protocols...", d: 500 },
+        { t: "INITIATING SYSTEM HANDOVER...", d: 1000 }
+      ];
+      const logContainer = document.getElementById('log');
+      const progressBar = document.getElementById('progress-container');
+
+      async function typeWriter(text, element, clazz) {
+        // typewriter effect for plain text, adding a CSS class if provided
+        return new Promise(resolve => {
+          let i = 0;
+          const span = document.createElement('span');
+          if (clazz) span.className = clazz;
+          element.appendChild(span);
+          function type() {
+            if (i < text.length) {
+              span.textContent += text[i++];
+              requestAnimationFrame(type); // use rAF for smoother typing
+            } else {
+              resolve();
+            }
+          }
+          type();
+        });
+      }
+
+      async function runTerminal() {
+        for (let i = 0; i < logs.length; i++) {
+          const lineDiv = document.createElement('div');
+          lineDiv.className = 'line';
+          logContainer.appendChild(lineDiv);
+
+          // If a CSS class (warning/success) is specified, apply it
+          await typeWriter(`> ${logs[i].t}`, lineDiv, logs[i].class || '');
+
+          // Occasional random noise line (plain text)
+          if (Math.random() > 0.7) {
+            const noise = document.createElement('div');
+            noise.className = 'line dim';
+            // generate a random hex code
+            const randHex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase().padStart(6, '0');
+            noise.textContent = `TRC: 0x${randHex} ... OK`;
+            logContainer.appendChild(noise);
+          }
+
+          // Update progress bar (use aria-valuenow for screen readers)
+          const percent = Math.round(((i + 1) / logs.length) * 100);
+          progressBar.style.width = percent + "%";
+          progressBar.setAttribute('aria-valuenow', percent);
+
+          await new Promise(r => setTimeout(r, logs[i].d));
+        }
+
+        const finalLine = document.createElement('div');
+        finalLine.className = 'line success';
+        finalLine.style.marginTop = "20px";
+        logContainer.appendChild(finalLine);
+        await typeWriter("OVERRIDE SUCCESSFUL. REDIRECTING...", finalLine);
+        finalLine.appendChild(document.createElement('span')).className = 'cursor';
+
+        // Redirect after a pause
+        setTimeout(() => { window.location.href = REDIRECT_URL; }, 1000);
+      }
+
+      runTerminal();
+      // Remove context menu / keys disabling (not recommended for real use)
+    });
+  </script>
+</body>
+</html>
