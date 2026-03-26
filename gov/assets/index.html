@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Archive — The Legend of Legiona</title>
+  <link rel="icon" type="image/png" href="https://faizzzlol.github.io/thelol/favicon-96x96.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #fbbf24;
+      --gold-dim: #8a6e2f;
+      --dark: #0a0a0f;
+      --dark-2: #111118;
+      --dark-3: #16161f;
+      --dark-4: #1e1e2a;
+      --dark-5: #252535;
+      --mid: #4a4a6a;
+      --text: #d4d4e8;
+      --text-dim: #8888aa;
+      --text-bright: #f0f0ff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── TOPBAR ── */
+    #topbar {
+      background: #08080d;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 8px 0;
+      position: sticky; top: 0; z-index: 1000;
+      overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+    }
+    #topbar::-webkit-scrollbar { display: none; }
+    .topbar-inner {
+      display: flex; align-items: center; gap: 0;
+      padding: 0 20px; min-width: max-content;
+    }
+    .topbar-inner a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 4px 12px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .topbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.06); }
+    .topbar-inner a:hover, .topbar-inner a.active { color: var(--gold); }
+
+    /* ── SUBNAV ── */
+    .subnav {
+      background: var(--dark-2);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .subnav-left {
+      display: flex; align-items: center; gap: 0;
+    }
+    .subnav a {
+      display: block; padding: 13px 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .subnav a:hover { color: var(--gold); }
+    .subnav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .subnav-era {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em;
+      color: var(--gold-dim);
+      padding: 13px 0;
+    }
+
+    /* ── HERO STRIP ── */
+    .page-hero {
+      background: var(--dark-2);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      padding: 64px 24px 48px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 10% 50%, rgba(201,168,76,0.05), transparent 60%);
+      pointer-events: none;
+    }
+    .page-hero .inner { max-width: 1200px; margin: 0 auto; position: relative; }
+    .page-hero .breadcrumb {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 20px;
+    }
+    .page-hero .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .page-hero .breadcrumb span { color: var(--text-dim); }
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 5vw, 54px); font-weight: 900;
+      color: var(--text-bright); line-height: 1.1; margin-bottom: 14px;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--gold); }
+    .page-hero p {
+      font-size: 15px; color: var(--text-dim);
+      max-width: 560px; line-height: 1.7;
+    }
+    .hero-meta {
+      display: flex; gap: 32px; flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .hero-meta .stat .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; color: var(--gold); line-height: 1;
+    }
+    .hero-meta .stat .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 0.15em;
+      color: var(--text-dim); text-transform: uppercase; margin-top: 4px;
+    }
+
+    /* ── SEARCH & FILTER ── */
+    .search-bar-wrap {
+      background: var(--dark-3);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 24px;
+      position: sticky; top: 37px; z-index: 900;
+    }
+    .search-bar-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    }
+    .search-input-wrap {
+      flex: 1; min-width: 220px;
+      display: flex; align-items: center; gap: 10px;
+      background: var(--dark-4);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 16px;
+    }
+    .search-input-wrap:focus-within { border-color: rgba(201,168,76,0.4); }
+    .search-icon { color: var(--text-dim); font-size: 14px; flex-shrink: 0; }
+    .search-input-wrap input {
+      flex: 1; background: none; border: none; outline: none;
+      font-family: 'Outfit', sans-serif; font-size: 14px;
+      color: var(--text-bright);
+    }
+    .search-input-wrap input::placeholder { color: var(--text-dim); }
+    .filter-btns {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 8px 14px; background: var(--dark-4);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-dim); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: rgba(201,168,76,0.3); color: var(--gold); }
+    .filter-btn.active { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.4); color: var(--gold); }
+    .result-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrap {
+      max-width: 1200px; margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── DOCUMENT GRID ── */
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+    .doc-card {
+      background: var(--dark-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-left: 3px solid var(--gold-dim);
+      padding: 0;
+      transition: border-left-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column;
+      cursor: pointer;
+    }
+    .doc-card:hover { border-left-color: var(--gold); transform: translateY(-2px); }
+    .doc-card[data-hidden="true"] { display: none; }
+    .doc-card-head {
+      padding: 20px 20px 0;
+    }
+    .doc-type-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 3px 8px; margin-bottom: 12px;
+    }
+    .type-proclamation { background: rgba(201,168,76,0.1); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+    .type-policy { background: rgba(52,152,219,0.1); color: #5dade2; border: 1px solid rgba(52,152,219,0.25); }
+    .type-decree { background: rgba(155,89,182,0.1); color: #bb8fce; border: 1px solid rgba(155,89,182,0.25); }
+    .type-treaty { background: rgba(39,174,96,0.1); color: #58d68d; border: 1px solid rgba(39,174,96,0.25); }
+    .type-report { background: rgba(231,76,60,0.1); color: #ec7063; border: 1px solid rgba(231,76,60,0.25); }
+    .doc-card-head h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px; font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 6px; line-height: 1.3;
+    }
+    .doc-card-head .doc-id {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold-dim); margin-bottom: 10px;
+    }
+    .doc-card-body {
+      padding: 0 20px 14px;
+    }
+    .doc-card-body p {
+      font-size: 13px; color: var(--text-dim); line-height: 1.65; margin-bottom: 14px;
+    }
+    .doc-meta {
+      display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .doc-meta-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .doc-meta-item span { color: var(--text); }
+    .doc-card-foot {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 14px 20px;
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-top: auto;
+    }
+    .doc-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 8px 14px; text-decoration: none; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .doc-btn-primary {
+      background: var(--gold);
+      color: #000; border: none;
+    }
+    .doc-btn-primary:hover { background: var(--gold-light); }
+    .doc-btn-outline {
+      background: transparent;
+      color: var(--gold); border: 1px solid rgba(201,168,76,0.35);
+    }
+    .doc-btn-outline:hover { background: rgba(201,168,76,0.07); }
+    .doc-btn-disabled {
+      background: transparent;
+      color: var(--text-dim); border: 1px solid rgba(255,255,255,0.08);
+      cursor: not-allowed; opacity: 0.5;
+    }
+
+    /* ── NO RESULTS ── */
+    #noResults {
+      display: none;
+      text-align: center; padding: 80px 24px;
+      grid-column: 1 / -1;
+    }
+    #noResults .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+    #noResults h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: var(--text-dim); margin-bottom: 8px;
+    }
+    #noResults p { font-size: 13px; color: var(--text-dim); }
+
+    /* ── FEATURED / PINNED ── */
+    .featured-strip {
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-left: 3px solid var(--gold);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .featured-strip .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 6px;
+    }
+    .featured-strip h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px; font-weight: 600; color: var(--text-bright);
+    }
+    .featured-strip .btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── INFO BOX ── */
+    .info-box {
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .info-box .icon { color: var(--gold); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+    .info-box p { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+    .info-box a { color: var(--gold); text-decoration: none; }
+    .info-box a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #06060a;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 40px 24px 24px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .footer-bottom .copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim);
+    }
+    .footer-bottom .era {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em; color: var(--gold-dim);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .doc-grid { grid-template-columns: 1fr; }
+      .search-bar-inner { flex-direction: column; align-items: stretch; }
+      .search-input-wrap { min-width: 0; }
+      .hero-meta { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-inner">
+      <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+      <a href="https://faizzzlol.github.io/thelol/">THE LOL</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/shop/">PAIZ SHOP</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/chicken/">PAIZ CHICKEN</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/productions/">PAIZPRODUCTIONS</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/productions/movie/">THE LOL MOVIE</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+      <a href="https://faizzzlol.github.io/PaizCorp/tlsrl/">TL RAILWAYS</a>
+    </div>
+  </div>
+
+  <!-- SUBNAV -->
+  <div class="subnav">
+    <div class="subnav-left">
+      <a href="https://faizzzlol.github.io/thelol/gov/">← Government</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/assets/" class="active">Legal Archive</a>
+    </div>
+    <div class="subnav-era">SKYXION: ALTAER ERA</div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="inner">
+      <div class="breadcrumb">
+        <a href="https://faizzzlol.github.io/thelol/gov/">Government</a>
+        <span> / Legal Archive</span>
+      </div>
+      <h1>Legal <em>Archive</em></h1>
+      <p>The official repository of all legal documents, policies, proclamations, and decrees of The Legend of Legiona. Browse, search, and download sovereign records.</p>
+      <div class="hero-meta">
+        <div class="stat"><div class="num" id="totalCount">—</div><div class="label">Documents</div></div>
+        <div class="stat"><div class="num">2023</div><div class="label">Est.</div></div>
+        <div class="stat"><div class="num">Public</div><div class="label">Access Level</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH BAR (sticky) -->
+  <div class="search-bar-wrap">
+    <div class="search-bar-inner">
+      <div class="search-input-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search documents, policies, decrees…" oninput="filterDocs()" />
+      </div>
+      <div class="filter-btns">
+        <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+        <button class="filter-btn" onclick="setFilter('proclamation', this)">Proclamation</button>
+        <button class="filter-btn" onclick="setFilter('policy', this)">Policy</button>
+        <button class="filter-btn" onclick="setFilter('decree', this)">Decree</button>
+        <button class="filter-btn" onclick="setFilter('treaty', this)">Treaty</button>
+        <button class="filter-btn" onclick="setFilter('report', this)">Report</button>
+      </div>
+      <div class="result-count" id="resultCount"></div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-wrap">
+
+    <!-- FEATURED -->
+    <div class="featured-strip">
+      <div>
+        <div class="label">📌 Featured Document</div>
+        <h3>Government Policy Framework of The Legend of Legiona</h3>
+      </div>
+      <div class="btns">
+        <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
+        <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.docx" class="doc-btn doc-btn-outline">↓ Download DOCX</a>
+      </div>
+    </div>
+
+    <!-- INFO BOX -->
+    <div class="info-box">
+      <span class="icon">ℹ</span>
+      <p>All documents in this archive are official sovereign records of The Legend of Legiona. Files are hosted at <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);">faizzzlol.github.io/thelol/gov/assets/</code>. To add a new document, upload the file to the assets directory and update this page. <a href="https://faizzzlol.github.io/thelol/gov/">← Return to Government Portal</a></p>
+    </div>
+
+    <!-- DOCUMENT GRID -->
+    <div class="doc-grid" id="docGrid">
+
+      <!-- PROCLAMATION OF SOVEREIGNTY (EN) -->
+      <div class="doc-card" data-type="proclamation" data-title="Proclamation of Sovereignty" data-tags="proclamation founding declaration sovereignty founders">
+        <div class="doc-card-head">
+          <div class="doc-type-badge type-proclamation">Proclamation</div>
+          <div class="doc-id">DOC-001 // 2023 // FOUNDATIONAL</div>
+          <h3>Proclamation of Sovereignty (English)</h3>
+        </div>
+        <div class="doc-card-body">
+          <p>The founding declaration of The Legend of Legiona — signed by all three Founders. Establishes the nation's sovereignty and core values.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">Date: <span>2023</span></div>
+            <div class="doc-meta-item">Signatories: <span>3</span></div>
+            <div class="doc-meta-item">Language: <span>EN</span></div>
+          </div>
+        </div>
+        <div class="doc-card-foot">
+          <a href="https://faizzzlol.github.io/thelol/assets/The_LoL_Proclamation.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
+        </div>
+      </div>
+
+      <!-- PROKLAMASI (BM) -->
+      <div class="doc-card" data-type="proclamation" data-title="Proklamasi Kedaulatan" data-tags="proklamasi proclamation bahasa melayu malay founding">
+        <div class="doc-card-head">
+          <div class="doc-type-badge type-proclamation">Proclamation</div>
+          <div class="doc-id">DOC-002 // 2023 // FOUNDATIONAL</div>
+          <h3>Proklamasi Kedaulatan (Bahasa Melayu)</h3>
+        </div>
+        <div class="doc-card-body">
+          <p>Versi Bahasa Melayu bagi Proklamasi Kedaulatan The Legend of Legiona — ditandatangani oleh ketiga-tiga Pengasas.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">Date: <span>2023</span></div>
+            <div class="doc-meta-item">Signatories: <span>3</span></div>
+            <div class="doc-meta-item">Language: <span>BM</span></div>
+          </div>
+        </div>
+        <div class="doc-card-foot">
+          <a href="https://faizzzlol.github.io/thelol/assets/Proklamasi_The_LoL.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
+        </div>
+      </div>
+
+      <!-- GOVERNMENT POLICY FRAMEWORK -->
+      <div class="doc-card" data-type="policy" data-title="Government Policy Framework" data-tags="policy framework government articles citizens rights isc landen">
+        <div class="doc-card-head">
+          <div class="doc-type-badge type-policy">Policy</div>
+          <div class="doc-id">DOC-003 // 2026 // CURRENT</div>
+          <h3>Government Policy Framework</h3>
+        </div>
+        <div class="doc-card-body">
+          <p>The primary governing document of The LoL. Covers territorial administration (Landen Accord), civil rights, national security (ISC), neutrality doctrine, and closing declaration.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">Date: <span>2026</span></div>
+            <div class="doc-meta-item">Era: <span>SKYXION: ALTAER</span></div>
+            <div class="doc-meta-item">Status: <span>Active</span></div>
+          </div>
+        </div>
+        <div class="doc-card-foot">
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.docx" class="doc-btn doc-btn-outline">↓ DOCX</a>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER: ISC CHARTER -->
+      <div class="doc-card" data-type="decree" data-title="ISC Charter" data-tags="isc internal security control charter decree intelligence agency">
+        <div class="doc-card-head">
+          <div class="doc-type-badge type-decree">Decree</div>
+          <div class="doc-id">DOC-004 // 2025–2026 // PENDING</div>
+          <h3>ISC Establishment Charter</h3>
+        </div>
+        <div class="doc-card-body">
+          <p>The formal establishment decree of the Internal Security Control (ISC), successor to TLIO. Defines the agency's mandate, authority, and operational scope.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">Date: <span>2025–2026</span></div>
+            <div class="doc-meta-item">Status: <span>Pending Upload</span></div>
+          </div>
+        </div>
+        <div class="doc-card-foot">
+          <span class="doc-btn doc-btn-disabled">File Pending</span>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER: LANDEN ACCORD -->
+      <div class="doc-card" data-type="treaty" data-title="Landen Accord" data-tags="landen accord territory sat special administrative ikanuwu imanhafizz">
+        <div class="doc-card-head">
+          <div class="doc-type-badge type-treaty">Treaty</div>
+          <div class="doc-id">DOC-005 // 2026 // PENDING</div>
+          <h3>The Landen Accord</h3>
+        </div>
+        <div class="doc-card-body">
+          <p>The formal accord establishing Landen as a Special Administrative Territory (SAT) of The LoL, granting localized autonomy to ikanuwu and ImanHafizz.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">Date: <span>2026</span></div>
+            <div class="doc-meta-item">Status: <span>Pending Upload</span></div>
+          </div>
+        </div>
+        <div class="doc-card-foot">
+          <span class="doc-btn doc-btn-disabled">File Pending</span>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER: NEUTRALITY DOCTRINE -->
+      <div class="doc-card" data-type="decree" data-title="Neutrality Doctrine" data-tags="neutrality doctrine diplomacy foreign policy peace skyxion">
+        <div class="doc-card-head">
+          <div class="doc-type-badge type-decree">Decree</div>
+          <div class="doc-id">DOC-006 // TBD // PENDING</div>
+          <h3>Doctrine of Neutrality &amp; Diplomacy</h3>
+        </div>
+        <div class="doc-card-body">
+          <p>The LoL's official stance on inter-nation relations in the Skyxion world, affirming peaceful neutrality and conditions under which that neutrality may be suspended.</p>
+          <div class="doc-meta">
+            <div class="doc-meta-item">Status: <span>Pending Upload</span></div>
+          </div>
+        </div>
+        <div class="doc-card-foot">
+          <span class="doc-btn doc-btn-disabled">File Pending</span>
+        </div>
+      </div>
+
+      <!-- NO RESULTS -->
+      <div id="noResults">
+        <div class="icon">📂</div>
+        <h3>No documents found</h3>
+        <p>Try adjusting your search or filter.</p>
+      </div>
+
+    </div><!-- /doc-grid -->
+
+  </div><!-- /main-wrap -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <div class="copy">© 2026 THE LEGEND OF LEGIONA // LEGAL ARCHIVE</div>
+        <div class="era">SKYXION: ALTAER ERA // ALL DOCUMENTS ARE SOVEREIGN RECORDS</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let activeFilter = 'all';
+
+    const cards = document.querySelectorAll('.doc-card[data-type]');
+    const countEl = document.getElementById('resultCount');
+    const totalEl = document.getElementById('totalCount');
+    const noResults = document.getElementById('noResults');
+
+    totalEl.textContent = cards.length;
+
+    function setFilter(type, btn) {
+      activeFilter = type;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterDocs();
+    }
+
+    function filterDocs() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      let visible = 0;
+      cards.forEach(card => {
+        const title = (card.dataset.title || '').toLowerCase();
+        const tags = (card.dataset.tags || '').toLowerCase();
+        const type = card.dataset.type;
+        const matchesFilter = activeFilter === 'all' || type === activeFilter;
+        const matchesSearch = !q || title.includes(q) || tags.includes(q);
+        const show = matchesFilter && matchesSearch;
+        card.dataset.hidden = show ? 'false' : 'true';
+        if (show) { card.style.display = 'flex'; visible++; }
+        else { card.style.display = 'none'; }
+      });
+      countEl.textContent = visible + ' result' + (visible !== 1 ? 's' : '');
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    filterDocs();
+  </script>
+</body>
+</html>
