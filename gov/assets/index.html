@@ -33,6 +33,199 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
+    
+        /* ── NOTICE BANNER ── */
+    .notice-banner {
+      background: linear-gradient(90deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .notice-banner .tag {
+      background: var(--gold);
+      color: #000;
+      padding: 2px 8px;
+      font-weight: 600;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      flex-shrink: 0;
+    }
+    .notice-banner a { color: var(--gold); text-decoration: none; }
+    .notice-banner a:hover { text-decoration: underline; }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,0.03) 39px, rgba(201,168,76,0.03) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,0.03) 39px, rgba(201,168,76,0.03) 40px);
+      pointer-events: none;
+    }
+    .hero-seal {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 2px solid rgba(201,168,76,0.4);
+      padding: 8px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero-overline {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 7vw, 80px);
+      font-weight: 900;
+      color: var(--text-bright);
+      line-height: 1.05;
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      color: var(--text-dim);
+      font-weight: 300;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.65s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 13px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.5);
+      padding: 13px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); transform: translateY(-1px); }
+    
+        /* ── NAV ── */
+    nav {
+      background: var(--dark-2);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 37px;
+      z-index: 999;
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 14px 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 14px 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--gold); transition: all 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      background: var(--dark-2);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      padding: 12px 24px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      padding: 10px 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
 
     /* ── TOPBAR ── */
     #topbar {
@@ -342,6 +535,18 @@
       .search-bar-inner { flex-direction: column; align-items: stretch; }
       .search-input-wrap { min-width: 0; }
       .hero-meta { gap: 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .proc-card { padding: 36px 24px; }
+      .proc-signers { gap: 20px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .mega-stats { gap: 24px; }
+      #home { padding: 100px 24px 60px; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -357,13 +562,36 @@
     </div>
   </div>
 
-  <!-- SUBNAV -->
-  <div class="subnav">
-    <div class="subnav-left">
-      <a href="https://faizzzlol.github.io/thelol/gov/">← Government</a>
-      <a href="https://faizzzlol.github.io/thelol/gov/assets/" class="active">Legal Archive</a>
-    </div>
-    <div class="subnav-era">SKYXION: ALTAER ERA</div>
+  <!-- NOTICE BANNER -->
+  <div class="notice-banner">
+    <span class="tag">NOTICE</span>
+    <span>ISC has formally succeeded TLIO as the national intelligence and security agency. All security matters are now under ISC jurisdiction. —
+      <a href="https://faizzzlol.github.io/thelol/gov/isc/">VISIT ISC PORTAL →</a>
+    </span>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">THELOL.GOV</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#proclamation">Proclamation</a></li>
+      <li><a href="#history">History</a></li>
+      <li><a href="#departments">Departments</a></li>
+      <li><a href="#megaprojects">Megaprojects</a></li>
+      <li><a href="#founders">Founders</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#proclamation" onclick="toggleMenu()">Proclamation</a>
+    <a href="#history" onclick="toggleMenu()">History</a>
+    <a href="#departments" onclick="toggleMenu()">Departments</a>
+    <a href="#megaprojects" onclick="toggleMenu()">Megaprojects</a>
+    <a href="#founders" onclick="toggleMenu()">Founders</a>
   </div>
 
   <!-- PAGE HERO -->
@@ -412,8 +640,8 @@
         <h3>Government Policy Framework of The Legend of Legiona</h3>
       </div>
       <div class="btns">
-        <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
-        <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.docx" class="doc-btn doc-btn-outline">↓ Download DOCX</a>
+        <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↗ Open PDF</a>
+        <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-outline">↗ Open PDF</a>
       </div>
     </div>
 
@@ -442,7 +670,7 @@
           </div>
         </div>
         <div class="doc-card-foot">
-          <a href="https://faizzzlol.github.io/thelol/assets/The_LoL_Proclamation.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
+          <a href="https://faizzzlol.github.io/thelol/assets/The_LoL_Proclamation.pdf" class="doc-btn doc-btn-primary">↗ Open PDF</a>
         </div>
       </div>
 
@@ -462,7 +690,7 @@
           </div>
         </div>
         <div class="doc-card-foot">
-          <a href="https://faizzzlol.github.io/thelol/assets/Proklamasi_The_LoL.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
+          <a href="https://faizzzlol.github.io/thelol/assets/Proklamasi_The_LoL.pdf" class="doc-btn doc-btn-primary">↗ Buka PDF</a>
         </div>
       </div>
 
@@ -482,8 +710,8 @@
           </div>
         </div>
         <div class="doc-card-foot">
-          <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↓ Download PDF</a>
-          <a href="https://faizzzlol.github.io/thelol/gov/assets/LoL_Government_Policy_Framework.docx" class="doc-btn doc-btn-outline">↓ DOCX</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↗ Open PDF</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-outline">↗ Open PDF</a>
         </div>
       </div>
 
