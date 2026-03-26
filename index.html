@@ -10,31 +10,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --green:       #1d5c3c;
-            --green-dark:  #0f2e1e;
-            --green-mid:   #265048;
-            --green-light: #2d7a52;
-            --emerald:     #34a06a;
-            --emerald-dim: rgba(52,160,106,0.12);
-            --gold:        #c8962a;
-            --gold-light:  #e0b045;
-            --gold-dim:    rgba(200,150,42,0.15);
-            --charcoal:    #0f110e;
-            --charcoal2:   #141812;
-            --charcoal3:   #1a1f17;
-            --off-white:   #f5f2eb;
-            --warm-white:  #faf8f3;
-            --cream:       #ede9de;
-            --text-dark:   #1a1c18;
-            --text-mid:    #3a3d34;
-            --text-muted:  #7a7d6e;
-            --text-faint:  #b0b39e;
-            --border-light: rgba(26,28,24,0.1);
+            --green:        #1d5c3c;
+            --green-dark:   #0f2e1e;
+            --green-light:  #2d7a52;
+            --emerald:      #34a06a;
+            --emerald-dim:  rgba(52,160,106,0.12);
+            --gold:         #c8962a;
+            --gold-light:   #e0b045;
+            --gold-dim:     rgba(200,150,42,0.15);
+            --charcoal:     #0f110e;
+            --charcoal2:    #141812;
+            --charcoal3:    #1a1f17;
+            --off-white:    #f5f2eb;
             --border-dark:  rgba(255,255,255,0.07);
-            --netbar-h: 30px;
+            --border-green: rgba(52,160,106,0.2);
+            --netbar-h:     32px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
         body {
@@ -45,883 +38,1008 @@
             line-height: 1.7;
         }
 
+        /* Grain */
         body::before {
             content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999;
         }
 
         /* ─── NETWORK BAR ─── */
-        .network-bar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 600;
+        .netbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 800;
             height: var(--netbar-h);
-            background: var(--green-dark);
-            border-bottom: 1px solid rgba(52,160,106,0.2);
-            display: flex;
-            align-items: center;
-            padding: 0 5%;
+            background: #08080d;
+            border-bottom: 1px solid rgba(52,160,106,0.15);
+            overflow-x: auto; white-space: nowrap;
+            scrollbar-width: none;
             transition: transform 0.3s ease;
         }
-
-        .network-bar.hidden { transform: translateY(-100%); }
+        .netbar::-webkit-scrollbar { display: none; }
+        .netbar.hidden { transform: translateY(-100%); }
 
         .netbar-inner {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
+            display: flex; align-items: stretch;
+            height: var(--netbar-h);
+            padding: 0 16px;
+            min-width: max-content;
         }
 
-        .netbar-brand {
+        .netbar-inner a {
             font-family: 'DM Mono', monospace;
-            font-size: 0.56rem;
-            letter-spacing: 2.5px;
-            color: rgba(255,255,255,0.3);
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .netbar-brand a {
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .netbar-brand a:hover { color: var(--gold-light); }
-
-        .netbar-sep {
-            width: 1px;
-            height: 14px;
-            background: rgba(255,255,255,0.1);
-            margin: 0 14px;
-            flex-shrink: 0;
-        }
-
-        .netbar-links {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-
-        .netbar-links a {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.52rem;
+            font-size: 0.5rem;
             letter-spacing: 1.5px;
             color: rgba(255,255,255,0.28);
             text-decoration: none;
-            padding: 0 10px;
-            height: var(--netbar-h);
-            display: flex;
-            align-items: center;
+            padding: 0 12px;
+            display: flex; align-items: center;
             border-right: 1px solid rgba(255,255,255,0.05);
             transition: color 0.2s, background 0.2s;
         }
+        .netbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
+        .netbar-inner a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
+        .netbar-inner a.nb-active { color: var(--emerald); background: rgba(52,160,106,0.1); }
 
-        .netbar-links a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
-        .netbar-links a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
-        .netbar-links a.active { color: var(--emerald); background: rgba(52,160,106,0.1); }
-
-        .netbar-right {
-            margin-left: auto;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.5rem;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.18);
-            white-space: nowrap;
-        }
-
-        /* ─── NAV ─── */
-        nav {
+        /* ─── STICKY NAV ─── */
+        .sitenav {
             position: fixed;
-            top: var(--netbar-h);
-            left: 0; right: 0;
-            z-index: 500;
+            top: var(--netbar-h); left: 0; right: 0;
+            z-index: 700;
+            height: 60px;
             padding: 0 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 64px;
-            transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s, top 0.3s ease;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.35s, backdrop-filter 0.35s, border-color 0.35s, top 0.3s ease;
         }
-
-        nav.netbar-gone { top: 0; }
-
-        nav.scrolled {
-            background: rgba(15,17,14,0.92);
-            backdrop-filter: blur(20px);
+        .sitenav.scrolled {
+            background: rgba(15,17,14,0.94);
+            backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--border-dark);
         }
+        .sitenav.nb-hidden { top: 0; }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: inherit;
+        .sitenav-logo {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none; color: inherit;
         }
-
-        .nav-logo img { height: 34px; opacity: 0.9; }
-
-        .nav-logo-text {
+        .sitenav-logo img { height: 30px; opacity: 0.9; }
+        .sitenav-logo span {
             font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 3px;
+            font-size: 0.68rem; letter-spacing: 3px;
             color: var(--emerald);
         }
 
-        .nav-links { display: flex; align-items: center; gap: 4px; }
-
-        .nav-links a {
-            padding: 6px 14px;
+        .sitenav-links { display: flex; align-items: center; gap: 2px; }
+        .sitenav-links a {
+            padding: 6px 12px;
             text-decoration: none;
             font-family: 'DM Mono', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.5);
+            font-size: 0.58rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.45);
             transition: color 0.2s;
         }
-
-        .nav-links a:hover { color: var(--emerald); }
-
-        .nav-cta {
-            padding: 8px 18px !important;
-            border: 1px solid rgba(52,160,106,0.4) !important;
+        .sitenav-links a:hover { color: var(--emerald); }
+        .sitenav-links .nav-cta {
+            border: 1px solid rgba(52,160,106,0.35);
             color: var(--emerald) !important;
-            transition: background 0.2s, border-color 0.2s !important;
+            transition: background 0.2s !important;
         }
+        .sitenav-links .nav-cta:hover { background: var(--emerald-dim) !important; }
 
-        .nav-cta:hover {
-            background: var(--emerald-dim) !important;
-            border-color: var(--emerald) !important;
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column; gap: 5px;
+            background: none; border: none;
+            cursor: pointer; padding: 6px;
         }
+        .hamburger span {
+            display: block; width: 22px; height: 2px;
+            background: rgba(255,255,255,0.6);
+            transition: all 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed; top: calc(var(--netbar-h) + 60px);
+            left: 0; right: 0; z-index: 690;
+            background: rgba(15,17,14,0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dark);
+            padding: 1rem 5%;
+            display: none; flex-direction: column; gap: 2px;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            padding: 12px 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem; letter-spacing: 2px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-dark);
+            transition: color 0.2s;
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: var(--emerald); }
 
         /* ─── HERO ─── */
         .hero {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             justify-content: center;
-            padding: calc(100px + var(--netbar-h)) 5% 5rem;
-            position: relative;
-            overflow: hidden;
+            padding: calc(120px + var(--netbar-h)) 5% 6rem;
+            position: relative; overflow: hidden;
         }
 
-        .hero-glow-1 {
-            position: absolute;
-            top: -10%; left: -10%;
-            width: 70vw; height: 70vw;
-            background: radial-gradient(circle, rgba(29,92,60,0.18) 0%, transparent 65%);
+        .hero-bg-glow {
+            position: absolute; top: -15%; left: -10%;
+            width: 80vw; height: 80vw; max-width: 900px;
+            background: radial-gradient(circle, rgba(29,92,60,0.2) 0%, transparent 65%);
             pointer-events: none;
         }
-
-        .hero-glow-2 {
-            position: absolute;
-            bottom: -20%; right: -10%;
-            width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(200,150,42,0.07) 0%, transparent 65%);
+        .hero-bg-glow-2 {
+            position: absolute; bottom: -20%; right: -5%;
+            width: 50vw; height: 50vw; max-width: 600px;
+            background: radial-gradient(circle, rgba(200,150,42,0.06) 0%, transparent 65%);
             pointer-events: none;
         }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
+        .hero-grid-bg {
+            position: absolute; inset: 0;
             background-image:
                 linear-gradient(rgba(52,160,106,0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(52,160,106,0.04) 1px, transparent 1px);
             background-size: 80px 80px;
-            mask-image: radial-gradient(ellipse 80% 80% at 30% 50%, black 0%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 80% at 25% 50%, black 0%, transparent 100%);
         }
 
         .hero-inner {
-            position: relative;
-            max-width: 1300px;
-            margin: 0 auto;
-            width: 100%;
+            position: relative; max-width: 1300px;
+            margin: 0 auto; width: 100%;
         }
 
         .hero-eyebrow {
             font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 4px;
-            color: var(--emerald);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            opacity: 0;
-            animation: fadeUp 0.8s ease 0.2s forwards;
+            font-size: 0.62rem; letter-spacing: 4px;
+            color: var(--emerald); margin-bottom: 1.8rem;
+            display: flex; align-items: center; gap: 14px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
         }
-
         .hero-eyebrow::before {
-            content: '';
-            width: 32px; height: 1px;
-            background: var(--emerald);
-            opacity: 0.6;
+            content: ''; width: 28px; height: 1px;
+            background: var(--emerald); opacity: 0.6;
         }
 
         .hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(4rem, 9vw, 10rem);
-            font-weight: 900;
-            line-height: 0.92;
-            letter-spacing: -2px;
-            color: #fff;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeUp 0.8s ease 0.3s forwards;
+            font-size: clamp(3.5rem, 9vw, 9rem);
+            font-weight: 900; line-height: 0.94;
+            letter-spacing: -2px; color: #fff;
+            margin-bottom: 1.6rem;
+            opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
         }
-
-        .hero h1 .accent {
+        .hero h1 .outline-text {
             color: transparent;
             -webkit-text-stroke: 1.5px var(--emerald);
         }
-
         .hero h1 .gold-text { color: var(--gold-light); }
 
         .hero-sub {
-            font-size: clamp(1rem, 1.5vw, 1.2rem);
-            color: rgba(255,255,255,0.45);
-            max-width: 560px;
-            font-weight: 300;
-            line-height: 1.85;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeUp 0.8s ease 0.4s forwards;
+            font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+            color: rgba(255,255,255,0.4);
+            max-width: 520px; font-weight: 300; line-height: 1.85;
+            margin-bottom: 2.8rem;
+            opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
         }
 
         .hero-actions {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeUp 0.8s ease 0.5s forwards;
+            display: flex; gap: 12px; flex-wrap: wrap;
+            opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
         }
 
-        .btn-green {
-            display: inline-block;
-            padding: 14px 32px;
-            background: var(--green-light);
-            color: #fff;
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px;
+            background: var(--green-light); color: #fff;
             text-decoration: none;
             font-family: 'DM Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 2px;
+            font-size: 0.65rem; letter-spacing: 2px;
             transition: background 0.25s, transform 0.2s;
         }
+        .btn-primary:hover { background: var(--emerald); transform: translateY(-2px); }
 
-        .btn-green:hover { background: var(--emerald); transform: translateY(-2px); }
-
-        .btn-outline-white {
-            display: inline-block;
-            padding: 14px 32px;
-            border: 1px solid rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.7);
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px;
+            border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.65);
             text-decoration: none;
             font-family: 'DM Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 2px;
+            font-size: 0.65rem; letter-spacing: 2px;
             transition: all 0.25s;
         }
+        .btn-secondary:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        .btn-outline-white:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
-
+        /* Hero scroll indicator */
         .hero-scroll {
-            position: absolute;
-            bottom: 2.5rem;
-            left: 0; right: 0;
-            display: flex;
-            justify-content: center;
-            opacity: 0;
-            animation: fadeIn 1s ease 1.2s forwards;
+            position: absolute; bottom: 2.5rem; left: 0; right: 0;
+            display: flex; justify-content: center;
+            opacity: 0; animation: fadeIn 1s ease 1.2s forwards;
         }
-
         .scroll-line {
-            width: 1px;
-            height: 50px;
+            width: 1px; height: 45px;
             background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
-            animation: scrollPulse 2s ease infinite;
+            animation: scrollPulse 2.2s ease infinite;
         }
 
-        .hero-stats {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            opacity: 0;
-            animation: fadeUp 0.8s ease 0.7s forwards;
-        }
-
-        .hero-stat {
-            padding: 1.2rem 1.6rem;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-dark);
-            text-align: right;
-            min-width: 180px;
-        }
-
-        .hero-stat .num {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--emerald);
-            line-height: 1;
-            display: block;
-        }
-
-        .hero-stat .lbl {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.3);
-            display: block;
-            margin-top: 4px;
-        }
-
-        /* ─── ABOUT STRIP ─── */
-        .about-strip {
-            background: var(--charcoal2);
-            padding: 5rem 5%;
-            border-top: 1px solid var(--border-dark);
-            border-bottom: 1px solid var(--border-dark);
-        }
-
-        .about-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
+        /* ─── SECTION UTILITY ─── */
         .section-eyebrow {
             font-family: 'DM Mono', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: var(--emerald);
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            font-size: 0.58rem; letter-spacing: 3.5px;
+            color: var(--emerald); margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 10px;
         }
-
         .section-eyebrow::before {
-            content: '';
-            width: 20px; height: 1px;
-            background: var(--emerald);
-            opacity: 0.6;
+            content: ''; width: 18px; height: 1px;
+            background: var(--emerald); opacity: 0.6;
         }
 
-        .about-left h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3.5vw, 3.2rem);
-            font-weight: 700;
-            line-height: 1.15;
-            color: #fff;
-            margin-bottom: 1.5rem;
-        }
-
-        .about-left h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
-
-        .about-left p { font-size: 1rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; margin-bottom: 1.2rem; }
-        .about-left p strong { color: rgba(255,255,255,0.75); font-weight: 500; }
-
-        .principles { display: flex; flex-direction: column; gap: 1px; }
-
-        .principle {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 1.2rem 1.5rem;
-            background: var(--charcoal3);
-            border: 1px solid var(--border-dark);
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .principle:hover { background: rgba(52,160,106,0.06); border-color: rgba(52,160,106,0.2); }
-
-        .principle-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(52,160,106,0.4);
-            line-height: 1;
-            flex-shrink: 0;
-            width: 36px;
-        }
-
-        .principle-info h4 { font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
-        .principle-info p { font-size: 0.8rem; color: rgba(255,255,255,0.38); line-height: 1.5; margin: 0; }
-
-        /* ─── HISTORY ─── */
-        .history-section { padding: 6rem 5%; background: var(--charcoal); }
-
-        .section-header {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #fff; }
-        .section-header h2 em { font-style: italic; color: var(--emerald); }
-        .section-header p { font-size: 0.85rem; color: rgba(255,255,255,0.3); max-width: 300px; text-align: right; line-height: 1.7; }
-
-        .timeline-track {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1px;
-            background: var(--border-dark);
-            border: 1px solid var(--border-dark);
-        }
-
-        .t-card { background: var(--charcoal2); padding: 2rem 1.5rem; position: relative; transition: background 0.25s; }
-        .t-card:hover { background: var(--charcoal3); }
-        .t-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--border-dark); transition: background 0.25s; }
-        .t-card:hover::before { background: var(--emerald); }
-
-        .t-card .era { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.6; margin-bottom: 0.8rem; display: block; }
-        .t-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; line-height: 1.3; }
-        .t-card p { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.65; font-weight: 300; }
-
-        .t-badge { display: inline-block; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px; padding: 2px 8px; border: 1px solid rgba(52,160,106,0.2); color: rgba(52,160,106,0.6); }
-        .t-badge.chaos { border-color: rgba(180,60,60,0.25); color: rgba(200,100,100,0.6); }
-        .t-badge.current { border-color: rgba(200,150,42,0.3); color: rgba(224,176,69,0.7); }
-
-        /* ─── MEGAPROJECTS ─── */
-        .projects-section {
-            background: var(--green-dark);
+        /* ─── HUB NETWORK SECTION ─── */
+        .hub-section {
+            background: var(--charcoal2);
             padding: 6rem 5%;
-            position: relative;
-            overflow: hidden;
+            border-top: 1px solid var(--border-dark);
+        }
+        .hub-inner { max-width: 1280px; margin: 0 auto; }
+
+        .hub-header {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 3rem; flex-wrap: wrap; gap: 16px;
+        }
+        .hub-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 700; color: #fff; line-height: 1.15;
+        }
+        .hub-header h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+        .hub-header p {
+            font-size: 0.88rem; color: rgba(255,255,255,0.32);
+            max-width: 300px; text-align: right; line-height: 1.7;
         }
 
-        .projects-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(-45deg, transparent, transparent 60px, rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px);
-        }
-
-        .projects-inner { max-width: 1200px; margin: 0 auto; position: relative; }
-
-        .projects-intro {
+        /* Primary cards (Government + ISC big) */
+        .hub-featured {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: end;
-            margin-bottom: 4rem;
+            grid-template-columns: 2fr 1fr;
+            gap: 3px;
+            margin-bottom: 3px;
         }
 
-        .projects-intro h2 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; color: #fff; line-height: 1.1; }
-        .projects-intro h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
-        .projects-intro-right p { font-size: 0.95rem; color: rgba(255,255,255,0.4); line-height: 1.85; font-weight: 300; }
-
-        .project-featured {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 3rem;
-            margin-bottom: 2px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-featured::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--emerald), var(--gold)); }
-
-        .pf-tag {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            color: var(--emerald);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .pf-tag::before { content: 'FLAGSHIP'; padding: 2px 8px; background: var(--emerald-dim); border: 1px solid rgba(52,160,106,0.3); font-size: 0.5rem; letter-spacing: 1.5px; }
-
-        .project-featured h3 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
-        .project-featured p { font-size: 0.92rem; color: rgba(255,255,255,0.45); line-height: 1.85; font-weight: 300; margin-bottom: 1.5rem; }
-
-        .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-        .project-tag { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 1.5px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.45); }
-
-        .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
-        .spec-item { padding: 1.2rem 1.4rem; background: rgba(255,255,255,0.03); }
-        .spec-item .sk { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: rgba(255,255,255,0.25); display: block; margin-bottom: 0.4rem; }
-        .spec-item .sv { font-size: 0.9rem; color: rgba(255,255,255,0.8); font-weight: 500; }
-        .spec-item .sv .big { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--emerald); }
-
-        .projects-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
-
-        .proj-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.07);
-            padding: 2rem 1.8rem;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .proj-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(52,160,106,0.25); }
-        .proj-card a { display: block; height: 100%; text-decoration: none; color: inherit; }
-
-        .proj-id { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.6; margin-bottom: 1rem; }
-        .proj-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; line-height: 1.3; }
-        .proj-card p { font-size: 0.82rem; color: rgba(255,255,255,0.35); line-height: 1.65; font-weight: 300; }
-
-        .proj-status { display: inline-flex; align-items: center; gap: 6px; margin-top: 1rem; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 1.5px; color: rgba(52,160,106,0.7); }
-        .proj-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--emerald); animation: pulse 2s infinite; }
-
-        .tlr-strip {
+        .hub-card {
             background: var(--charcoal3);
-            border: 1px solid rgba(255,255,255,0.07);
-            padding: 2rem 2.5rem;
-            margin-top: 2px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .tlr-brand { flex-shrink: 0; }
-        .tlr-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: #fff; }
-        .tlr-sub { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: rgba(255,255,255,0.3); margin-top: 2px; }
-        .tlr-divider { width: 1px; height: 50px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
-        .tlr-lines { display: flex; gap: 20px; flex: 1; flex-wrap: wrap; }
-        .tlr-line { text-align: center; }
-        .tlr-line-code { font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; color: var(--emerald); display: block; }
-        .tlr-line-name { font-size: 0.75rem; color: rgba(255,255,255,0.4); display: block; margin-top: 2px; }
-        .tlr-cta { flex-shrink: 0; display: inline-block; padding: 9px 20px; border: 1px solid rgba(52,160,106,0.3); color: var(--emerald); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 1.5px; transition: background 0.2s; }
-        .tlr-cta:hover { background: var(--emerald-dim); }
-
-        /* ─── PORTALS ─── */
-        .portals-section { padding: 6rem 5%; background: var(--charcoal2); }
-        .portals-inner { max-width: 1200px; margin: 0 auto; }
-
-        .portals-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2px; background: var(--border-dark); }
-
-        .portal-card {
-            background: var(--charcoal3);
-            padding: 2.5rem;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            padding: 2.4rem 2.2rem;
+            text-decoration: none; color: inherit;
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
             transition: background 0.25s;
-            min-height: 280px;
+            min-height: 220px;
         }
+        .hub-card:hover { background: rgba(52,160,106,0.07); }
+        .hub-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--emerald), transparent);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .hub-card:hover::before { transform: scaleX(1); }
+        .hub-card.gold-card::before { background: linear-gradient(90deg, var(--gold), transparent); }
+        .hub-card.gold-card:hover { background: rgba(200,150,42,0.06); }
 
-        .portal-card:hover { background: rgba(52,160,106,0.06); }
-        .portal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--emerald); transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
-        .portal-card:hover::before { transform: scaleX(1); }
-        .portal-card.gold-accent::before { background: var(--gold-light); }
-        .portal-card.gold-accent:hover { background: rgba(200,150,42,0.05); }
-
-        .portal-num { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.6; margin-bottom: auto; }
-        .portal-card.gold-accent .portal-num { color: var(--gold); }
-        .portal-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #fff; margin: auto 0 0.5rem; line-height: 1.2; }
-        .portal-card p { font-size: 0.85rem; color: rgba(255,255,255,0.38); line-height: 1.65; font-weight: 300; margin-bottom: 1.5rem; }
-        .portal-arrow { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 1.5px; color: var(--emerald); transition: letter-spacing 0.2s; }
-        .portal-card.gold-accent .portal-arrow { color: var(--gold); }
-        .portal-card:hover .portal-arrow { letter-spacing: 3px; }
-
-        /* ─── NETWORK SECTION ─── */
-        .network-section { padding: 5rem 5%; background: var(--charcoal); border-top: 1px solid var(--border-dark); }
-        .network-inner { max-width: 1200px; margin: 0 auto; }
-
-        .network-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
-        .network-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: #fff; line-height: 1.15; }
-        .network-header h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
-
-        .network-header-link {
+        .hc-tag {
             font-family: 'DM Mono', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(200,150,42,0.3);
-            padding-bottom: 2px;
-            transition: border-color 0.2s, color 0.2s;
+            font-size: 0.52rem; letter-spacing: 2px;
+            color: var(--emerald); opacity: 0.7;
+            margin-bottom: auto; padding-bottom: 1.5rem;
         }
+        .hub-card.gold-card .hc-tag { color: var(--gold); }
 
-        .network-header-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+        .hc-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 700; color: #fff;
+            margin-bottom: 0.5rem; line-height: 1.2;
+        }
+        .hc-desc {
+            font-size: 0.82rem; color: rgba(255,255,255,0.35);
+            line-height: 1.65; font-weight: 300;
+            margin-bottom: 1.4rem;
+        }
+        .hc-arrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem; letter-spacing: 1.5px;
+            color: rgba(52,160,106,0.55);
+            transition: letter-spacing 0.2s, color 0.2s;
+        }
+        .hub-card.gold-card .hc-arrow { color: rgba(200,150,42,0.55); }
+        .hub-card:hover .hc-arrow { letter-spacing: 3px; color: var(--emerald); }
+        .hub-card.gold-card:hover .hc-arrow { color: var(--gold); }
 
-        /* 4-column grid so 7 cards wrap to 2 rows */
-        .network-grid {
+        /* Secondary grid — remaining 7 sites */
+        .hub-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-            background: var(--border-dark);
+            gap: 3px;
         }
 
-        .network-card {
-            background: var(--charcoal2);
+        .hub-mini {
+            background: var(--charcoal3);
             padding: 1.8rem 1.6rem;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
+            text-decoration: none; color: inherit;
+            display: flex; flex-direction: column; gap: 8px;
+            position: relative; overflow: hidden;
             transition: background 0.2s;
         }
+        .hub-mini:hover { background: rgba(52,160,106,0.06); }
+        .hub-mini::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+            background: var(--gold);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .hub-mini:hover::after { transform: scaleX(1); }
 
-        .network-card:hover { background: var(--charcoal3); }
-        .network-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
-        .network-card:hover::after { transform: scaleX(1); }
-        .network-card.active-site { background: rgba(200,150,42,0.06); border: 1px solid rgba(200,150,42,0.15); cursor: default; }
-        .network-card.active-site::after { transform: scaleX(1); }
+        .hm-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.48rem; letter-spacing: 2px;
+            color: var(--gold); opacity: 0.6;
+        }
+        .hm-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem; font-weight: 700; color: #fff;
+            line-height: 1.2;
+        }
+        .hm-desc {
+            font-size: 0.78rem; color: rgba(255,255,255,0.3);
+            line-height: 1.55; font-weight: 300;
+        }
+        .hm-arrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem; letter-spacing: 1.5px;
+            color: rgba(200,150,42,0.45);
+            transition: letter-spacing 0.2s, color 0.2s;
+            margin-top: auto; padding-top: 8px;
+        }
+        .hub-mini:hover .hm-arrow { letter-spacing: 2.5px; color: var(--gold); }
 
-        .nc-tag { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 2px; color: var(--gold); opacity: 0.6; }
-        .network-card.active-site .nc-tag { opacity: 1; }
-        .nc-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.2; }
-        .nc-desc { font-size: 0.78rem; color: rgba(255,255,255,0.3); line-height: 1.6; font-weight: 300; flex: 1; }
-        .nc-arrow { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 1.5px; color: rgba(200,150,42,0.5); transition: letter-spacing 0.2s, color 0.2s; }
-        .network-card:hover .nc-arrow { color: var(--gold); letter-spacing: 2.5px; }
-        .nc-you { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.45rem; letter-spacing: 1.5px; padding: 2px 7px; background: rgba(200,150,42,0.15); border: 1px solid rgba(200,150,42,0.3); color: var(--gold); }
+        /* ─── ABOUT ─── */
+        .about-section {
+            padding: 6rem 5%;
+            background: var(--charcoal);
+            border-top: 1px solid var(--border-dark);
+        }
+        .about-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 700; line-height: 1.15; color: #fff;
+            margin-bottom: 1.4rem;
+        }
+        .about-text h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+        .about-text p {
+            font-size: 0.95rem; color: rgba(255,255,255,0.43);
+            line-height: 1.85; font-weight: 300; margin-bottom: 1.2rem;
+        }
+        .about-text p strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+        .about-text p em { font-style: italic; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+
+        .about-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-top: 0.5rem;
+            font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 2px;
+            color: var(--emerald); text-decoration: none;
+            border-bottom: 1px solid rgba(52,160,106,0.3); padding-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+        .about-link:hover { border-color: var(--emerald); }
+
+        /* Pillars */
+        .pillars { display: flex; flex-direction: column; gap: 2px; }
+        .pillar {
+            display: flex; align-items: center; gap: 18px;
+            padding: 1.1rem 1.4rem;
+            background: var(--charcoal2);
+            border: 1px solid var(--border-dark);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .pillar:hover { background: rgba(52,160,106,0.05); border-color: var(--border-green); }
+        .pillar-num {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900;
+            color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.3);
+            flex-shrink: 0; width: 32px; line-height: 1;
+        }
+        .pillar h4 { font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.15rem; }
+        .pillar p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.5; margin: 0; }
+
+        /* ─── HISTORY ─── */
+        .history-section {
+            background: var(--charcoal2);
+            padding: 6rem 5%;
+            border-top: 1px solid var(--border-dark);
+        }
+        .history-inner { max-width: 1200px; margin: 0 auto; }
+
+        .history-header {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 3.5rem; flex-wrap: wrap; gap: 16px;
+        }
+        .history-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 700; color: #fff;
+        }
+        .history-header h2 em { font-style: italic; color: var(--emerald); }
+        .history-header p { font-size: 0.85rem; color: rgba(255,255,255,0.3); max-width: 260px; text-align: right; line-height: 1.7; }
+
+        .timeline-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            background: var(--border-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .t-card {
+            background: var(--charcoal3);
+            padding: 2rem 1.6rem;
+            position: relative;
+            transition: background 0.25s;
+        }
+        .t-card:hover { background: rgba(52,160,106,0.05); }
+        .t-card::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: var(--border-dark);
+            transition: background 0.25s;
+        }
+        .t-card:hover::before { background: var(--emerald); }
+        .t-card .era {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.56rem; letter-spacing: 2px;
+            color: var(--emerald); opacity: 0.65;
+            margin-bottom: 0.8rem; display: block;
+        }
+        .t-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem; font-weight: 700; color: #fff;
+            margin-bottom: 0.6rem; line-height: 1.3;
+        }
+        .t-card p { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.65; font-weight: 300; }
+        .t-badge {
+            display: inline-block; margin-top: 1rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.48rem; letter-spacing: 1.5px;
+            padding: 2px 8px;
+            border: 1px solid rgba(52,160,106,0.22); color: rgba(52,160,106,0.65);
+        }
+        .t-badge.chaos { border-color: rgba(180,60,60,0.25); color: rgba(200,100,100,0.65); }
+        .t-badge.current { border-color: rgba(200,150,42,0.3); color: rgba(224,176,69,0.7); }
+
+        .history-cta {
+            margin-top: 2.5rem; text-align: center;
+        }
+
+        /* ─── STATS STRIP ─── */
+        .stats-strip {
+            background: var(--green-dark);
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border-green);
+            border-bottom: 1px solid var(--border-green);
+        }
+        .stats-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+        }
+        .stat-block {
+            text-align: center; padding: 2rem 1rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-block .num {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 900; color: var(--emerald);
+            display: block; line-height: 1;
+        }
+        .stat-block .lbl {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem; letter-spacing: 2px;
+            color: rgba(255,255,255,0.3);
+            display: block; margin-top: 6px;
+        }
 
         /* ─── FOUNDERS ─── */
-        .founders-section { padding: 6rem 5%; background: var(--charcoal); }
+        .founders-section {
+            padding: 6rem 5%;
+            background: var(--charcoal);
+            border-top: 1px solid var(--border-dark);
+        }
         .founders-inner { max-width: 1200px; margin: 0 auto; }
 
-        .founders-header { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: center; margin-bottom: 4rem; }
-        .founders-header h2 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: #fff; line-height: 1.1; }
+        .founders-header {
+            display: grid; grid-template-columns: 1fr 2fr;
+            gap: 60px; align-items: center; margin-bottom: 3.5rem;
+        }
+        .founders-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 900; color: #fff; line-height: 1.1;
+        }
         .founders-header h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
-        .founders-header p { font-size: 0.95rem; color: rgba(255,255,255,0.4); line-height: 1.85; font-weight: 300; }
+        .founders-header p { font-size: 0.93rem; color: rgba(255,255,255,0.38); line-height: 1.85; font-weight: 300; }
 
-        .founders-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border-dark); }
-
-        .founder-card { background: var(--charcoal2); padding: 2.5rem 2rem 2rem; position: relative; transition: background 0.2s; }
+        .founders-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 3px; background: var(--border-dark);
+        }
+        .founder-card {
+            background: var(--charcoal2);
+            padding: 2.5rem 2rem;
+            position: relative;
+            transition: background 0.2s;
+        }
         .founder-card:hover { background: var(--charcoal3); }
+        .founder-ghost {
+            font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900;
+            color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.12);
+            position: absolute; top: 1.5rem; right: 1.5rem; line-height: 1;
+        }
+        .founder-init {
+            width: 48px; height: 48px;
+            border: 1px solid rgba(52,160,106,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif; font-size: 1.2rem;
+            font-weight: 700; color: var(--emerald);
+            background: rgba(52,160,106,0.05);
+            margin-bottom: 1.4rem;
+        }
+        .founder-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem; font-weight: 700; color: #fff;
+            margin-bottom: 0.35rem;
+        }
+        .founder-role {
+            font-family: 'DM Mono', monospace; font-size: 0.53rem;
+            letter-spacing: 2px; color: var(--emerald); opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+        .founder-card p { font-size: 0.85rem; color: rgba(255,255,255,0.36); line-height: 1.75; font-weight: 300; }
 
-        .founder-index { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.15); position: absolute; top: 1.5rem; right: 1.5rem; line-height: 1; }
+        /* Proclamation block */
+        .proclamation-block {
+            margin-top: 3px;
+            background: var(--charcoal2);
+            border: 1px solid var(--border-dark);
+            padding: 2.2rem 2.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 30px; flex-wrap: wrap;
+        }
+        .proc-title {
+            font-family: 'DM Mono', monospace; font-size: 0.56rem;
+            letter-spacing: 3px; color: var(--emerald); opacity: 0.7;
+            margin-bottom: 0.5rem;
+        }
+        .proclamation-block h3 {
+            font-family: 'Playfair Display', serif; font-size: 1.3rem;
+            font-weight: 700; color: #fff; margin-bottom: 0.25rem;
+        }
+        .proclamation-block p { font-size: 0.84rem; color: rgba(255,255,255,0.35); }
+        .proc-btns { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
+        .proc-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid;
+            font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px;
+            text-decoration: none; transition: background 0.2s;
+        }
+        .proc-btn.green { border-color: rgba(52,160,106,0.4); color: var(--emerald); }
+        .proc-btn.green:hover { background: var(--emerald-dim); }
+        .proc-btn.gold { border-color: rgba(200,150,42,0.35); color: var(--gold); }
+        .proc-btn.gold:hover { background: var(--gold-dim); }
 
-        .founder-initial { width: 52px; height: 52px; border: 1px solid rgba(52,160,106,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--emerald); margin-bottom: 1.5rem; background: rgba(52,160,106,0.06); }
-
-        .founder-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
-        .founder-role { font-family: 'DM Mono', monospace; font-size: 0.57rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.7; margin-bottom: 1rem; }
-        .founder-card p { font-size: 0.88rem; color: rgba(255,255,255,0.38); line-height: 1.75; font-weight: 300; }
+        /* ─── CONTACT ─── */
+        .contact-section {
+            padding: 5rem 5%;
+            background: var(--charcoal2);
+            border-top: 1px solid var(--border-dark);
+            text-align: center;
+        }
+        .contact-inner { max-width: 600px; margin: 0 auto; }
+        .contact-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 700; color: #fff; margin-bottom: 1rem;
+        }
+        .contact-section h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
+        .contact-section p {
+            font-size: 0.93rem; color: rgba(255,255,255,0.38);
+            line-height: 1.85; font-weight: 300; margin-bottom: 2.5rem;
+        }
+        .contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
         /* ─── FOOTER ─── */
-        .footer { background: var(--green-dark); border-top: 1px solid rgba(52,160,106,0.15); }
-
-        .footer-main { max-width: 1200px; margin: 0 auto; padding: 4rem 5% 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
-
-        .f-logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: #fff; margin-bottom: 0.8rem; line-height: 1.2; }
+        footer {
+            background: var(--green-dark);
+            border-top: 1px solid rgba(52,160,106,0.14);
+        }
+        .footer-main {
+            max-width: 1200px; margin: 0 auto;
+            padding: 4rem 5% 3rem;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .f-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem; font-weight: 900; color: #fff;
+            margin-bottom: 0.7rem; line-height: 1.2;
+        }
         .f-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
-        .f-desc { font-size: 0.88rem; color: rgba(255,255,255,0.3); line-height: 1.75; font-weight: 300; max-width: 260px; margin-bottom: 1rem; }
+        .f-desc {
+            font-size: 0.86rem; color: rgba(255,255,255,0.3);
+            line-height: 1.75; font-weight: 300;
+            max-width: 240px; margin-bottom: 1.2rem;
+        }
+        .f-network-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 14px;
+            border: 1px solid rgba(200,150,42,0.22);
+            background: rgba(200,150,42,0.05);
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .f-network-badge:hover { background: rgba(200,150,42,0.1); border-color: rgba(200,150,42,0.4); }
+        .f-network-badge .fbn-label { font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); line-height: 1.3; }
+        .f-network-badge .fbn-name { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1px; color: var(--gold); font-weight: 500; }
 
-        .f-corp-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid rgba(200,150,42,0.25); background: rgba(200,150,42,0.06); text-decoration: none; transition: background 0.2s, border-color 0.2s; }
-        .f-corp-badge:hover { background: rgba(200,150,42,0.12); border-color: rgba(200,150,42,0.4); }
-        .f-corp-badge-label { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); line-height: 1.3; }
-        .f-corp-badge-name { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 1px; color: var(--gold); font-weight: 500; }
+        .f-col h5 {
+            font-family: 'DM Mono', monospace; font-size: 0.54rem;
+            letter-spacing: 2.5px; color: var(--emerald); opacity: 0.7;
+            margin-bottom: 1.2rem;
+        }
+        .f-col.network h5 { color: var(--gold); }
+        .f-col a {
+            display: block; font-size: 0.86rem;
+            color: rgba(255,255,255,0.32); text-decoration: none;
+            margin-bottom: 0.6rem; font-weight: 300;
+            transition: color 0.2s;
+        }
+        .f-col a:hover { color: rgba(255,255,255,0.72); }
+        .f-col.network a:hover { color: var(--gold-light); }
 
-        .f-col h5 { font-family: 'DM Mono', monospace; font-size: 0.57rem; letter-spacing: 2.5px; color: var(--emerald); opacity: 0.6; margin-bottom: 1.2rem; }
-        .f-col.f-col-network h5 { color: var(--gold); }
-        .f-col a { display: block; font-size: 0.88rem; color: rgba(255,255,255,0.35); text-decoration: none; margin-bottom: 0.6rem; font-weight: 300; transition: color 0.2s; }
-        .f-col a:hover { color: rgba(255,255,255,0.75); }
-        .f-col.f-col-network a:hover { color: var(--gold-light); }
-
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 1.2rem 5%; }
-        .footer-bottom-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .footer-bottom p { font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.2); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 1.2rem 5%;
+        }
+        .footer-bottom-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 8px;
+        }
+        .footer-bottom p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.54rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.2);
+        }
         .footer-bottom a { color: rgba(200,150,42,0.5); text-decoration: none; transition: color 0.2s; }
         .footer-bottom a:hover { color: var(--gold); }
 
         /* ─── ANIMATIONS ─── */
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
         @keyframes scrollPulse {
             0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
-            40%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
-            60%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+            45%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+            55%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
             100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
         }
 
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .reveal.in { opacity: 1; transform: translateY(0); }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 1100px) {
-            .hero-stats { display: none; }
-            .timeline-track { grid-template-columns: repeat(3, 1fr); }
-            .network-grid { grid-template-columns: repeat(3, 1fr); }
+            .hub-grid { grid-template-columns: repeat(3, 1fr); }
+            .footer-main { grid-template-columns: 1fr 1fr 1fr; }
         }
 
         @media (max-width: 900px) {
-            .about-inner { grid-template-columns: 1fr; gap: 50px; }
-            .project-featured { grid-template-columns: 1fr; }
-            .projects-intro { grid-template-columns: 1fr; gap: 20px; }
-            .projects-grid { grid-template-columns: 1fr 1fr; }
-            .portals-grid { grid-template-columns: 1fr; }
+            .hub-featured { grid-template-columns: 1fr; }
+            .hub-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-inner { grid-template-columns: 1fr; gap: 40px; }
+            .timeline-cards { grid-template-columns: 1fr 1fr; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
             .founders-grid { grid-template-columns: 1fr; }
             .founders-header { grid-template-columns: 1fr; gap: 20px; }
             .footer-main { grid-template-columns: 1fr 1fr; }
-            .nav-links { display: none; }
-            .network-grid { grid-template-columns: 1fr 1fr; }
-            .network-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .netbar-links { display: none; }
+            .sitenav-links { display: none; }
+            .hamburger { display: flex; }
+            .history-header p { display: none; }
+            .hub-header p { display: none; }
         }
 
-        @media (max-width: 600px) {
-            .timeline-track { grid-template-columns: 1fr; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .spec-grid { grid-template-columns: 1fr; }
+        @media (max-width: 640px) {
+            :root { --netbar-h: 0px; }
+            .netbar { display: none; }
+            .sitenav { top: 0 !important; }
+            .hero { padding: calc(80px) 5% 5rem; min-height: 100svh; }
+            .hero h1 { font-size: clamp(3rem, 13vw, 5rem); letter-spacing: -1px; }
+            .hub-grid { grid-template-columns: 1fr 1fr; }
+            .timeline-cards { grid-template-columns: 1fr; }
+            .stats-inner { grid-template-columns: 1fr 1fr; }
             .footer-main { grid-template-columns: 1fr; }
-            .footer-bottom-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
+            .footer-bottom-inner { flex-direction: column; text-align: center; }
             .hero-actions { flex-direction: column; }
-            .tlr-strip { flex-direction: column; align-items: flex-start; }
-            .founders-grid { grid-template-columns: 1fr; }
-            .network-grid { grid-template-columns: 1fr; }
-            .network-bar { display: none; }
-            nav { top: 0 !important; }
-            .hero { padding-top: 100px; }
+            .proclamation-block { flex-direction: column; }
+            .proc-btns { width: 100%; }
+            .proc-btn { flex: 1; text-align: center; }
+            .hub-header h2 { font-size: 1.8rem; }
+            .contact-btns { flex-direction: column; align-items: center; }
+            .hero-scroll { display: none; }
+        }
+
+        @media (max-width: 420px) {
+            .hub-grid { grid-template-columns: 1fr; }
+            .stats-inner { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- PAIZ® CORP NETWORK BAR -->
-    <div class="network-bar" id="networkBar">
+    <!-- NETWORK BAR -->
+    <nav class="netbar" id="netbar" aria-label="Network">
         <div class="netbar-inner">
-            <span class="netbar-brand">
-                PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK
-            </span>
-            <div class="netbar-sep"></div>
-            <div class="netbar-links">
-                <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
-                <a href="https://faizzzlol.github.io/thelol/" class="active">THE LOL</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
-                <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
-                <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
-                <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
-            </div>
-            <span class="netbar-right">SKYXION: ALTAER ERA</span>
-        </div>
-    </div>
-
-    <!-- NAV -->
-    <nav id="navbar">
-        <a href="#" class="nav-logo">
-            <img src="/thelol/favicon-96x96.png" alt="LoL Logo" onerror="this.style.display='none'">
-            <span class="nav-logo-text">THE LOL</span>
-        </a>
-        <div class="nav-links">
-            <a href="#about">ABOUT</a>
-            <a href="#history">HISTORY</a>
-            <a href="#megaprojects">MEGAPROJECTS</a>
-            <a href="#portals">PORTALS</a>
-            <a href="#founders">FOUNDERS</a>
-            <a href="/thelol/gov/" class="nav-cta">GOV PORTAL</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+            <a href="https://faizzzlol.github.io/thelol/" class="nb-active">THE LOL</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+            <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-glow-1"></div>
-        <div class="hero-glow-2"></div>
-        <div class="hero-grid"></div>
+    <!-- SITE NAV -->
+    <header class="sitenav" id="sitenav">
+        <a href="/thelol/" class="sitenav-logo">
+            <img src="/thelol/favicon-96x96.png" alt="The LoL" onerror="this.style.display='none'">
+            <span>THE LOL</span>
+        </a>
+        <nav class="sitenav-links" aria-label="Main">
+            <a href="#about">ABOUT</a>
+            <a href="#history">HISTORY</a>
+            <a href="#network">NETWORK</a>
+            <a href="#founders">FOUNDERS</a>
+            <a href="/thelol/gov/" class="nav-cta">GOV PORTAL</a>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
 
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+        <a href="#about" onclick="closeMobile()">ABOUT</a>
+        <a href="#history" onclick="closeMobile()">HISTORY</a>
+        <a href="#network" onclick="closeMobile()">NETWORK HUB</a>
+        <a href="#founders" onclick="closeMobile()">FOUNDERS</a>
+        <a href="/thelol/gov/" onclick="closeMobile()">GOVERNMENT PORTAL</a>
+        <a href="/thelol/gov/isc/" onclick="closeMobile()">ISC</a>
+        <a href="/thelol/tlr/" onclick="closeMobile()">TL RAILWAYS</a>
+        <a href="/thelol/about" onclick="closeMobile()">FULL HISTORY</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-bg-glow"></div>
+        <div class="hero-bg-glow-2"></div>
+        <div class="hero-grid-bg"></div>
         <div class="hero-inner">
-            <div class="hero-eyebrow">THE SUS // EST. 2022 // SOVEREIGN NATION</div>
+            <div class="hero-eyebrow">THE SUS // EST. 2023 // SOVEREIGN NATION // SKYXION: ALTAER ERA</div>
             <h1>
-                The <span class="accent">Legend</span><br>
+                The <span class="outline-text">Legend</span><br>
                 of <span class="gold-text">Legiona.</span>
             </h1>
             <p class="hero-sub">
-                A sovereign nation forged in vision, courage, and camaraderie. From a squad of three 
-                to the most modern nation in Skyxion — this is The LoL.
+                A sovereign nation forged in vision, courage, and camaraderie. 
+                From a squad of three to the most modern nation in Skyxion — 
+                this is <strong>The LoL.</strong>
             </p>
             <div class="hero-actions">
-                <a href="#about" class="btn-green">EXPLORE THE LOL</a>
-                <a href="/thelol/assets/The_LoL_Proclamation.pdf" class="btn-outline-white" target="_blank">READ THE PROCLAMATION</a>
+                <a href="#network" class="btn-primary">EXPLORE THE NETWORK</a>
+                <a href="/thelol/about" class="btn-secondary">FULL HISTORY →</a>
             </div>
         </div>
-
-        <div class="hero-stats">
-            <div class="hero-stat"><span class="num">2023</span><span class="lbl">YEAR FOUNDED</span></div>
-            <div class="hero-stat"><span class="num">3</span><span class="lbl">FOUNDING MEMBERS</span></div>
-            <div class="hero-stat"><span class="num">4,800+</span><span class="lbl">BLOCKS // TLSRL</span></div>
-            <div class="hero-stat"><span class="num">6+</span><span class="lbl">MEGAPROJECTS</span></div>
-        </div>
-
         <div class="hero-scroll"><div class="scroll-line"></div></div>
     </section>
 
+    <!-- ─── HUB NETWORK CARDS ─── -->
+    <section class="hub-section" id="network">
+        <div class="hub-inner">
+            <div class="hub-header reveal">
+                <div>
+                    <div class="section-eyebrow">PAIZ® CORP NETWORK</div>
+                    <h2>Everything<br>in <em>The LoL.</em></h2>
+                </div>
+                <p>All portals, agencies, and services of The Legend of Legiona and the Paiz® Corp network in one place.</p>
+            </div>
+
+            <!-- FEATURED ROW -->
+            <div class="hub-featured reveal">
+                <a href="/thelol/gov/" class="hub-card">
+                    <span class="hc-tag">PORTAL-01 // OFFICIAL GOVERNANCE</span>
+                    <div class="hc-title">The LoL Government Portal</div>
+                    <p class="hc-desc">Legislation, departments, proclamation documents, founding history, and national megaprojects. The official face of The LoL's governance.</p>
+                    <span class="hc-arrow">ACCESS GOVERNMENT →</span>
+                </a>
+                <a href="/thelol/gov/isc/" class="hub-card gold-card">
+                    <span class="hc-tag">PORTAL-02 // INTELLIGENCE AGENCY</span>
+                    <div class="hc-title">ISC — Internal Security Control</div>
+                    <p class="hc-desc">Sovereignty through oversight. The LoL's primary intelligence and security agency. Successor to TLIO.</p>
+                    <span class="hc-arrow">ENTER ISC →</span>
+                </a>
+            </div>
+
+            <!-- SECONDARY GRID -->
+            <div class="hub-grid reveal" style="margin-top: 3px;">
+                <a href="/thelol/about" class="hub-mini">
+                    <span class="hm-tag">HISTORY // THE LOL</span>
+                    <span class="hm-name">About The LoL</span>
+                    <p class="hm-desc">The full national timeline — from The Sus to The Legend of Legiona.</p>
+                    <span class="hm-arrow">READ MORE →</span>
+                </a>
+                <a href="/thelol/tlr/" class="hub-mini">
+                    <span class="hm-tag">TRANSPORT // SUBSIDIARY</span>
+                    <span class="hm-name">TL Railways</span>
+                    <p class="hm-desc">National rail network. Routes, timetables, and 4,800+ blocks of track.</p>
+                    <span class="hm-arrow">VIEW ROUTES →</span>
+                </a>
+                <a href="/thelol/gov/isc/national" class="hub-mini">
+                    <span class="hm-tag">ARCHIVE // PUBLIC ACCESS</span>
+                    <span class="hm-name">ISC National Archive</span>
+                    <p class="hm-desc">Declassified ISC records and national transparency portal.</p>
+                    <span class="hm-arrow">OPEN ARCHIVE →</span>
+                </a>
+                <a href="/thelol/gov/assets/" class="hub-mini">
+                    <span class="hm-tag">DOCUMENTS // LEGAL</span>
+                    <span class="hm-name">Legal Archive</span>
+                    <p class="hm-desc">Proclamations, policies, decrees and sovereign legal records.</p>
+                    <span class="hm-arrow">BROWSE DOCS →</span>
+                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/" class="hub-mini">
+                    <span class="hm-tag">CORP HUB // PARENT</span>
+                    <span class="hm-name">Paiz® Corp</span>
+                    <p class="hm-desc">The conglomerate homepage. Explore all subsidiaries and projects.</p>
+                    <span class="hm-arrow">VISIT HUB →</span>
+                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="hub-mini">
+                    <span class="hm-tag">STOREFRONT // CORP</span>
+                    <span class="hm-name">Paiz Shop</span>
+                    <p class="hm-desc">Official in-game item shop. Browse and order resources in-world.</p>
+                    <span class="hm-arrow">SHOP NOW →</span>
+                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/" class="hub-mini">
+                    <span class="hm-tag">FOOD // CORP</span>
+                    <span class="hm-name">Paiz Chicken</span>
+                    <p class="hm-desc">Online food ordering across Skyxion. Priced in diamonds.</p>
+                    <span class="hm-arrow">ORDER NOW →</span>
+                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/" class="hub-mini">
+                    <span class="hm-tag">FILM & MEDIA // CORP</span>
+                    <span class="hm-name">PaizProductions</span>
+                    <p class="hm-desc">Official film studio. The LoL Movie, Chronicles, and ISC: Classified.</p>
+                    <span class="hm-arrow">VIEW STUDIO →</span>
+                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie" class="hub-mini">
+                    <span class="hm-tag">FILM // PAIZPRODUCTIONS</span>
+                    <span class="hm-name">The LoL Movie</span>
+                    <p class="hm-desc">The upcoming cinematic feature based on The LoL's history.</p>
+                    <span class="hm-arrow">LEARN MORE →</span>
+                </a>
+                <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener" class="hub-mini">
+                    <span class="hm-tag">COMMUNITY // DISCORD</span>
+                    <span class="hm-name">The LoL Discord</span>
+                    <p class="hm-desc">Join the official Discord server for The Legend of Legiona.</p>
+                    <span class="hm-arrow">JOIN SERVER →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-strip reveal">
+        <div class="stats-inner">
+            <div class="stat-block">
+                <span class="num">2023</span>
+                <span class="lbl">YEAR FOUNDED</span>
+            </div>
+            <div class="stat-block">
+                <span class="num">3</span>
+                <span class="lbl">FOUNDING MEMBERS</span>
+            </div>
+            <div class="stat-block">
+                <span class="num">4,800+</span>
+                <span class="lbl">BLOCKS — TLSRL</span>
+            </div>
+            <div class="stat-block">
+                <span class="num">9</span>
+                <span class="lbl">NETWORK SITES</span>
+            </div>
+        </div>
+    </div>
+
     <!-- ABOUT -->
-    <section class="about-strip" id="about">
+    <section class="about-section" id="about">
         <div class="about-inner">
-            <div class="about-left reveal">
+            <div class="about-text reveal">
                 <div class="section-eyebrow">THE LEGEND OF LEGIONA</div>
                 <h2>More than a nation —<br>a <em>legacy.</em></h2>
                 <p>
-                    The Legend of Legiona, known simply as <strong>The LoL</strong>, is a sovereign nation 
-                    within the Skyxion world. Originally founded as a small squad called <strong>"The Sus"</strong> 
-                    by Faiz4224, ItzDynozz, and Imii Kun, the nation rapidly grew into the most modern 
-                    and wealthiest in all of Skyxion.
+                    The Legend of Legiona, known as <strong>The LoL</strong>, is a sovereign 
+                    nation within the Skyxion world. Originally founded as a small squad called 
+                    <strong>"The Sus"</strong> by Faiz4224, ItzDynozz, and Imii Kun, the nation 
+                    rapidly grew into the most modern and wealthiest in all of Skyxion.
                 </p>
                 <p>
-                    Through democratic elections, political conflict, a presidential resistance, and 
-                    full recovery — The LoL has proven that unity and perseverance can overcome anything. 
-                    Today, it stands as a symbol of resilience, innovation, and sovereign pride.
+                    Through democratic elections, political conflict, a presidential crisis, 
+                    and full recovery — The LoL has proven that unity and perseverance can 
+                    overcome anything.
                 </p>
-                <p style="font-style:italic; color:rgba(255,255,255,0.3); font-size:0.92rem;">
-                    "In the Name of Unity, Legacy, and Glory." — Proclamation of Sovereignty
-                </p>
+                <p><em>"In the Name of Unity, Legacy, and Glory." — Proclamation of Sovereignty</em></p>
+                <a href="/thelol/about" class="about-link">READ THE FULL HISTORY →</a>
             </div>
-
-            <div class="principles reveal">
-                <div class="principle">
-                    <span class="principle-num">01</span>
-                    <div class="principle-info">
+            <div class="pillars reveal">
+                <div class="pillar">
+                    <span class="pillar-num">01</span>
+                    <div>
                         <h4>Unity</h4>
-                        <p>All players — builders, warriors, adventurers — stand as one, striving for collective greatness.</p>
+                        <p>All players stand as one, striving for collective greatness across Skyxion.</p>
                     </div>
                 </div>
-                <div class="principle">
-                    <span class="principle-num">02</span>
-                    <div class="principle-info">
+                <div class="pillar">
+                    <span class="pillar-num">02</span>
+                    <div>
                         <h4>Freedom</h4>
-                        <p>Every citizen has the right to explore, create, and thrive within The LoL's borders.</p>
+                        <p>Every citizen has the right to explore, create, and thrive within The LoL.</p>
                     </div>
                 </div>
-                <div class="principle">
-                    <span class="principle-num">03</span>
-                    <div class="principle-info">
+                <div class="pillar">
+                    <span class="pillar-num">03</span>
+                    <div>
                         <h4>Innovation</h4>
-                        <p>Harnessing the limitless possibilities of Minecraft to build a nation unlike any other.</p>
+                        <p>Harnessing Minecraft's limitless possibilities to build a nation unlike any other.</p>
                     </div>
                 </div>
-                <div class="principle">
-                    <span class="principle-num">04</span>
-                    <div class="principle-info">
+                <div class="pillar">
+                    <span class="pillar-num">04</span>
+                    <div>
                         <h4>Defence & Honour</h4>
-                        <p>Protecting our lands from griefers and threats while upholding fairness and respect for all.</p>
+                        <p>Protecting our lands while upholding fairness and respect for all citizens.</p>
                     </div>
                 </div>
             </div>
@@ -930,244 +1048,51 @@
 
     <!-- HISTORY -->
     <section class="history-section" id="history">
-        <div class="section-header reveal">
-            <h2>The Story of<br><em>The LoL.</em></h2>
-            <p>From humble beginnings as "The Sus" to a sovereign nation — every chapter shaped who we are.</p>
-        </div>
-        <div class="timeline-track reveal">
-            <div class="t-card">
-                <span class="era">2023 // EARLY</span>
-                <h4>The Sus Founded</h4>
-                <p>Faiz4224, ItzDynozz &amp; Imii Kun form the original squad in Skyxion. Three founders, one shared vision.</p>
-                <span class="t-badge">ORIGIN</span>
+        <div class="history-inner">
+            <div class="history-header reveal">
+                <h2>The story of<br><em>The LoL.</em></h2>
+                <p>From humble beginnings to a sovereign nation — every chapter shaped who we are.</p>
             </div>
-            <div class="t-card">
-                <span class="era">2023</span>
-                <h4>Renamed & Reborn</h4>
-                <p>Renamed "The Legend of Legiona." Becomes the most modern and wealthiest nation in Skyxion under President Faiz4224.</p>
-                <span class="t-badge">GOLDEN ERA</span>
-            </div>
-            <div class="t-card">
-                <span class="era">MAY 6, 2023</span>
-                <h4>First Election</h4>
-                <p>The LoL's first democratic election. UltraX2020 and PHRTL win, becoming the 2nd President.</p>
-                <span class="t-badge">DEMOCRACY</span>
-            </div>
-            <div class="t-card">
-                <span class="era">2023 // CRISIS</span>
-                <h4>Chaos & Conflict</h4>
-                <p>Internal strife under UltraX2020. The LoL City sign bombed, TLCC was bombed. Political conflict grips the nation.</p>
-                <span class="t-badge chaos">CONFLICT</span>
-            </div>
-            <div class="t-card">
-                <span class="era">NOV 8, 2023</span>
-                <h4>Resistance & Recovery</h4>
-                <p>UltraX2020 resigns. Faiz4224 resumes leadership. TLIO formed as national intelligence body. Rebuilding begins.</p>
-                <span class="t-badge">REBIRTH</span>
-            </div>
-            <div class="t-card">
-                <span class="era">2025–2026</span>
-                <h4>The Modern Era</h4>
-                <p>TLIO reborn as ISC. Skyxion: Altaer era begins. The LoL stands as a symbol of perseverance and innovation.</p>
-                <span class="t-badge current">CURRENT</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- MEGAPROJECTS -->
-    <section class="projects-section" id="megaprojects">
-        <div class="projects-inner">
-            <div class="projects-intro reveal">
-                <div>
-                    <div class="section-eyebrow">NATIONAL MEGAPROJECTS</div>
-                    <h2>Built for a<br><em>nation.</em></h2>
+            <div class="timeline-cards reveal">
+                <div class="t-card">
+                    <span class="era">2023 // EARLY</span>
+                    <h4>The Sus Founded</h4>
+                    <p>Faiz4224, ItzDynozz &amp; Imii Kun form the original squad in Skyxion. Three founders, one shared vision.</p>
+                    <span class="t-badge">ORIGIN</span>
                 </div>
-                <div class="projects-intro-right">
-                    <p>
-                        From a 4,800-block railway to twin towers that dominate The LoL City skyline — 
-                        every megaproject is a testament to what The LoL builds when its people are united 
-                        under a shared vision. Constructed by <a href="https://faizzzlol.github.io/PaizCorp/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(200,150,42,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>Paiz® Corp</strong></a> and 
-                        operated by <a href="https://faizzzlol.github.io/thelol/tlr/" style="color:rgba(255,255,255,0.7); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(52,160,106,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'"><strong>TL Railways</strong></a>.
-                    </p>
+                <div class="t-card">
+                    <span class="era">2023</span>
+                    <h4>Renamed & Reborn</h4>
+                    <p>Renamed "The Legend of Legiona." Becomes the most modern and wealthiest nation in Skyxion.</p>
+                    <span class="t-badge">GOLDEN ERA</span>
+                </div>
+                <div class="t-card">
+                    <span class="era">MAY 6, 2023</span>
+                    <h4>First Election</h4>
+                    <p>The LoL's first democratic election. UltraX2020 and PHRTL win, becoming the 2nd President.</p>
+                    <span class="t-badge">DEMOCRACY</span>
+                </div>
+                <div class="t-card">
+                    <span class="era">2023 // CRISIS</span>
+                    <h4>Chaos & Conflict</h4>
+                    <p>Internal strife under UltraX2020. The LoL City sign bombed. TLCC attacked. Political chaos grips the nation.</p>
+                    <span class="t-badge chaos">CONFLICT</span>
+                </div>
+                <div class="t-card">
+                    <span class="era">NOV 8, 2023</span>
+                    <h4>Resistance & Recovery</h4>
+                    <p>UltraX2020 resigns. Faiz4224 resumes leadership. TLIO formed as national intelligence. Rebuilding begins.</p>
+                    <span class="t-badge">REBIRTH</span>
+                </div>
+                <div class="t-card">
+                    <span class="era">2025–2026</span>
+                    <h4>The Modern Era</h4>
+                    <p>TLIO reborn as ISC. Skyxion: Altaer era begins. The LoL stands as a symbol of perseverance.</p>
+                    <span class="t-badge current">CURRENT</span>
                 </div>
             </div>
-
-            <div class="project-featured reveal">
-                <div>
-                    <div class="pf-tag">MEGAPROJECT-01 // TRANSPORT</div>
-                    <h3>The LoL–Spawn<br>Railway Link (TLSRL)</h3>
-                    <p>
-                        The crown jewel of The LoL's infrastructure. Spanning over 4,800 blocks and taking 
-                        just 10 minutes end-to-end, TLSRL connects The LoL to Spawn with regular, express, 
-                        and cargo services. Suggested by Faiz4224. Built by Paiz™ Construction. Operated by TL Railways.
-                    </p>
-                    <div class="project-tags">
-                        <span class="project-tag">REGULAR SERVICE</span>
-                        <span class="project-tag">EXPRESS SERVICE</span>
-                        <span class="project-tag">CARGO TRANSPORT</span>
-                        <span class="project-tag">ENDER CHEST</span>
-                        <span class="project-tag">ESCALATOR</span>
-                    </div>
-                    <a href="/thelol/PaizCorp/tlsrl" style="display:inline-block; margin-top:1.5rem; font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:2px; color:var(--emerald); text-decoration:none; border-bottom:1px solid rgba(52,160,106,0.3); padding-bottom:2px;">VIEW TLSRL PAGE →</a>
-                </div>
-                <div class="spec-grid">
-                    <div class="spec-item"><span class="sk">DISTANCE</span><span class="sv"><span class="big">4,800+</span> blocks</span></div>
-                    <div class="spec-item"><span class="sk">TRAVEL TIME</span><span class="sv"><span class="big">~10</span> minutes</span></div>
-                    <div class="spec-item"><span class="sk">OPERATOR</span><span class="sv">TL Railways</span></div>
-                    <div class="spec-item"><span class="sk">CONTRACTOR</span><span class="sv">Paiz™ Construction</span></div>
-                    <div class="spec-item"><span class="sk">ROUTE</span><span class="sv">The LoL ↔ Spawn</span></div>
-                    <div class="spec-item"><span class="sk">PARENT CORP</span><span class="sv"><a href="https://faizzzlol.github.io/PaizCorp/" style="color:var(--emerald); text-decoration:none;">Paiz® Corp</a></span></div>
-                </div>
-            </div>
-
-            <div class="tlr-strip reveal">
-                <div class="tlr-brand">
-                    <div class="tlr-name">TL Railways</div>
-                    <div class="tlr-sub">SUBSIDIARY OF PAIZ® CORP</div>
-                </div>
-                <div class="tlr-divider"></div>
-                <div class="tlr-lines">
-                    <div class="tlr-line"><span class="tlr-line-code">TLSRL</span><span class="tlr-line-name">Spawn Railway Link</span></div>
-                    <div class="tlr-line"><span class="tlr-line-code">MONO</span><span class="tlr-line-name">TL Monorail</span></div>
-                    <div class="tlr-line"><span class="tlr-line-code">LRT/MRT</span><span class="tlr-line-name">Rapid Transit</span></div>
-                    <div class="tlr-line"><span class="tlr-line-code">HSB</span><span class="tlr-line-name">High-Speed Boat Link</span></div>
-                </div>
-                <a href="https://faizzzlol.github.io/thelol/tlr/" class="tlr-cta">VIEW TL RAILWAYS →</a>
-            </div>
-
-            <div class="projects-grid reveal" style="margin-top:2px;">
-                <div class="proj-card">
-                    <div class="proj-id">MEGAPROJECT-02 // ARCHITECTURE</div>
-                    <h4>TLCC Twin Towers</h4>
-                    <p>The most iconic landmark in The LoL City. The Convention Centre Twin Towers stand as a monument to national prosperity and ambition.</p>
-                    <span class="proj-status">COMPLETED</span>
-                </div>
-                <div class="proj-card">
-                    <div class="proj-id">MEGAPROJECT-03 // ECONOMY</div>
-                    <h4>National Farm Complex</h4>
-                    <p>Three automated farms — Iron Farm, Totem Farm, and Gold Farm — powering The LoL's economic engine and citizen welfare.</p>
-                    <span class="proj-status">OPERATIONAL</span>
-                </div>
-                <div class="proj-card">
-                    <a href="/thelol/gov/isc/">
-                        <div class="proj-id">MEGAPROJECT-04 // DEFENCE</div>
-                        <h4>Internal Security Control</h4>
-                        <p>The LoL's intelligence agency. Successor to TLIO and PPTL, protecting national sovereignty across all Skyxion territories since 2025.</p>
-                        <span class="proj-status">ACTIVE</span>
-                    </a>
-                </div>
-                <div class="proj-card">
-                    <a href="https://faizzzlol.github.io/PaizCorp/">
-                        <div class="proj-id">MEGAPROJECT-05 // CORPORATE</div>
-                        <h4>Paiz® Corp</h4>
-                        <p>The national conglomerate behind all construction and transport. Parent of TL Railways, Paiz™ Construction, and more.</p>
-                        <span class="proj-status">ACTIVE</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PORTALS -->
-    <section class="portals-section" id="portals">
-        <div class="portals-inner">
-            <div style="margin-bottom:3rem;" class="reveal">
-                <div class="section-eyebrow">EXPLORE THE LOL UNIVERSE</div>
-                <h2 style="font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:700; color:#fff; margin-top:0.8rem;">
-                    Every corner of<br><em style="font-style:italic; color:var(--emerald); font-weight:400;">the nation.</em>
-                </h2>
-            </div>
-            <div class="portals-grid reveal">
-                <a href="/thelol/gov/" class="portal-card">
-                    <span class="portal-num">PORTAL-01 // GOVERNMENT</span>
-                    <h3>Official Government Portal</h3>
-                    <p>Legislation, departments, history, and the founding proclamation. The official face of The LoL's governance.</p>
-                    <span class="portal-arrow">ACCESS PORTAL →</span>
-                </a>
-                <a href="/thelol/gov/isc/" class="portal-card gold-accent">
-                    <span class="portal-num">PORTAL-02 // SECURITY</span>
-                    <h3>ISC — Internal Security Control</h3>
-                    <p>Intelligence. Defence. Sovereignty. The LoL's intelligence agency.</p>
-                    <span class="portal-arrow">ACCESS ISC →</span>
-                </a>
-                <a href="/thelol/tlr/" class="portal-card">
-                    <span class="portal-num">PORTAL-03 // TRANSPORT</span>
-                    <h3>TL Railways</h3>
-                    <p>Routes, timetables, and booking for The LoL's national rail network.</p>
-                    <span class="portal-arrow">VIEW ROUTES →</span>
-                </a>
-                <a href="/thelol/gov/isc/search" class="portal-card" style="grid-column:1 / span 2;">
-                    <span class="portal-num">PORTAL-04 // ARCHIVE</span>
-                    <h3>Public Archive &amp; Search</h3>
-                    <p>Search declassified missions, legal documents, and historical intelligence files. Open to all citizens.</p>
-                    <span class="portal-arrow">OPEN ARCHIVE →</span>
-                </a>
-                <a href="/thelol/about" class="portal-card gold-accent">
-                    <span class="portal-num">PORTAL-05 // HISTORY</span>
-                    <h3>About The LoL</h3>
-                    <p>The full story, proclamation documents, and founding documents.</p>
-                    <span class="portal-arrow">READ MORE →</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- PAIZ® CORP NETWORK SECTION -->
-    <section class="network-section" id="network">
-        <div class="network-inner">
-            <div class="network-header reveal">
-                <div>
-                    <div class="section-eyebrow" style="color:var(--gold);">
-                        <span style="background:var(--gold); opacity:0.6; display:inline-block; width:20px; height:1px; margin-right:12px;"></span>
-                        PAIZ® CORP CONGLOMERATE
-                    </div>
-                    <h2>Part of the<br><em>Paiz® Corp</em> network.</h2>
-                </div>
-                <a href="https://faizzzlol.github.io/PaizCorp/" class="network-header-link">VISIT PAIZ® CORP HUB →</a>
-            </div>
-            <div class="network-grid reveal">
-                <div class="network-card active-site">
-                    <span class="nc-tag">THE LOL // NATION</span>
-                    <span class="nc-name">The Legend of Legiona</span>
-                    <span class="nc-desc">The sovereign nation at the heart of the Paiz® Corp ecosystem. You are here.</span>
-                    <span class="nc-you">YOU ARE HERE</span>
-                </div>
-                <a href="https://faizzzlol.github.io/PaizCorp/" class="network-card">
-                    <span class="nc-tag">CORP HUB</span>
-                    <span class="nc-name">Paiz® Corp</span>
-                    <span class="nc-desc">The conglomerate homepage. Explore all subsidiaries and projects.</span>
-                    <span class="nc-arrow">VISIT HUB →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="network-card">
-                    <span class="nc-tag">STOREFRONT</span>
-                    <span class="nc-name">Paiz Shop</span>
-                    <span class="nc-desc">The official Paiz® Corp in-game item shop. Browse and order resources.</span>
-                    <span class="nc-arrow">SHOP NOW →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/thelol/tlr/" class="network-card">
-                    <span class="nc-tag">TRANSPORT</span>
-                    <span class="nc-name">TL Railways</span>
-                    <span class="nc-desc">National rail network serving all LoL territories. Routes, timetables &amp; info.</span>
-                    <span class="nc-arrow">VIEW ROUTES →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/thelol/gov/isc/" class="network-card">
-                    <span class="nc-tag">SECURITY // GOV</span>
-                    <span class="nc-name">ISC Archive</span>
-                    <span class="nc-desc">Declassified intelligence files and national security records.</span>
-                    <span class="nc-arrow">ACCESS →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/" class="network-card">
-                    <span class="nc-tag">FOOD</span>
-                    <span class="nc-name">Paiz Chicken</span>
-                    <span class="nc-desc">Online food ordering across Skyxion. Delivery &amp; pickup. Priced in diamonds.</span>
-                    <span class="nc-arrow">ORDER NOW →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/" class="network-card">
-                    <span class="nc-tag">FILM &amp; MEDIA</span>
-                    <span class="nc-name">PaizProductions</span>
-                    <span class="nc-desc">Official film studio. The LoL Movie, The LoL Chronicles, and ISC: Classified.</span>
-                    <span class="nc-arrow">VIEW STUDIO →</span>
-                </a>
+            <div class="history-cta reveal">
+                <a href="/thelol/about" class="btn-secondary" style="display:inline-flex;">READ FULL HISTORY →</a>
             </div>
         </div>
     </section>
@@ -1178,65 +1103,76 @@
             <div class="founders-header reveal">
                 <h2>The Three<br><em>Founders.</em></h2>
                 <p>
-                    The Legend of Legiona was built by three people who turned a simple squad into a sovereign nation. 
-                    Their names are inscribed in the Proclamation of Sovereignty — the founding document of The LoL. 
-                    Their legacy lives on in every block, every railway track, and every citizen of The Legend of Legiona.
+                    The Legend of Legiona was built by three people who turned a simple squad 
+                    into a sovereign nation. Their names are inscribed in the Proclamation of 
+                    Sovereignty — the founding document of The LoL. Their legacy lives on in every 
+                    block, every railway track, and every citizen of The Legend of Legiona.
                 </p>
             </div>
             <div class="founders-grid reveal">
                 <div class="founder-card">
-                    <span class="founder-index">01</span>
-                    <div class="founder-initial">F</div>
+                    <span class="founder-ghost">01</span>
+                    <div class="founder-init">F</div>
                     <h3>Faiz4224</h3>
                     <div class="founder-role">FIRST PRESIDENT // FOUNDING LEADER</div>
-                    <p>Whose unwavering resolve and ingenuity laid the foundation of this great nation. Led The LoL through its golden era, survived the political chaos of 2023, and rebuilt the nation stronger than before. Suggester of TLSRL.</p>
+                    <p>Whose unwavering resolve and ingenuity laid the foundation of this great nation. Led The LoL through its golden era and rebuilt it stronger after the political crisis of 2023.</p>
                 </div>
                 <div class="founder-card">
-                    <span class="founder-index">02</span>
-                    <div class="founder-initial">I</div>
+                    <span class="founder-ghost">02</span>
+                    <div class="founder-init">I</div>
                     <h3>Imii Kun</h3>
                     <div class="founder-role">CO-FOUNDER // VISIONARY</div>
-                    <p>The visionary who proposed renaming the nation to "The Legend of Legiona." A pillar of strength whose dedication forged the bonds of unity that sustain the people of Legiona to this day.</p>
+                    <p>The visionary who proposed renaming the nation to "The Legend of Legiona." A pillar of strength whose dedication forged the bonds of unity that sustain Legiona to this day.</p>
                 </div>
                 <div class="founder-card">
-                    <span class="founder-index">03</span>
-                    <div class="founder-initial">D</div>
+                    <span class="founder-ghost">03</span>
+                    <div class="founder-init">D</div>
                     <h3>Dyno</h3>
                     <div class="founder-role">CO-FOUNDER // STRATEGIST</div>
                     <p>Whose wisdom and determination illuminated the path toward the nation's glorious future from its earliest days as The Sus. A strategist at heart.</p>
                 </div>
             </div>
 
-            <div style="margin-top:3rem; padding:2.5rem; border:1px solid var(--border-dark); background:var(--charcoal2); display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap;" class="reveal">
+            <div class="proclamation-block reveal">
                 <div>
-                    <div style="font-family:'DM Mono',monospace; font-size:0.58rem; letter-spacing:3px; color:var(--emerald); opacity:0.7; margin-bottom:0.5rem;">FOUNDING DOCUMENT</div>
-                    <div style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:#fff;">The LoL Proclamation of Sovereignty</div>
-                    <div style="font-size:0.85rem; color:rgba(255,255,255,0.35); margin-top:0.3rem;">Signed by all three founders. Available in English and Bahasa Melayu.</div>
+                    <div class="proc-title">FOUNDING DOCUMENT</div>
+                    <h3>The LoL Proclamation of Sovereignty</h3>
+                    <p>Signed by all three founders. Available in English and Bahasa Melayu.</p>
                 </div>
-                <div style="display:flex; gap:10px; flex-shrink:0; flex-wrap:wrap;">
-                    <a href="/thelol/assets/The_LoL_Proclamation.pdf"
-                       style="padding:10px 22px; border:1px solid rgba(52,160,106,0.4); color:var(--emerald); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; transition:background 0.2s;"
-                       onmouseover="this.style.background='rgba(52,160,106,0.1)'" onmouseout="this.style.background=''"
-                       target="_blank">↓ PROCLAMATION (EN)</a>
-                    <a href="/thelol/assets/Proklamasi_The_LoL.pdf"
-                       style="padding:10px 22px; border:1px solid rgba(200,150,42,0.3); color:var(--gold); text-decoration:none; font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:1.5px; transition:background 0.2s;"
-                       onmouseover="this.style.background='rgba(200,150,42,0.08)'" onmouseout="this.style.background=''"
-                       target="_blank">↓ PROKLAMASI (BM)</a>
+                <div class="proc-btns">
+                    <a href="/thelol/assets/The_LoL_Proclamation.pdf" class="proc-btn green" target="_blank">↓ PROCLAMATION (EN)</a>
+                    <a href="/thelol/assets/Proklamasi_The_LoL.pdf" class="proc-btn gold" target="_blank">↓ PROKLAMASI (BM)</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+        <div class="contact-inner">
+            <div class="section-eyebrow" style="justify-content:center;">JOIN THE COMMUNITY</div>
+            <h2>Get involved<br>with <em>The LoL.</em></h2>
+            <p>
+                Join the Discord server to connect with the community, apply for citizenship, 
+                or support the continued development of The Legend of Legiona.
+            </p>
+            <div class="contact-btns">
+                <a href="https://discord.gg/TB4T8qwN4R" class="btn-primary" target="_blank" rel="noopener">JOIN DISCORD</a>
+                <a href="https://sociabuzz.com/faizgg/donate" class="btn-secondary" target="_blank" rel="noopener">SUPPORT THE LOL</a>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer>
         <div class="footer-main">
             <div>
                 <div class="f-logo">The <em>LoL</em></div>
-                <p class="f-desc">The Legend of Legiona. A sovereign nation in Skyxion, built on unity, freedom, innovation, and honour since 2022.</p>
-                <a href="https://faizzzlol.github.io/PaizCorp/" class="f-corp-badge">
+                <p class="f-desc">The Legend of Legiona. A sovereign nation in Skyxion built on unity, freedom, innovation, and honour since 2023.</p>
+                <a href="https://faizzzlol.github.io/PaizCorp/" class="f-network-badge">
                     <div>
-                        <div class="f-corp-badge-label">PART OF THE</div>
-                        <div class="f-corp-badge-name">PAIZ® CORP NETWORK</div>
+                        <div class="fbn-label">PART OF THE</div>
+                        <div class="fbn-name">PAIZ® CORP NETWORK</div>
                     </div>
                 </a>
             </div>
@@ -1245,22 +1181,22 @@
                 <a href="#about">About The LoL</a>
                 <a href="#history">History</a>
                 <a href="#founders">Founders</a>
-                <a href="/thelol/about">Full Story</a>
+                <a href="/thelol/about">Full Timeline</a>
             </div>
             <div class="f-col">
                 <h5>PORTALS</h5>
                 <a href="/thelol/gov/">Government</a>
                 <a href="/thelol/gov/isc/">ISC</a>
                 <a href="/thelol/tlr/">TL Railways</a>
-                <a href="/thelol/gov/isc/search">Archive</a>
+                <a href="/thelol/gov/assets/">Legal Archive</a>
             </div>
             <div class="f-col">
                 <h5>DOCUMENTS</h5>
                 <a href="/thelol/assets/The_LoL_Proclamation.pdf" target="_blank">Proclamation (EN)</a>
                 <a href="/thelol/assets/Proklamasi_The_LoL.pdf" target="_blank">Proklamasi (BM)</a>
-                <a href="/thelol/PaizCorp/tlsrl">TLSRL Info</a>
+                <a href="/thelol/gov/isc/search">Public Archive</a>
             </div>
-            <div class="f-col f-col-network">
+            <div class="f-col network">
                 <h5>NETWORK</h5>
                 <a href="https://faizzzlol.github.io/PaizCorp/">Paiz® Corp Hub</a>
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">Paiz Shop</a>
@@ -1277,22 +1213,45 @@
     </footer>
 
     <script>
-        const navbar = document.getElementById('navbar');
-        const networkBar = document.getElementById('networkBar');
-        const NETBAR_H = 30;
+        const sitenav = document.getElementById('sitenav');
+        const netbar  = document.getElementById('netbar');
+        const NETBAR_H = 32;
 
+        // Scroll behaviour
         window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            navbar.classList.toggle('scrolled', scrollY > 60);
-            if (scrollY > NETBAR_H) {
-                networkBar.classList.add('hidden');
-                navbar.classList.add('netbar-gone');
+            const y = window.scrollY;
+            sitenav.classList.toggle('scrolled', y > 60);
+            if (y > NETBAR_H) {
+                netbar.classList.add('hidden');
+                sitenav.classList.add('nb-hidden');
             } else {
-                networkBar.classList.remove('hidden');
-                navbar.classList.remove('netbar-gone');
+                netbar.classList.remove('hidden');
+                sitenav.classList.remove('nb-hidden');
             }
+        }, { passive: true });
+
+        // Hamburger
+        const hamburger   = document.getElementById('hamburger');
+        const mobileMenu  = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            const open = mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open', open);
+            hamburger.setAttribute('aria-expanded', open);
         });
 
+        function closeMobile() {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+        }
+
+        // Close menu on outside click
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+        });
+
+        // Reveal on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
@@ -1300,10 +1259,9 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.08 });
+        }, { threshold: 0.06 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
-
 </body>
 </html>
