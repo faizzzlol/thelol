@@ -4,36 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About The LoL — The Legend of Legiona</title>
-    <link rel="icon" type="image/png" href="/thelol/TheLoL2.png">
+    <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
     <meta name="description" content="The full history of The Legend of Legiona — from The Sus to a sovereign nation.">
     <meta property="og:title" content="About The LoL — The Legend of Legiona">
     <meta property="og:url" content="https://faizzzlol.github.io/thelol/about">
-    <meta property="og:image" content="/thelol/TheLoL.png">
+    <meta property="og:image" content="/thelol/assets/TheLoL.png">
     <meta property="og:type" content="website">
     <meta property="og:description" content="The full history of The Legend of Legiona.">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Outfit:wght@300;400;500;600&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --green:       #1d5c3c;
-            --green-dark:  #0f2e1e;
-            --green-light: #2d7a52;
-            --emerald:     #34a06a;
-            --emerald-dim: rgba(52,160,106,0.1);
-            --gold:        #c8962a;
-            --gold-light:  #e0b045;
-            --charcoal:    #0f110e;
-            --charcoal2:   #141812;
-            --charcoal3:   #1a1f17;
-            --surface:     #1e2419;
-            --off-white:   #f5f2eb;
-            --border-dark: rgba(255,255,255,0.07);
+            --green:        #1d5c3c;
+            --green-dark:   #0f2e1e;
+            --green-light:  #2d7a52;
+            --emerald:      #34a06a;
+            --emerald-dim:  rgba(52,160,106,0.1);
+            --gold:         #c8962a;
+            --gold-light:   #e0b045;
+            --charcoal:     #0f110e;
+            --charcoal2:    #141812;
+            --charcoal3:    #1a1f17;
+            --surface:      #1e2419;
+            --off-white:    #f5f2eb;
+            --border-dark:  rgba(255,255,255,0.07);
             --border-green: rgba(52,160,106,0.2);
+            --netbar-h:     32px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
-        /* ── LIGHT / DARK MODE ── */
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--charcoal);
@@ -58,446 +58,373 @@
             content: '';
             position: fixed; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
+            pointer-events: none; z-index: 9999;
         }
 
-        /* ── NAV ── */
-        nav {
-            position: sticky; top: 0; z-index: 200;
+        /* ─── NETWORK BAR ─── */
+        .netbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 800;
+            height: var(--netbar-h);
+            background: #08080d;
+            border-bottom: 1px solid rgba(52,160,106,0.15);
+            overflow-x: auto; white-space: nowrap;
+            scrollbar-width: none;
+        }
+        .netbar::-webkit-scrollbar { display: none; }
+
+        .netbar-inner {
+            display: flex; align-items: stretch;
+            height: var(--netbar-h);
+            padding: 0 16px;
+            min-width: max-content;
+        }
+        .netbar-inner a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.5rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.28); text-decoration: none;
+            padding: 0 12px;
+            display: flex; align-items: center;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            transition: color 0.2s, background 0.2s;
+        }
+        .netbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
+        .netbar-inner a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
+
+        /* ─── NAV ─── */
+        nav.sitenav {
+            position: sticky;
+            top: var(--netbar-h);
+            z-index: 200;
             padding: 0 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 62px;
+            display: flex; justify-content: space-between; align-items: center;
+            height: 60px;
             background: rgba(15,17,14,0.93);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-dark);
             transition: background 0.35s;
         }
-
-        body.light nav {
-            background: rgba(245,242,235,0.95);
-        }
+        body.light nav.sitenav { background: rgba(245,242,235,0.95); }
 
         .nav-logo {
             font-family: 'Fraunces', serif;
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--off-white);
-            text-decoration: none;
+            font-size: 1.2rem; font-weight: 900;
+            color: var(--off-white); text-decoration: none;
         }
-
         .nav-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
 
-        .nav-center {
-            display: flex;
-            gap: 4px;
-        }
-
+        .nav-center { display: flex; gap: 2px; }
         .nav-center a {
-            padding: 6px 14px;
-            text-decoration: none;
+            padding: 6px 12px; text-decoration: none;
             font-family: 'Fira Code', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 1.5px;
+            font-size: 0.6rem; letter-spacing: 1.5px;
             color: rgba(255,255,255,0.45);
-            transition: color 0.2s;
-            position: relative;
+            transition: color 0.2s; position: relative;
         }
-
         body.light .nav-center a { color: rgba(26,28,24,0.5); }
-
         .nav-center a.active { color: var(--emerald); }
-
         .nav-center a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 14px; right: 14px;
-            height: 2px;
-            background: var(--emerald);
+            content: ''; position: absolute;
+            bottom: 0; left: 12px; right: 12px;
+            height: 2px; background: var(--emerald);
         }
-
         .nav-center a:hover { color: var(--emerald); }
 
         .nav-right { display: flex; align-items: center; gap: 10px; }
 
         .theme-btn {
-            width: 36px; height: 36px;
+            width: 34px; height: 34px;
             border: 1px solid var(--border-dark);
-            background: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: rgba(255,255,255,0.5);
+            background: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.95rem; color: rgba(255,255,255,0.5);
             transition: color 0.2s, border-color 0.2s;
         }
-
         body.light .theme-btn { color: rgba(26,28,24,0.5); }
         .theme-btn:hover { color: var(--emerald); border-color: var(--border-green); }
 
-        /* ── PAGE HEADER ── */
+        /* Hamburger */
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 6px;
+        }
+        .hamburger span {
+            display: block; width: 20px; height: 2px;
+            background: rgba(255,255,255,0.5);
+            transition: all 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: calc(var(--netbar-h) + 60px);
+            left: 0; right: 0; z-index: 190;
+            background: rgba(15,17,14,0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dark);
+            padding: 1rem 5%;
+            display: none; flex-direction: column; gap: 2px;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            padding: 12px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem; letter-spacing: 2px;
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            border-bottom: 1px solid var(--border-dark);
+            transition: color 0.2s;
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a:hover { color: var(--emerald); }
+
+        /* ─── PAGE HEADER ─── */
         .page-header {
             padding: 5rem 5% 4rem;
             background: var(--green-dark);
             border-bottom: 1px solid var(--border-green);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
         .page-header::before {
-            content: '';
-            position: absolute; inset: 0;
+            content: ''; position: absolute; inset: 0;
             background:
                 radial-gradient(ellipse 50% 80% at 80% 50%, rgba(52,160,106,0.08) 0%, transparent 70%),
                 repeating-linear-gradient(-55deg, transparent, transparent 38px, rgba(255,255,255,0.012) 38px, rgba(255,255,255,0.012) 39px);
         }
-
-        .ph-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-        }
-
+        .ph-inner { max-width: 1100px; margin: 0 auto; position: relative; }
         .ph-eyebrow {
             font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: var(--emerald);
-            opacity: 0.75;
+            font-size: 0.58rem; letter-spacing: 3px;
+            color: var(--emerald); opacity: 0.75;
             margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            display: flex; align-items: center; gap: 12px;
         }
-
         .ph-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--emerald); opacity: 0.6; }
-
         .page-header h1 {
             font-family: 'Fraunces', serif;
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 900;
-            line-height: 1.05;
-            color: #fff;
-            margin-bottom: 1.2rem;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900; line-height: 1.05; color: #fff; margin-bottom: 1.2rem;
         }
-
         .page-header h1 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
-
         .page-header p {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.45);
-            max-width: 560px;
-            font-weight: 300;
-            line-height: 1.85;
+            font-size: 1rem; color: rgba(255,255,255,0.45);
+            max-width: 560px; font-weight: 300; line-height: 1.85;
         }
-
-        /* Proclamation buttons in header */
-        .proc-btns {
-            display: flex;
-            gap: 10px;
-            margin-top: 2.5rem;
-            flex-wrap: wrap;
-        }
-
+        .proc-btns { display: flex; gap: 10px; margin-top: 2.5rem; flex-wrap: wrap; }
         .proc-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 22px;
-            border: 1px solid;
-            text-decoration: none;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 1.5px;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 22px; border: 1px solid; text-decoration: none;
+            font-family: 'Fira Code', monospace; font-size: 0.62rem; letter-spacing: 1.5px;
             transition: background 0.2s;
         }
-
-        .proc-btn.green {
-            border-color: rgba(52,160,106,0.4);
-            color: var(--emerald);
-        }
+        .proc-btn.green { border-color: rgba(52,160,106,0.4); color: var(--emerald); }
         .proc-btn.green:hover { background: var(--emerald-dim); }
-
-        .proc-btn.gold {
-            border-color: rgba(200,150,42,0.35);
-            color: var(--gold);
-        }
+        .proc-btn.gold { border-color: rgba(200,150,42,0.35); color: var(--gold); }
         .proc-btn.gold:hover { background: rgba(200,150,42,0.08); }
 
-        /* ── CONTENT WRAPPER ── */
-        .content-wrap {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 5rem 5%;
-        }
+        /* ─── CONTENT ─── */
+        .content-wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 5%; }
 
-        /* ── TIMELINE ── */
+        /* Timeline label */
         .timeline-label {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+            display: flex; align-items: center; gap: 16px;
             margin-bottom: 3rem;
         }
-
         .timeline-label h2 {
             font-family: 'Fraunces', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--off-white);
+            font-size: 1.8rem; font-weight: 700; color: var(--off-white);
         }
-
         .timeline-label h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
-
         .timeline-label span {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.57rem;
-            letter-spacing: 2.5px;
-            color: rgba(255,255,255,0.2);
-            padding: 3px 10px;
-            border: 1px solid var(--border-dark);
+            font-family: 'Fira Code', monospace; font-size: 0.55rem;
+            letter-spacing: 2.5px; color: rgba(255,255,255,0.2);
+            padding: 3px 10px; border: 1px solid var(--border-dark);
         }
-
         body.light .timeline-label span { color: rgba(26,28,24,0.3); }
 
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
+        /* Timeline */
+        .timeline { display: flex; flex-direction: column; position: relative; }
         .timeline::before {
-            content: '';
-            position: absolute;
-            left: 96px;
-            top: 8px; bottom: 8px;
-            width: 1px;
-            background: var(--border-dark);
+            content: ''; position: absolute;
+            left: 96px; top: 8px; bottom: 8px;
+            width: 1px; background: var(--border-dark);
         }
 
         .event {
-            display: grid;
-            grid-template-columns: 96px 1fr;
-            gap: 32px;
-            padding: 2rem 0;
+            display: grid; grid-template-columns: 96px 1fr;
+            gap: 32px; padding: 2rem 0;
             border-bottom: 1px solid var(--border-dark);
             position: relative;
-            opacity: 0;
-            transform: translateY(20px);
+            opacity: 0; transform: translateY(20px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
-
         .event.in { opacity: 1; transform: translateY(0); }
         .event:last-child { border-bottom: none; }
 
         .event-year {
             font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 1px;
-            color: rgba(255,255,255,0.22);
-            text-align: right;
-            padding-top: 5px;
-            line-height: 1.6;
+            font-size: 0.6rem; letter-spacing: 1px;
+            color: rgba(255,255,255,0.22); text-align: right;
+            padding-top: 5px; line-height: 1.6;
         }
-
         body.light .event-year { color: rgba(26,28,24,0.3); }
 
         .event-dot {
-            position: absolute;
-            left: 89px;
-            top: 2.3rem;
+            position: absolute; left: 89px; top: 2.3rem;
             width: 14px; height: 14px;
             border: 1px solid var(--border-green);
             background: var(--charcoal);
             transform: rotate(45deg);
             transition: border-color 0.2s, background 0.2s;
         }
+        .event:hover .event-dot { border-color: var(--emerald); background: var(--emerald-dim); }
+        .event-dot.highlight { border-color: var(--emerald); background: var(--emerald-dim); }
+        .event-dot.gold { border-color: rgba(200,150,42,0.5); background: rgba(200,150,42,0.08); }
+        .event-dot.red { border-color: rgba(180,60,60,0.5); background: rgba(180,60,60,0.06); }
 
-        .event:hover .event-dot {
-            border-color: var(--emerald);
-            background: var(--emerald-dim);
-        }
-
-        .event-dot.highlight {
-            border-color: var(--emerald);
-            background: var(--emerald-dim);
-        }
-
-        .event-dot.gold {
-            border-color: rgba(200,150,42,0.5);
-            background: rgba(200,150,42,0.08);
-        }
-
-        .event-dot.red {
-            border-color: rgba(180,60,60,0.5);
-            background: rgba(180,60,60,0.06);
-        }
-
-        .event-content {
-            padding-left: 24px;
-        }
-
+        .event-content { padding-left: 24px; }
         .event-num {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: var(--emerald);
-            opacity: 0.6;
+            font-family: 'Fira Code', monospace; font-size: 0.53rem;
+            letter-spacing: 2px; color: var(--emerald); opacity: 0.6;
             margin-bottom: 0.5rem;
         }
-
         .event-content h2 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--off-white);
-            margin-bottom: 0.3rem;
-            line-height: 1.3;
+            font-family: 'Fraunces', serif; font-size: 1.25rem;
+            font-weight: 700; color: var(--off-white);
+            margin-bottom: 0.3rem; line-height: 1.3;
         }
-
         .event-content h3 {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.35);
-            margin-bottom: 0.9rem;
-            font-weight: 300;
+            font-family: 'Fira Code', monospace; font-size: 0.6rem;
+            letter-spacing: 1.5px; color: rgba(255,255,255,0.35);
+            margin-bottom: 0.9rem; font-weight: 300;
         }
-
         body.light .event-content h3 { color: rgba(26,28,24,0.45); }
-
         .event-content p {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.5);
-            line-height: 1.85;
-            font-weight: 300;
-            max-width: 680px;
+            font-size: 0.93rem; color: rgba(255,255,255,0.5);
+            line-height: 1.85; font-weight: 300; max-width: 680px;
         }
-
         body.light .event-content p { color: rgba(26,28,24,0.6); }
 
         .event-badge {
-            display: inline-block;
-            margin-top: 0.8rem;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.52rem;
-            letter-spacing: 1.5px;
-            padding: 3px 10px;
-            border: 1px solid;
+            display: inline-block; margin-top: 0.8rem;
+            font-family: 'Fira Code', monospace; font-size: 0.5rem;
+            letter-spacing: 1.5px; padding: 3px 10px; border: 1px solid;
         }
-
         .event-badge.green { border-color: rgba(52,160,106,0.3); color: rgba(52,160,106,0.7); }
         .event-badge.gold  { border-color: rgba(200,150,42,0.3); color: rgba(200,150,42,0.7); }
         .event-badge.red   { border-color: rgba(180,60,60,0.3);  color: rgba(200,100,100,0.7); }
         .event-badge.white { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.4); }
 
-        /* ── DIVIDER ── */
-        .section-divider {
-            height: 1px;
-            background: var(--border-dark);
-            margin: 4rem 0;
-        }
+        /* ─── DIVIDER ─── */
+        .section-divider { height: 1px; background: var(--border-dark); margin: 4rem 0; }
 
-        /* ── DONATE ── */
+        /* ─── DONATE ─── */
         .donate-block {
-            background: var(--charcoal3);
-            border: 1px solid var(--border-dark);
+            background: var(--charcoal3); border: 1px solid var(--border-dark);
             padding: 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 24px; flex-wrap: wrap;
         }
-
         .donate-block h3 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--off-white);
-            margin-bottom: 0.4rem;
+            font-family: 'Fraunces', serif; font-size: 1.3rem;
+            font-weight: 700; color: var(--off-white); margin-bottom: 0.35rem;
         }
-
-        .donate-block p {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.38);
-            font-weight: 300;
-        }
-
+        .donate-block p { font-size: 0.88rem; color: rgba(255,255,255,0.38); font-weight: 300; }
         body.light .donate-block p { color: rgba(26,28,24,0.45); }
-
         .donate-btn {
-            display: inline-block;
-            padding: 12px 28px;
-            background: var(--green-light);
-            color: #fff;
-            text-decoration: none;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            flex-shrink: 0;
-            transition: background 0.25s;
+            display: inline-block; padding: 12px 26px;
+            background: var(--green-light); color: #fff; text-decoration: none;
+            font-family: 'Fira Code', monospace; font-size: 0.63rem; letter-spacing: 2px;
+            flex-shrink: 0; transition: background 0.25s;
         }
-
         .donate-btn:hover { background: var(--emerald); }
 
-        /* ── FOOTER ── */
+        /* ─── FOOTER ─── */
         footer {
             border-top: 1px solid var(--border-dark);
             padding: 1.4rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--charcoal2);
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--charcoal2); flex-wrap: wrap; gap: 10px;
         }
-
         footer p {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.2);
+            font-family: 'Fira Code', monospace; font-size: 0.56rem;
+            letter-spacing: 1.5px; color: rgba(255,255,255,0.2);
         }
-
         body.light footer p { color: rgba(26,28,24,0.3); }
-
-        .footer-links { display: flex; gap: 18px; }
-
+        .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
         .footer-links a {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.57rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.2);
-            text-decoration: none;
+            font-family: 'Fira Code', monospace; font-size: 0.55rem;
+            letter-spacing: 1.5px; color: rgba(255,255,255,0.2); text-decoration: none;
             transition: color 0.2s;
         }
-
         .footer-links a:hover { color: var(--emerald); }
 
-        /* ── RESPONSIVE ── */
+        /* ─── RESPONSIVE ─── */
         @media (max-width: 640px) {
+            :root { --netbar-h: 0px; }
+            .netbar { display: none; }
+
             .timeline::before { left: 60px; }
-            .event { grid-template-columns: 60px 1fr; gap: 16px; }
+            .event { grid-template-columns: 60px 1fr; gap: 14px; }
             .event-dot { left: 53px; }
+            .event-content { padding-left: 16px; }
+            .event-content h2 { font-size: 1.1rem; }
             .nav-center { display: none; }
-            footer { flex-direction: column; gap: 0.6rem; text-align: center; }
+            .hamburger { display: flex; }
+            footer { flex-direction: column; text-align: center; }
+            .proc-btns { flex-direction: column; }
+            .proc-btn { justify-content: center; }
+            .donate-block { flex-direction: column; }
+            .donate-btn { width: 100%; text-align: center; }
+        }
+
+        @media (max-width: 420px) {
+            .page-header h1 { font-size: 2.2rem; }
+            .event-year { font-size: 0.52rem; }
         }
     </style>
 </head>
 <body id="body">
 
+    <!-- NETWORK BAR -->
+    <div class="netbar">
+        <div class="netbar-inner">
+            <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+            <a href="https://faizzzlol.github.io/thelol/">THE LOL</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
+            <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+        </div>
+    </div>
+
     <!-- NAV -->
-    <nav>
+    <nav class="sitenav">
         <a href="/thelol" class="nav-logo">The <em>LoL</em></a>
         <div class="nav-center">
             <a href="/thelol/about" class="active">ABOUT</a>
             <a href="/thelol">HOME</a>
-            <a href="/thelol/#contact">CONTACT</a>
+            <a href="/thelol/gov/">GOVERNMENT</a>
         </div>
         <div class="nav-right">
             <button class="theme-btn" id="theme-btn" title="Toggle theme" onclick="toggleTheme()">☽</button>
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="/thelol" onclick="closeMobile()">HOME</a>
+        <a href="/thelol/gov/" onclick="closeMobile()">GOVERNMENT</a>
+        <a href="/thelol/gov/isc/" onclick="closeMobile()">ISC</a>
+        <a href="/thelol/tlr/" onclick="closeMobile()">TL RAILWAYS</a>
+        <a href="/thelol/gov/assets/" onclick="closeMobile()">LEGAL ARCHIVE</a>
     </nav>
 
     <!-- PAGE HEADER -->
@@ -543,7 +470,10 @@
                             The LoL was originally called "The Sus", founded by <strong>Faiz4224</strong>, 
                             alongside <strong>ItzDynozz</strong> and <strong>Imii Kun</strong>. During its inception, 
                             the nation was small, but the collaboration between these three founders laid the 
-                            groundwork for future developments.
+                            groundwork for future developments. EhekSquad — led by PhoenixAiman, PandaPutih, 
+                            and Kagee — also joined during this era, though their exact status was never 
+                            formally defined as The Sus had no policy or governance structure. They later 
+                            departed and re-established EhekSquad independently.
                         </p>
                         <span class="event-badge green">ORIGIN ERA</span>
                     </div>
@@ -555,7 +485,7 @@
                     <div class="event-dot highlight"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 02</div>
-                        <h2>Renaming &amp; Expansion</h2>
+                        <h2>Renaming & Expansion</h2>
                         <h3>THE LEGEND OF LEGIONA IS BORN</h3>
                         <p>
                             As the nation grew, the founders decided to rename it <strong>"The Legend of Legiona"</strong>, 
@@ -631,7 +561,8 @@
                             After the political turmoil, The LoL began a rebuilding phase. Faiz4224's government 
                             initiated several infrastructure projects, improved security with the founding of 
                             <strong>TLIO</strong> (later reborn as ISC), and focused on uniting the nation under 
-                            one banner once again.
+                            one banner once again. The Black House — The LoL's presidential office — was 
+                            established as the seat of executive governance.
                         </p>
                         <span class="event-badge green">REBIRTH</span>
                     </div>
@@ -644,12 +575,12 @@
                     <div class="event-content">
                         <div class="event-num">CHAPTER 07</div>
                         <h2>The Modern Era</h2>
-                        <h3>SKYXION: RAGNAROK // LOOKING AHEAD</h3>
+                        <h3>SKYXION: ALTAER ERA // LOOKING AHEAD</h3>
                         <p>
                             Today, The LoL stands as a symbol of perseverance and innovation. TLIO has been 
-                            reborn as <strong>ISC (Internal Security Control)</strong>. With its leadership firmly 
-                            in place, The LoL is poised to continue its legacy as one of the most modern 
-                            and successful nations in Skyxion.
+                            reborn as <strong>ISC (Internal Security Control)</strong>. Under Skyxion : Altaer era, The LoL continues to operate with full sovereignty, 
+                            the Landen Accord, and an active egalitarian governance model. The LoL is poised 
+                            to continue its legacy as one of the most modern and successful nations in Skyxion.
                         </p>
                         <span class="event-badge gold">CURRENT ERA</span>
                     </div>
@@ -665,7 +596,7 @@
                     <h3>Support The LoL</h3>
                     <p>If you'd like to support The LoL's continued development and growth, consider donating.</p>
                 </div>
-                <a href="https://tr.ee/FU_4QuJ-U5" class="donate-btn" target="_blank">DONATE NOW →</a>
+                <a href="https://sociabuzz.com/lyvwiz/donate" class="donate-btn" target="_blank">DONATE NOW →</a>
             </div>
 
         </div>
@@ -692,18 +623,33 @@
                 }
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.event').forEach(el => observer.observe(el));
 
         // Theme toggle
         const btn = document.getElementById('theme-btn');
         let light = false;
-
         function toggleTheme() {
             light = !light;
             document.body.classList.toggle('light', light);
             btn.textContent = light ? '☀' : '☽';
         }
+
+        // Hamburger
+        const hamburger  = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            const open = mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open', open);
+            hamburger.setAttribute('aria-expanded', open);
+        });
+        function closeMobile() {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+        }
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+        });
     </script>
 
 </body>
