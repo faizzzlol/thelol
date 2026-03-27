@@ -30,7 +30,6 @@
             --border-dark:  rgba(255,255,255,0.07);
             --border-green: rgba(52,160,106,0.2);
             --netbar-h:     32px;
-            --legal-h:      28px;
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,7 +41,6 @@
             color: var(--off-white);
             line-height: 1.75;
             overflow-x: hidden;
-            padding-bottom: var(--legal-h);
         }
 
         /* Grain */
@@ -411,40 +409,21 @@
         .footer-bottom a { color: rgba(200,150,42,0.5); text-decoration: none; transition: color 0.2s; }
         .footer-bottom a:hover { color: var(--gold); }
 
-        /* ─── LEGAL DISCLAIMER BAR ─── */
-        .legal-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            z-index: 9999;
-            height: var(--legal-h);
-            background: #08080d;
-            border-top: 1px solid rgba(52,160,106,0.15);
-            overflow: hidden;
-            display: flex; align-items: center;
-        }
-        .legal-bar-track {
-            display: flex; align-items: center;
-            white-space: nowrap;
-            animation: legalScroll 55s linear infinite;
-            will-change: transform;
-        }
-        .legal-bar-track span {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.46rem; letter-spacing: 1.8px;
-            color: rgba(255,255,255,0.22);
-            padding: 0 60px;
-        }
-        .legal-bar-track span em {
-            font-style: normal;
-            color: rgba(255,255,255,0.38);
-        }
-        @keyframes legalScroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
         /* ─── REVEAL ANIMATION ─── */
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .reveal.in { opacity: 1; transform: translateY(0); }
+
+        .footer-legal {
+            max-width: 1200px; margin: 0 auto;
+            padding: 0.9rem 5% 1.2rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .footer-legal p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.44rem; letter-spacing: 1.4px;
+            color: rgba(255,255,255,0.15);
+            line-height: 1.7;
+        }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 1100px) {
@@ -460,11 +439,12 @@
             .netbar { display: none; }
             .sitenav { top: 0 !important; }
             .page-header { padding: calc(80px) 5% 4rem; }
-            .timeline::before { left: 56px; }
-            .event { grid-template-columns: 56px 1fr; gap: 14px; }
-            .event-dot { left: 49px; }
-            .event-content { padding-left: 14px; }
-            .event-content h2 { font-size: 1.1rem; }
+            .timeline::before { left: 48px; }
+            .event { grid-template-columns: 48px 1fr; gap: 12px; }
+            .event-dot { left: 41px; top: 2.2rem; }
+            .event-content { padding-left: 12px; }
+            .event-content h2 { font-size: 1.05rem; }
+            .event-content p { font-size: 0.88rem; }
             .footer-main { grid-template-columns: 1fr; }
             .footer-bottom-inner { flex-direction: column; text-align: center; }
             .proc-btns { flex-direction: column; }
@@ -473,7 +453,11 @@
             .donate-btn { width: 100%; text-align: center; }
         }
         @media (max-width: 420px) {
-            .page-header h1 { font-size: 2.4rem; }
+            .page-header h1 { font-size: 2.2rem; }
+            .event-year { font-size: 0.5rem; }
+            .timeline::before { left: 42px; }
+            .event { grid-template-columns: 42px 1fr; gap: 10px; }
+            .event-dot { left: 35px; }
         }
     </style>
 </head>
@@ -741,26 +725,10 @@
                 <p>PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: ALTAER ERA</p>
             </div>
         </div>
-    </footer>
-
-    <!-- LEGAL DISCLAIMER BAR -->
-    <div class="legal-bar" aria-label="Legal disclaimer">
-        <div class="legal-bar-track" id="legalTrack">
-            <span>
-                <em>LEGAL DISCLAIMER</em> — The Legend of Legiona (The LoL) is an independent community project within Minecraft. The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
-                &nbsp;&nbsp;&nbsp;✦&nbsp;&nbsp;&nbsp;
-                <em>LEGAL DISCLAIMER</em> — The Legend of Legiona (The LoL) is an independent community project within Minecraft. The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
-                &nbsp;&nbsp;&nbsp;✦&nbsp;&nbsp;&nbsp;
-            </span>
-            <!-- Duplicate for seamless loop -->
-            <span aria-hidden="true">
-                <em>LEGAL DISCLAIMER</em> — The Legend of Legiona (The LoL) is an independent community project within Minecraft. The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
-                &nbsp;&nbsp;&nbsp;✦&nbsp;&nbsp;&nbsp;
-                <em>LEGAL DISCLAIMER</em> — The Legend of Legiona (The LoL) is an independent community project within Minecraft. The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
-                &nbsp;&nbsp;&nbsp;✦&nbsp;&nbsp;&nbsp;
-            </span>
+        <div class="footer-legal">
+            <p>LEGAL DISCLAIMER — The Legend of Legiona (The LoL) is an independent community project within Minecraft. The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.</p>
         </div>
-    </div>
+    </footer>
 
     <script>
         const sitenav = document.getElementById('sitenav');
