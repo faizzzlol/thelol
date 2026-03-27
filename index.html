@@ -43,7 +43,7 @@
             content: '';
             position: fixed; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 9999;
+            pointer-events: none; z-index: 9998;
         }
 
         /* ─── NETWORK BAR ─── */
@@ -309,7 +309,6 @@
             max-width: 300px; text-align: right; line-height: 1.7;
         }
 
-        /* Primary cards (Government + ISC big) */
         .hub-featured {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -367,7 +366,6 @@
         .hub-card:hover .hc-arrow { letter-spacing: 3px; color: var(--emerald); }
         .hub-card.gold-card:hover .hc-arrow { color: var(--gold); }
 
-        /* Secondary grid — remaining 7 sites */
         .hub-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -451,7 +449,6 @@
         }
         .about-link:hover { border-color: var(--emerald); }
 
-        /* Pillars */
         .pillars { display: flex; flex-direction: column; gap: 2px; }
         .pillar {
             display: flex; align-items: center; gap: 18px;
@@ -533,9 +530,7 @@
         .t-badge.chaos { border-color: rgba(180,60,60,0.25); color: rgba(200,100,100,0.65); }
         .t-badge.current { border-color: rgba(200,150,42,0.3); color: rgba(224,176,69,0.7); }
 
-        .history-cta {
-            margin-top: 2.5rem; text-align: center;
-        }
+        .history-cta { margin-top: 2.5rem; text-align: center; }
 
         /* ─── STATS STRIP ─── */
         .stats-strip {
@@ -624,7 +619,6 @@
         }
         .founder-card p { font-size: 0.85rem; color: rgba(255,255,255,0.36); line-height: 1.75; font-weight: 300; }
 
-        /* Proclamation block */
         .proclamation-block {
             margin-top: 3px;
             background: var(--charcoal2);
@@ -646,8 +640,7 @@
         .proc-btns { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
         .proc-btn {
             display: inline-block;
-            padding: 10px 20px;
-            border: 1px solid;
+            padding: 10px 20px; border: 1px solid;
             font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px;
             text-decoration: none; transition: background 0.2s;
         }
@@ -708,7 +701,7 @@
         }
         .f-network-badge:hover { background: rgba(200,150,42,0.1); border-color: rgba(200,150,42,0.4); }
         .f-network-badge .fbn-label { font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); line-height: 1.3; }
-        .f-network-badge .fbn-name { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1px; color: var(--gold); font-weight: 500; }
+        .f-network-badge .fbn-name  { font-family: 'DM Mono', monospace; font-size: 0.6rem;  letter-spacing: 1px; color: var(--gold); font-weight: 500; }
 
         .f-col h5 {
             font-family: 'DM Mono', monospace; font-size: 0.54rem;
@@ -741,6 +734,17 @@
         }
         .footer-bottom a { color: rgba(200,150,42,0.5); text-decoration: none; transition: color 0.2s; }
         .footer-bottom a:hover { color: var(--gold); }
+        .footer-legal {
+            max-width: 1200px; margin: 0 auto;
+            padding: 0.9rem 5% 1.2rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .footer-legal p {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.44rem; letter-spacing: 1.4px;
+            color: rgba(255,255,255,0.15);
+            line-height: 1.7;
+        }
 
         /* ─── ANIMATIONS ─── */
         @keyframes fadeUp {
@@ -888,7 +892,6 @@
                 <p>All portals, agencies, and services of The Legend of Legiona and the Paiz® Corp network in one place.</p>
             </div>
 
-            <!-- FEATURED ROW -->
             <div class="hub-featured reveal">
                 <a href="/thelol/gov/" class="hub-card">
                     <span class="hc-tag">PORTAL-01 // OFFICIAL GOVERNANCE</span>
@@ -904,7 +907,6 @@
                 </a>
             </div>
 
-            <!-- SECONDARY GRID -->
             <div class="hub-grid reveal" style="margin-top: 3px;">
                 <a href="/thelol/about" class="hub-mini">
                     <span class="hm-tag">HISTORY // THE LOL</span>
@@ -1037,7 +1039,7 @@
                 <div class="pillar">
                     <span class="pillar-num">04</span>
                     <div>
-                        <h4>Defence & Honour</h4>
+                        <h4>Defence &amp; Honour</h4>
                         <p>Protecting our lands while upholding fairness and respect for all citizens.</p>
                     </div>
                 </div>
@@ -1061,7 +1063,7 @@
                 </div>
                 <div class="t-card">
                     <span class="era">2023</span>
-                    <h4>Renamed & Reborn</h4>
+                    <h4>Renamed &amp; Reborn</h4>
                     <p>Renamed "The Legend of Legiona." Becomes the most modern and wealthiest nation in Skyxion.</p>
                     <span class="t-badge">GOLDEN ERA</span>
                 </div>
@@ -1073,13 +1075,13 @@
                 </div>
                 <div class="t-card">
                     <span class="era">2023 // CRISIS</span>
-                    <h4>Chaos & Conflict</h4>
+                    <h4>Chaos &amp; Conflict</h4>
                     <p>Internal strife under UltraX2020. The LoL City sign bombed. TLCC attacked. Political chaos grips the nation.</p>
                     <span class="t-badge chaos">CONFLICT</span>
                 </div>
                 <div class="t-card">
                     <span class="era">NOV 8, 2023</span>
-                    <h4>Resistance & Recovery</h4>
+                    <h4>Resistance &amp; Recovery</h4>
                     <p>UltraX2020 resigns. Faiz4224 resumes leadership. TLIO formed as national intelligence. Rebuilding begins.</p>
                     <span class="t-badge">REBIRTH</span>
                 </div>
@@ -1209,14 +1211,17 @@
                 <p>PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: ALTAER ERA</p>
             </div>
         </div>
+        <div class="footer-legal">
+            <p>LEGAL DISCLAIMER — The Legend of Legiona (The LoL) is an independent community project within Minecraft. The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.</p>
+        </div>
     </footer>
 
+    <!-- SITE NAV SCROLL BEHAVIOUR -->
     <script>
         const sitenav = document.getElementById('sitenav');
         const netbar  = document.getElementById('netbar');
         const NETBAR_H = 32;
 
-        // Scroll behaviour
         window.addEventListener('scroll', () => {
             const y = window.scrollY;
             sitenav.classList.toggle('scrolled', y > 60);
@@ -1229,9 +1234,8 @@
             }
         }, { passive: true });
 
-        // Hamburger
-        const hamburger   = document.getElementById('hamburger');
-        const mobileMenu  = document.getElementById('mobileMenu');
+        const hamburger  = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
 
         hamburger.addEventListener('click', () => {
             const open = mobileMenu.classList.toggle('open');
@@ -1245,12 +1249,10 @@
             hamburger.setAttribute('aria-expanded', 'false');
         }
 
-        // Close menu on outside click
         document.addEventListener('click', (e) => {
             if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
         });
 
-        // Reveal on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
