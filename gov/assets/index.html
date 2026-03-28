@@ -33,8 +33,8 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-    
-        /* ── NOTICE BANNER ── */
+
+    /* ── NOTICE BANNER ── */
     .notice-banner {
       background: linear-gradient(90deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
       border-bottom: 1px solid rgba(201,168,76,0.15);
@@ -58,104 +58,39 @@
     .notice-banner a { color: var(--gold); text-decoration: none; }
     .notice-banner a:hover { text-decoration: underline; }
 
-    /* ── HERO ── */
-    #home {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      padding: 120px 24px 80px;
-      overflow: hidden;
+    /* ── TOPBAR ── */
+    #topbar {
+      background: #08080d;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 8px 0;
+      position: sticky; top: 0; z-index: 1000;
+      overflow-x: auto; white-space: nowrap; scrollbar-width: none;
     }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.07) 0%, transparent 70%),
-        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,0.03) 39px, rgba(201,168,76,0.03) 40px),
-        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,0.03) 39px, rgba(201,168,76,0.03) 40px);
-      pointer-events: none;
+    #topbar::-webkit-scrollbar { display: none; }
+    .topbar-inner {
+      display: flex; align-items: center; gap: 0;
+      padding: 0 20px; min-width: max-content;
     }
-    .hero-seal {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      border: 2px solid rgba(201,168,76,0.4);
-      padding: 8px;
-      margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.2s forwards;
-    }
-    .hero-overline {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.4s forwards;
-    }
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(38px, 7vw, 80px);
-      font-weight: 900;
-      color: var(--text-bright);
-      line-height: 1.05;
-      margin-bottom: 12px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.5s forwards;
-    }
-    .hero-title em {
-      font-style: italic;
-      color: var(--gold);
-    }
-    .hero-sub {
-      font-family: 'Outfit', sans-serif;
-      font-size: 16px;
+    .topbar-inner a {
       color: var(--text-dim);
-      font-weight: 300;
-      margin-bottom: 48px;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.65s forwards;
-    }
-    .hero-btns {
-      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.8s forwards;
-    }
-    .btn-primary {
-      background: var(--gold);
-      color: #000;
-      border: none;
-      padding: 13px 28px;
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       text-decoration: none;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent;
-      color: var(--gold);
-      border: 1px solid rgba(201,168,76,0.5);
-      padding: 13px 28px;
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 4px 12px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
     }
-    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); transform: translateY(-1px); }
-    
-        /* ── NAV ── */
+    .topbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.06); }
+    .topbar-inner a:hover, .topbar-inner a.active { color: var(--gold); }
+
+    /* ── NAV WRAPPER (sticky container for nav + mobile menu) ── */
+    .nav-wrapper {
+      position: sticky;
+      top: 37px;
+      z-index: 999;
+    }
+
+    /* ── NAV ── */
     nav {
       background: var(--dark-2);
       border-top: 1px solid rgba(201,168,76,0.1);
@@ -164,9 +99,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 37px;
-      z-index: 999;
     }
     .nav-logo {
       font-family: 'DM Mono', monospace;
@@ -227,59 +159,6 @@
     }
     .mobile-menu a:hover { color: var(--gold); }
 
-    /* ── TOPBAR ── */
-    #topbar {
-      background: #08080d;
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      padding: 8px 0;
-      position: sticky; top: 0; z-index: 1000;
-      overflow-x: auto; white-space: nowrap; scrollbar-width: none;
-    }
-    #topbar::-webkit-scrollbar { display: none; }
-    .topbar-inner {
-      display: flex; align-items: center; gap: 0;
-      padding: 0 20px; min-width: max-content;
-    }
-    .topbar-inner a {
-      color: var(--text-dim);
-      text-decoration: none;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 4px 12px;
-      border-right: 1px solid rgba(255,255,255,0.06);
-      transition: color 0.2s;
-    }
-    .topbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.06); }
-    .topbar-inner a:hover, .topbar-inner a.active { color: var(--gold); }
-
-    /* ── SUBNAV ── */
-    .subnav {
-      background: var(--dark-2);
-      border-bottom: 1px solid rgba(201,168,76,0.1);
-      padding: 0 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; flex-wrap: wrap;
-    }
-    .subnav-left {
-      display: flex; align-items: center; gap: 0;
-    }
-    .subnav a {
-      display: block; padding: 13px 16px;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--text-dim); text-decoration: none;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .subnav a:hover { color: var(--gold); }
-    .subnav a.active { color: var(--gold); border-bottom-color: var(--gold); }
-    .subnav-era {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px; letter-spacing: 0.1em;
-      color: var(--gold-dim);
-      padding: 13px 0;
-    }
-
     /* ── HERO STRIP ── */
     .page-hero {
       background: var(--dark-2);
@@ -330,7 +209,10 @@
       background: var(--dark-3);
       border-bottom: 1px solid rgba(255,255,255,0.05);
       padding: 24px;
-      position: sticky; top: 37px; z-index: 900;
+      position: sticky;
+      /* FIX: sit below topbar (37px) + nav (~45px) = 82px */
+      top: 82px;
+      z-index: 900;
     }
     .search-bar-inner {
       max-width: 1200px; margin: 0 auto;
@@ -562,39 +444,41 @@
     </div>
   </div>
 
-<!-- NOTICE BANNER -->
-<div class="notice-banner">
-  <span class="tag">NOTICE</span>
-  <span>
-    The official Government Policy Framework of The Legend of Legiona (The LoL) is now published and available for reference. All governance, security, and administrative matters are defined within this document. —
-    <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" target="_blank">
-      VIEW OFFICIAL DOCUMENTS →
-    </a>
-  </span>
-</div>
+  <!-- NOTICE BANNER -->
+  <div class="notice-banner">
+    <span class="tag">NOTICE</span>
+    <span>
+      The official Government Policy Framework of The Legend of Legiona (The LoL) is now published and available for reference. All governance, security, and administrative matters are defined within this document. —
+      <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" target="_blank">
+        VIEW OFFICIAL DOCUMENTS →
+      </a>
+    </span>
+  </div>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">THELOL.GOV</div>
-    <ul class="nav-links">
-      <li><a href="/thelol/gov/#home">Home</a></li>
-      <li><a href="/thelol/gov/#proclamation">Proclamation</a></li>
-      <li><a href="/thelol/gov/#history">History</a></li>
-      <li><a href="/thelol/gov/#departments">Departments</a></li>
-      <li><a href="/thelol/gov/#megaprojects">Megaprojects</a></li>
-      <li><a href="/thelol/gov/#founders">Founders</a></li>
-    </ul>
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="/thelol/gov/#home" onclick="toggleMenu()">Home</a>
-    <a href="/thelol/gov/#proclamation" onclick="toggleMenu()">Proclamation</a>
-    <a href="/thelol/gov/#history" onclick="toggleMenu()">History</a>
-    <a href="/thelol/gov/#departments" onclick="toggleMenu()">Departments</a>
-    <a href="/thelol/gov/#megaprojects" onclick="toggleMenu()">Megaprojects</a>
-    <a href="/thelol/gov/#founders" onclick="toggleMenu()">Founders</a>
+  <!-- NAV WRAPPER: sticky container keeps nav + mobile menu together -->
+  <div class="nav-wrapper">
+    <nav>
+      <div class="nav-logo">THELOL.GOV</div>
+      <ul class="nav-links">
+        <li><a href="/thelol/gov/#home">Home</a></li>
+        <li><a href="/thelol/gov/#proclamation">Proclamation</a></li>
+        <li><a href="/thelol/gov/#history">History</a></li>
+        <li><a href="/thelol/gov/#departments">Departments</a></li>
+        <li><a href="/thelol/gov/#megaprojects">Megaprojects</a></li>
+        <li><a href="/thelol/gov/#founders">Founders</a></li>
+      </ul>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/thelol/gov/#home" onclick="toggleMenu()">Home</a>
+      <a href="/thelol/gov/#proclamation" onclick="toggleMenu()">Proclamation</a>
+      <a href="/thelol/gov/#history" onclick="toggleMenu()">History</a>
+      <a href="/thelol/gov/#departments" onclick="toggleMenu()">Departments</a>
+      <a href="/thelol/gov/#megaprojects" onclick="toggleMenu()">Megaprojects</a>
+      <a href="/thelol/gov/#founders" onclick="toggleMenu()">Founders</a>
+    </div>
   </div>
 
   <!-- PAGE HERO -->
@@ -793,13 +677,20 @@
         <div class="era">SKYXION: ALTAER ERA // ALL DOCUMENTS ARE SOVEREIGN RECORDS</div>
       </div>
       <div style="margin-top: 25px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; opacity: 0.8; line-height: 1.6;">
-            <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft. 
-            The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. 
-            This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
+        <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft. 
+        The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. 
+        This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
       </div>
+    </div>
   </footer>
 
   <script>
+    /* ── NAV TOGGLE (was missing in this file — now added) ── */
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    /* ── ARCHIVE FILTER & SEARCH ── */
     let activeFilter = 'all';
 
     const cards = document.querySelectorAll('.doc-card[data-type]');
