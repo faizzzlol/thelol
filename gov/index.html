@@ -195,6 +195,13 @@
     }
     .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); transform: translateY(-1px); }
 
+    /* ── NAV WRAPPER (sticky container for nav + mobile menu) ── */
+    .nav-wrapper {
+      position: sticky;
+      top: 37px;
+      z-index: 999;
+    }
+
     /* ── NAV ── */
     nav {
       background: var(--dark-2);
@@ -204,9 +211,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 37px;
-      z-index: 999;
     }
     .nav-logo {
       font-family: 'DM Mono', monospace;
@@ -747,39 +751,41 @@
     </div>
   </div>
 
-<!-- NOTICE BANNER -->
-<div class="notice-banner">
-  <span class="tag">NOTICE</span>
-  <span>
-    The official Government Policy Framework of The Legend of Legiona (The LoL) is now published and available for reference. All governance, security, and administrative matters are defined within this document. —
-    <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" target="_blank">
-      VIEW OFFICIAL DOCUMENTS →
-    </a>
-  </span>
-</div>
+  <!-- NOTICE BANNER -->
+  <div class="notice-banner">
+    <span class="tag">NOTICE</span>
+    <span>
+      The official Government Policy Framework of The Legend of Legiona (The LoL) is now published and available for reference. All governance, security, and administrative matters are defined within this document. —
+      <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" target="_blank">
+        VIEW OFFICIAL DOCUMENTS →
+      </a>
+    </span>
+  </div>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">THELOL.GOV</div>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#proclamation">Proclamation</a></li>
-      <li><a href="#history">History</a></li>
-      <li><a href="#departments">Departments</a></li>
-      <li><a href="#megaprojects">Megaprojects</a></li>
-      <li><a href="#founders">Founders</a></li>
-    </ul>
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#home" onclick="toggleMenu()">Home</a>
-    <a href="#proclamation" onclick="toggleMenu()">Proclamation</a>
-    <a href="#history" onclick="toggleMenu()">History</a>
-    <a href="#departments" onclick="toggleMenu()">Departments</a>
-    <a href="#megaprojects" onclick="toggleMenu()">Megaprojects</a>
-    <a href="#founders" onclick="toggleMenu()">Founders</a>
+  <!-- NAV WRAPPER: sticky container keeps nav + mobile menu together -->
+  <div class="nav-wrapper">
+    <nav>
+      <div class="nav-logo">THELOL.GOV</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#proclamation">Proclamation</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#departments">Departments</a></li>
+        <li><a href="#megaprojects">Megaprojects</a></li>
+        <li><a href="#founders">Founders</a></li>
+      </ul>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home" onclick="toggleMenu()">Home</a>
+      <a href="#proclamation" onclick="toggleMenu()">Proclamation</a>
+      <a href="#history" onclick="toggleMenu()">History</a>
+      <a href="#departments" onclick="toggleMenu()">Departments</a>
+      <a href="#megaprojects" onclick="toggleMenu()">Megaprojects</a>
+      <a href="#founders" onclick="toggleMenu()">Founders</a>
+    </div>
   </div>
 
   <!-- HERO -->
@@ -1082,17 +1088,17 @@
           <a href="https://faizzzlol.github.io/thelol/about">About The LoL</a>
         </div>
       </div>
-    <div class="footer-bottom">
-          <div class="copy">© 2026 THE LEGEND OF LEGIONA // OFFICIAL GOVERNMENT</div>
-          <div class="era">SKYXION: ALTAER ERA // BUILT FOR PEACE // SOVEREIGNTY THROUGH UNITY</div>
-        </div>
-
-        <div style="margin-top: 25px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; opacity: 0.8; line-height: 1.6;">
-            <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft. 
-            The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. 
-            This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
+      <div class="footer-bottom">
+        <div class="copy">© 2026 THE LEGEND OF LEGIONA // OFFICIAL GOVERNMENT</div>
+        <div class="era">SKYXION: ALTAER ERA // BUILT FOR PEACE // SOVEREIGNTY THROUGH UNITY</div>
       </div>
-    </footer>
+      <div style="margin-top: 25px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; opacity: 0.8; line-height: 1.6;">
+        <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft. 
+        The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho. 
+        This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
+      </div>
+    </div>
+  </footer>
 
   <script>
     function toggleMenu() {
