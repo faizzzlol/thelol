@@ -2,595 +2,366 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Internal Security Control | ISC</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internal Security Control | ISC</title>
   <meta property="og:title" content="Internal Security Control — ISC">
-  <meta property="og:description" content="The first defense line for The Legend of Legiona. Built for peace.">
-  <meta property="og:image" content="ISC_LOGO.png">
+  <meta property="og:description" content="The first defense line for The Legend of Legiona.">
   <meta name="theme-color" content="#c6a664">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="icon" href="ISC_LOGO.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --gold: #c6a664;
-      --gold-light: #d4b87a;
-      --gold-dim: rgba(198,166,100,0.12);
-      --gold-glow: rgba(198,166,100,0.08);
-      --red: #8b2020;
-      --red-dim: rgba(139,32,32,0.15);
-      --bg: #0e0d0b;
-      --bg2: #121110;
-      --surface: #1a1815;
-      --surface2: #201e1a;
-      --border: rgba(198,166,100,0.18);
-      --border-sub: rgba(255,255,255,0.06);
-      --text: #e8e0d0;
-      --text-muted: #a39887;
-      --text-dim: #4a4238;
-      /* Network bar */
-      --nb-h: 30px;
+      --gold:        #c6a664;
+      --gold-dim:    rgba(198,166,100,0.12);
+      --gold-border: rgba(198,166,100,0.22);
+      --bg:          #090807;
+      --surface:     #111009;
+      --border:      rgba(255,255,255,0.07);
+      --text:        #ddd5c5;
+      --muted:       #5a5040;
+      --dim:         #28221a;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { height: 100%; }
+
     body {
-      font-family: 'Barlow', sans-serif;
       background: var(--bg);
       color: var(--text);
+      font-family: 'Barlow', sans-serif;
       min-height: 100vh;
-      display: flex; flex-direction: column;
-      overflow-x: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
     }
 
-    /* ═══════════════════════════════════════
-       NETWORK TOPBAR — THE LOL NETWORK
-    ═══════════════════════════════════════ */
-    #network-bar {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--nb-h);
-      background: #0a0a0a;
-      border-bottom: 1px solid rgba(198,166,100,0.2);
-      display: flex; align-items: center;
+    /* ── TOP NAV ── */
+    .top-nav {
+      display: flex;
+      align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
-      z-index: 9000;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
+      padding: 24px 64px;
+      border-bottom: 1px solid var(--border);
     }
-    .nb-brand {
-      display: flex; align-items: center; gap: 10px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img { height: 28px; opacity: 0.85; }
+
+    .brand-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 4px;
       color: var(--gold);
       font-weight: 500;
-      letter-spacing: 2.5px;
-      text-decoration: none;
     }
-    .nb-pulse {
-      width: 5px; height: 5px; border-radius: 50%;
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    .live-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
       background: var(--gold);
-      animation: pulse-dot 2s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-    @keyframes pulse-dot {
-      0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(198,166,100,0.4); }
-      50% { opacity:0.5; box-shadow:0 0 0 4px rgba(198,166,100,0); }
-    }
-    .nb-links {
-      display: flex; align-items: center; gap: 20px;
-    }
-    .nb-links a {
-      color: var(--text-dim);
-      text-decoration: none;
-      letter-spacing: 1.5px;
-      transition: color 0.2s;
-    }
-    .nb-links a:hover { color: var(--gold); }
-    .nb-links a.nb-active { color: var(--gold); opacity: 0.7; pointer-events: none; }
-    .nb-sep { color: var(--text-dim); }
-
-    /* ═══════════════════════════════════════
-       NOISE OVERLAY
-    ═══════════════════════════════════════ */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      z-index: 9999; pointer-events: none; opacity: 0.5;
+      opacity: 0.9;
     }
 
-    /* ═══════════════════════════════════════
-       HEADER
-    ═══════════════════════════════════════ */
-    header {
-      padding: 0 5%;
-      height: 64px;
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid var(--border-sub);
-      position: sticky; top: var(--nb-h);
-      background: rgba(14,13,11,0.92);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      z-index: 100;
-    }
-    .logo-area {
-      display: flex; align-items: center; gap: 14px;
-      text-decoration: none; color: inherit;
-    }
-    .logo-area img { height: 36px; opacity: 0.92; }
-    .logo-wordmark {
-      display: flex; flex-direction: column; gap: 2px;
-    }
-    .logo-wordmark span:first-child {
-      font-family: 'Fira Code'; font-size: 0.75rem; font-weight: 500;
-      letter-spacing: 4px; color: var(--gold);
-    }
-    .logo-wordmark span:last-child {
-      font-family: 'Fira Code'; font-size: 0.5rem;
-      letter-spacing: 2px; color: var(--text-muted);
-    }
-    /* Breadcrumb trail */
-    .header-breadcrumb {
-      font-family: 'Fira Code'; font-size: 0.56rem;
-      letter-spacing: 1.5px; color: var(--text-dim);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .header-breadcrumb a {
-      color: var(--text-dim); text-decoration: none;
-      transition: color 0.2s;
-    }
-    .header-breadcrumb a:hover { color: var(--gold); }
-    .header-breadcrumb .bc-sep { opacity: 0.4; }
-    .header-breadcrumb .bc-current { color: var(--gold); opacity: 0.7; }
-    .header-right {
-      font-family: 'Fira Code'; font-size: 0.6rem;
-      letter-spacing: 2px; color: var(--text-muted);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold); animation: blink 1.5s infinite;
-    }
-    @keyframes blink {
-      0%,100% { opacity: 1; } 50% { opacity: 0.2; }
-    }
-
-    /* ═══════════════════════════════════════
-       MAIN LAYOUT
-    ═══════════════════════════════════════ */
+    /* ── MAIN ── */
     main {
-      flex: 1; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 0 5%; position: relative; overflow: hidden;
-    }
-    .bg-radial {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 60% at 50% 38%, rgba(198,166,100,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 35% 45% at 10% 85%, rgba(139,32,32,0.05) 0%, transparent 60%),
-        radial-gradient(ellipse 35% 45% at 90% 15%, rgba(139,32,32,0.04) 0%, transparent 60%);
-      pointer-events: none;
-      transition: transform 0.25s ease-out;
-    }
-    .bg-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(198,166,100,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(198,166,100,0.03) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse 75% 75% at center, black 0%, transparent 100%);
-      pointer-events: none;
-    }
-    .scanline {
-      position: fixed; inset: 0; pointer-events: none; z-index: 10;
-      height: 120px;
-      background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0) 100%);
-      opacity: 0.08;
-      animation: scan 12s linear infinite;
-    }
-    @keyframes scan {
-      0%   { transform: translateY(-120px); }
-      100% { transform: translateY(100vh); }
+      padding: 80px 64px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 64px;
     }
 
-    /* ═══════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════ */
-    .hero {
-      position: relative; text-align: center;
-      max-width: 860px; padding: 5rem 0 4rem; z-index: 1;
-    }
-    .eyebrow {
-      font-family: 'Fira Code'; font-size: 0.65rem; letter-spacing: 4px;
-      color: var(--gold); opacity: 0.85; margin-bottom: 2rem;
-      animation: fadeUp 0.6s ease both;
-    }
-    .hero-title {
-      font-family: 'Playfair Display'; font-size: clamp(2.8rem, 6.5vw, 5.6rem);
-      font-weight: 400; line-height: 1.1; letter-spacing: -1px;
-      color: var(--text); margin-bottom: 2rem;
-      animation: fadeUp 0.6s ease 0.1s both;
-    }
-    .hero-title .dot { color: var(--gold); }
-    .hero-divider {
-      width: 60px; height: 1px; background: var(--border);
-      margin: 0 auto 2.2rem; animation: expandLine 0.8s ease 0.3s both;
-    }
-    @keyframes expandLine {
-      from { transform: scaleX(0); opacity: 0; }
-      to   { transform: scaleX(1); opacity: 1; }
-    }
-    .hero-desc {
-      font-size: 0.95rem; color: var(--text-muted);
-      line-height: 1.9; max-width: 560px; margin: 0 auto 2.5rem;
-      font-weight: 300; animation: fadeUp 0.6s ease 0.2s both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* Hero */
+    .hero-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
     }
 
-    /* ═══════════════════════════════════════
-       STAT ROW (NEW)
-    ═══════════════════════════════════════ */
-    .stat-row {
-      display: flex; justify-content: center; gap: 3rem;
-      margin-bottom: 3rem;
-      animation: fadeUp 0.6s ease 0.28s both;
-    }
-    .stat-item {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-    }
-    .stat-val {
-      font-family: 'Fira Code'; font-size: 1.15rem; font-weight: 500;
-      color: var(--gold);
-    }
-    .stat-label {
-      font-family: 'Fira Code'; font-size: 0.53rem; letter-spacing: 2px;
-      color: var(--text-dim); text-transform: uppercase;
-    }
-    .stat-div {
-      width: 1px; height: 40px; background: var(--border);
-      align-self: center;
-    }
-
-    /* ═══════════════════════════════════════
-       NAV CARDS
-    ═══════════════════════════════════════ */
-    nav.nav-cards {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1px; background: var(--border-sub);
-      border: 1px solid var(--border-sub);
-      animation: fadeUp 0.6s ease 0.35s both;
-    }
-    .card {
-      padding: 2.4rem 2.2rem; background: var(--bg);
-      text-decoration: none; color: inherit;
-      position: relative; overflow: hidden;
-      transition: background 0.3s;
-      text-align: left;
-    }
-    .card::before {
+    .hero-label::before {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-    .card::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 60% at 30% 40%, rgba(198,166,100,0.04), transparent);
-      opacity: 0; transition: opacity 0.4s;
-      pointer-events: none;
-    }
-    .card:hover { background: var(--surface); }
-    .card:hover::before { transform: scaleX(1); }
-    .card:hover::after { opacity: 1; }
-    .card-number {
-      font-family: 'Fira Code'; font-size: 0.6rem; letter-spacing: 2px;
-      color: var(--gold); opacity: 0.55; margin-bottom: 1.2rem;
-    }
-    .card h3 {
-      font-family: 'Fira Code'; font-size: 0.75rem; font-weight: 500;
-      letter-spacing: 2px; color: var(--gold); margin-bottom: 0.8rem;
-    }
-    .card p {
-      font-size: 0.83rem; color: var(--text-muted);
-      line-height: 1.75; font-weight: 300;
-    }
-    .card-arrow {
-      display: inline-block; margin-top: 1.4rem;
-      font-family: 'Fira Code'; font-size: 0.62rem; letter-spacing: 2px;
-      color: var(--text-dim); transition: color 0.3s, transform 0.3s;
-    }
-    .card:hover .card-arrow { color: var(--gold); transform: translateX(5px); }
-    .card-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: 'Fira Code'; font-size: 0.56rem; letter-spacing: 2px;
-      padding: 3px 9px;
-      margin-top: 1rem;
-    }
-    .badge-pub {
-      background: rgba(198,166,100,0.08);
-      border: 1px solid rgba(198,166,100,0.22);
-      color: var(--gold);
-    }
-    .badge-res {
-      background: rgba(139,32,32,0.1);
-      border: 1px solid rgba(139,32,32,0.28);
-      color: #9b5050;
-    }
-    /* Hover glitch on card title */
-    @media (prefers-reduced-motion: no-preference) {
-      .card:hover h3 {
-        animation: glitch 0.4s cubic-bezier(.25,.46,.45,.94) infinite;
-      }
-    }
-    @keyframes glitch {
-      0%,100% { transform: translate(0,0); clip-path: none; }
-      20% { transform: translate(-1px, 1px); }
-      40% { transform: translate(-1px,-1px); }
-      60% { transform: translate(1px, 1px); }
-      80% { transform: translate(1px,-1px); }
-    }
-
-    /* ═══════════════════════════════════════
-       QUICK LINKS ROW (NEW)
-    ═══════════════════════════════════════ */
-    .quick-links {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0; margin-top: 1px;
-      background: var(--border-sub);
-      border: 1px solid var(--border-sub);
-      border-top: none;
-      animation: fadeUp 0.6s ease 0.42s both;
-    }
-    .quick-link {
-      flex: 1; padding: 1rem 1.5rem;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      text-decoration: none; color: var(--text-dim);
-      font-family: 'Fira Code'; font-size: 0.58rem; letter-spacing: 2px;
-      border-right: 1px solid var(--border-sub);
-      background: var(--bg);
-      transition: color 0.25s, background 0.25s;
-    }
-    .quick-link:last-child { border-right: none; }
-    .quick-link:hover { color: var(--gold); background: var(--surface); }
-    .ql-icon {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: currentColor; opacity: 0.5;
+      width: 20px; height: 1px;
+      background: var(--muted);
       flex-shrink: 0;
     }
 
-    /* ═══════════════════════════════════════
-       HUD CORNERS
-    ═══════════════════════════════════════ */
-    .ui-corner {
-      position: absolute; bottom: 1.2rem;
-      font-family: 'Fira Code'; font-size: 0.57rem;
-      color: var(--text-dim); letter-spacing: 1px;
-      white-space: pre-line; z-index: 5;
+    h1 {
+      font-family: 'Fira Code', monospace;
+      font-size: clamp(3rem, 8.5vw, 8rem);
+      font-weight: 300;
+      line-height: 1.04;
+      color: var(--text);
+      letter-spacing: -2px;
+      margin-bottom: 36px;
     }
-    .bottom-left { left: 5%; }
-    .bottom-right { right: 5%; text-align: right; }
 
-    /* ═══════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════ */
+    h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.75;
+    }
+
+    /* ── PORTAL LINKS ── */
+    .portals {
+      border-top: 1px solid var(--border);
+    }
+
+    .portal-link {
+      display: flex;
+      align-items: center;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      gap: 28px;
+      position: relative;
+      transition: padding-left 0.28s ease;
+    }
+
+    .portal-link::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--gold);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.28s ease;
+    }
+
+    .portal-link:hover { padding-left: 18px; }
+    .portal-link:hover::before { transform: scaleY(1); }
+
+    .p-num {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--dim);
+      flex-shrink: 0;
+      width: 36px;
+    }
+
+    .p-name {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: var(--text);
+      flex: 1;
+      transition: color 0.22s;
+    }
+
+    .portal-link:hover .p-name { color: var(--gold); }
+
+    .p-badge {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      padding: 4px 11px;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+
+    .badge-open   { color: var(--gold);   border-color: var(--gold-border); }
+    .badge-closed { color: #8b5050; border-color: rgba(139,80,80,0.28); }
+
+    .p-arrow {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--dim);
+      transition: color 0.22s, transform 0.22s;
+      flex-shrink: 0;
+    }
+
+    .portal-link:hover .p-arrow { color: var(--gold); transform: translateX(5px); }
+
+    /* ── META STRIP ── */
+    .meta-strip {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .meta-item {
+      padding: 20px 36px 20px 0;
+      margin-right: 36px;
+      border-right: 1px solid var(--border);
+    }
+
+    .meta-item:last-child { border-right: none; margin-right: 0; }
+
+    .meta-val {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+
+    .meta-lbl {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 2.5px;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
     footer {
-      padding: 1.2rem 5%;
-      border-top: 1px solid var(--border-sub);
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 0.5rem;
-      font-family: 'Fira Code'; font-size: 0.55rem;
-      letter-spacing: 1.5px; color: var(--text-dim);
+      padding: 20px 64px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
+
+    footer p {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 1.5px;
+      color: var(--dim);
+    }
+
     .footer-links {
-      display: flex; align-items: center; gap: 16px;
+      display: flex;
+      gap: 24px;
     }
+
     .footer-links a {
-      color: var(--text-dim); text-decoration: none; transition: color 0.2s;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
     }
+
     .footer-links a:hover { color: var(--gold); }
 
-
-
-    /* ═══════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════ */
+    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      #network-bar { display: none; }
-      header { top: 0; }
-      .nav-cards { grid-template-columns: 1fr; }
-      .quick-links { flex-direction: column; }
-      .quick-link { border-right: none; border-bottom: 1px solid var(--border-sub); width: 100%; }
-      .quick-link:last-child { border-bottom: none; }
-      .hero-title { font-size: 2.5rem; }
-      .header-breadcrumb { display: none; }
-      .stat-row { gap: 1.5rem; }
-      footer { justify-content: center; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
+      .top-nav { padding: 18px 24px; }
+      main { padding: 48px 24px 48px; gap: 48px; }
+      footer { padding: 18px 24px; }
+      h1 { font-size: 2.8rem; letter-spacing: -1px; }
+      .meta-strip { flex-wrap: wrap; gap: 0; }
+      .meta-item { border-right: none; padding: 16px 0; margin-right: 0; border-bottom: 1px solid var(--border); width: 50%; }
+      .meta-item:nth-child(odd) { padding-right: 16px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══ NETWORK TOPBAR ═══ -->
-  <div id="network-bar">
-    <a class="nb-brand" href="/thelol">
-      <div class="nb-pulse"></div>
-      THE LOL NETWORK
+  <nav class="top-nav">
+    <a href="/thelol/gov/isc/" class="brand">
+      <img src="ISC_LOGO.png" alt="ISC">
+      <span class="brand-label">ISC</span>
     </a>
-    <div class="nb-links">
-      <a href="/thelol">THE LOL HUB</a>
-      <span class="nb-sep">//</span>
-      <a href="/thelol/gov">GOVERNMENT</a>
-      <span class="nb-sep">//</span>
-      <a href="/thelol/gov/isc" class="nb-active">ISC</a>
-      <span class="nb-sep">//</span>
-      <a href="/thelol/gov/isc/national">NATIONAL ACCESS</a>
-      <span class="nb-sep">//</span>
-      <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener">DISCORD</a>
+    <div class="nav-right">
+      <div class="live-dot"></div>
+      <span id="clock">-- : -- : --</span>
+      <span style="opacity:.5;">MYT</span>
     </div>
-  </div>
+  </nav>
 
-  <!-- ═══ HEADER ═══ -->
-  <header>
-    <a href="/thelol/gov/isc" class="logo-area">
-      <img src="ISC_LOGO.png" alt="ISC Logo">
-      <div class="logo-wordmark">
-        <span>ISC</span>
-        <span>INTERNAL SECURITY CONTROL</span>
-      </div>
-    </a>
-    <div class="header-breadcrumb">
-      <a href="/thelol">THE LOL</a>
-      <span class="bc-sep">/</span>
-      <a href="/thelol/gov">GOVERNMENT</a>
-      <span class="bc-sep">/</span>
-      <span class="bc-current">ISC</span>
-    </div>
-    <div class="header-right">
-      <div class="status-dot"></div>
-      SYSTEMS_OPERATIONAL
-    </div>
-  </header>
-
-  <!-- ═══ MAIN ═══ -->
   <main>
-    <div class="bg-radial"></div>
-    <div class="bg-grid"></div>
-    <div class="scanline"></div>
+    <div>
+      <div class="hero-label">THE LEGEND OF LEGIONA // INTELLIGENCE DIVISION</div>
+      <h1>Internal<br>Security<br><em>Control.</em></h1>
+      <p class="hero-desc">The first and only intelligence agency of The Legend of Legiona. Preserving sovereignty, history, and peace across Skyxion since Season 1.</p>
 
-    <div class="hero">
-      <div class="eyebrow">INTERNAL SECURITY CONTROL // THE LEGEND OF LEGIONA</div>
-
-      <h1 class="hero-title">
-        Sovereignty<span class="dot">.</span><br>
-        Equality<span class="dot">.</span><br>
-        Rebirth<span class="dot">.</span>
-      </h1>
-
-      <div class="hero-divider"></div>
-
-      <p class="hero-desc">
-        Born from the terror attacks, ISC stands as a testament to the strength
-        of a united community. From our humble beginnings as the "Sus Squad"
-        to our rise as the trusted, first, and only agency of The Legend of Legiona.
-      </p>
-
-      <!-- STAT ROW -->
-      <div class="stat-row">
-        <div class="stat-item">
-          <span class="stat-val">EST. S1</span>
-          <span class="stat-label">FOUNDED</span>
-        </div>
-        <div class="stat-div"></div>
-        <div class="stat-item">
-          <span class="stat-val">ACTIVE</span>
-          <span class="stat-label">STATUS</span>
-        </div>
-        <div class="stat-div"></div>
-        <div class="stat-item">
-          <span class="stat-val">CLASSIFIED</span>
-          <span class="stat-label">CLEARANCE LVL</span>
-        </div>
-        <div class="stat-div"></div>
-        <div class="stat-item">
-          <span class="stat-val" id="isc-date">--/--</span>
-          <span class="stat-label">MYT DATE</span>
-        </div>
-      </div>
-
-      <!-- NAV CARDS -->
-      <nav class="nav-cards">
-        <a href="/thelol/gov/isc/national" class="card">
-          <div class="card-number">01 // PUBLIC</div>
-          <h3>NATIONAL_ACCESS</h3>
-          <p>View our official documentation, mission history, and open-source public records.</p>
-          <div class="card-badge badge-pub">● OPEN ACCESS</div>
-          <div class="card-arrow">ACCESS →</div>
+      <div class="portals" style="margin-top:56px;">
+        <a href="/thelol/gov/isc/national" class="portal-link">
+          <span class="p-num">01</span>
+          <span class="p-name">NATIONAL_ACCESS</span>
+          <span class="p-badge badge-open">OPEN ACCESS</span>
+          <span class="p-arrow">→</span>
         </a>
-        <a href="/thelol/gov/isc/intel" class="card">
-          <div class="card-number">02 // RESTRICTED</div>
-          <h3>INTERNAL_PORTAL</h3>
-          <p>Secure access to ISC intelligence assets, briefings, and classified archives.</p>
-          <div class="card-badge badge-res">⬡ CLEARANCE REQUIRED</div>
-          <div class="card-arrow">ENTER →</div>
-        </a>
-      </nav>
-
-      <!-- QUICK LINKS -->
-      <div class="quick-links">
-        <a class="quick-link" href="/thelol">
-          <span class="ql-icon"></span>THE LOL HUB
-        </a>
-        <a class="quick-link" href="/thelol/gov">
-          <span class="ql-icon"></span>GOVERNMENT PORTAL
-        </a>
-        <a class="quick-link" href="/thelol/gov/isc/national">
-          <span class="ql-icon"></span>ISC NATIONAL ARCHIVE
-        </a>
-        <a class="quick-link" href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener">
-          <span class="ql-icon"></span>JOIN DISCORD
+        <a href="/thelol/gov/isc/intel" class="portal-link">
+          <span class="p-num">02</span>
+          <span class="p-name">INTERNAL_PORTAL</span>
+          <span class="p-badge badge-closed">CLEARANCE REQUIRED</span>
+          <span class="p-arrow">→</span>
         </a>
       </div>
     </div>
 
-    <!-- HUD -->
-    <div class="ui-corner bottom-left">
-      LOC: SKYXION // ALTAER ERA<br>
-      SIG: ENCRYPTED_AES-256<br>
-      AUTH: REQUIRED FOR CLEARANCE 2+
+    <div class="meta-strip">
+      <div class="meta-item">
+        <span class="meta-val">ACTIVE</span>
+        <span class="meta-lbl">Status</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-val">EST. S1</span>
+        <span class="meta-lbl">Founded</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-val" id="myt-date">--/--/----</span>
+        <span class="meta-lbl">MYT Date</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-val">SKYXION</span>
+        <span class="meta-lbl">Jurisdiction</span>
+      </div>
     </div>
-    <div class="ui-corner bottom-right" id="live-clock">--:--:-- MYT</div>
   </main>
 
-  <!-- ═══ FOOTER ═══ -->
   <footer>
-    <span>© 2026 THE LEGEND OF LEGIONA // ISC // BUILT FOR PEACE</span>
+    <p>© 2026 INTERNAL SECURITY CONTROL // THE LEGEND OF LEGIONA</p>
     <div class="footer-links">
-      <a href="/thelol">Hub</a>
-      <a href="/thelol/gov">Gov Portal</a>
-      <a href="/thelol/gov/isc/national">National Archive</a>
-      <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener">Discord</a>
+      <a href="/thelol/gov/">GOV PORTAL</a>
+      <a href="/thelol/gov/isc/national">NATIONAL ARCHIVE</a>
+      <a href="/thelol/">THE LOL HUB</a>
     </div>
   </footer>
 
-
-
   <script>
-    /* ─── Parallax ─── */
-    document.addEventListener('mousemove', (e) => {
-      const x = (window.innerWidth / 2 - e.clientX) / 55;
-      const y = (window.innerHeight / 2 - e.clientY) / 55;
-      document.querySelector('.bg-radial').style.transform = `translate(${x}px, ${y}px)`;
-    });
-
-    /* ─── GMT+8 Live Clock ─── */
-    function updateClock() {
-      const now = new Date();
-      const myt = new Date(now.getTime() + (8 * 60 * 60 * 1000));
-      const h = String(myt.getUTCHours()).padStart(2, '0');
-      const m = String(myt.getUTCMinutes()).padStart(2, '0');
-      const s = String(myt.getUTCSeconds()).padStart(2, '0');
-      document.getElementById('live-clock').textContent = `${h}:${m}:${s} MYT`;
+    function tick() {
+      const now = new Date(Date.now() + 8 * 3600000);
+      const p = n => String(n).padStart(2, '0');
+      document.getElementById('clock').textContent =
+        `${p(now.getUTCHours())} : ${p(now.getUTCMinutes())} : ${p(now.getUTCSeconds())}`;
     }
-    setInterval(updateClock, 1000);
-    updateClock();
+    setInterval(tick, 1000); tick();
 
-    /* ─── MYT Date in stat row ─── */
-    (function() {
-      const now = new Date(Date.now() + 8 * 3600 * 1000);
-      const dd = String(now.getUTCDate()).padStart(2, '0');
-      const mm = String(now.getUTCMonth() + 1).padStart(2, '0');
-      const yy = String(now.getUTCFullYear()).slice(2);
-      document.getElementById('isc-date').textContent = `${dd}/${mm}/${yy}`;
+    (function () {
+      const now = new Date(Date.now() + 8 * 3600000);
+      const p = n => String(n).padStart(2, '0');
+      document.getElementById('myt-date').textContent =
+        `${p(now.getUTCDate())}/${p(now.getUTCMonth() + 1)}/${now.getUTCFullYear()}`;
     })();
-
-
   </script>
 </body>
 </html>
