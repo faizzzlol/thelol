@@ -1,764 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>National Access | ISC Public Records</title>
-    <link rel="icon" type="image/png" href="ISC_LOGO.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #c6a664;
-            --gold-dim: rgba(198,166,100,0.15);
-            --gold-glow: rgba(198,166,100,0.08);
-            --bg: #0e0d0b;
-            --bg2: #121110;
-            --bg3: #161412;
-            --surface: #1a1815;
-            --border: rgba(198,166,100,0.18);
-            --border-dim: rgba(255,255,255,0.06);
-            --text: #e8e0d0;
-            --text-muted: #7a7060;
-            --text-dim: #4a4438;
-            --red: #8b2020;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Barlow', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* Grain overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.6;
-        }
-
-        /* ─── HEADER ─── */
-        header {
-            padding: 1.2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: rgba(14,13,11,0.92);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .logo-area img { height: 38px; opacity: 0.9; }
-
-        .logo-wordmark {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-
-        .logo-wordmark span:first-child {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 4px;
-            color: var(--gold);
-        }
-
-        .logo-wordmark span:last-child {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.7rem;
-            font-family: 'Fira Code', monospace;
-            letter-spacing: 1.5px;
-            transition: color 0.25s;
-        }
-
-        .nav-links a:hover { color: var(--gold); }
-
-        .nav-cta {
-            padding: 8px 18px;
-            border: 1px solid var(--border) !important;
-            color: var(--gold) !important;
-            transition: background 0.25s, border-color 0.25s !important;
-        }
-
-        .nav-cta:hover {
-            background: var(--gold-dim);
-            border-color: var(--gold) !important;
-        }
-
-        /* ─── HERO ─── */
-        .hero {
-            min-height: 75vh;
-            display: flex;
-            align-items: center;
-            padding: 6rem 5%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 60% 60% at 70% 40%, rgba(198,166,100,0.05) 0%, transparent 70%),
-                radial-gradient(ellipse 40% 40% at 20% 70%, rgba(139,32,32,0.04) 0%, transparent 60%);
-        }
-
-        .hero-grid-bg {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(198,166,100,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(198,166,100,0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 80% 80% at center, black 20%, transparent 100%);
-        }
-
-        .hero-inner {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .hero-eyebrow {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: var(--gold);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            animation: fadeUp 0.8s ease both;
-        }
-
-        .hero-eyebrow::before {
-            content: '';
-            width: 30px;
-            height: 1px;
-            background: var(--gold);
-            opacity: 0.5;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            font-weight: 400;
-            line-height: 1.1;
-            color: var(--text);
-            margin-bottom: 2rem;
-            animation: fadeUp 0.8s ease 0.1s both;
-        }
-
-        .hero h1 em {
-            font-style: italic;
-            color: var(--gold);
-        }
-
-        .hero-sub {
-            font-size: 1rem;
-            color: var(--text-muted);
-            max-width: 550px;
-            line-height: 1.8;
-            animation: fadeUp 0.8s ease 0.2s both;
-        }
-
-        .hero-meta {
-            margin-top: 3rem;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            animation: fadeUp 0.8s ease 0.3s both;
-        }
-
-        .hero-badge {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            padding: 6px 14px;
-            border: 1px solid var(--border-dim);
-            color: var(--text-dim);
-        }
-
-        .hero-badge.active {
-            border-color: rgba(198,166,100,0.4);
-            color: var(--gold);
-            background: var(--gold-glow);
-        }
-
-        .stamp {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%) rotate(-12deg);
-            font-family: 'Fira Code', monospace;
-            font-size: 1.1rem;
-            letter-spacing: 4px;
-            color: rgba(139,32,32,0.25);
-            border: 2px solid rgba(139,32,32,0.2);
-            padding: 10px 20px;
-            font-weight: 500;
-            text-transform: uppercase;
-            animation: fadeUp 1s ease 0.5s both;
-            display: none;
-        }
-
-        @media (min-width: 900px) { .stamp { display: block; } }
-
-        /* ─── DIVIDER ─── */
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border), transparent);
-            margin: 0 5%;
-        }
-
-        /* ─── SECTIONS ─── */
-        section {
-            padding: 5rem 5%;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 3.5rem;
-        }
-
-        .section-label .code {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            opacity: 0.7;
-        }
-
-        .section-label .title {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-        }
-
-        .section-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-dim);
-        }
-
-        /* ─── FOUNDATION SECTION ─── */
-        .foundation-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        .foundation-text h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            color: var(--text);
-        }
-
-        .foundation-text p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.2rem;
-            font-weight: 300;
-        }
-
-        .foundation-text strong { color: var(--text); font-weight: 500; }
-
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            padding: 6px 14px;
-            border: 1px solid rgba(198,166,100,0.3);
-            color: var(--gold);
-            margin-top: 1.5rem;
-        }
-
-        .status-pill::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: pulse 2s infinite;
-        }
-
-        .citation-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            position: relative;
-        }
-
-        .citation-card::after {
-            content: 'OFFICIAL_RECORD';
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-        }
-
-        .citation-card blockquote {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.05rem;
-            line-height: 1.9;
-            color: var(--text);
-            border-left: 2px solid var(--gold);
-            padding-left: 1.5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.85;
-        }
-
-        .citation-card cite {
-            font-family: 'Fira Code', monospace;
-            font-style: normal;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-        }
-
-        /* ─── EVOLUTION SECTION ─── */
-        #declassified { background: var(--bg2); }
-
-        .evolution-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .archive-card {
-            background: var(--bg3);
-            border: 1px solid var(--border-dim);
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .archive-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold), transparent);
-        }
-
-        .archive-tag {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            opacity: 0.7;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .archive-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-            font-weight: 300;
-        }
-
-        .archive-card strong { color: var(--text); }
-
-        .evolution-text h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-        }
-
-        .evolution-text p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.2rem;
-            font-weight: 300;
-        }
-
-        .classified-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            padding: 6px 14px;
-            background: rgba(139,32,32,0.12);
-            border: 1px solid rgba(139,32,32,0.3);
-            color: #b04040;
-            margin-top: 1.5rem;
-        }
-
-        /* ─── TIMELINE ─── */
-        #timeline { background: var(--bg); }
-
-        .timeline-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            position: relative;
-        }
-
-        .timeline-list::before {
-            content: '';
-            position: absolute;
-            left: 110px;
-            top: 0; bottom: 0;
-            width: 1px;
-            background: var(--border-dim);
-        }
-
-        .timeline-item {
-            display: grid;
-            grid-template-columns: 110px 1fr;
-            gap: 40px;
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border-dim);
-            position: relative;
-        }
-
-        .timeline-item:last-child { border-bottom: none; }
-
-        .timeline-date {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            padding-top: 4px;
-            text-align: right;
-            letter-spacing: 1px;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 104px;
-            top: 2.3rem;
-            width: 14px;
-            height: 14px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            transform: rotate(45deg);
-        }
-
-        .timeline-dot.active {
-            border-color: var(--gold);
-            background: var(--gold-dim);
-        }
-
-        .timeline-content h4 {
-            font-family: 'Barlow', sans-serif;
-            font-weight: 500;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .timeline-content p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 300;
-            line-height: 1.7;
-        }
-
-        /* ─── FOOTER ─── */
-        footer {
-            padding: 3rem 5%;
-            border-top: 1px solid var(--border-dim);
-            background: var(--bg);
-        }
-
-        .footer-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .footer-left {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            line-height: 2;
-        }
-
-        .footer-right {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 1px;
-            color: var(--text-dim);
-            text-align: right;
-        }
-
-        /* ─── ANIMATIONS ─── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 768px) {
-            .foundation-layout,
-            .evolution-layout { grid-template-columns: 1fr; gap: 30px; }
-            .nav-links .hide-mobile { display: none; }
-            .timeline-list::before { left: 80px; }
-            .timeline-dot { left: 74px; }
-            .timeline-item { grid-template-columns: 80px 1fr; gap: 20px; }
-            .footer-inner { flex-direction: column; align-items: flex-start; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Access | ISC Public Records</title>
+  <link rel="icon" type="image/png" href="ISC_LOGO.png">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:        #c6a664;
+      --gold-dim:    rgba(198,166,100,0.1);
+      --gold-border: rgba(198,166,100,0.22);
+      --bg:          #090807;
+      --surface:     #111009;
+      --surface2:    #161412;
+      --border:      rgba(255,255,255,0.07);
+      --text:        #ddd5c5;
+      --muted:       #5a5040;
+      --dim:         #28221a;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 64px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(9,8,7,0.96);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo-area img { height: 26px; opacity: 0.82; }
+
+    .logo-text-wrap { display: flex; flex-direction: column; gap: 2px; }
+
+    .logo-text-wrap .primary {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .logo-text-wrap .secondary {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .header-nav a {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover { color: var(--text); }
+
+    .header-cta {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--gold) !important;
+      border: 1px solid var(--gold-border);
+      padding: 6px 14px;
+      transition: background 0.2s !important;
+    }
+
+    .header-cta:hover { background: var(--gold-dim) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 100px 64px 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 64px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    h1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 600;
+      line-height: 1.04;
+      color: var(--text);
+      letter-spacing: -2px;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 300;
+    }
+
+    .hero-meta {
+      flex-shrink: 0;
+      text-align: right;
+      padding-top: 8px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      padding: 5px 12px;
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .hero-meta p {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 2px;
+      color: var(--dim);
+      line-height: 2;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.8;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 64px; border-bottom: 1px solid var(--border); }
+
+    .sec-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .sec-code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    .sec-title-text {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+    }
+
+    .sec-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── FOUNDATION ── */
+    #foundations .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .f-text h2 {
+      font-family: 'Barlow', sans-serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .f-text p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .f-text strong { color: var(--text); font-weight: 500; }
+
+    .mandate-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      margin-top: 16px;
+    }
+
+    .mandate-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .citation-block {
+      border: 1px solid var(--border);
+      padding: 36px;
+      background: var(--surface);
+      position: relative;
+    }
+
+    .citation-block::before {
+      content: 'OFFICIAL_RECORD';
+      position: absolute;
+      top: 16px; right: 16px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.48rem;
+      letter-spacing: 2px;
+      color: var(--dim);
+    }
+
+    .citation-block blockquote {
+      font-family: 'Barlow', sans-serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text);
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .citation-block cite {
+      font-family: 'Fira Code', monospace;
+      font-style: normal;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+
+    /* ── EVOLUTION ── */
+    #evolution { background: var(--surface); }
+
+    #evolution .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .archive-card {
+      border: 1px solid var(--border);
+      padding: 32px;
+      border-top: 2px solid var(--gold-border);
+    }
+
+    .archive-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .archive-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .archive-card strong { color: var(--text); font-weight: 500; }
+
+    .evo-text h2 {
+      font-family: 'Barlow', sans-serif;
+      font-size: clamp(1.6rem, 2.8vw, 2rem);
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .evo-text p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .classified-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      background: rgba(139,64,64,0.1);
+      border: 1px solid rgba(139,64,64,0.24);
+      color: #9b5050;
+      margin-top: 16px;
+    }
+
+    /* ── TIMELINE ── */
+    #timeline { background: var(--bg); }
+
+    .tl-list {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tl-list::before {
+      content: '';
+      position: absolute;
+      left: 96px; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 48px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .tl-item:last-child { border-bottom: none; }
+
+    .tl-date {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      padding-top: 4px;
+      text-align: right;
+      letter-spacing: 1px;
+      line-height: 1.6;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: 89px; top: 33px;
+      width: 14px; height: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      transform: rotate(45deg);
+    }
+
+    .tl-dot.active {
+      border-color: var(--gold-border);
+      background: var(--gold-dim);
+    }
+
+    .tl-content h4 {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .tl-content p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 64px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-left {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 2px;
+      color: var(--dim);
+      line-height: 2;
+    }
+
+    .footer-right {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 1.5px;
+      color: var(--dim);
+      text-align: right;
+      line-height: 2;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { padding: 18px 24px; }
+      .header-nav .hide-sm { display: none; }
+      .hero { padding: 60px 24px 48px; }
+      .hero-top { flex-direction: column; gap: 24px; }
+      .hero-meta { text-align: left; }
+      section { padding: 56px 24px; }
+      #foundations .layout,
+      #evolution .layout { grid-template-columns: 1fr; gap: 28px; }
+      .tl-list::before { left: 64px; }
+      .tl-dot { left: 57px; }
+      .tl-item { grid-template-columns: 64px 1fr; gap: 24px; }
+      footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <a href="/thelol/gov/isc" class="logo-area">
-            <img src="ISC_LOGO.png" alt="ISC Logo">
-            <div class="logo-wordmark">
-                <span>ISC</span>
-                <span>INTERNAL SECURITY CONTROL</span>
-            </div>
-        </a>
-        <nav class="nav-links">
-            <a href="/thelol/gov/isc" class="hide-mobile">RETURN_HOME</a>
-            <a href="#foundations" class="hide-mobile">FOUNDATIONS</a>
-            <a href="#declassified" class="hide-mobile">DECLASSIFIED</a>
-            <a href="/thelol/gov/isc/search" class="nav-cta">OPEN SEARCH ARCHIVE</a>
-        </nav>
-    </header>
+  <header>
+    <a href="/thelol/gov/isc/" class="logo-area">
+      <img src="ISC_LOGO.png" alt="ISC">
+      <div class="logo-text-wrap">
+        <span class="primary">ISC</span>
+        <span class="secondary">INTERNAL SECURITY CONTROL</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/thelol/gov/isc/" class="hide-sm">RETURN HOME</a>
+      <a href="#foundations" class="hide-sm">FOUNDATIONS</a>
+      <a href="#evolution" class="hide-sm">EVOLUTION</a>
+      <a href="/thelol/gov/isc/search" class="header-cta">OPEN ARCHIVE SEARCH</a>
+    </nav>
+  </header>
 
-    <!-- HERO -->
-    <div class="hero">
-        <div class="hero-grid-bg"></div>
-        <div class="hero-inner">
-            <div class="hero-eyebrow">PUBLIC_ACCESS // FILE_ID: NAT-001</div>
-            <h1>National<br><em>Transparency</em><br>Portal</h1>
-            <p class="hero-sub">
-                Archiving the journey from the original <strong>Declaration of Establishment</strong> to
-                the current <strong>Internal Security Control</strong> mandate.
-                All records are subject to ISC jurisdiction.
-            </p>
-            <div class="hero-meta">
-                <div class="hero-badge active">PORTAL_ACTIVE</div>
-                <div class="hero-badge">CLEARANCE: PUBLIC</div>
-                <div class="hero-badge">SXR_ERA // 2026</div>
-            </div>
-            <div class="stamp">DECLASSIFIED</div>
-        </div>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-eyebrow">PUBLIC ACCESS // FILE: NAT-001</div>
+        <h1>National<br><em>Transparency</em><br>Portal</h1>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-badge">PORTAL_ACTIVE</div>
+        <p>
+          CLEARANCE: PUBLIC<br>
+          SXR_ERA // 2026<br>
+          JURISDICTION: SKYXION
+        </p>
+      </div>
     </div>
+    <p class="hero-desc">
+      Archiving the journey from the original <strong>Declaration of Establishment</strong> to the current
+      <strong>Internal Security Control</strong> mandate. All records subject to ISC jurisdiction.
+    </p>
+  </div>
 
-    <div class="divider"></div>
-
-    <!-- FOUNDATION -->
-    <section id="foundations">
-        <div class="container">
-            <div class="section-label">
-                <span class="code">01</span>
-                <span class="title">THE_FOUNDATION</span>
-            </div>
-            <div class="foundation-layout">
-                <div class="foundation-text reveal">
-                    <h2>Sovereignty &amp; Unity</h2>
-                    <p>
-                        Building upon the original <strong>Declaration of Establishment</strong>, the ISC
-                        continues to uphold the core principle that the Legiona is a sovereign entity.
-                        As originally decreed, our existence is a testament to the strength of
-                        a united community.
-                    </p>
-                    <p>
-                        The ISC remains the primary executor of the mandate to protect our digital
-                        and social borders from external destabilization across all Skyxion territories.
-                    </p>
-                    <div class="status-pill">MANDATE: ACTIVE</div>
-                </div>
-                <div class="citation-card reveal">
-                    <blockquote>
-                        "We hereby establish this collective to ensure the longevity of our culture,
-                        the safety of our sectors, and the preservation of our history."
-                    </blockquote>
-                    <cite>— Excerpt from the Declaration of Establishment</cite>
-                </div>
-            </div>
+  <!-- FOUNDATION -->
+  <section id="foundations">
+    <div class="sec-label">
+      <span class="sec-code">01</span>
+      <span class="sec-title-text">THE FOUNDATION</span>
+    </div>
+    <div class="layout reveal">
+      <div class="f-text">
+        <h2>Sovereignty &amp; Unity</h2>
+        <p>
+          Building upon the original <strong>Declaration of Establishment</strong>, the ISC continues
+          to uphold the core principle that the Legiona is a sovereign entity. As originally decreed,
+          our existence is a testament to the strength of a united community.
+        </p>
+        <p>
+          The ISC remains the primary executor of the mandate to protect our digital and social borders
+          from external destabilization across all Skyxion territories.
+        </p>
+        <div class="mandate-pill">
+          <span class="mandate-dot"></span>
+          MANDATE: ACTIVE
         </div>
-    </section>
+      </div>
+      <div class="citation-block">
+        <blockquote>
+          "We hereby establish this collective to ensure the longevity of our culture, the safety of
+          our sectors, and the preservation of our history."
+        </blockquote>
+        <cite>— Excerpt from the Declaration of Establishment</cite>
+      </div>
+    </div>
+  </section>
 
-    <div class="divider"></div>
+  <!-- EVOLUTION -->
+  <section id="evolution">
+    <div class="sec-label">
+      <span class="sec-code">02</span>
+      <span class="sec-title-text">THE EVOLUTION FROM TLIO</span>
+    </div>
+    <div class="layout reveal">
+      <div class="archive-card">
+        <span class="archive-tag">[ ARCHIVE FILE: TLIO_ABOUT ]</span>
+        <p>
+          The organization formerly known as <strong>The Legend of Legiona Intelligence
+          Organization (TLIO)</strong> has been integrated into the ISC. While the branding has
+          evolved, the mission of <strong>"Lore Preservation and Strategic Oversight"</strong>
+          remains unchanged.
+        </p>
+      </div>
+      <div class="evo-text">
+        <h2>From "Sus Squad" to ISC</h2>
+        <p>
+          As documented in our heritage records, the transition was sparked by the need for a more
+          robust defense line. What was once a community-led intelligence group (TLIO) has now been
+          reborn as a formal agency to handle the complex threats of the Skyxion era.
+        </p>
+        <div class="classified-pill">TLIO DOCS: ISC JURISDICTION</div>
+      </div>
+    </div>
+  </section>
 
-    <!-- DECLASSIFIED -->
-    <section id="declassified">
-        <div class="container">
-            <div class="section-label">
-                <span class="code">02</span>
-                <span class="title">THE_EVOLUTION_FROM_TLIO</span>
-            </div>
-            <div class="evolution-layout">
-                <div class="archive-card reveal">
-                    <span class="archive-tag">[ ARCHIVE_FILE: TLIO_ABOUT ]</span>
-                    <p>
-                        The organization formerly known as <strong>The Legend of Legiona Intelligence
-                        Organization (TLIO)</strong> has been integrated into the ISC. While the
-                        branding has evolved, the mission of <strong>"Lore Preservation and
-                        Strategic Oversight"</strong> remains unchanged.
-                    </p>
-                </div>
-                <div class="evolution-text reveal">
-                    <h2>From "Sus Squad" to ISC</h2>
-                    <p>
-                        As documented in our heritage records, the transition was sparked by the
-                        need for a more robust defense line. What was once a community-led
-                        intelligence group (TLIO) has now been reborn as a formal agency to
-                        handle the complex threats of the Skyxion era.
-                    </p>
-                    <div class="classified-tag">TLIO DOCS: ISC JURISDICTION</div>
-                </div>
-            </div>
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="sec-label">
+      <span class="sec-code">03</span>
+      <span class="sec-title-text">OPERATIONAL TIMELINE</span>
+    </div>
+    <div class="tl-list">
+
+      <div class="tl-item reveal">
+        <div class="tl-date">2023<br>MID</div>
+        <div class="tl-dot active"></div>
+        <div class="tl-content">
+          <h4>Founding of "The Sus"</h4>
+          <p>Origins of the collective under founders Faiz4224, Imii Kun, and ItzDynozz in the Skyxion world. The foundation of what would become The LoL nation.</p>
         </div>
-    </section>
+      </div>
 
-    <div class="divider"></div>
-
-    <!-- TIMELINE -->
-    <section id="timeline">
-        <div class="container">
-            <div class="section-label">
-                <span class="code">03</span>
-                <span class="title">OPERATIONAL_TIMELINE</span>
-            </div>
-            <div class="timeline-list">
-                <div class="timeline-item reveal">
-                    <div class="timeline-date">2023<br>MID</div>
-                    <div class="timeline-dot active"></div>
-                    <div class="timeline-content">
-                        <h4>Founding of "The Sus"</h4>
-                        <p>Origins of the collective under founders Faiz4224, Imii Kun, and LonelyDynozz in the Skyxion world. The foundation of what would become The LoL nation.</p>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-date">2023<br>08 NOV</div>
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h4>Establishment of TLIO</h4>
-                        <p>Following the suppression of the UltraX2020 regime, the Persatuan Pengkhianat TheLoL was formally rebranded as The Legend of Legiona Intelligence Organization.</p>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-date">2025–<br>2026</div>
-                    <div class="timeline-dot active"></div>
-                    <div class="timeline-content">
-                        <h4>Rebirth as Internal Security Control</h4>
-                        <p>TLIO transitioned into the ISC — a CIA-inspired agency with a unified command structure and formal jurisdiction over all Legiona security matters.</p>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-date">2026<br>CURRENT</div>
-                    <div class="timeline-dot active"></div>
-                    <div class="timeline-content">
-                        <h4>Active Operations — Skyxion: Ragnarok Era</h4>
-                        <p>ISC operates at full mandate capacity. All prior TLIO documentation absorbed and reclassified under ISC Sector 07 jurisdiction.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2023<br>08 NOV</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Establishment of TLIO</h4>
+          <p>Following the suppression of the UltraX2020 regime, the intelligence body was formally established as The Legend of Legiona Intelligence Organization (TLIO).</p>
         </div>
-    </section>
+      </div>
 
-    <footer>
-        <div class="footer-inner">
-            <div class="footer-left">
-                &copy; 2026 INTERNAL SECURITY CONTROL<br>
-                SUCCESSOR TO TLIO // SECTOR 07<br>
-                HONORING THE ORIGINAL DECLARATION OF ESTABLISHMENT
-            </div>
-            <div class="footer-right">
-                CLASSIFICATION: PUBLIC<br>
-                FILE: NAT-TRANSPARENCY-001<br>
-                JURISDICTION: SKYXION RAGNAROK ERA
-            </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2025–<br>2026</div>
+        <div class="tl-dot active"></div>
+        <div class="tl-content">
+          <h4>Rebirth as Internal Security Control</h4>
+          <p>TLIO transitioned into the ISC — a formal agency with a unified command structure and jurisdiction over all Legiona security matters.</p>
         </div>
-    </footer>
+      </div>
 
-    <script>
-        // Reveal on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12 });
+      <div class="tl-item reveal">
+        <div class="tl-date">2026<br>CURRENT</div>
+        <div class="tl-dot active"></div>
+        <div class="tl-content">
+          <h4>Active Operations — Skyxion: Altaer Era</h4>
+          <p>ISC operates at full mandate capacity. All prior TLIO documentation absorbed and reclassified under ISC jurisdiction.</p>
+        </div>
+      </div>
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">
+      © 2026 INTERNAL SECURITY CONTROL<br>
+      SUCCESSOR TO TLIO // HONORING THE ORIGINAL DECLARATION
+    </div>
+    <div class="footer-right">
+      CLASSIFICATION: PUBLIC<br>
+      FILE: NAT-TRANSPARENCY-001<br>
+      JURISDICTION: SKYXION ALTAER ERA
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
