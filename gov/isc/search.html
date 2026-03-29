@@ -1,795 +1,684 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Public Archive Search | ISC</title>
-    <link rel="icon" type="image/png" href="ISC_LOGO.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #c6a664;
-            --gold-dim: rgba(198,166,100,0.12);
-            --gold-glow: rgba(198,166,100,0.06);
-            --bg: #0e0d0b;
-            --bg2: #121110;
-            --bg3: #161412;
-            --surface: #1a1815;
-            --border: rgba(198,166,100,0.18);
-            --border-dim: rgba(255,255,255,0.06);
-            --text: #e8e0d0;
-            --text-muted: #7a7060;
-            --text-dim: #3a342c;
-            --red: rgba(139,32,32,0.25);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Public Archive Search | ISC</title>
+  <link rel="icon" type="image/png" href="ISC_LOGO.png">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:        #c6a664;
+      --gold-dim:    rgba(198,166,100,0.08);
+      --gold-border: rgba(198,166,100,0.22);
+      --bg:          #090807;
+      --surface:     #111009;
+      --surface2:    #161412;
+      --border:      rgba(255,255,255,0.07);
+      --text:        #ddd5c5;
+      --muted:       #5a5040;
+      --dim:         #28221a;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Barlow', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto auto auto 1fr auto;
+    }
 
-        /* Grain */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.6;
-        }
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 64px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(9,8,7,0.96);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+    }
 
-        /* ── HEADER ── */
-        header {
-            padding: 1.2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(14,13,11,0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-dim);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            text-decoration: none;
-            color: inherit;
-        }
+    .logo-area img { height: 26px; opacity: 0.82; }
 
-        .logo-area img { height: 34px; opacity: 0.9; }
+    .logo-labels { display: flex; flex-direction: column; gap: 2px; }
 
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
+    .logo-labels .top {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+    }
 
-        .logo-text span:first-child {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 3px;
-            color: var(--gold);
-        }
+    .logo-labels .btm {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
 
-        .logo-text span:last-child {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-        }
+    .back-btn {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid var(--gold-border);
+      padding: 7px 16px;
+      transition: background 0.2s;
+    }
 
-        .back-link {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.68rem;
-            color: var(--gold);
-            text-decoration: none;
-            letter-spacing: 1.5px;
-            padding: 7px 16px;
-            border: 1px solid var(--border);
-            transition: background 0.2s, border-color 0.2s;
-        }
+    .back-btn:hover { background: var(--gold-dim); }
 
-        .back-link:hover {
-            background: var(--gold-dim);
-            border-color: var(--gold);
-        }
+    /* ── SEARCH HERO ── */
+    .search-hero {
+      padding: 72px 64px 56px;
+      border-bottom: 1px solid var(--border);
+    }
 
-        /* ── HERO ── */
-        .hero {
-            padding: 5rem 5% 3.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 1px solid var(--border-dim);
-        }
+    .search-eyebrow {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -80px; left: 50%;
-            transform: translateX(-50%);
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(198,166,100,0.06) 0%, transparent 70%);
-            pointer-events: none;
-        }
+    .search-eyebrow::before {
+      content: '';
+      width: 18px; height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
 
-        .bg-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(198,166,100,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(198,166,100,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 80% 100% at center, black 0%, transparent 100%);
-            pointer-events: none;
-        }
+    .search-hero h1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
 
-        .hero-eyebrow {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            color: var(--gold);
-            margin-bottom: 1.2rem;
-            opacity: 0;
-            animation: fadeUp 0.5s ease 0.1s forwards;
-            position: relative;
-        }
+    .search-sub {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4.5vw, 3.2rem);
-            font-weight: 400;
-            color: var(--text);
-            margin-bottom: 0.6rem;
-            opacity: 0;
-            animation: fadeUp 0.5s ease 0.2s forwards;
-            position: relative;
-        }
+    /* ── SEARCH BAR ── */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      max-width: 680px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color 0.2s;
+    }
 
-        .hero-sub {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeUp 0.5s ease 0.3s forwards;
-            position: relative;
-        }
+    .search-bar:focus-within { border-color: var(--gold-border); }
 
-        /* ── SEARCH BAR ── */
-        .search-wrapper {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            opacity: 0;
-            animation: fadeUp 0.5s ease 0.4s forwards;
-        }
+    .search-icon {
+      padding: 0 18px;
+      font-family: 'Fira Code', monospace;
+      font-size: 1rem;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
 
-        .search-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 1rem;
-            pointer-events: none;
-            font-family: 'Fira Code', monospace;
-            z-index: 1;
-        }
+    #archive-search {
+      flex: 1;
+      padding: 16px 0;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      outline: none;
+      letter-spacing: 1px;
+    }
 
-        #archive-search {
-            width: 100%;
-            padding: 16px 18px 16px 48px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.82rem;
-            border: 1px solid var(--border-dim);
-            background: var(--surface);
-            color: var(--text);
-            outline: none;
-            transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
-            letter-spacing: 0.5px;
-        }
+    #archive-search::placeholder {
+      color: var(--dim);
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+    }
 
-        #archive-search::placeholder { color: var(--text-dim); }
+    .search-hint {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
 
-        #archive-search:focus {
-            border-color: var(--border);
-            background: var(--bg3);
-            box-shadow: 0 0 0 3px rgba(198,166,100,0.05), 0 8px 30px rgba(0,0,0,0.3);
-        }
+    .hint-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 1.5px;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
 
-        .search-hint {
-            margin-top: 0.8rem;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            color: var(--text-dim);
-            letter-spacing: 1.5px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+    .hint-tag:hover { border-color: var(--gold-border); color: var(--gold); }
 
-        .hint-tag {
-            padding: 3px 8px;
-            border: 1px solid var(--border-dim);
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: border-color 0.2s, color 0.2s;
-        }
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
 
-        .hint-tag:hover {
-            border-color: var(--border);
-            color: var(--gold);
-        }
+    .stats-item {
+      padding: 20px 48px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
 
-        /* ── STATS BAR ── */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 0;
-            background: var(--bg2);
-            border-bottom: 1px solid var(--border-dim);
-        }
+    .stats-item:last-child { border-right: none; }
 
-        .stat-item {
-            text-align: center;
-            padding: 1.4rem 3.5rem;
-            border-right: 1px solid var(--border-dim);
-        }
+    .stats-val {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--gold);
+      display: block;
+    }
 
-        .stat-item:last-child { border-right: none; }
+    .stats-lbl {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
 
-        .stat-item .num {
-            font-family: 'Fira Code', monospace;
-            font-size: 1.3rem;
-            font-weight: 400;
-            color: var(--gold);
-            display: block;
-        }
+    /* ── RESULTS ── */
+    .results-wrap {
+      padding: 0 64px 80px;
+    }
 
-        .stat-item .label {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 4px;
-            display: block;
-        }
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
 
-        /* ── RESULTS ── */
-        .results-wrapper {
-            flex: 1;
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 2.5rem 5% 5rem;
-        }
+    .results-count {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
 
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-dim);
-        }
+    .results-count strong { color: var(--gold); font-weight: 500; }
 
-        .results-count {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
+    /* Default / empty states */
+    .state-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 0;
+      text-align: center;
+      gap: 16px;
+    }
 
-        .results-count span { color: var(--gold); }
+    .state-icon {
+      width: 52px; height: 52px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(45deg);
+      font-size: 1.1rem;
+    }
 
-        /* Category group */
-        .category-group { margin-bottom: 2.5rem; }
+    .state-icon-inner { transform: rotate(-45deg); opacity: 0.3; }
 
-        .category-label {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 3px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    .state-box p {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 2.5px;
+      color: var(--dim);
+    }
 
-        .category-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-dim);
-        }
+    /* Category group */
+    .cat-group { margin-top: 32px; }
 
-        /* Result card */
-        .result-card {
-            background: var(--surface);
-            border: 1px solid var(--border-dim);
-            padding: 1.6rem 1.8rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.5rem;
-            transition: border-color 0.2s, background 0.2s, transform 0.2s;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-        }
+    .cat-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 3px;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .result-card::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 2px;
-            background: var(--gold);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
+    .cat-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
 
-        .result-card:hover {
-            border-color: var(--border);
-            background: var(--bg3);
-            transform: translateX(4px);
-        }
+    /* Result card */
+    .result-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      transition: padding-left 0.25s ease;
+    }
 
-        .result-card:hover::before { transform: scaleY(1); }
+    .result-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--gold);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.25s ease;
+    }
 
-        .card-body { flex: 1; }
+    .result-card:hover { padding-left: 14px; }
+    .result-card:hover::before { transform: scaleY(1); }
 
-        .card-tag {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            opacity: 0.7;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .card-body { flex: 1; }
 
-        .card-tag::before {
-            content: '';
-            display: inline-block;
-            width: 5px; height: 5px;
-            border-radius: 50%;
-            background: var(--gold);
-            opacity: 0.6;
-        }
+    .card-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.54rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .result-card h3 {
-            font-family: 'Barlow', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 0.4rem;
-            line-height: 1.4;
-        }
+    .card-tag::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.7;
+    }
 
-        .result-card p {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            font-weight: 300;
-        }
+    .result-card h3 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
 
-        .card-action { flex-shrink: 0; }
+    .result-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.65;
+    }
 
-        .result-link {
-            display: inline-block;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            color: var(--gold);
-            text-decoration: none;
-            border: 1px solid var(--border);
-            padding: 7px 14px;
-            letter-spacing: 1px;
-            transition: background 0.2s, border-color 0.2s;
-            white-space: nowrap;
-        }
+    .result-link {
+      flex-shrink: 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid var(--gold-border);
+      padding: 7px 14px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
 
-        .result-link:hover {
-            background: var(--gold-dim);
-            border-color: var(--gold);
-        }
+    .result-link:hover { background: var(--gold-dim); }
 
-        /* ── EMPTY STATE ── */
-        #no-results {
-            display: none;
-            text-align: center;
-            padding: 5rem 0;
-        }
+    /* ── FOOTER ── */
+    footer {
+      padding: 20px 64px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-        #no-results .no-icon {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: var(--text-dim);
-            margin-bottom: 1rem;
-            border: 1px solid var(--border-dim);
-            display: inline-block;
-            padding: 10px 20px;
-        }
+    footer p {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 1.5px;
+      color: var(--dim);
+    }
 
-        #no-results p {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+    .class-badge {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+      padding: 4px 12px;
+    }
 
-        /* ── DEFAULT STATE ── */
-        .pre-search {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 5rem 0;
-            text-align: center;
-            gap: 1.5rem;
-        }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
 
-        .pre-search-icon {
-            width: 60px; height: 60px;
-            border: 1px solid var(--border-dim);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(45deg);
-        }
+    .card-animate { animation: cardIn 0.2s ease both; }
 
-        .pre-search-icon-inner {
-            transform: rotate(-45deg);
-            font-size: 1.2rem;
-            opacity: 0.3;
-        }
-
-        .pre-search p {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.68rem;
-            color: var(--text-dim);
-            letter-spacing: 2.5px;
-        }
-
-        /* ── ANIMATIONS ── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-animate {
-            animation: cardIn 0.2s ease both;
-        }
-
-        @keyframes cardIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to   { opacity: 1; transform: translateX(0); }
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid var(--border-dim);
-            padding: 1.4rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg);
-        }
-
-        footer p {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            color: var(--text-dim);
-            letter-spacing: 1.5px;
-        }
-
-        .classification-badge {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            border: 1px solid var(--border);
-            padding: 4px 12px;
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 640px) {
-            .stats-bar { flex-wrap: wrap; }
-            .stat-item { flex: 1; min-width: 100px; border-right: none; border-bottom: 1px solid var(--border-dim); }
-            .result-card { flex-direction: column; align-items: flex-start; }
-            footer { flex-direction: column; gap: 0.75rem; text-align: center; }
-        }
-    </style>
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header       { padding: 18px 24px; }
+      .search-hero { padding: 48px 24px 40px; }
+      .stats-strip { flex-wrap: wrap; }
+      .stats-item  { border-right: none; border-bottom: 1px solid var(--border); flex: 1; min-width: 80px; }
+      .results-wrap { padding: 0 24px 60px; }
+      .result-card { flex-direction: column; align-items: flex-start; gap: 14px; }
+      footer       { padding: 18px 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <a href="/thelol/gov/isc/" class="logo-area">
-            <img src="ISC_LOGO.png" alt="ISC Logo">
-            <div class="logo-text">
-                <span>INTERNAL SECURITY CONTROL</span>
-                <span>Public Archive</span>
-            </div>
-        </a>
-        <a href="/thelol/gov/isc/national" class="back-link">← BACK_TO_INFO</a>
-    </header>
+  <header>
+    <a href="/thelol/gov/isc/" class="logo-area">
+      <img src="ISC_LOGO.png" alt="ISC">
+      <div class="logo-labels">
+        <span class="top">INTERNAL SECURITY CONTROL</span>
+        <span class="btm">Public Archive</span>
+      </div>
+    </a>
+    <a href="/thelol/gov/isc/national" class="back-btn">← BACK TO INFO</a>
+  </header>
 
-    <div class="hero">
-        <div class="bg-grid"></div>
-        <p class="hero-eyebrow">DECLASSIFIED // PUBLIC ACCESS</p>
-        <h1>Global Asset Discovery</h1>
-        <p class="hero-sub">Search missions, legal documents, and historical intelligence files.</p>
+  <div class="search-hero">
+    <div class="search-eyebrow">DECLASSIFIED // PUBLIC ACCESS</div>
+    <h1>Global Asset Discovery</h1>
+    <p class="search-sub">Search missions, legal documents, and historical intelligence files.</p>
 
-        <div class="search-wrapper">
-            <span class="search-icon">⌕</span>
-            <input
-                type="text"
-                id="archive-search"
-                placeholder="SEARCH MISSIONS, FILES, OR HISTORY..."
-                oninput="filterResults()"
-                autocomplete="off"
-                spellcheck="false"
-            >
-            <div class="search-hint">
-                <span class="hint-tag" onclick="setQuery('TLIO')">TLIO</span>
-                <span class="hint-tag" onclick="setQuery('ATTACK')">ATTACK</span>
-                <span class="hint-tag" onclick="setQuery('OPERATION')">OPERATION</span>
-                <span class="hint-tag" onclick="setQuery('LEGAL')">LEGAL</span>
-                <span class="hint-tag" onclick="setQuery('HISTORY')">HISTORY</span>
-            </div>
-        </div>
+    <div class="search-bar">
+      <span class="search-icon">⌕</span>
+      <input
+        type="text"
+        id="archive-search"
+        placeholder="SEARCH MISSIONS, FILES, HISTORY..."
+        oninput="filterResults()"
+        autocomplete="off"
+        spellcheck="false"
+      >
     </div>
 
-    <div class="stats-bar">
-        <div class="stat-item">
-            <span class="num" id="total-count">6</span>
-            <span class="label">Total Assets</span>
-        </div>
-        <div class="stat-item">
-            <span class="num">4</span>
-            <span class="label">Categories</span>
-        </div>
-        <div class="stat-item">
-            <span class="num">2026</span>
-            <span class="label">Archive Year</span>
-        </div>
+    <div class="search-hint">
+      <span class="hint-tag" onclick="setQuery('TLIO')">TLIO</span>
+      <span class="hint-tag" onclick="setQuery('ATTACK')">ATTACK</span>
+      <span class="hint-tag" onclick="setQuery('OPERATION')">OPERATION</span>
+      <span class="hint-tag" onclick="setQuery('LEGAL')">LEGAL</span>
+      <span class="hint-tag" onclick="setQuery('HISTORY')">HISTORY</span>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stats-item">
+      <span class="stats-val" id="total-count">13</span>
+      <span class="stats-lbl">Total Assets</span>
+    </div>
+    <div class="stats-item">
+      <span class="stats-val">4</span>
+      <span class="stats-lbl">Categories</span>
+    </div>
+    <div class="stats-item">
+      <span class="stats-val">2026</span>
+      <span class="stats-lbl">Archive Year</span>
+    </div>
+  </div>
+
+  <div class="results-wrap">
+    <div class="results-header">
+      <p class="results-count" id="results-count">
+        ENTER A QUERY TO SEARCH <strong id="count-num">13</strong> DECLASSIFIED ASSETS
+      </p>
     </div>
 
-    <div class="results-wrapper">
-        <div class="results-header">
-            <p class="results-count" id="results-count">
-                ENTER A QUERY TO SEARCH <span id="count-num">6</span> DECLASSIFIED ASSETS
-            </p>
-        </div>
+    <div id="default-state" class="state-box">
+      <div class="state-icon"><span class="state-icon-inner">🗂</span></div>
+      <p>TYPE TO BEGIN SEARCHING THE ARCHIVE</p>
+    </div>
 
-        <div id="default-state" class="pre-search">
-            <div class="pre-search-icon">
-                <span class="pre-search-icon-inner">🗂</span>
+    <div id="results-list" style="display:none;"></div>
+
+    <div id="no-results" class="state-box" style="display:none;">
+      <div class="state-icon"><span class="state-icon-inner">—</span></div>
+      <p>NO DECLASSIFIED ASSETS MATCH YOUR QUERY</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 INTERNAL SECURITY CONTROL // PUBLIC SEARCH INTERFACE</p>
+    <div class="class-badge">UNCLASSIFIED</div>
+  </footer>
+
+  <script>
+    const ASSETS = [
+      {
+        category: "Legal Documentation",
+        title: "Declaration of Establishment",
+        desc: "The foundational document of the Legiona community. The original mandate that outlined the sovereignty and unity of the Legiona sectors.",
+        link: "https://faizzzlol.github.io/thelol/gov/Declaration_of_Establishment_TLIO.pdf",
+        linkText: "VIEW PDF",
+        tags: ["declaration establishment tlio", "legal", "sovereignty", "legiona"]
+      },
+      {
+        category: "Historical File",
+        title: "Origin: The Sus Squad",
+        desc: "Details regarding the pre-ISC volunteer unit and their role during the 2025 terror attacks.",
+        link: "/thelol/gov/isc/national#timeline",
+        linkText: "READ HISTORY",
+        tags: ["sus squad history origin", "grassroots", "defense", "unit", "history"]
+      },
+      {
+        category: "Mission Brief",
+        title: "Operation: Skyxion Shield",
+        desc: "A specialized drone protocol deployed in Skyxion Center for territory protection.",
+        link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2024-03-09 (5).png",
+        linkText: "VIEW BRIEF",
+        tags: ["operation skyxion shield mission", "operation", "drones", "protection", "mission"]
+      },
+      {
+        category: "Agency Update",
+        title: "TLIO Reclassification",
+        desc: "Documentation regarding the rebranding of The Legend of Legiona Intelligence Organization to ISC.",
+        link: "/thelol/gov/isc/national#evolution",
+        linkText: "VIEW UPDATE",
+        tags: ["tlio integration rebranding", "tlio", "isc", "reclassification", "rebrand"]
+      },
+      {
+        category: "Incident Report",
+        title: "The First Unknown Attacks in The LoL City",
+        desc: "The small explosion was reported by The LoL people in The LoL City. Initial ISC response documentation.",
+        link: "/thelol/gov/isc/assets/publics/TLC_ATTACKS/2023-05-11 (3).png",
+        linkText: "VIEW IMAGE",
+        tags: ["the lol city attacks", "explosion", "attack", "incident", "city", "the lol"]
+      },
+      {
+        category: "Incident Report",
+        title: "The LoL Sign Was Bombed",
+        desc: "The shocking explosion was reported by Former The LoL President during the conflict in The LoL City.",
+        link: "/thelol/gov/isc/assets/publics/TLC_ATTACKS/2023-05-12 (2).png",
+        linkText: "VIEW IMAGE",
+        tags: ["the lol city attacks", "bombing", "attack", "president", "conflict", "the lol"]
+      },
+      {
+        category: "OPERATION",
+        title: "Safety Operation Record: 2023-03-03",
+        desc: "A field image captured during a safety operation, documenting an ████████ and ████████████ joining the mission together.",
+        link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2023-03-03 (6).png",
+        linkText: "VIEW IMAGE",
+        tags: ["operation", "safety-ops", "classified", "image"]
+      },
+      {
+        category: "OPERATION",
+        title: "Field Reconnaissance: Unit-█████",
+        desc: "Classified visual record of a clandestine operation within the Skyxion sector. Details remain restricted to Level 5 clearance.",
+        link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2023-05-11 (1).png",
+        linkText: "VIEW IMAGE",
+        tags: ["operation", "redacted", "skyxion", "classified"]
+      },
+      {
+        category: "OPERATION",
+        title: "Infrastructure Infiltration: 2023-05-11",
+        desc: "Surveillance log documenting the night-phase deployment of specialized assets. All mission specifics have been expunged from the public record.",
+        link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2023-05-11 (2).png",
+        linkText: "VIEW IMAGE",
+        tags: ["operation", "night-ops", "internal-security", "redacted"]
+      },
+      {
+        category: "ATTACK",
+        title: "TLCC Twin Towers: Hub Compromise",
+        desc: "Post-incident documentation of The LoL Convention Center (TLCC). Evidence of the UltraX-█████ infiltration is present, though the operative's identity remains classified.",
+        link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/IMG-20230530-WA0004.jpg",
+        linkText: "VIEW IMAGE",
+        tags: ["attack", "tlcc", "commercial-hub", "sabotage"]
+      },
+      {
+        category: "ATTACK",
+        title: "TLCC Twin Towers: Residential Audit",
+        desc: "Visual log from the residential and hotel levels of the TLCC following the 2023-05-30 event. Structural tampering and unauthorized access documented.",
+        link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/IMG-20230530-WA0005.jpg",
+        linkText: "VIEW IMAGE",
+        tags: ["attack", "tlcc", "residential", "redacted"]
+      },
+      {
+        category: "HISTORY",
+        title: "Neverland Protocol: Unit-█████ Origins",
+        desc: "Classified archival footage from the Neverland Era (2020). Documents early experimental redstone testing and biological containment procedures.",
+        link: "/thelol/gov/isc/assets/publics/LEGACY_RECORDS/WhatsApp Image 2026-03-04 at 2.12.54 AM (1).jpeg",
+        linkText: "VIEW RECORD",
+        tags: ["neverland", "pre-skyxion", "legacy", "origins"]
+      },
+      {
+        category: "HISTORY",
+        title: "Legacy Tactical Loadout: Operation Flowey",
+        desc: "An archived visual from the pre-Skyxion era documenting Unit-█████ in full tactical gear. One of the few surviving records of the operative's early combat efficiency.",
+        link: "/thelol/gov/isc/assets/publics/LEGACY_RECORDS/WhatsApp Image 2026-03-04 at 2.12.54 AM.jpg",
+        linkText: "VIEW RECORD",
+        tags: ["legacy", "tactical", "unauthorised", "pre-skyxion"]
+      }
+    ];
+
+    document.getElementById('total-count').textContent = ASSETS.length;
+    document.getElementById('count-num').textContent   = ASSETS.length;
+
+    function setQuery(q) {
+      document.getElementById('archive-search').value = q;
+      filterResults();
+    }
+
+    function filterResults() {
+      const q    = document.getElementById('archive-search').value.toLowerCase().trim();
+      const list = document.getElementById('results-list');
+      const none = document.getElementById('no-results');
+      const def  = document.getElementById('default-state');
+      const cnt  = document.getElementById('results-count');
+
+      if (!q) {
+        def.style.display   = 'flex';
+        list.style.display  = 'none';
+        none.style.display  = 'none';
+        cnt.innerHTML = `ENTER A QUERY TO SEARCH <strong>${ASSETS.length}</strong> DECLASSIFIED ASSETS`;
+        return;
+      }
+
+      def.style.display = 'none';
+
+      const filtered = ASSETS.filter(a =>
+        a.title.toLowerCase().includes(q) ||
+        a.desc.toLowerCase().includes(q) ||
+        a.category.toLowerCase().includes(q) ||
+        a.tags.some(t => t.toLowerCase().includes(q))
+      );
+
+      if (!filtered.length) {
+        list.style.display = 'none';
+        none.style.display = 'flex';
+        cnt.innerHTML = `SHOWING <strong>0</strong> RESULTS FOR "${q.toUpperCase()}"`;
+        return;
+      }
+
+      none.style.display = 'none';
+      list.style.display = 'block';
+      cnt.innerHTML = `SHOWING <strong>${filtered.length}</strong> RESULT${filtered.length !== 1 ? 'S' : ''} FOR "${q.toUpperCase()}"`;
+
+      const groups = {};
+      filtered.forEach(a => {
+        if (!groups[a.category]) groups[a.category] = [];
+        groups[a.category].push(a);
+      });
+
+      list.innerHTML = '';
+      let delay = 0;
+      Object.entries(groups).forEach(([cat, items]) => {
+        const group = document.createElement('div');
+        group.className = 'cat-group';
+        group.innerHTML = `<p class="cat-label">${cat}</p>`;
+
+        items.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'result-card card-animate';
+          card.style.animationDelay = `${delay * 0.055}s`;
+          card.innerHTML = `
+            <div class="card-body">
+              <span class="card-tag">${item.category}</span>
+              <h3>${item.title}</h3>
+              <p>${item.desc}</p>
             </div>
-            <p>TYPE TO BEGIN SEARCHING THE ARCHIVE</p>
-        </div>
+            <a href="${item.link}" class="result-link" ${item.link.startsWith('http') ? 'target="_blank"' : ''}>
+              ${item.linkText} →
+            </a>
+          `;
+          group.appendChild(card);
+          delay++;
+        });
 
-        <div id="results-list" style="display:none;"></div>
-
-        <div id="no-results">
-            <div class="no-icon">NO_MATCH</div>
-            <p>No declassified assets match your query</p>
-        </div>
-    </div>
-
-    <footer>
-        <p>© 2026 INTERNAL SECURITY CONTROL // PUBLIC SEARCH INTERFACE</p>
-        <div class="classification-badge">UNCLASSIFIED</div>
-    </footer>
-
-    <script>
-        const ASSETS = [
-            {
-                category: "Legal Documentation",
-                title: "Declaration of Establishment",
-                desc: "The foundational document of the Legiona community. The original mandate that outlined the sovereignty and unity of the Legiona sectors.",
-                link: "https://faizzzlol.github.io/thelol/gov/Declaration_of_Establishment_TLIO.pdf",
-                linkText: "VIEW PDF",
-                tags: ["Declaration of Establishment TLIO", "legal", "sovereignty", "legiona"]
-            },
-            {
-                category: "Historical File",
-                title: "Origin: The Sus Squad",
-                desc: "Details regarding the pre-ISC volunteer unit and their role during the 2025 terror attacks.",
-                link: "/thelol/gov/isc/national#history",
-                linkText: "READ HISTORY",
-                tags: ["Sus Squad History Origin", "grassroots", "defense", "unit", "history"]
-            },
-            {
-                category: "Mission Brief",
-                title: "Operation: Skyxion Shield",
-                desc: "A specialized drone protocol deployed in Skyxion Center for territory protection.",
-                link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2024-03-09 (5).png",
-                linkText: "VIEW BRIEF",
-                tags: ["Operation Skyxion Shield Mission", "operation", "drones", "protection", "mission"]
-            },
-            {
-                category: "Agency Update",
-                title: "TLIO Reclassification",
-                desc: "Documentation regarding the rebranding of The Legend of Legiona Intelligence Organization to ISC.",
-                link: "/thelol/gov/isc/national#declassified",
-                linkText: "VIEW UPDATE",
-                tags: ["TLIO Integration Rebranding", "tlio", "isc", "reclassification", "rebrand"]
-            },
-            {
-                category: "Incident Report",
-                title: "The First Unknown Attacks in The LoL City",
-                desc: "The small explosion was reported by The LoL people in The LoL City. Initial ISC response documentation.",
-                link: "/thelol/gov/isc/assets/publics/TLC_ATTACKS/2023-05-11 (3).png",
-                linkText: "VIEW IMAGE",
-                tags: ["The LoL City Attacks", "explosion", "attack", "incident", "city", "the lol"]
-            },
-            {
-                category: "Incident Report",
-                title: "The LoL Sign Was Bombed",
-                desc: "The shocking explosion was reported by Former The LoL President during the conflict in The LoL City.",
-                link: "/thelol/gov/isc/assets/publics/TLC_ATTACKS/2023-05-12 (2).png",
-                linkText: "VIEW IMAGE",
-                tags: ["The LoL City Attacks", "bombing", "attack", "president", "conflict", "the lol"]
-            },
-            {
-                category: "OPERATION",
-                title: "Safety Operation Record: 2023-03-03",
-                desc: "A field image captured during a safety operation, documenting an ████████ and ████████████ joining the mission together.",
-                link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2023-03-03 (6).png",
-                linkText: "VIEW IMAGE",
-                tags: ["OPERATION", "SAFETY-OPS", "CLASSIFIED", "IMAGE"]
-            },
-            {
-                category: "OPERATION",
-                title: "Field Reconnaissance: Unit-█████",
-                desc: "Classified visual record of a clandestine operation within the Skyxion: Ragnarok sector. Details regarding the subject's involvement in the UltraX-█████ incident remain restricted to Level 5 clearance.",
-                link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2023-05-11 (1).png",
-                linkText: "VIEW IMAGE",
-                tags: ["OPERATION", "REDACTED", "SKYXION", "CLASSIFIED"]
-            },
-            {
-                category: "OPERATION",
-                title: "Infrastructure Infiltration: 2023-05-11",
-                desc: "Surveillance log documenting the night-phase deployment of specialized assets. All mission specifics and operative IDs have been expunged from the public record to maintain sector stability.",
-                link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/2023-05-11 (2).png",
-                linkText: "VIEW IMAGE",
-                tags: ["OPERATION", "NIGHT-OPS", "INTERNAL-SECURITY", "REDACTED"]
-            },
-            {
-                category: "ATTACK",
-                title: "TLCC Twin Towers: Hub Compromise",
-                desc: "Post-incident documentation of The LoL Convention Center (TLCC) commercial hub. The record shows environmental sculk and obsidian barriers placed during the systemic disruption of the twin tower complex. Evidence of the UltraX-█████ infiltration is present, though the operative's identity remains classified.",
-                link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/IMG-20230530-WA0004.jpg",
-                linkText: "VIEW IMAGE",
-                tags: ["ATTACK", "TLCC", "COMMERCIAL-HUB", "SABOTAGE"]
-            },
-            {
-                category: "ATTACK",
-                title: "TLCC Twin Towers: Residential Audit",
-                desc: "Visual log from the residential and hotel levels of the TLCC twin towers following the 2023-05-30 event. This sector, designed for high-density living and international visitors, shows structural tampering and unauthorized access. All details regarding the sabotage of the UltraX2020 systems have been ████████ per ISC protocol.",
-                link: "/thelol/gov/isc/assets/publics/SAFETY-OPS/IMG-20230530-WA0005.jpg",
-                linkText: "VIEW IMAGE",
-                tags: ["ATTACK", "TLCC", "RESIDENTIAL", "REDACTED"]
-            },
-            {
-                category: "HISTORY",
-                title: "Neverland Protocol: Unit-█████ Origins",
-                desc: "Classified archival footage from the Neverland Era (2020). This record documents early experimental redstone testing and biological containment procedures. This file is maintained for historical context regarding the evolution of current tactical maneuvers.",
-                link: "/thelol/gov/isc/assets/publics/LEGACY_RECORDS/WhatsApp Image 2026-03-04 at 2.12.54 AM (1).jpeg",
-                linkText: "VIEW ANCIENT RECORD",
-                tags: ["NEVERLAND", "PRE-SKYXION", "LEGACY", "ORIGINS"]
-            },
-            {
-                category: "HISTORY",
-                title: "Legacy Tactical Loadout: Operation Flowey",
-                desc: "An archived visual from the pre-Skyxion era documenting Unit-█████ in full tactical gear. Noticeable inclusion of high-value assets and specialized weaponry. This image remains one of the few surviving records of the operative's early combat efficiency before the 2025 systemic shifts.",
-                link: "/thelol/gov/isc/assets/publics/LEGACY_RECORDS/WhatsApp Image 2026-03-04 at 2.12.54 AM.jpg",
-                linkText: "VIEW CLASSIFIED GEAR",
-                tags: ["LEGACY", "TACTICAL", "UNAUTHORISED", "PRE-SKYXION"]
-            }
-        ];
-
-        document.getElementById('total-count').textContent = ASSETS.length;
-        document.getElementById('count-num').textContent = ASSETS.length;
-
-        function setQuery(q) {
-            document.getElementById('archive-search').value = q;
-            filterResults();
-        }
-
-        function filterResults() {
-            const query = document.getElementById('archive-search').value.toLowerCase().trim();
-            const resultsList = document.getElementById('results-list');
-            const noResults = document.getElementById('no-results');
-            const defaultState = document.getElementById('default-state');
-            const countEl = document.getElementById('results-count');
-
-            if (query.length === 0) {
-                defaultState.style.display = 'flex';
-                resultsList.style.display = 'none';
-                noResults.style.display = 'none';
-                countEl.innerHTML = `ENTER A QUERY TO SEARCH <span id="count-num">${ASSETS.length}</span> DECLASSIFIED ASSETS`;
-                return;
-            }
-
-            defaultState.style.display = 'none';
-
-            const filtered = ASSETS.filter(a =>
-                a.title.toLowerCase().includes(query) ||
-                a.desc.toLowerCase().includes(query) ||
-                a.category.toLowerCase().includes(query) ||
-                a.tags.some(t => t.toLowerCase().includes(query))
-            );
-
-            if (filtered.length === 0) {
-                resultsList.style.display = 'none';
-                noResults.style.display = 'block';
-                countEl.innerHTML = `SHOWING <span>0</span> RESULTS FOR "${query.toUpperCase()}"`;
-                return;
-            }
-
-            noResults.style.display = 'none';
-            resultsList.style.display = 'block';
-            countEl.innerHTML = `SHOWING <span>${filtered.length}</span> RESULT${filtered.length !== 1 ? 'S' : ''} FOR "${query.toUpperCase()}"`;
-
-            const groups = {};
-            filtered.forEach(a => {
-                if (!groups[a.category]) groups[a.category] = [];
-                groups[a.category].push(a);
-            });
-
-            resultsList.innerHTML = '';
-            let delay = 0;
-            Object.entries(groups).forEach(([cat, items]) => {
-                const group = document.createElement('div');
-                group.className = 'category-group';
-                group.innerHTML = `<p class="category-label">${cat}</p>`;
-
-                items.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'result-card card-animate';
-                    card.style.animationDelay = `${delay * 0.06}s`;
-                    card.innerHTML = `
-                        <div class="card-body">
-                            <span class="card-tag">${item.category}</span>
-                            <h3>${item.title}</h3>
-                            <p>${item.desc}</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="${item.link}" class="result-link" ${item.link.startsWith('http') ? 'target="_blank"' : ''}>${item.linkText} →</a>
-                        </div>
-                    `;
-                    group.appendChild(card);
-                    delay++;
-                });
-
-                resultsList.appendChild(group);
-            });
-        }
-    </script>
-
+        list.appendChild(group);
+      });
+    }
+  </script>
 </body>
 </html>
