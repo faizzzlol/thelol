@@ -1,868 +1,689 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISC PORTAL | The Legend of Legiona</title>
-    <link rel="icon" type="image/png" href="ISC_LOGO.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #c6a664;
-            --gold-dim: rgba(198,166,100,0.12);
-            --gold-glow: rgba(198,166,100,0.06);
-            --bg: #0e0d0b;
-            --bg2: #121110;
-            --bg3: #161412;
-            --surface: #1a1815;
-            --surface2: #1e1c18;
-            --border: rgba(198,166,100,0.18);
-            --border-dim: rgba(255,255,255,0.06);
-            --text: #e8e0d0;
-            --text-muted: #7a7060;
-            --text-dim: #3a342c;
-            --green: #4a8c5c;
-            --red-text: #8b4040;
-            --red-border: rgba(139,64,64,0.3);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-touch-callout: none; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Barlow', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: filter 0.4s ease;
-        }
-
-        /* Grain */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.6;
-        }
-
-        /* Watermark */
-        body::after {
-            content: "ISC CONFIDENTIAL";
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 5rem;
-            color: rgba(198,166,100,0.025);
-            pointer-events: none;
-            z-index: 9997;
-            white-space: nowrap;
-            font-family: 'Fira Code', monospace;
-            letter-spacing: 8px;
-        }
-
-        body.security-blur { filter: blur(25px); }
-        @media print { body { display: none !important; } }
-
-        /* ── LOGIN OVERLAY ── */
-        #login-overlay {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s ease;
-        }
-
-        .login-bg-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(198,166,100,0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(198,166,100,0.035) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 60% 60% at center, black 0%, transparent 100%);
-        }
-
-        .login-glow {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(198,166,100,0.07) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .login-box {
-            position: relative;
-            text-align: center;
-            max-width: 420px;
-            width: 90%;
-            padding: 3.5rem;
-            background: var(--surface);
-            border: 1px solid var(--border-dim);
-            animation: fadeUp 0.6s ease both;
-        }
-
-        .login-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-
-        .login-box img {
-            height: 80px;
-            margin-bottom: 2rem;
-            opacity: 0.85;
-            filter: drop-shadow(0 0 20px rgba(198,166,100,0.2));
-        }
-
-        .login-eyebrow {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: var(--gold);
-            opacity: 0.7;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-box h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: var(--text);
-            margin-bottom: 2rem;
-        }
-
-        .input-wrap {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-
-        .input-wrap::before {
-            content: '//';
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            pointer-events: none;
-        }
-
-        input[type="password"] {
-            width: 100%;
-            padding: 14px 14px 14px 38px;
-            border: 1px solid var(--border-dim);
-            background: var(--bg3);
-            color: var(--text);
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            text-align: left;
-            outline: none;
-            letter-spacing: 3px;
-            transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
-        }
-
-        input[type="password"]::placeholder {
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            font-size: 0.7rem;
-        }
-
-        input[type="password"]:focus {
-            border-color: var(--border);
-            background: var(--surface2);
-            box-shadow: 0 0 0 3px rgba(198,166,100,0.05);
-        }
-
-        .login-btn {
-            width: 100%;
-            margin-top: 4px;
-            padding: 13px;
-            border: 1px solid var(--border);
-            background: none;
-            color: var(--gold);
-            cursor: pointer;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 3px;
-            transition: background 0.25s, border-color 0.25s;
-        }
-
-        .login-btn:hover:not(:disabled) {
-            background: var(--gold-dim);
-            border-color: var(--gold);
-        }
-
-        .login-btn:disabled {
-            border-color: var(--text-dim);
-            color: var(--text-dim);
-            cursor: not-allowed;
-        }
-
-        #error-msg {
-            color: var(--red-text);
-            font-size: 0.65rem;
-            font-family: 'Fira Code', monospace;
-            margin-top: 1rem;
-            letter-spacing: 1px;
-            display: none;
-            padding: 8px 12px;
-            border: 1px solid var(--red-border);
-            background: rgba(139,64,64,0.06);
-        }
-
-        .login-footer-note {
-            margin-top: 2rem;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-        }
-
-        /* ── MAIN CONTENT ── */
-        #main-content { display: none; }
-
-        /* ── HEADER ── */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 5%;
-            background: rgba(14,13,11,0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .brand img { height: 36px; opacity: 0.9; }
-
-        .brand-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .brand-text span:first-child {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 4px;
-            color: var(--gold);
-        }
-
-        .brand-text span:last-child {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.52rem;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-        }
-
-        .header-center {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .header-center a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            padding: 6px 14px;
-            transition: color 0.2s;
-        }
-
-        .header-center a:hover { color: var(--gold); }
-
-        .btn-exit {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 1.5px;
-            color: var(--red-text);
-            text-decoration: none;
-            border: 1px solid var(--red-border);
-            padding: 7px 16px;
-            transition: background 0.2s;
-        }
-
-        .btn-exit:hover { background: rgba(139,64,64,0.1); }
-
-        /* ── MAIN LAYOUT ── */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 5% 5rem;
-        }
-
-        /* Hero */
-        .hero {
-            margin-bottom: 3.5rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--border-dim);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .hero-left {}
-
-        .hero-eyebrow {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            color: var(--gold);
-            opacity: 0.7;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .hero-eyebrow::before {
-            content: '';
-            width: 24px; height: 1px;
-            background: var(--gold);
-            opacity: 0.5;
-        }
-
-        .hero h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            font-weight: 400;
-            color: var(--text);
-            line-height: 1.2;
-        }
-
-        .hero h2 em {
-            font-style: italic;
-            color: var(--gold);
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 0.6rem;
-            font-weight: 300;
-        }
-
-        .hero-right {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .live-clock {
-            font-family: 'Fira Code', monospace;
-            font-size: 1.5rem;
-            color: var(--text);
-            letter-spacing: 2px;
-        }
-
-        .clock-label {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 3px;
-            color: var(--text-dim);
-            margin-top: 4px;
-        }
-
-        /* Grid */
-        .dash-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        /* Panel */
-        .panel {
-            background: var(--surface);
-            border: 1px solid var(--border-dim);
-            padding: 1.8rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .panel::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, var(--gold), transparent);
-            opacity: 0.4;
-        }
-
-        .panel-header {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            opacity: 0.7;
-            margin-bottom: 1.6rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid var(--border-dim);
-        }
-
-        /* System Status */
-        .status-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            padding: 0.7rem 0;
-            border-bottom: 1px solid var(--border-dim);
-            color: var(--text-muted);
-        }
-
-        .status-row:last-child { border-bottom: none; }
-
-        .status-badge {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            padding: 3px 10px;
-            border: 1px solid;
-        }
-
-        .status-badge.online {
-            color: #5aaa72;
-            border-color: rgba(90,170,114,0.3);
-            background: rgba(90,170,114,0.07);
-        }
-
-        .status-badge.offline {
-            color: var(--red-text);
-            border-color: var(--red-border);
-            background: rgba(139,64,64,0.06);
-        }
-
-        /* Personnel */
-        .person {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-dim);
-        }
-
-        .person:last-child { border-bottom: none; }
-
-        .person-info strong {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: var(--text);
-            margin-bottom: 3px;
-        }
-
-        .person-info small {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-        }
-
-        .clearance {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            padding: 4px 12px;
-            border: 1px solid var(--border);
-            color: var(--gold);
-            background: var(--gold-glow);
-        }
-
-        /* Logs */
-        .log-entry {
-            padding: 1.2rem 0;
-            border-bottom: 1px solid var(--border-dim);
-        }
-
-        .log-entry:last-child { border-bottom: none; }
-
-        .log-id {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            opacity: 0.6;
-            margin-bottom: 0.4rem;
-            display: block;
-        }
-
-        .log-title {
-            font-family: 'Barlow', sans-serif;
-            font-weight: 500;
-            font-size: 0.92rem;
-            display: block;
-            color: var(--text);
-            margin-bottom: 0.3rem;
-        }
-
-        .log-body {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .log-tag {
-            display: inline-block;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 1.5px;
-            padding: 2px 8px;
-            border: 1px solid var(--border-dim);
-            color: var(--text-muted);
-            margin-top: 0.6rem;
-        }
-
-        /* Full-width panel */
-        .panel.full {
-            grid-column: 1 / -1;
-        }
-
-        .threat-bar {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 0.9rem 1.2rem;
-            background: var(--bg3);
-            border: 1px solid var(--border-dim);
-            margin-bottom: 0.5rem;
-        }
-
-        .threat-bar:last-child { margin-bottom: 0; }
-
-        .threat-level {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            padding: 3px 10px;
-            border: 1px solid;
-            flex-shrink: 0;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .threat-level.low { color: #5aaa72; border-color: rgba(90,170,114,0.3); }
-        .threat-level.med { color: #c6a664; border-color: rgba(198,166,100,0.3); }
-        .threat-level.high { color: var(--red-text); border-color: var(--red-border); }
-
-        .threat-name {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text);
-            flex: 1;
-        }
-
-        .threat-sector {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-        }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border-dim);
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg);
-        }
-
-        footer p {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            color: var(--text-dim);
-        }
-
-        .session-tag {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            border: 1px solid var(--border);
-            padding: 4px 12px;
-        }
-
-        /* Animations */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(18px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.2; }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(18px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        @media (max-width: 768px) {
-            .dash-grid { grid-template-columns: 1fr; }
-            .panel.full { grid-column: 1; }
-            .hero { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-            header { flex-wrap: wrap; gap: 10px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISC Internal Portal</title>
+  <link rel="icon" type="image/png" href="ISC_LOGO.png">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:        #c6a664;
+      --gold-dim:    rgba(198,166,100,0.1);
+      --gold-border: rgba(198,166,100,0.22);
+      --bg:          #090807;
+      --surface:     #111009;
+      --surface2:    #161412;
+      --border:      rgba(255,255,255,0.07);
+      --text:        #ddd5c5;
+      --muted:       #5a5040;
+      --dim:         #28221a;
+      --red:         #8b4040;
+      --red-dim:     rgba(139,64,64,0.12);
+      --red-border:  rgba(139,64,64,0.24);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    @media print { body { display: none !important; } }
+
+    /* ── LOGIN OVERLAY ── */
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease;
+    }
+
+    .login-inner {
+      width: 100%;
+      max-width: 360px;
+      padding: 0 28px;
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 52px;
+    }
+
+    .login-logo img { height: 28px; opacity: 0.8; }
+
+    .login-logo span {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+    }
+
+    .login-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .login-sub {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    .inp {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 3px;
+      outline: none;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+
+    .inp::placeholder {
+      color: var(--dim);
+      letter-spacing: 2px;
+      font-size: 0.62rem;
+    }
+
+    .inp:focus { border-color: var(--gold-border); }
+
+    .auth-btn {
+      width: 100%;
+      padding: 13px;
+      background: none;
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .auth-btn:hover:not(:disabled) { background: var(--gold-dim); }
+
+    .auth-btn:disabled {
+      border-color: var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    #error-msg {
+      display: none;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 1.5px;
+      color: var(--red);
+      padding: 10px 14px;
+      border: 1px solid var(--red-border);
+      background: var(--red-dim);
+      margin-top: 8px;
+    }
+
+    .login-note {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 2px;
+      color: var(--dim);
+      margin-top: 32px;
+      line-height: 1.9;
+    }
+
+    /* ── MAIN CONTENT (hidden until auth) ── */
+    #main-content { display: none; }
+
+    /* ── PORTAL NAV ── */
+    .portal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 64px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(9,8,7,0.96);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+    }
+
+    .pnav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .pnav-brand img { height: 24px; opacity: 0.82; }
+
+    .pnav-brand span {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+    }
+
+    .pnav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .pnav-links a {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .pnav-links a:hover { color: var(--text); }
+
+    .exit-link {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--red);
+      text-decoration: none;
+      border: 1px solid var(--red-border);
+      padding: 6px 14px;
+      transition: background 0.2s;
+    }
+
+    .exit-link:hover { background: var(--red-dim); }
+
+    /* ── DASHBOARD ── */
+    .dash-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 64px 80px;
+    }
+
+    .dash-hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+
+    .dash-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    .dash-title {
+      font-family: 'Barlow', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .dash-title em {
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 300;
+    }
+
+    .dash-sub {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: 8px;
+    }
+
+    .clock-wrap { text-align: right; }
+
+    .clock-time {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.9rem;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 2px;
+    }
+
+    .clock-lbl {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 2.5px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── GRID ── */
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      padding: 28px;
+      background: var(--surface);
+    }
+
+    .panel-hdr {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .panel-tag { color: var(--dim); font-size: 0.54rem; }
+
+    /* Status */
+    .st-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    .st-row:last-child { border-bottom: none; }
+
+    .st-tag {
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      padding: 3px 10px;
+      border: 1px solid;
+    }
+
+    .st-tag.on  { color: #5aaa72; border-color: rgba(90,170,114,0.3); background: rgba(90,170,114,0.07); }
+    .st-tag.off { color: var(--red); border-color: var(--red-border); background: var(--red-dim); }
+
+    /* Personnel */
+    .person-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .person-row:last-child { border-bottom: none; }
+
+    .person-name {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .person-role {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+    .clearance {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+    }
+
+    /* Logs */
+    .log-entry {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .log-entry:last-child { border-bottom: none; }
+
+    .log-id {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      opacity: 0.65;
+      margin-bottom: 7px;
+    }
+
+    .log-title {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .log-body {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    .log-tag {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 1.5px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* Threats */
+    .threat-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .threat-row:last-child { border-bottom: none; }
+
+    .t-level {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 2px;
+      padding: 3px 10px;
+      border: 1px solid;
+      flex-shrink: 0;
+      min-width: 64px;
+      text-align: center;
+    }
+
+    .t-level.low  { color: #5aaa72; border-color: rgba(90,170,114,0.3); }
+    .t-level.med  { color: var(--gold); border-color: var(--gold-border); }
+    .t-level.high { color: var(--red); border-color: var(--red-border); }
+
+    .t-name   { flex: 1; font-size: 0.85rem; color: var(--text); }
+    .t-sector {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    .portal-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .portal-footer p {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+    .session-pill {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+      padding: 4px 12px;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 768px) {
+      .portal-nav  { padding: 16px 24px; }
+      .pnav-links  { display: none; }
+      .dash-wrap   { padding: 36px 24px 56px; }
+      .dash-grid   { grid-template-columns: 1fr; }
+      .dash-hero   { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .portal-footer { padding: 16px 24px; flex-direction: column; gap: 10px; }
+    }
+  </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <!-- LOGIN OVERLAY -->
-    <div id="login-overlay">
-        <div class="login-bg-grid"></div>
-        <div class="login-glow"></div>
-        <div class="login-box">
-            <img src="ISC_LOGO.png" alt="ISC Logo">
-            <div class="login-eyebrow">INTERNAL SECURITY CONTROL</div>
-            <h2>Authorization<br>Required</h2>
-            <div class="input-wrap">
-                <input
-                    type="password"
-                    id="passcode"
-                    placeholder="ENTER CLEARANCE CODE"
-                    onkeypress="handleEnter(event)"
-                    autocomplete="off"
-                >
-            </div>
-            <button class="login-btn" id="auth-btn" onclick="checkCode()">AUTHENTICATE</button>
-            <p id="error-msg">ACCESS DENIED.</p>
-            <p class="login-footer-note">UNAUTHORIZED ACCESS IS A VIOLATION OF ISC DIRECTIVE 01</p>
+  <!-- ── LOGIN OVERLAY ── -->
+  <div id="login-overlay">
+    <div class="login-inner">
+      <div class="login-logo">
+        <img src="ISC_LOGO.png" alt="ISC">
+        <span>INTERNAL SECURITY CONTROL</span>
+      </div>
+      <div class="login-title">Authorization Required</div>
+      <div class="login-sub">ISC INTERNAL PORTAL // RESTRICTED ACCESS</div>
+      <input
+        type="password"
+        class="inp"
+        id="passcode"
+        placeholder="ENTER CLEARANCE CODE"
+        onkeypress="if(event.key==='Enter') auth()"
+        autocomplete="off"
+      >
+      <button class="auth-btn" id="auth-btn" onclick="auth()">AUTHENTICATE →</button>
+      <div id="error-msg"></div>
+      <p class="login-note">
+        UNAUTHORIZED ACCESS VIOLATES ISC DIRECTIVE 01<br>
+        ALL SESSIONS ARE LOGGED AND MONITORED
+      </p>
+    </div>
+  </div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div id="main-content">
+
+    <nav class="portal-nav">
+      <div class="pnav-brand">
+        <img src="ISC_LOGO.png" alt="ISC">
+        <span>ISC // INTERNAL PORTAL</span>
+      </div>
+      <div class="pnav-links">
+        <a href="#status">SYSTEM</a>
+        <a href="#personnel">PERSONNEL</a>
+        <a href="#logs">LOGS</a>
+        <a href="#threats">THREATS</a>
+      </div>
+      <a href="/thelol/gov/isc/" class="exit-link">EXIT →</a>
+    </nav>
+
+    <div class="dash-wrap">
+
+      <div class="dash-hero reveal">
+        <div>
+          <div class="dash-label">CLEARANCE_GRANTED // PORTAL_ACTIVE</div>
+          <h2 class="dash-title">Sovereignty Through <em>Oversight.</em></h2>
+          <p class="dash-sub">Official intelligence branch — The Legend of Legiona.</p>
         </div>
+        <div class="clock-wrap">
+          <div class="clock-time" id="clock">--:--:--</div>
+          <div class="clock-lbl">UTC // LIVE</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+
+        <div class="panel reveal" id="status">
+          <div class="panel-hdr">
+            <span>SYSTEM_CORE</span>
+            <span class="panel-tag">SXR_ERA_2026</span>
+          </div>
+          <div class="st-row"><span>SKYXION_ALTAER</span><span class="st-tag off">OFFLINE</span></div>
+          <div class="st-row"><span>ISC_ENCRYPTION</span><span class="st-tag on">ACTIVE</span></div>
+          <div class="st-row"><span>ARCHIVE_SYNC</span><span class="st-tag on">SYNCED</span></div>
+          <div class="st-row"><span>BORDER_MONITORING</span><span class="st-tag on">RUNNING</span></div>
+        </div>
+
+        <div class="panel reveal" id="personnel">
+          <div class="panel-hdr">
+            <span>ACTIVE_OPERATIVES</span>
+            <span class="panel-tag">2 ACTIVE</span>
+          </div>
+          <div class="person-row">
+            <div>
+              <div class="person-name">Director of Intel</div>
+              <div class="person-role">OVERSIGHT // COMMAND</div>
+            </div>
+            <div class="clearance">L-0</div>
+          </div>
+          <div class="person-row">
+            <div>
+              <div class="person-name">Lead Archivist</div>
+              <div class="person-role">LORE PRESERVATION</div>
+            </div>
+            <div class="clearance">L-1</div>
+          </div>
+        </div>
+
+        <div class="panel reveal" id="logs">
+          <div class="panel-hdr">
+            <span>CLASSIFIED_LOGS</span>
+            <span class="panel-tag">2 ENTRIES</span>
+          </div>
+          <div class="log-entry">
+            <div class="log-id">LOG-001-GEN</div>
+            <div class="log-title">The Genesis Protocol</div>
+            <p class="log-body">Initial unit formation data. Core bonds established between founding members of the pre-ISC unit.</p>
+            <span class="log-tag">ORIGIN // HISTORICAL</span>
+          </div>
+          <div class="log-entry">
+            <div class="log-id">LOG-030-EQA</div>
+            <div class="log-title">Directive: Eternal Equality</div>
+            <p class="log-body">Monitoring centralized power spikes for the Egalitarian Model. Post-UltraX2020 governance oversight.</p>
+            <span class="log-tag">DIRECTIVE // ONGOING</span>
+          </div>
+        </div>
+
+        <div class="panel reveal" id="threats">
+          <div class="panel-hdr">
+            <span>THREAT_MONITOR</span>
+            <span class="panel-tag">SXR ERA</span>
+          </div>
+          <div class="threat-row">
+            <span class="t-level low">LOW</span>
+            <span class="t-name">Border Instability</span>
+            <span class="t-sector">OUTER</span>
+          </div>
+          <div class="threat-row">
+            <span class="t-level med">MED</span>
+            <span class="t-name">Unverified Faction Activity</span>
+            <span class="t-sector">CENTRAL</span>
+          </div>
+          <div class="threat-row">
+            <span class="t-level high">HIGH</span>
+            <span class="t-name">SKYXION_ALTAER Offline</span>
+            <span class="t-sector">SYSTEM</span>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main-content">
+    <footer class="portal-footer">
+      <p>© 2026 INTERNAL SECURITY CONTROL // THE LEGEND OF LEGIONA</p>
+      <div class="session-pill">SESSION: ACTIVE</div>
+    </footer>
 
-        <header>
-            <div class="brand">
-                <img src="ISC_LOGO.png" alt="ISC Logo">
-                <div class="brand-text">
-                    <span>ISC</span>
-                    <span>INTERNAL SECURITY CONTROL</span>
-                </div>
-            </div>
-            <div class="header-center">
-                <a href="#database">DATABASE</a>
-                <a href="#personnel">PERSONNEL</a>
-                <a href="#threats">THREATS</a>
-            </div>
-            <a href="/thelol/gov/isc/" class="btn-exit">EXIT TO MAIN_NET →</a>
-        </header>
+  </div>
 
-        <main>
+  <script>
+    let attempts = 0;
 
-            <!-- HERO -->
-            <section class="hero reveal">
-                <div class="hero-left">
-                    <div class="hero-eyebrow">CLEARANCE_GRANTED // PORTAL_ACTIVE</div>
-                    <h2>Sovereignty Through <em>Oversight.</em></h2>
-                    <p>Official intelligence branch of <strong>The Legend of Legiona.</strong></p>
-                </div>
-                <div class="hero-right">
-                    <div class="live-clock" id="clock">00:00:00</div>
-                    <div class="clock-label">UTC // LIVE</div>
-                </div>
-            </section>
+    function auth() {
+      const val = document.getElementById('passcode').value;
+      const err = document.getElementById('error-msg');
+      const btn = document.getElementById('auth-btn');
 
-            <div class="dash-grid">
-
-                <!-- SYSTEM STATUS -->
-                <div class="panel reveal">
-                    <div class="panel-header">
-                        <span>[ SYSTEM_CORE ]</span>
-                        <span style="opacity:0.5; font-size:0.58rem;">SXR_ERA_2026</span>
-                    </div>
-                    <div class="status-row">
-                        <span>SKYXION_ALTAER</span>
-                        <span class="status-badge offline">OFFLINE</span>
-                    </div>
-                    <div class="status-row">
-                        <span>ISC_ENCRYPTION</span>
-                        <span class="status-badge online">ACTIVE</span>
-                    </div>
-                    <div class="status-row">
-                        <span>ARCHIVE_SYNC</span>
-                        <span class="status-badge online">SYNCED</span>
-                    </div>
-                    <div class="status-row">
-                        <span>BORDER_MONITORING</span>
-                        <span class="status-badge online">RUNNING</span>
-                    </div>
-                </div>
-
-                <!-- PERSONNEL -->
-                <div class="panel reveal" id="personnel">
-                    <div class="panel-header">
-                        <span>[ ACTIVE_OPERATIVES ]</span>
-                        <span style="opacity:0.5; font-size:0.58rem;">2 ACTIVE</span>
-                    </div>
-                    <div class="person">
-                        <div class="person-info">
-                            <strong>Director of Intel</strong>
-                            <small>OVERSIGHT // COMMAND</small>
-                        </div>
-                        <div class="clearance">L-0</div>
-                    </div>
-                    <div class="person">
-                        <div class="person-info">
-                            <strong>Lead Archivist</strong>
-                            <small>LORE PRESERVATION</small>
-                        </div>
-                        <div class="clearance">L-1</div>
-                    </div>
-                </div>
-
-                <!-- CLASSIFIED LOGS -->
-                <div class="panel reveal" id="database">
-                    <div class="panel-header">
-                        <span>[ CLASSIFIED_LOGS ]</span>
-                        <span style="opacity:0.5; font-size:0.58rem;">2 ENTRIES</span>
-                    </div>
-                    <div class="log-entry">
-                        <span class="log-id">LOG-001-GEN</span>
-                        <span class="log-title">The Genesis Protocol</span>
-                        <p class="log-body">Initial unit formation data. Core bonds established between founding members of the pre-ISC unit.</p>
-                        <span class="log-tag">ORIGIN // HISTORICAL</span>
-                    </div>
-                    <div class="log-entry">
-                        <span class="log-id">LOG-030-EQA</span>
-                        <span class="log-title">Directive: Eternal Equality</span>
-                        <p class="log-body">Monitoring centralized power spikes for the Egalitarian Model. Post-UltraX2020 governance oversight.</p>
-                        <span class="log-tag">DIRECTIVE // ONGOING</span>
-                    </div>
-                </div>
-
-                <!-- THREAT MONITOR -->
-                <div class="panel reveal" id="threats">
-                    <div class="panel-header">
-                        <span>[ THREAT_MONITOR ]</span>
-                        <span style="opacity:0.5; font-size:0.58rem;">SXR ERA</span>
-                    </div>
-                    <div class="threat-bar">
-                        <span class="threat-level low">LOW</span>
-                        <span class="threat-name">Border Instability</span>
-                        <span class="threat-sector">OUTER_SECTOR</span>
-                    </div>
-                    <div class="threat-bar">
-                        <span class="threat-level med">MEDIUM</span>
-                        <span class="threat-name">Unverified Faction Activity</span>
-                        <span class="threat-sector">CENTRAL</span>
-                    </div>
-                    <div class="threat-bar">
-                        <span class="threat-level high">HIGH</span>
-                        <span class="threat-name">SKYXION_ALTAER Offline</span>
-                        <span class="threat-sector">SYSTEM</span>
-                    </div>
-                </div>
-
-            </div>
-        </main>
-
-        <footer>
-            <p>© 2026 INTERNAL SECURITY CONTROL // THE LEGEND OF LEGIONA</p>
-            <div class="session-tag" id="session-tag">SESSION: ACTIVE</div>
-        </footer>
-
-    </div>
-
-    <script>
-        let attempts = 0;
-
-        function checkCode() {
-            const input = document.getElementById('passcode').value;
-            const error = document.getElementById('error-msg');
-            const btn = document.getElementById('auth-btn');
-
-            if (input.toUpperCase() === "LEGIONA2026") {
-                const overlay = document.getElementById('login-overlay');
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    const content = document.getElementById('main-content');
-                    content.style.display = 'block';
-                    // Trigger reveal animations
-                    setTimeout(() => {
-                        document.querySelectorAll('.reveal').forEach((el, i) => {
-                            setTimeout(() => el.classList.add('visible'), i * 100);
-                        });
-                    }, 50);
-                }, 600);
-            } else {
-                attempts++;
-                error.style.display = 'block';
-                if (attempts >= 3) {
-                    btn.disabled = true;
-                    error.textContent = "SYSTEM LOCKED — COOLDOWN: 30s";
-                    let remaining = 30;
-                    const countdown = setInterval(() => {
-                        remaining--;
-                        error.textContent = `SYSTEM LOCKED — COOLDOWN: ${remaining}s`;
-                        if (remaining <= 0) {
-                            clearInterval(countdown);
-                            btn.disabled = false;
-                            attempts = 0;
-                            error.style.display = 'none';
-                        }
-                    }, 1000);
-                } else {
-                    error.textContent = `ACCESS DENIED — ${3 - attempts} ATTEMPT${3 - attempts !== 1 ? 'S' : ''} REMAINING`;
-                }
-                document.getElementById('passcode').value = '';
+      if (val.toUpperCase() === 'LEGIONA2026') {
+        const overlay = document.getElementById('login-overlay');
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          document.getElementById('main-content').style.display = 'block';
+          setTimeout(() => {
+            document.querySelectorAll('.reveal').forEach((el, i) => {
+              setTimeout(() => el.classList.add('visible'), i * 100);
+            });
+          }, 50);
+        }, 500);
+      } else {
+        attempts++;
+        err.style.display = 'block';
+        if (attempts >= 3) {
+          btn.disabled = true;
+          let t = 30;
+          err.textContent = `SYSTEM LOCKED — COOLDOWN: ${t}s`;
+          const cd = setInterval(() => {
+            t--;
+            err.textContent = `SYSTEM LOCKED — COOLDOWN: ${t}s`;
+            if (t <= 0) {
+              clearInterval(cd);
+              btn.disabled = false;
+              attempts = 0;
+              err.style.display = 'none';
             }
+          }, 1000);
+        } else {
+          err.textContent = `ACCESS DENIED — ${3 - attempts} ATTEMPT${3 - attempts !== 1 ? 'S' : ''} REMAINING`;
         }
+        document.getElementById('passcode').value = '';
+      }
+    }
 
-        function handleEnter(e) { if (e.key === 'Enter') checkCode(); }
+    document.onkeydown = e => {
+      if (e.keyCode === 123 ||
+         (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) ||
+         (e.ctrlKey && e.keyCode === 85)) return false;
+    };
 
-        // Anti-snooping
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = e => {
-            if (e.keyCode == 123 ||
-               (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) ||
-               (e.ctrlKey && e.keyCode == 85)) return false;
-        };
+    window.addEventListener('blur',  () => document.body.style.filter = 'blur(20px)');
+    window.addEventListener('focus', () => document.body.style.filter = '');
 
-        window.addEventListener('blur', () => document.body.classList.add('security-blur'));
-        window.addEventListener('focus', () => document.body.classList.remove('security-blur'));
-
-        // Clock
-        function updateClock() {
-            const el = document.getElementById('clock');
-            if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'UTC' });
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
+    function tick() {
+      const el = document.getElementById('clock');
+      if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour12: false, timeZone: 'UTC' });
+    }
+    setInterval(tick, 1000); tick();
+  </script>
 </body>
 </html>
