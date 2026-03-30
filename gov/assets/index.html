@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legal Archive — The Legend of Legiona</title>
-  <link rel="icon" type="image/png" href="https://faizzzlol.github.io/thelol/gov/assets/TheLoLGovernmentLogo.png" />
+  <link rel="icon" type="image/png" href="https://faizzzlol.github.io/thelol/gov/assets/img/TheLoLGovernmentLogo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -391,16 +391,52 @@
     .info-box a { color: var(--gold); text-decoration: none; }
     .info-box a:hover { text-decoration: underline; }
 
-    /* ── FOOTER ── */
+      /* ── FOOTER ── */
     footer {
       background: #06060a;
       border-top: 1px solid rgba(201,168,76,0.1);
-      padding: 40px 24px 24px;
+      padding: 60px 24px 32px;
     }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+    .footer-brand .name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+    .footer-brand .name em { font-style: italic; color: var(--gold); }
+    .footer-brand p { font-size: 13px; color: var(--text-dim); line-height: 1.7; max-width: 280px; }
+    .footer-col h5 {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 13px;
+      color: var(--text-dim);
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--text); }
     .footer-bottom {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
     }
     .footer-bottom .copy {
       font-family: 'DM Mono', monospace;
@@ -449,7 +485,7 @@
     <span class="tag">NOTICE</span>
     <span>
       The official Government Policy Framework of The Legend of Legiona (The LoL) is now published and available for reference. All governance, security, and administrative matters are defined within this document. —
-      <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" target="_blank">
+      <a href="https://faizzzlol.github.io/thelol/gov/assets/documents/policies/The_LoL_Government_Policy_Framework.pdf" target="_blank">
         VIEW OFFICIAL DOCUMENTS →
       </a>
     </span>
@@ -527,15 +563,15 @@
         <h3>Government Policy Framework of The Legend of Legiona</h3>
       </div>
       <div class="btns">
-        <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↗ Open PDF</a>
-        <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-outline">↗ Open PDF</a>
+        <a href="https://faizzzlol.github.io/thelol/gov/assets/documents/policies/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↗ Open PDF</a>
+        <a href="https://faizzzlol.github.io/thelol/gov/assets/documents/policies/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-outline" download>↓ Download PDF</a>
       </div>
     </div>
 
     <!-- INFO BOX -->
     <div class="info-box">
       <span class="icon">ℹ</span>
-      <p>All documents in this archive are official sovereign records of The Legend of Legiona. Files are hosted at <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);">faizzzlol.github.io/thelol/gov/assets/</code>. To add a new document, upload the file to the assets directory and update this page. <a href="https://faizzzlol.github.io/thelol/gov/">← Return to Government Portal</a></p>
+      <p>All documents in this archive are official sovereign records of The Legend of Legiona. Files are hosted at <code style="font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);">faizzzlol.github.io/thelol/gov/assets/documents</code>.</p>
     </div>
 
     <!-- DOCUMENT GRID -->
@@ -597,8 +633,8 @@
           </div>
         </div>
         <div class="doc-card-foot">
-          <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↗ Open PDF</a>
-          <a href="https://faizzzlol.github.io/thelol/gov/assets/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-outline">↗ Open PDF</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/documents/policies/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-primary">↗ Open PDF</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/documents/policies/The_LoL_Government_Policy_Framework.pdf" class="doc-btn doc-btn-outline" download>↓ Download PDF</a>
         </div>
       </div>
 
@@ -672,6 +708,32 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="name">The Legend of <em>Legiona</em></div>
+          <p>The official government of The LoL — a sovereign nation built on unity, equality, and the resilience of its people across the Skyxion world since 2023.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Government</h5>
+          <a href="#proclamation">Proclamation</a>
+          <a href="#history">History</a>
+          <a href="#departments">Departments</a>
+          <a href="#founders">Founders</a>
+        </div>
+        <div class="footer-col">
+          <h5>Agencies</h5>
+          <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC Portal</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/isc/national">ISC Transparency</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/isc/search">ISC Public Archive</a>
+        </div>
+        <div class="footer-col">
+          <h5>Documents</h5>
+          <a href="https://faizzzlol.github.io/thelol/assets/The_LoL_Proclamation.pdf">Proclamation (EN)</a>
+          <a href="https://faizzzlol.github.io/thelol/assets/Proklamasi_The_LoL.pdf">Proklamasi (BM)</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/">Legal Archive</a>
+          <a href="https://faizzzlol.github.io/thelol/about">About The LoL</a>
+        </div>
+      </div>
       <div class="footer-bottom">
         <div class="copy">© 2026 THE LEGEND OF LEGIONA // LEGAL ARCHIVE</div>
         <div class="era">SKYXION: ALTAER ERA // ALL DOCUMENTS ARE SOVEREIGN RECORDS</div>
