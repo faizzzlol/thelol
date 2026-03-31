@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply for Citizenship — The Legend of Legiona</title>
+  <link rel="icon" type="image/png" href="https://faizzzlol.github.io/thelol/gov/assets/img/TheLoLGovernmentLogo.png" />
+  <meta name="description" content="Submit your official citizenship application or renewal for The Legend of Legiona on Skyxion.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111111;
+      --surface-2: #161616;
+      --border:    #1e1e1e;
+      --gold:      #c6a664;
+      --gold-bg:   rgba(198,166,100,0.08);
+      --gold-mid:  rgba(198,166,100,0.35);
+      --red:       #c46a6a;
+      --red-bg:    rgba(180,80,80,0.1);
+      --green:     #6ab87a;
+      --green-bg:  rgba(80,160,100,0.1);
+      --text:      #e8e8e8;
+      --muted:     #888888;
+      --dim:       #555555;
+      --fh:        'Barlow Condensed', sans-serif;
+      --fb:        'Barlow', sans-serif;
+      --fm:        'Fira Code', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--fb);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NOTICE BAR ─── */
+    .notice-bar {
+      background: var(--gold-bg);
+      border-bottom: 1px solid var(--gold-mid);
+      padding: 9px 24px;
+      text-align: center;
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; color: var(--gold);
+    }
+    .notice-bar a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ─── TOP NAV ─── */
+    .topnav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      display: flex; align-items: center;
+      justify-content: space-between; height: 54px;
+    }
+    .topnav-logo {
+      font-family: var(--fh); font-size: 15px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+    }
+    .topnav-logo span { color: var(--gold); }
+    .topnav-links { display: flex; gap: 28px; list-style: none; }
+    .topnav-links a {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .topnav-links a:hover, .topnav-links a.active { color: var(--gold); }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--text); transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed;
+      top: 54px; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 28px; z-index: 99;
+      flex-direction: column;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--fm); font-size: 12px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a.active, .mobile-nav a:hover { color: var(--gold); }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 28px;
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; color: var(--dim);
+    }
+    .breadcrumb a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { margin: 0 8px; color: var(--gold); }
+
+    /* ─── LAYOUT ─── */
+    .page {
+      max-width: 800px; margin: 0 auto;
+      padding: 60px 28px 100px;
+    }
+
+    /* ─── PAGE HEADER ─── */
+    .page-hd {
+      margin-bottom: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 12px;
+    }
+    .page-hd h1 {
+      font-family: var(--fh);
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 800; text-transform: uppercase;
+      letter-spacing: -0.02em; line-height: 0.92;
+      margin-bottom: 16px;
+    }
+    .page-hd h1 em { font-style: italic; color: var(--gold); }
+    .page-hd p {
+      font-size: 14px; font-weight: 300;
+      color: var(--muted); line-height: 1.7;
+      max-width: 540px;
+    }
+
+    /* ─── TYPE SELECTOR ─── */
+    .type-selector {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .type-btn {
+      padding: 22px 20px;
+      background: var(--surface);
+      cursor: pointer; text-align: left;
+      border: none; transition: background 0.2s;
+      position: relative;
+    }
+    .type-btn:hover { background: var(--surface-2); }
+    .type-btn.selected {
+      background: var(--gold-bg);
+    }
+    .type-btn.selected::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--gold);
+    }
+    .type-btn-tag {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dim); display: block; margin-bottom: 6px;
+    }
+    .type-btn.selected .type-btn-tag { color: var(--gold); }
+    .type-btn h3 {
+      font-family: var(--fh); font-size: 22px;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.02em; margin-bottom: 6px;
+      color: var(--muted); transition: color 0.2s;
+    }
+    .type-btn.selected h3 { color: var(--text); }
+    .type-btn p {
+      font-size: 12px; font-weight: 300;
+      color: var(--dim); line-height: 1.55;
+    }
+    .type-btn.selected p { color: var(--muted); }
+
+    /* ─── FORM ─── */
+    .form-section {
+      margin-bottom: 40px;
+    }
+    .form-section-title {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px; display: block;
+    }
+
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .field label span.req { color: var(--gold); margin-left: 3px; }
+    .field-note {
+      font-size: 12px; font-weight: 300;
+      color: var(--dim); margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .field input[type="text"],
+    .field input[type="tel"],
+    .field textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--fm); font-size: 13px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .field input:focus,
+    .field textarea:focus { border-color: var(--gold); }
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--dim); }
+    .field textarea { resize: vertical; min-height: 80px; }
+
+    /* Contact method toggle */
+    .contact-toggle {
+      display: flex; gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    .ct-btn {
+      flex: 1; padding: 10px;
+      background: var(--surface);
+      border: none; cursor: pointer;
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dim); transition: all 0.2s;
+    }
+    .ct-btn:hover { color: var(--muted); background: var(--surface-2); }
+    .ct-btn.active { background: var(--gold-bg); color: var(--gold); }
+
+    /* File upload */
+    .file-upload-area {
+      border: 1px dashed var(--border);
+      background: var(--surface);
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .file-upload-area:hover,
+    .file-upload-area.dragging {
+      border-color: var(--gold);
+      background: var(--gold-bg);
+    }
+    .file-upload-area input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .upload-icon {
+      font-family: var(--fm); font-size: 24px;
+      color: var(--dim); display: block; margin-bottom: 10px;
+    }
+    .upload-main {
+      font-family: var(--fh); font-size: 16px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted);
+      display: block; margin-bottom: 4px;
+    }
+    .upload-sub {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; color: var(--dim);
+    }
+    .file-preview {
+      display: none;
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      padding: 12px;
+      align-items: center; gap: 14px;
+    }
+    .file-preview.show { display: flex; }
+    .file-preview img {
+      width: 56px; height: 56px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      border: 1px solid var(--border);
+    }
+    .file-preview-info { flex: 1; min-width: 0; }
+    .file-preview-name {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--muted); display: block;
+      overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-preview-size {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--dim); letter-spacing: 0.08em;
+    }
+    .file-preview-remove {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--red); cursor: pointer;
+      background: none; border: none; padding: 4px;
+      flex-shrink: 0; transition: opacity 0.2s;
+    }
+    .file-preview-remove:hover { opacity: 0.7; }
+
+    /* ─── DECLARATIONS ─── */
+    .declarations { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .decl-item {
+      background: var(--surface);
+      padding: 14px 16px;
+      display: flex; gap: 14px; align-items: flex-start;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .decl-item:hover { background: var(--surface-2); }
+    .decl-item input[type="checkbox"] {
+      appearance: none; -webkit-appearance: none;
+      width: 16px; height: 16px; flex-shrink: 0;
+      border: 1px solid var(--border); background: var(--surface-2);
+      cursor: pointer; margin-top: 1px;
+      transition: all 0.15s; position: relative;
+    }
+    .decl-item input[type="checkbox"]:checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .decl-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute; left: 4px; top: 1px;
+      width: 5px; height: 9px;
+      border: 2px solid var(--bg);
+      border-top: none; border-left: none;
+      transform: rotate(45deg);
+    }
+    .decl-text {
+      font-size: 13px; font-weight: 300;
+      color: var(--muted); line-height: 1.55;
+    }
+    .decl-text strong { color: var(--text); font-weight: 500; }
+    .decl-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ─── SUBMIT AREA ─── */
+    .submit-area {
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    .submit-notice {
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-mid);
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
+    .submit-notice p {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.06em; color: var(--gold);
+      line-height: 1.65;
+    }
+    .btn-submit {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--fm); font-size: 12px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 16px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--gold); color: var(--bg); }
+    .btn-submit:disabled {
+      opacity: 0.4; cursor: not-allowed;
+    }
+    .btn-submit .spinner {
+      display: none; width: 14px; height: 14px;
+      border: 1px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-label { opacity: 0.6; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── SUCCESS / ERROR STATES ─── */
+    .state-panel {
+      display: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 48px 36px;
+      text-align: center;
+    }
+    .state-panel.show { display: block; }
+    .state-panel .state-icon {
+      font-family: var(--fm); font-size: 32px;
+      display: block; margin-bottom: 20px;
+    }
+    .state-panel.success .state-icon { color: var(--green); }
+    .state-panel.error .state-icon { color: var(--red); }
+    .state-panel h2 {
+      font-family: var(--fh); font-size: 32px;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.04em; margin-bottom: 12px;
+    }
+    .state-panel.success h2 { color: var(--green); }
+    .state-panel.error h2 { color: var(--red); }
+    .state-panel p {
+      font-size: 14px; font-weight: 300;
+      color: var(--muted); line-height: 1.7;
+      max-width: 400px; margin: 0 auto 12px;
+    }
+    .state-ref {
+      font-family: var(--fm); font-size: 13px;
+      letter-spacing: 0.1em; color: var(--gold);
+      display: block; margin: 16px 0 28px;
+    }
+    .state-btn {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; padding: 12px 24px;
+      border: 1px solid var(--gold); color: var(--gold);
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer; display: inline-block; margin: 6px;
+    }
+    .state-btn:hover { background: var(--gold); color: var(--bg); }
+    .state-btn.ghost { border-color: var(--border); color: var(--muted); }
+    .state-btn.ghost:hover { border-color: var(--gold); color: var(--gold); background: transparent; }
+
+    /* ─── VALIDATION ─── */
+    .field-error {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--red); letter-spacing: 0.08em;
+      margin-top: 6px; display: none;
+    }
+    .field.invalid input,
+    .field.invalid textarea { border-color: var(--red); }
+    .field.invalid .field-error { display: block; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 28px 28px;
+    }
+    .footer-bottom {
+      max-width: 800px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--dim);
+      text-transform: uppercase;
+    }
+    .footer-bottom a {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--dim); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-bottom a:hover { color: var(--gold); }
+    .disclaimer {
+      max-width: 800px; margin: 16px auto 0;
+      font-size: 11px; color: var(--dim);
+      font-weight: 300; line-height: 1.6;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .topnav-links { display: none; }
+      .hamburger { display: flex; }
+      .page { padding: 48px 20px 80px; }
+      .type-selector { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .page-hd h1 { font-size: 42px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NOTICE BAR -->
+  <div class="notice-bar">
+    OFFICIAL CITIZENSHIP APPLICATION PORTAL // SKYXION: ALTAER ERA //
+    <a href="/thelol/gov/citizenship/">← Back to Citizenship Info</a>
+  </div>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <a href="https://faizzzlol.github.io/thelol/" class="topnav-logo">THE <span>LOL</span></a>
+    <ul class="topnav-links">
+      <li><a href="https://faizzzlol.github.io/thelol/">THE LOL</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a></li>
+      <li><a href="/thelol/gov/citizenship/" class="active">CITIZENSHIP</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/assets/">ARCHIVES</a></li>
+    </ul>
+    <button class="hamburger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="https://faizzzlol.github.io/thelol/">THE LOL</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+    <a href="/thelol/gov/citizenship/" class="active">CITIZENSHIP</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/assets/">ARCHIVES</a>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="https://faizzzlol.github.io/thelol/gov/">Government</a>
+    <span>//</span>
+    <a href="/thelol/gov/citizenship/">Citizenship</a>
+    <span>//</span>
+    Application Form
+  </div>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="page">
+
+    <!-- PAGE HEADER -->
+    <div class="page-hd">
+      <span class="page-tag">THELOL.GOV // CITIZENSHIP APPLICATION // ALTAER ERA</span>
+      <h1>Citizenship <em>Application</em></h1>
+      <p>
+        Complete this form to apply for or renew your citizenship in The Legend of Legiona.
+        All fields are required. Ensure your information is accurate — false declarations
+        are immediate grounds for rejection and potential ban from future applications.
+      </p>
+    </div>
+
+    <!-- SUCCESS PANEL -->
+    <div class="state-panel success" id="panelSuccess">
+      <span class="state-icon">✓</span>
+      <h2>Application Submitted</h2>
+      <p>Your application has been received by the Office of the President. You will be contacted via the details you provided.</p>
+      <span class="state-ref" id="successRef">REF // THELOL-CTZN-2026-0000</span>
+      <p style="font-size: 12px; color: var(--dim);">Save your reference number. Review time may vary. Do not resubmit.</p>
+      <br>
+      <a href="/thelol/gov/citizenship/" class="state-btn ghost">← Back to Citizenship Info</a>
+    </div>
+
+    <!-- ERROR PANEL -->
+    <div class="state-panel error" id="panelError">
+      <span class="state-icon">✕</span>
+      <h2>Submission Failed</h2>
+      <p id="errorMsg">An error occurred while submitting your application. Please try again.</p>
+      <br>
+      <button class="state-btn" onclick="resetError()">Try Again</button>
+      <a href="/thelol/gov/citizenship/apply" class="state-btn ghost">← Back</a>
+    </div>
+
+    <!-- APPLICATION FORM -->
+    <div id="formWrapper">
+
+      <!-- TYPE SELECTOR -->
+      <div class="type-selector" id="typeSelector">
+        <button class="type-btn selected" data-type="apply" onclick="selectType('apply')">
+          <span class="type-btn-tag">TYPE-01 // NEW</span>
+          <h3>New Application</h3>
+          <p>First time applying for citizenship in The LoL during this Skyxion era.</p>
+        </button>
+        <button class="type-btn" data-type="renew" onclick="selectType('renew')">
+          <span class="type-btn-tag">TYPE-02 // RENEWAL</span>
+          <h3>Renewal</h3>
+          <p>Previously a citizen. Renewing after a server reset or expired status.</p>
+        </button>
+      </div>
+      <input type="hidden" id="appType" value="apply">
+
+      <!-- FORM -->
+      <form id="citizenForm" novalidate>
+
+        <!-- SECTION 1: PERSONAL DETAILS -->
+        <div class="form-section">
+          <span class="form-section-title">Section 01 // Personal Details</span>
+
+          <div class="field" id="fieldCallName">
+            <label for="callName">Call Name <span class="req">*</span></label>
+            <p class="field-note">Your in-game or community call name — not your full name. (e.g. "Lewis" not "Lewis Hamilton")</p>
+            <input type="text" id="callName" name="callName" placeholder="e.g. Lewis" maxlength="32" autocomplete="on">
+            <span class="field-error">Call name is required.</span>
+          </div>
+
+          <div class="field" id="fieldIGN">
+            <label for="ign">Minecraft IGN (Username) <span class="req">*</span></label>
+            <p class="field-note">Your exact Minecraft username / Gamertag. <strong>This is case-sensitive</strong> — type it exactly as it appears in-game. (e.g. Faiz4224, lyvwiz)</p>
+            <input type="text" id="ign" name="ign" placeholder="e.g. Faiz4224" maxlength="16" autocomplete="on" spellcheck="false">
+            <span class="field-error">Minecraft IGN is required.</span>
+          </div>
+        </div>
+
+        <!-- SECTION 2: CONTACT -->
+        <div class="form-section">
+          <span class="form-section-title">Section 02 // Contact Information</span>
+
+          <div class="field" id="fieldContact">
+            <label>Contact Method <span class="req">*</span></label>
+            <p class="field-note">Provide either your Discord username or WhatsApp number. The Government will use this to notify you of your application status.</p>
+            <div class="contact-toggle">
+              <button type="button" class="ct-btn active" id="ctDiscord" onclick="setContact('discord')">Discord</button>
+              <button type="button" class="ct-btn" id="ctWhatsapp" onclick="setContact('whatsapp')">WhatsApp</button>
+            </div>
+            <input type="text" id="contactInput" name="contact" placeholder="Discord username (e.g. faiz4224)" autocomplete="on" spellcheck="false">
+            <input type="hidden" id="contactMethod" name="contactMethod" value="discord">
+            <span class="field-error" id="contactError">Contact information is required.</span>
+          </div>
+        </div>
+
+        <!-- SECTION 3: SKIN AVATAR -->
+        <div class="form-section">
+          <span class="form-section-title">Section 03 // Minecraft Skin Avatar</span>
+
+          <div class="field" id="fieldSkin">
+            <label>Skin Avatar Screenshot <span class="req">*</span></label>
+            <p class="field-note">Upload a screenshot of your Minecraft character / skin avatar. A clear front-facing view of your skin is preferred. JPG, PNG accepted. Max 8MB.</p>
+            <div class="file-upload-area" id="dropZone">
+              <input type="file" id="skinFile" name="skin" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+              <span class="upload-icon">↑</span>
+              <span class="upload-main">Upload Skin Screenshot</span>
+              <span class="upload-sub">Click to browse, or drag and drop // PNG, JPG // Max 8MB</span>
+            </div>
+            <div class="file-preview" id="filePreview">
+              <img id="previewImg" src="" alt="Skin preview">
+              <div class="file-preview-info">
+                <span class="file-preview-name" id="previewName"></span>
+                <span class="file-preview-size" id="previewSize"></span>
+              </div>
+              <button type="button" class="file-preview-remove" onclick="removeFile()">✕ Remove</button>
+            </div>
+            <span class="field-error" id="skinError">Skin avatar is required.</span>
+          </div>
+        </div>
+
+        <!-- SECTION 4: DECLARATIONS -->
+        <div class="form-section">
+          <span class="form-section-title">Section 04 // Declarations &amp; Agreements</span>
+          <p class="field-note" style="margin-bottom: 16px;">You must check all boxes to proceed. These declarations are legally binding within The LoL's governance framework.</p>
+
+          <div class="declarations" id="declarationsBlock">
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_age">
+              <span class="decl-text"><strong>I confirm I am 16 years of age or older (IRL)</strong> at the time of this application.</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_active">
+              <span class="decl-text"><strong>I confirm I am an active player on the Skyxion server</strong> during the current ALTAER ERA.</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_clean">
+              <span class="decl-text"><strong>I confirm I have no active bans, suspensions, or unresolved issues</strong> with Skyxion server administration (Kawaiisho).</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_rules">
+              <span class="decl-text"><strong>I agree to follow all Skyxion server rules</strong> at all times as a condition of my citizenship.</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_chaos">
+              <span class="decl-text"><strong>I agree not to cause chaos, grief, or hostility</strong> toward any player, nation, or squad on the server.</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_respect">
+              <span class="decl-text"><strong>I agree to respect all other nations and squads</strong> and to practice mutual tolerance toward all Skyxion players.</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_opinion">
+              <span class="decl-text"><strong>I agree to be open to the opinions of others</strong> and not to cut off, dismiss, or silence constructive dialogue.</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_temp">
+              <span class="decl-text"><strong>I understand that citizenship is temporary and era-specific</strong> — it expires upon each server reset and must be renewed.</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_revoke">
+              <span class="decl-text"><strong>I understand The LoL may revoke my citizenship at any time</strong>, from anywhere, without prior notice, as defined in (<a href="https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Revocation_Suspension_Ordinance_29_3_2026.pdf" target="_blank">THELOLGOV-29-03-2026-0002</a>).</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_docs">
+              <span class="decl-text"><strong>I have read and agree to the Citizenship Act</strong> (<a href="https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Citizenship_Act_29_3_2026.pdf" target="_blank">THELOLGOV-29-03-2026-0001</a>) and the Rights Charter (<a href="https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Citizen_Rights_Responsibilities_Charter_29_3_2026.pdf" target="blank">THELOLGOV-29-03-2026-0003</a>).</span>
+            </label>
+            <label class="decl-item">
+              <input type="checkbox" class="decl-check" name="decl_honest">
+              <span class="decl-text"><strong>I declare all information in this application is true and accurate.</strong> I understand that false declarations result in immediate rejection and may ban me from future applications.</span>
+            </label>
+          </div>
+          <span class="field-error" id="declError" style="display:none; margin-top: 10px;">All declarations must be accepted to submit.</span>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="submit-area">
+          <div class="submit-notice">
+            <p>
+              Your application will be submitted to the Office of the President via a secure channel.
+              No personal data is stored on GitHub. You will receive a reference number upon submission.
+              <br><br>
+              Processing time varies. Do not resubmit unless instructed to. The Government's decision on all applications is final.
+            </p>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="spinner"></span>
+            <span class="btn-label" id="submitLabel">Submit Application →</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <p>© 2026 THE LEGEND OF LEGIONA // CITIZENSHIP PORTAL</p>
+      <a href="/thelol/gov/citizenship/">← Citizenship Info</a>
+    </div>
+    <p class="disclaimer">
+      <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft. Not affiliated with Kawaiisho, Mojang AB, or Microsoft Corporation.
+    </p>
+  </footer>
+
+  <script>
+    /* ==========================================================
+       CONFIGURATION — SET YOUR DISCORD WEBHOOK URL BELOW
+       ==========================================================
+       HOW TO GET YOUR WEBHOOK URL:
+         1. Open Discord — go to the private channel you want
+            applications sent to (e.g. #citizenship-applications)
+         2. Right-click the channel → Edit Channel
+         3. Go to Integrations → Webhooks → New Webhook
+         4. Name it (e.g. "The LoL Citizenship") → Copy Webhook URL
+         5. Paste the URL below, replacing the placeholder text
+       ========================================================== */
+    const WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+    /* ========================================================== */
+
+    // ── Hamburger ──
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobileNav');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // ── Pre-select type from URL param ──
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const t = params.get('type');
+      if (t === 'renew') selectType('renew');
+    })();
+
+    // ── Type selector ──
+    function selectType(type) {
+      document.getElementById('appType').value = type;
+      document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.type === type);
+      });
+      document.getElementById('submitLabel').textContent =
+        type === 'renew' ? 'Submit Renewal →' : 'Submit Application →';
+    }
+
+    // ── Contact method toggle ──
+    let contactMethod = 'discord';
+    function setContact(method) {
+      contactMethod = method;
+      document.getElementById('contactMethod').value = method;
+      document.getElementById('ctDiscord').classList.toggle('active', method === 'discord');
+      document.getElementById('ctWhatsapp').classList.toggle('active', method === 'whatsapp');
+      const input = document.getElementById('contactInput');
+      if (method === 'discord') {
+        input.type = 'text';
+        input.placeholder = 'Discord username (e.g. faiz4224)';
+      } else {
+        input.type = 'tel';
+        input.placeholder = 'WhatsApp number with country code (e.g. +60123456789)';
+      }
+    }
+
+    // ── File upload & preview ──
+    const skinFileInput = document.getElementById('skinFile');
+    const filePreview = document.getElementById('filePreview');
+    const dropZone = document.getElementById('dropZone');
+    let selectedFile = null;
+
+    skinFileInput.addEventListener('change', e => {
+      if (e.target.files[0]) handleFile(e.target.files[0]);
+    });
+
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault(); dropZone.classList.remove('dragging');
+      const f = e.dataTransfer.files[0];
+      if (f && f.type.startsWith('image/')) handleFile(f);
+    });
+
+    function handleFile(file) {
+      if (file.size > 8 * 1024 * 1024) {
+        alert('File is too large. Maximum size is 8MB.');
+        return;
+      }
+      selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        document.getElementById('previewImg').src = ev.target.result;
+        document.getElementById('previewName').textContent = file.name;
+        document.getElementById('previewSize').textContent =
+          (file.size / 1024).toFixed(1) + ' KB';
+        filePreview.classList.add('show');
+      };
+      reader.readAsDataURL(file);
+      clearFieldError('fieldSkin');
+    }
+
+    function removeFile() {
+      selectedFile = null;
+      skinFileInput.value = '';
+      filePreview.classList.remove('show');
+      document.getElementById('previewImg').src = '';
+    }
+
+    // ── Validation ──
+    function setFieldError(id, msg) {
+      const el = document.getElementById(id);
+      el.classList.add('invalid');
+      if (msg) {
+        const errEl = el.querySelector('.field-error');
+        if (errEl) errEl.textContent = msg;
+      }
+    }
+    function clearFieldError(id) {
+      document.getElementById(id)?.classList.remove('invalid');
+    }
+
+    function validateForm() {
+      let valid = true;
+
+      const callName = document.getElementById('callName').value.trim();
+      if (!callName) { setFieldError('fieldCallName'); valid = false; }
+      else clearFieldError('fieldCallName');
+
+      const ign = document.getElementById('ign').value.trim();
+      if (!ign) { setFieldError('fieldIGN'); valid = false; }
+      else clearFieldError('fieldIGN');
+
+      const contact = document.getElementById('contactInput').value.trim();
+      if (!contact) {
+        document.getElementById('fieldContact').classList.add('invalid');
+        valid = false;
+      } else clearFieldError('fieldContact');
+
+      if (!selectedFile) {
+        document.getElementById('fieldSkin').classList.add('invalid');
+        document.getElementById('skinError').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('fieldSkin').classList.remove('invalid');
+        document.getElementById('skinError').style.display = 'none';
+      }
+
+      const checks = document.querySelectorAll('.decl-check');
+      const allChecked = Array.from(checks).every(c => c.checked);
+      if (!allChecked) {
+        document.getElementById('declError').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('declError').style.display = 'none';
+      }
+
+      return valid;
+    }
+
+    // ── Generate reference number ──
+    function genRef() {
+      const year = new Date().getFullYear();
+      const num = String(Math.floor(1000 + Math.random() * 9000));
+      return `LOL-CTZN-${year}-${num}`;
+    }
+
+    // ── Submit to Discord ──
+    document.getElementById('citizenForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!validateForm()) return;
+
+      if (WEBHOOK_URL === 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
+        alert('⚠️ Discord Webhook URL has not been configured yet.\n\nPlease set WEBHOOK_URL in the script section of apply.html.');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      const ref = genRef();
+      const type = document.getElementById('appType').value;
+      const callName = document.getElementById('callName').value.trim();
+      const ign = document.getElementById('ign').value.trim();
+      const contactMethodVal = document.getElementById('contactMethod').value;
+      const contact = document.getElementById('contactInput').value.trim();
+
+      const typeLabel = type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION';
+      const embedColor = 0xC6A664; // LoL gold
+
+      const payload = {
+        username: 'The LoL Citizenship Portal',
+        embeds: [{
+          title: type === 'renew'
+            ? '🔄 Citizenship Renewal Application'
+            : '🏛️ New Citizenship Application',
+          color: embedColor,
+          fields: [
+            { name: 'Type',          value: typeLabel,         inline: true  },
+            { name: 'Reference',     value: `\`${ref}\``,      inline: true  },
+            { name: '\u200b',        value: '\u200b',           inline: false },
+            { name: 'Call Name',     value: callName,          inline: true  },
+            { name: 'Minecraft IGN', value: `\`${ign}\``,      inline: true  },
+            {
+              name: contactMethodVal === 'discord' ? 'Discord' : 'WhatsApp',
+              value: contact,
+              inline: false
+            },
+          ],
+          footer: {
+            text: `THELOL.GOV // CITIZENSHIP PORTAL // SKYXION: ALTAER ERA // Submitted via online portal`
+          },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      try {
+        const fd = new FormData();
+        fd.append('payload_json', JSON.stringify(payload));
+        if (selectedFile) {
+          fd.append('files[0]', selectedFile, selectedFile.name);
+        }
+
+        const res = await fetch(WEBHOOK_URL, { method: 'POST', body: fd });
+
+        if (res.ok || res.status === 204) {
+          // Success
+          document.getElementById('formWrapper').style.display = 'none';
+          document.getElementById('successRef').textContent = 'REF // ' + ref;
+          document.getElementById('panelSuccess').classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          throw new Error(`HTTP ${res.status}`);
+        }
+      } catch (err) {
+        document.getElementById('panelError').classList.add('show');
+        document.getElementById('errorMsg').textContent =
+          'An error occurred while submitting your application. Check your connection and try again. (' + err.message + ')';
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    function resetError() {
+      document.getElementById('panelError').classList.remove('show');
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+    }
+
+    // ── Live field clear on input ──
+    document.getElementById('callName').addEventListener('input', () => clearFieldError('fieldCallName'));
+    document.getElementById('ign').addEventListener('input', () => clearFieldError('fieldIGN'));
+    document.getElementById('contactInput').addEventListener('input', () => clearFieldError('fieldContact'));
+    document.querySelectorAll('.decl-check').forEach(c => {
+      c.addEventListener('change', () => {
+        const all = Array.from(document.querySelectorAll('.decl-check')).every(x => x.checked);
+        if (all) document.getElementById('declError').style.display = 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
