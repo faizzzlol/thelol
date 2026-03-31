@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizenship — The Legend of Legiona</title>
+  <link rel="icon" type="image/png" href="https://faizzzlol.github.io/thelol/gov/assets/img/TheLoLGovernmentLogo.png" />
+  <meta name="description" content="Official Citizenship Portal of The Legend of Legiona. Apply or renew your citizenship in The LoL sovereign nation on Skyxion.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:         #0a0a0a;
+      --surface:    #111111;
+      --surface-2:  #161616;
+      --border:     #1e1e1e;
+      --gold:       #c6a664;
+      --gold-bg:    rgba(198,166,100,0.08);
+      --gold-mid:   rgba(198,166,100,0.35);
+      --red-dim:    rgba(180,80,80,0.15);
+      --red:        #c46a6a;
+      --text:       #e8e8e8;
+      --muted:      #888888;
+      --dim:        #555555;
+      --fh:         'Barlow Condensed', sans-serif;
+      --fb:         'Barlow', sans-serif;
+      --fm:         'Fira Code', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--fb);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NOTICE BAR ─── */
+    .notice-bar {
+      background: var(--gold-bg);
+      border-bottom: 1px solid var(--gold-mid);
+      padding: 9px 24px;
+      text-align: center;
+      font-family: var(--fm);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+    }
+    .notice-bar a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ─── TOP NAV ─── */
+    .topnav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+    }
+    .topnav-logo {
+      font-family: var(--fh);
+      font-size: 15px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+    }
+    .topnav-logo span { color: var(--gold); }
+    .topnav-links { display: flex; gap: 28px; list-style: none; }
+    .topnav-links a {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .topnav-links a:hover,
+    .topnav-links a.active { color: var(--gold); }
+
+    /* hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--text); transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed;
+      top: 54px; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 28px; z-index: 99;
+      flex-direction: column;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--fm); font-size: 12px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a.active,
+    .mobile-nav a:hover { color: var(--gold); }
+
+    /* ─── SECTION NAV ─── */
+    .snav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .snav::-webkit-scrollbar { display: none; }
+    .snav-inner {
+      display: flex; white-space: nowrap;
+      min-width: max-content;
+    }
+    .snav a {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--dim); text-decoration: none;
+      padding: 13px 18px; display: block;
+      border-right: 1px solid var(--border);
+      transition: color 0.2s, background 0.2s;
+    }
+    .snav a:first-child { border-left: 1px solid var(--border); }
+    .snav a:hover, .snav a.active { color: var(--gold); background: var(--gold-bg); }
+
+    /* ─── HERO ─── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 96px 28px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: 'CITIZENSHIP';
+      position: absolute; right: -20px; top: 40px;
+      font-family: var(--fh); font-size: clamp(80px, 14vw, 180px);
+      font-weight: 800; text-transform: uppercase;
+      color: rgba(198,166,100,0.03);
+      pointer-events: none; white-space: nowrap;
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .hero-tag {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--fh);
+      font-size: clamp(52px, 10vw, 110px);
+      font-weight: 800; line-height: 0.92;
+      text-transform: uppercase; letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-desc {
+      font-size: 15px; font-weight: 300;
+      color: var(--muted); max-width: 500px;
+      line-height: 1.75; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; padding: 12px 26px;
+      border: 1px solid var(--gold); color: var(--gold);
+      background: transparent;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer; display: inline-block;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--gold); color: var(--bg); }
+    .btn-ghost {
+      border-color: var(--border); color: var(--muted);
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); background: transparent; }
+
+    .hero-aside {
+      position: absolute; right: 28px; bottom: 80px;
+      text-align: right;
+    }
+    .hero-aside span {
+      display: block;
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dim); line-height: 1.8;
+    }
+
+    /* ─── UTILS ─── */
+    .divider { border: none; border-top: 1px solid var(--border); }
+
+    .section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 80px 28px;
+    }
+    .sec-hd { margin-bottom: 48px; }
+    .sec-tag {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 12px;
+    }
+    .sec-title {
+      font-family: var(--fh);
+      font-size: clamp(30px, 5vw, 50px);
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: -0.01em; line-height: 1;
+    }
+    .sec-title em { font-style: italic; color: var(--gold); }
+    .sec-desc {
+      font-size: 14px; font-weight: 300;
+      color: var(--muted); max-width: 580px;
+      margin-top: 14px; line-height: 1.75;
+    }
+
+    /* ─── OVERVIEW CARDS ─── */
+    .ov-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .ov-card {
+      background: var(--surface); padding: 36px 28px;
+      transition: background 0.2s;
+    }
+    .ov-card:hover { background: var(--surface-2); }
+    .ov-card-tag {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 18px;
+    }
+    .ov-card h3 {
+      font-family: var(--fh); font-size: 30px;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.02em; margin-bottom: 12px;
+    }
+    .ov-card p {
+      font-size: 14px; color: var(--muted);
+      font-weight: 300; line-height: 1.65;
+    }
+
+    /* ─── ELIGIBILITY ─── */
+    .el-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .el-col-title {
+      font-family: var(--fh); font-size: 18px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .req-list { list-style: none; }
+    .req-list li {
+      display: flex; gap: 14px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px; font-weight: 300;
+      color: var(--muted); line-height: 1.55;
+    }
+    .req-list li:first-child { border-top: 1px solid var(--border); }
+    .req-icon {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--gold); flex-shrink: 0;
+      margin-top: 3px; letter-spacing: 0.05em;
+    }
+    .req-icon.no { color: var(--red); }
+    .req-list strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 3px; }
+
+    /* ─── STEPS ─── */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .step {
+      background: var(--surface); padding: 32px 24px;
+      transition: background 0.2s;
+    }
+    .step:hover { background: var(--surface-2); }
+    .step-n {
+      font-family: var(--fh); font-size: 72px;
+      font-weight: 800; line-height: 1;
+      color: rgba(198,166,100,0.12); margin-bottom: 14px;
+    }
+    .step-tag {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; color: var(--gold);
+      display: block; margin-bottom: 8px;
+    }
+    .step h4 {
+      font-family: var(--fh); font-size: 18px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; margin-bottom: 10px;
+    }
+    .step p {
+      font-size: 13px; color: var(--muted);
+      font-weight: 300; line-height: 1.65;
+    }
+
+    /* ─── OBLIGATIONS ─── */
+    .ob-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .ob-item {
+      background: var(--surface); padding: 26px 24px;
+      display: flex; gap: 14px;
+      transition: background 0.2s;
+    }
+    .ob-item:hover { background: var(--surface-2); }
+    .ob-n {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--gold); flex-shrink: 0; margin-top: 2px;
+    }
+    .ob-item h4 {
+      font-family: var(--fh); font-size: 16px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; margin-bottom: 6px;
+    }
+    .ob-item p {
+      font-size: 13px; color: var(--muted);
+      font-weight: 300; line-height: 1.6;
+    }
+
+    /* ─── DOCUMENT EXCERPT ─── */
+    .doc-box {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      background: var(--surface);
+      padding: 32px 36px;
+      margin-bottom: 20px;
+    }
+    .doc-box-hd {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 12px;
+      padding-bottom: 18px; margin-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .doc-ref {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; color: var(--gold);
+      display: block; margin-bottom: 4px;
+    }
+    .doc-title-text {
+      font-family: var(--fh); font-size: 20px;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .doc-badge {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dim); background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 4px 10px; flex-shrink: 0;
+    }
+    .doc-body {
+      font-size: 13px; color: var(--muted);
+      font-weight: 300; line-height: 1.8;
+    }
+    .doc-article { margin-bottom: 20px; }
+    .doc-article:last-child { margin-bottom: 0; }
+    .doc-art-title {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text); display: block; margin-bottom: 10px;
+    }
+    .doc-line {
+      display: block; padding-left: 16px; margin-bottom: 6px;
+    }
+    .doc-foot {
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+      padding-top: 18px; margin-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-foot a {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+    }
+    .doc-foot a:hover { text-decoration: underline; }
+    .doc-foot span {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--dim); letter-spacing: 0.08em;
+    }
+
+    /* ─── CTA ─── */
+    .cta {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 90px 28px;
+      text-align: center;
+    }
+    .cta-inner { max-width: 560px; margin: 0 auto; }
+    .cta-tag {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 16px;
+    }
+    .cta h2 {
+      font-family: var(--fh);
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 800; text-transform: uppercase;
+      line-height: 0.92; margin-bottom: 18px;
+    }
+    .cta h2 em { font-style: italic; color: var(--gold); }
+    .cta p {
+      font-size: 14px; font-weight: 300;
+      color: var(--muted); line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 52px 28px 36px;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px; margin-bottom: 40px;
+    }
+    .footer-brand h3 {
+      font-family: var(--fh); font-size: 20px;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.04em; margin-bottom: 10px;
+    }
+    .footer-brand h3 em { font-style: italic; color: var(--gold); }
+    .footer-brand p {
+      font-size: 13px; color: var(--dim);
+      font-weight: 300; line-height: 1.6; max-width: 280px;
+    }
+    .footer-col h4 {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 9px; }
+    .footer-col a {
+      font-size: 13px; color: var(--dim);
+      text-decoration: none; font-weight: 300;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      padding-top: 24px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--dim);
+      text-transform: uppercase;
+    }
+    .disclaimer {
+      font-size: 11px; color: var(--dim);
+      font-weight: 300; line-height: 1.6;
+      margin-top: 16px; max-width: 900px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .steps-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .topnav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 64px 24px 60px; }
+      .hero::before { display: none; }
+      .hero-aside { display: none; }
+      .ov-grid { grid-template-columns: 1fr; }
+      .el-grid { grid-template-columns: 1fr; gap: 36px; }
+      .ob-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .doc-box { padding: 22px 20px; }
+      .section { padding: 60px 24px; }
+    }
+    @media (max-width: 500px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .cta-btns { flex-direction: column; align-items: stretch; }
+      .cta-btns .btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NOTICE BAR -->
+  <div class="notice-bar">
+    CITIZENSHIP APPLICATIONS NOW OPEN — SKYXION: ALTAER ERA //
+    <a href="apply.html">SUBMIT YOUR APPLICATION →</a>
+  </div>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <a href="https://faizzzlol.github.io/thelol/" class="topnav-logo">THE <span>LOL</span></a>
+    <ul class="topnav-links">
+      <li><a href="https://faizzzlol.github.io/thelol/">THE LOL</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a></li>
+      <li><a href="index.html" class="active">CITIZENSHIP</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/assets/">ARCHIVES</a></li>
+    </ul>
+    <button class="hamburger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="https://faizzzlol.github.io/thelol/">THE LOL</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+    <a href="index.html" class="active">CITIZENSHIP</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/assets/">ARCHIVES</a>
+    <a href="apply.html">APPLY / RENEW →</a>
+  </div>
+
+  <!-- SECTION NAV -->
+  <div class="snav">
+    <div class="snav-inner">
+      <a href="#overview">Overview</a>
+      <a href="#eligibility">Eligibility</a>
+      <a href="#process">Process</a>
+      <a href="#obligations">Obligations</a>
+      <a href="#documents">Documents</a>
+      <a href="apply.html">Apply / Renew</a>
+    </div>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="home">
+    <div class="hero-tag">THELOL.GOV // CITIZENSHIP PORTAL // SKYXION: ALTAER ERA</div>
+    <h1>Citizen<em>ship</em><br>of The LoL</h1>
+    <p class="hero-desc">
+      Become a recognised member of The Legend of Legiona — a sovereign nation on Skyxion.
+      Open to all active players. Temporary by era. Earned by conduct. Revocable by authority.
+    </p>
+    <div class="hero-btns">
+      <a href="apply.html?type=apply" class="btn">Apply for Citizenship →</a>
+      <a href="apply.html?type=renew" class="btn btn-ghost">Renew Citizenship →</a>
+    </div>
+    <div class="hero-aside">
+      <span>REF // LOLGOV-2026-0001</span>
+      <span>ERA // ALTAER</span>
+      <span>AUTH // OFFICE OF THE PRESIDENT</span>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══ OVERVIEW ═══ -->
+  <section id="overview">
+    <div class="section">
+      <div class="sec-hd">
+        <span class="sec-tag">01 // OVERVIEW</span>
+        <h2 class="sec-title">What is LoL <em>Citizenship?</em></h2>
+        <p class="sec-desc">
+          Citizenship in The Legend of Legiona is a formal declaration of allegiance and membership within The LoL's sovereign territory on Skyxion. It is not permanent — it is bound to the active server era, and may be granted, renewed, or revoked by the Government at any time.
+        </p>
+      </div>
+      <div class="ov-grid">
+        <div class="ov-card">
+          <span class="ov-card-tag">STATUS-01 // DURATION</span>
+          <h3>Temporary</h3>
+          <p>Citizenship is era-bound. When the Skyxion server resets, all citizenships expire automatically. There is no such thing as permanent LoL citizenship — every citizen must reapply to maintain their status for each new era.</p>
+        </div>
+        <div class="ov-card">
+          <span class="ov-card-tag">STATUS-02 // CONTINUITY</span>
+          <h3>Renewable</h3>
+          <p>Past citizens in good standing are eligible for a streamlined renewal upon server reset. Your history with The LoL is considered. Renewals are submitted through the same application portal, with a separate renewal path.</p>
+        </div>
+        <div class="ov-card">
+          <span class="ov-card-tag">STATUS-03 // AUTHORITY</span>
+          <h3>Revocable</h3>
+          <p>The Office of the President and the Government of The LoL hold the unconditional right to revoke any citizenship at any time, from any location, without prior notice — as defined in THELOLGOV-29-03-2026-0002.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══ ELIGIBILITY ═══ -->
+  <section id="eligibility">
+    <div class="section">
+      <div class="sec-hd">
+        <span class="sec-tag">02 // ELIGIBILITY</span>
+        <h2 class="sec-title">Who Can <em>Apply?</em></h2>
+        <p class="sec-desc">
+          Any active player on the Skyxion server may apply for citizenship in The LoL. Applications are reviewed against the criteria below. Meeting all requirements does not guarantee citizenship — the Government's decision is final.
+        </p>
+      </div>
+      <div class="el-grid">
+        <div>
+          <div class="el-col-title">Requirements — Must Meet All</div>
+          <ul class="req-list">
+            <li>
+              <span class="req-icon">✓</span>
+              <div><strong>Active Skyxion Player</strong>You must be an active player on the Skyxion server during the current era (ALTAER) at the time of application.</div>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <div><strong>Age: 16 or Older (IRL)</strong>All applicants must be at least sixteen (16) years of age in real life. No exceptions will be made to this requirement.</div>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <div><strong>Clean Server Record</strong>No active bans, suspensions, or unresolved violations with Skyxion server administration (Kawaiisho) at the time of application.</div>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <div><strong>No Outstanding Issues With The LoL</strong>No unresolved disputes, penalties, or prior citizenship revocations from The LoL without a formal pardon.</div>
+            </li>
+            <li>
+              <span class="req-icon">✓</span>
+              <div><strong>Willingness to Comply</strong>Full agreement to all obligations of citizenship as defined in this portal and the Rights Charter (THELOLGOV-29-03-2026-0003).</div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="el-col-title">Disqualifications — Any One Applies</div>
+          <ul class="req-list">
+            <li>
+              <span class="req-icon no">✕</span>
+              <div><strong>Active Server Ban</strong>Players currently banned from Skyxion are ineligible until the ban is fully and officially lifted by Kawaiisho administration.</div>
+            </li>
+            <li>
+              <span class="req-icon no">✕</span>
+              <div><strong>Prior Revocation Without Pardon</strong>Former citizens whose citizenship was revoked by presidential decree are ineligible unless a formal pardon has been issued by the Office of the President.</div>
+            </li>
+            <li>
+              <span class="req-icon no">✕</span>
+              <div><strong>Under 16 Years of Age (IRL)</strong>Applications from individuals below the age threshold are automatically rejected and will not be reviewed.</div>
+            </li>
+            <li>
+              <span class="req-icon no">✕</span>
+              <div><strong>Declared or Known Hostile Intent</strong>Any applicant with known hostile intent toward The LoL, its citizens, or allied entities will be denied without review.</div>
+            </li>
+            <li>
+              <span class="req-icon no">✕</span>
+              <div><strong>Membership in a Hostile Entity</strong>Active membership in a group or nation that is in declared conflict with The LoL may result in automatic disqualification.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══ PROCESS ═══ -->
+  <section id="process">
+    <div class="section">
+      <div class="sec-hd">
+        <span class="sec-tag">03 // PROCESS</span>
+        <h2 class="sec-title">How It <em>Works</em></h2>
+        <p class="sec-desc">
+          The application process is direct and fully online. Complete all steps accurately. Incomplete or falsified applications will be immediately rejected.
+        </p>
+      </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-n">01</div>
+          <span class="step-tag">STEP-01 // VERIFY</span>
+          <h4>Check Eligibility</h4>
+          <p>Read all requirements and disqualification criteria carefully. Confirm you are 16+, hold a clean server record, and are prepared to honour every obligation of citizenship.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">02</div>
+          <span class="step-tag">STEP-02 // SUBMIT</span>
+          <h4>Submit Application</h4>
+          <p>Complete the official form. Provide your call name, Minecraft IGN (case-sensitive), contact details, and upload a screenshot of your Minecraft skin avatar. Choose Apply or Renew.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">03</div>
+          <span class="step-tag">STEP-03 // REVIEW</span>
+          <h4>Government Review</h4>
+          <p>The Office of the President reviews all submissions. Server records and eligibility are verified. You will be contacted via the details you provided. This may take some time.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">04</div>
+          <span class="step-tag">STEP-04 // STATUS</span>
+          <h4>Citizenship Granted</h4>
+          <p>Upon approval, you are recognised as an official citizen of The Legend of Legiona for the current Skyxion era. Citizenship must be renewed after each server reset.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══ OBLIGATIONS ═══ -->
+  <section id="obligations">
+    <div class="section">
+      <div class="sec-hd">
+        <span class="sec-tag">04 // OBLIGATIONS</span>
+        <h2 class="sec-title">Your <em>Responsibilities</em></h2>
+        <p class="sec-desc">
+          By accepting citizenship, you agree to uphold the following at all times. Failure to comply is grounds for citizenship revocation without notice under THELOLGOV-29-03-2026-0002.
+        </p>
+      </div>
+      <div class="ob-grid">
+        <div class="ob-item">
+          <span class="ob-n">OB-01</span>
+          <div>
+            <h4>Follow Skyxion Server Rules</h4>
+            <p>All citizens must abide by the official rules set by Kawaiisho server administration at all times. Server-wide rules always take precedence.</p>
+          </div>
+        </div>
+        <div class="ob-item">
+          <span class="ob-n">OB-02</span>
+          <div>
+            <h4>Do Not Cause Chaos</h4>
+            <p>Citizens must not initiate or participate in griefing, sabotage, provocation, or any behaviour that destabilises The LoL or the wider Skyxion community.</p>
+          </div>
+        </div>
+        <div class="ob-item">
+          <span class="ob-n">OB-03</span>
+          <div>
+            <h4>Respect All Nations &amp; Squads</h4>
+            <p>As a LoL citizen you represent the nation. Treat all other squads, teams, and nations with respect. Do not act with terror or unprovoked hostility toward any party.</p>
+          </div>
+        </div>
+        <div class="ob-item">
+          <span class="ob-n">OB-04</span>
+          <div>
+            <h4>Tolerate &amp; Include Others</h4>
+            <p>The LoL is built on unity. Citizens must practice mutual tolerance. Targeted harassment, discrimination, or deliberate exclusion of any individual is strictly prohibited.</p>
+          </div>
+        </div>
+        <div class="ob-item">
+          <span class="ob-n">OB-05</span>
+          <div>
+            <h4>Be Open to Others' Opinions</h4>
+            <p>Citizens must not dismiss or cut off the views of others. Constructive dialogue is central to The LoL's egalitarian governance model. Listen before you speak.</p>
+          </div>
+        </div>
+        <div class="ob-item">
+          <span class="ob-n">OB-06</span>
+          <div>
+            <h4>Maintain Good Standing</h4>
+            <p>Any new server violations, misconduct, or issues arising after citizenship is granted must be disclosed to the Government. Deliberate concealment is grounds for immediate revocation.</p>
+          </div>
+        </div>
+        <div class="ob-item">
+          <span class="ob-n">OB-07</span>
+          <div>
+            <h4>Renew After Each Server Reset</h4>
+            <p>Citizenship expires automatically at each server reset. Active citizens in good standing must submit a renewal application to retain their status for the new era.</p>
+          </div>
+        </div>
+        <div class="ob-item">
+          <span class="ob-n">OB-08</span>
+          <div>
+            <h4>Uphold The LoL's Honour</h4>
+            <p>You represent The Legend of Legiona in every action you take on Skyxion. Act with integrity and national pride. Your conduct is a direct reflection of our people.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══ DOCUMENTS ═══ -->
+  <section id="documents">
+    <div class="section">
+      <div class="sec-hd">
+        <span class="sec-tag">05 // LEGAL BASIS</span>
+        <h2 class="sec-title">Official <em>Documents</em></h2>
+        <p class="sec-desc">
+          The following are selected excerpts from the official legal instruments governing citizenship in The LoL. Full documents are available in the Legal Archive.
+        </p>
+      </div>
+
+      <!-- EXCERPT 1: CITIZENSHIP ACT -->
+      <div class="doc-box">
+        <div class="doc-box-hd">
+          <div>
+            <span class="doc-ref">THELOLGOV-29-03-2026-0001</span>
+            <div class="doc-title-text">The Citizenship Act</div>
+          </div>
+          <span class="doc-badge">Excerpt</span>
+        </div>
+        <div class="doc-body">
+          <!-- ============================================================
+               REPLACE THIS BLOCK WITH YOUR ACTUAL DOCUMENT CONTENT.
+               Copy the relevant Articles/Sections from the .docx file.
+               ============================================================ -->
+          <div class="doc-article">
+            <span class="doc-art-title">Article I — Establishment of Citizenship</span>
+            <span class="doc-line">Section 1.1 — The Legend of Legiona hereby establishes a formal citizenship framework applicable to all players within the sovereign territory of The LoL on the Skyxion server.</span>
+            <span class="doc-line">Section 1.2 — Citizenship of The LoL is non-permanent in nature and shall be bound to the active server era. No citizenship shall persist beyond a server reset without a formal renewal being submitted and approved.</span>
+            <span class="doc-line">Section 1.3 — The Office of the President holds the primary and overriding authority over the granting, renewal, and revocation of all citizenships.</span>
+          </div>
+          <div class="doc-article">
+            <span class="doc-art-title">Article II — Eligibility</span>
+            <span class="doc-line">Section 2.1 — Any active player on the Skyxion server is eligible to apply for citizenship in The LoL, subject to the conditions set forth in this Act and any supplementary proclamations issued by the Office of the President.</span>
+            <span class="doc-line">Section 2.2 — The applicant must be at least sixteen (16) years of age at the time of application. Applications from individuals below this age threshold shall be automatically rejected.</span>
+            <span class="doc-line">Section 2.3 — The applicant must not hold any active bans, suspensions, or unresolved administrative violations on the Skyxion server at the time of application.</span>
+          </div>
+        </div>
+        <div class="doc-foot">
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/">→ View Full Document in Legal Archive</a>
+          <span>SKYXION: ALTAER ERA // OFFICE OF THE PRESIDENT</span>
+        </div>
+      </div>
+
+      <!-- EXCERPT 2: REVOCATION ORDINANCE -->
+      <div class="doc-box">
+        <div class="doc-box-hd">
+          <div>
+            <span class="doc-ref">THELOLGOV-29-03-2026-0002</span>
+            <div class="doc-title-text">Citizenship Revocation Ordinance</div>
+          </div>
+          <span class="doc-badge">Excerpt</span>
+        </div>
+        <div class="doc-body">
+          <!-- ============================================================
+               REPLACE THIS BLOCK WITH YOUR ACTUAL DOCUMENT CONTENT.
+               ============================================================ -->
+          <div class="doc-article">
+            <span class="doc-art-title">Article I — Authority of Revocation</span>
+            <span class="doc-line">Section 1.1 — The Office of the President of The Legend of Legiona reserves the unconditional right to revoke the citizenship of any individual at any time and from any location, without prior notice, and without the requirement for stated justification.</span>
+            <span class="doc-line">Section 1.2 — Grounds for revocation include, but are not limited to: violation of Skyxion server rules, acts of hostility or terrorism against The LoL or its citizens, conduct deemed unbecoming of a citizen, or any act found to threaten the stability, reputation, or integrity of The Legend of Legiona.</span>
+            <span class="doc-line">Section 1.3 — A citizen whose citizenship has been revoked may appeal in writing to the Office of the President. The decision of the President on such an appeal is final and binding.</span>
+          </div>
+        </div>
+        <div class="doc-foot">
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/">→ View Full Document in Legal Archive</a>
+          <span>SKYXION: ALTAER ERA // OFFICE OF THE PRESIDENT</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══ CTA ═══ -->
+  <div class="cta">
+    <div class="cta-inner">
+      <span class="cta-tag">READY TO JOIN? // THELOL.GOV // ALTAER ERA</span>
+      <h2>Become a <em>Citizen</em></h2>
+      <p>Applications for the Skyxion: Altaer Era are now open. Existing citizens may also submit renewal applications via the same portal. Choose your application type below.</p>
+      <div class="cta-btns">
+        <a href="apply.html?type=apply" class="btn">New Application →</a>
+        <a href="apply.html?type=renew" class="btn btn-ghost">Renewal Application →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>The Legend of <em>Legiona</em></h3>
+          <p>Official citizenship portal of The LoL — a sovereign nation on Skyxion Minecraft server, est. 2023. Egalitarian governance. Open to all players.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Citizenship</h4>
+          <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#eligibility">Eligibility</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#obligations">Obligations</a></li>
+            <li><a href="apply.html">Apply / Renew</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Government</h4>
+          <ul>
+            <li><a href="https://faizzzlol.github.io/thelol/gov/">Gov Portal</a></li>
+            <li><a href="https://faizzzlol.github.io/thelol/gov/assets/">Legal Archive</a></li>
+            <li><a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC Portal</a></li>
+            <li><a href="https://faizzzlol.github.io/thelol/about">About The LoL</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 THE LEGEND OF LEGIONA // CITIZENSHIP PORTAL</p>
+        <p>SKYXION: ALTAER ERA // THELOL.GOV</p>
+      </div>
+      <p class="disclaimer">
+        <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft. The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with or associated with Kawaiisho. This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Hamburger
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobileNav');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // ── Active section nav highlight on scroll
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const snavLinks = document.querySelectorAll('.snav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 130) current = s.id;
+      });
+      snavLinks.forEach(a => {
+        const href = a.getAttribute('href');
+        a.classList.toggle('active', href === '#' + current);
+      });
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
