@@ -166,7 +166,9 @@
       position: relative;
     }
     .type-btn:hover { background: var(--surface-2); }
-    .type-btn.selected { background: var(--gold-bg); }
+    .type-btn.selected {
+      background: var(--gold-bg);
+    }
     .type-btn.selected::after {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0;
@@ -192,7 +194,9 @@
     .type-btn.selected p { color: var(--muted); }
 
     /* ─── FORM ─── */
-    .form-section { margin-bottom: 40px; }
+    .form-section {
+      margin-bottom: 40px;
+    }
     .form-section-title {
       font-family: var(--fm); font-size: 11px;
       letter-spacing: 0.12em; text-transform: uppercase;
@@ -250,6 +254,73 @@
     }
     .ct-btn:hover { color: var(--muted); background: var(--surface-2); }
     .ct-btn.active { background: var(--gold-bg); color: var(--gold); }
+
+    /* File upload */
+    .file-upload-area {
+      border: 1px dashed var(--border);
+      background: var(--surface);
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .file-upload-area:hover,
+    .file-upload-area.dragging {
+      border-color: var(--gold);
+      background: var(--gold-bg);
+    }
+    .file-upload-area input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .upload-icon {
+      font-family: var(--fm); font-size: 24px;
+      color: var(--dim); display: block; margin-bottom: 10px;
+    }
+    .upload-main {
+      font-family: var(--fh); font-size: 16px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted);
+      display: block; margin-bottom: 4px;
+    }
+    .upload-sub {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; color: var(--dim);
+    }
+    .file-preview {
+      display: none;
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      padding: 12px;
+      align-items: center; gap: 14px;
+    }
+    .file-preview.show { display: flex; }
+    .file-preview img {
+      width: 56px; height: 56px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      border: 1px solid var(--border);
+    }
+    .file-preview-info { flex: 1; min-width: 0; }
+    .file-preview-name {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--muted); display: block;
+      overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-preview-size {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--dim); letter-spacing: 0.08em;
+    }
+    .file-preview-remove {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--red); cursor: pointer;
+      background: none; border: none; padding: 4px;
+      flex-shrink: 0; transition: opacity 0.2s;
+    }
+    .file-preview-remove:hover { opacity: 0.7; }
 
     /* ─── DECLARATIONS ─── */
     .declarations { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
@@ -316,7 +387,9 @@
       display: flex; align-items: center; justify-content: center; gap: 10px;
     }
     .btn-submit:hover:not(:disabled) { background: var(--gold); color: var(--bg); }
-    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-submit:disabled {
+      opacity: 0.4; cursor: not-allowed;
+    }
     .btn-submit .spinner {
       display: none; width: 14px; height: 14px;
       border: 1px solid currentColor;
@@ -555,9 +628,34 @@
           </div>
         </div>
 
-        <!-- SECTION 3: DECLARATIONS -->
+        <!-- SECTION 3: SKIN AVATAR -->
         <div class="form-section">
-          <span class="form-section-title">Section 03 // Declarations &amp; Agreements</span>
+          <span class="form-section-title">Section 03 // Minecraft Skin Avatar</span>
+
+          <div class="field" id="fieldSkin">
+            <label>Skin Avatar Screenshot <span class="req">*</span></label>
+            <p class="field-note">Upload a screenshot of your Minecraft character / skin avatar. A clear front-facing view of your skin is preferred. JPG, PNG accepted. Max 8MB.</p>
+            <div class="file-upload-area" id="dropZone">
+              <input type="file" id="skinFile" name="skin_avatar" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+              <span class="upload-icon">↑</span>
+              <span class="upload-main">Upload Skin Screenshot</span>
+              <span class="upload-sub">Click to browse, or drag and drop // PNG, JPG // Max 8MB</span>
+            </div>
+            <div class="file-preview" id="filePreview">
+              <img id="previewImg" src="" alt="Skin preview">
+              <div class="file-preview-info">
+                <span class="file-preview-name" id="previewName"></span>
+                <span class="file-preview-size" id="previewSize"></span>
+              </div>
+              <button type="button" class="file-preview-remove" onclick="removeFile()">✕ Remove</button>
+            </div>
+            <span class="field-error" id="skinError">Skin avatar is required.</span>
+          </div>
+        </div>
+
+        <!-- SECTION 4: DECLARATIONS -->
+        <div class="form-section">
+          <span class="form-section-title">Section 04 // Declarations &amp; Agreements</span>
           <p class="field-note" style="margin-bottom: 16px;">You must check all boxes to proceed. These declarations are legally binding within The LoL's governance framework.</p>
 
           <div class="declarations" id="declarationsBlock">
@@ -674,7 +772,9 @@
     }
 
     // ── Contact method toggle ──
+    let contactMethod = 'discord';
     function setContact(method) {
+      contactMethod = method;
       document.getElementById('contactMethod').value = method;
       document.getElementById('ctDiscord').classList.toggle('active', method === 'discord');
       document.getElementById('ctWhatsapp').classList.toggle('active', method === 'whatsapp');
@@ -686,6 +786,48 @@
         input.type = 'tel';
         input.placeholder = 'WhatsApp number with country code (e.g. +60123456789)';
       }
+    }
+
+    // ── File upload & preview ──
+    const skinFileInput = document.getElementById('skinFile');
+    const filePreview   = document.getElementById('filePreview');
+    const dropZone      = document.getElementById('dropZone');
+    let selectedFile    = null;
+
+    skinFileInput.addEventListener('change', e => {
+      if (e.target.files[0]) handleFile(e.target.files[0]);
+    });
+
+    dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('dragging'); });
+    dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('dragging'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault(); dropZone.classList.remove('dragging');
+      const f = e.dataTransfer.files[0];
+      if (f && f.type.startsWith('image/')) handleFile(f);
+    });
+
+    function handleFile(file) {
+      if (file.size > 8 * 1024 * 1024) {
+        alert('File is too large. Maximum size is 8MB.');
+        return;
+      }
+      selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        document.getElementById('previewImg').src = ev.target.result;
+        document.getElementById('previewName').textContent = file.name;
+        document.getElementById('previewSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+        filePreview.classList.add('show');
+      };
+      reader.readAsDataURL(file);
+      clearFieldError('fieldSkin');
+    }
+
+    function removeFile() {
+      selectedFile = null;
+      skinFileInput.value = '';
+      filePreview.classList.remove('show');
+      document.getElementById('previewImg').src = '';
     }
 
     // ── Validation ──
@@ -718,6 +860,15 @@
         valid = false;
       } else clearFieldError('fieldContact');
 
+      if (!selectedFile) {
+        document.getElementById('fieldSkin').classList.add('invalid');
+        document.getElementById('skinError').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('fieldSkin').classList.remove('invalid');
+        document.getElementById('skinError').style.display = 'none';
+      }
+
       const checks     = document.querySelectorAll('.decl-check');
       const allChecked = Array.from(checks).every(c => c.checked);
       if (!allChecked) {
@@ -737,7 +888,7 @@
       return `THELOL-CTZN-${year}-${num}`;
     }
 
-    // ── Submit to Formspree ──
+    // ── Submit ──
     document.getElementById('citizenForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       if (!validateForm()) return;
@@ -753,15 +904,21 @@
       const contactMethodVal = document.getElementById('contactMethod').value;
       const contact          = document.getElementById('contactInput').value.trim();
 
+      // ── Build FormData for Formspree ──
+      // Formspree receives this as a structured email / dashboard entry.
+      // The skin image is attached under the field name "skin_avatar".
       const fd = new FormData();
-      fd.append('Application Type', type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION');
-      fd.append('Reference Number', ref);
-      fd.append('Call Name',        callName);
-      fd.append('Minecraft IGN',    ign);
-      fd.append('Contact Method',   contactMethodVal === 'discord' ? 'Discord' : 'WhatsApp');
-      fd.append('Contact Details',  contact);
-      fd.append('Era',              'SKYXION: ALTAER ERA');
-      fd.append('_subject',         `[${type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION'}] The LoL Citizenship — ${callName} (${ign}) // ${ref}`);
+      fd.append('Application Type',  type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION');
+      fd.append('Reference Number',  ref);
+      fd.append('Call Name',         callName);
+      fd.append('Minecraft IGN',     ign);
+      fd.append('Contact Method',    contactMethodVal === 'discord' ? 'Discord' : 'WhatsApp');
+      fd.append('Contact Details',   contact);
+      fd.append('Era',               'SKYXION: ALTAER ERA');
+      fd.append('_subject',          `[${type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION'}] The LoL Citizenship — ${callName} (${ign}) // ${ref}`);
+      // _replyto: use contact only if it looks like an email, otherwise leave blank
+      if (contact.includes('@') && !contact.includes(' ')) fd.append('_replyto', contact);
+      if (selectedFile) fd.append('skin_avatar', selectedFile, selectedFile.name);
 
       try {
         const res  = await fetch('https://formspree.io/f/mnjovorn', {
@@ -772,11 +929,13 @@
         const data = await res.json();
 
         if (res.ok && data.ok) {
+          // ── Success ──
           document.getElementById('formWrapper').style.display = 'none';
           document.getElementById('successRef').textContent   = 'REF // ' + ref;
           document.getElementById('panelSuccess').classList.add('show');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
+          // ── Formspree returned a structured error ──
           const errMsg = (data.errors && data.errors.length)
             ? data.errors.map(err => err.message).join(' ')
             : 'Submission rejected by server. Check your details and try again.';
@@ -801,9 +960,9 @@
     }
 
     // ── Live field clear on input ──
-    document.getElementById('callName').addEventListener('input',     () => clearFieldError('fieldCallName'));
-    document.getElementById('ign').addEventListener('input',          () => clearFieldError('fieldIGN'));
-    document.getElementById('contactInput').addEventListener('input',  () => clearFieldError('fieldContact'));
+    document.getElementById('callName').addEventListener('input',    () => clearFieldError('fieldCallName'));
+    document.getElementById('ign').addEventListener('input',         () => clearFieldError('fieldIGN'));
+    document.getElementById('contactInput').addEventListener('input', () => clearFieldError('fieldContact'));
     document.querySelectorAll('.decl-check').forEach(c => {
       c.addEventListener('change', () => {
         const all = Array.from(document.querySelectorAll('.decl-check')).every(x => x.checked);
