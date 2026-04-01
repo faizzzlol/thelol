@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Legend of Legiona — The LoL</title>
+    <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
     <meta property="og:title" content="The Legend of Legiona">
     <meta property="og:description" content="A sovereign nation forged in vision, courage, and camaraderie. Welcome to The LoL.">
     <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
@@ -262,7 +263,6 @@
         }
         .btn-secondary:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
 
-        /* Hero scroll indicator */
         .hero-scroll {
             position: absolute; bottom: 2.5rem; left: 0; right: 0;
             display: flex; justify-content: center;
@@ -309,6 +309,7 @@
             max-width: 300px; text-align: right; line-height: 1.7;
         }
 
+        /* Featured 2-col cards */
         .hub-featured {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -366,17 +367,45 @@
         .hub-card:hover .hc-arrow { letter-spacing: 3px; color: var(--emerald); }
         .hub-card.gold-card:hover .hc-arrow { color: var(--gold); }
 
+        /* ── Subsection label ── */
+        .hub-sublabel {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem; letter-spacing: 3px;
+            color: rgba(255,255,255,0.18);
+            padding: 18px 0 10px;
+            border-top: 1px solid var(--border-dark);
+            margin-top: 24px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .hub-sublabel::after {
+            content: ''; flex: 1; height: 1px;
+            background: var(--border-dark);
+        }
+        .hub-sublabel.gold { color: rgba(200,150,42,0.35); }
+        .hub-sublabel.gold::after { background: rgba(200,150,42,0.1); }
+
+        /* Mini grid */
         .hub-grid {
             display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 3px;
+        }
+        .hub-grid-4 {
+            display: grid;
             grid-template-columns: repeat(4, 1fr);
+            gap: 3px;
+        }
+        .hub-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 3px;
         }
 
         .hub-mini {
             background: var(--charcoal3);
-            padding: 1.8rem 1.6rem;
+            padding: 1.6rem 1.5rem;
             text-decoration: none; color: inherit;
-            display: flex; flex-direction: column; gap: 8px;
+            display: flex; flex-direction: column; gap: 7px;
             position: relative; overflow: hidden;
             transition: background 0.2s;
         }
@@ -390,28 +419,41 @@
         }
         .hub-mini:hover::after { transform: scaleX(1); }
 
+        /* Corp-accent mini */
+        .hub-mini.corp-accent::after { background: var(--emerald); }
+        .hub-mini.corp-accent:hover { background: rgba(52,160,106,0.06); }
+        .hub-mini.community-accent::after { background: #5865F2; }
+
         .hm-tag {
             font-family: 'DM Mono', monospace;
-            font-size: 0.48rem; letter-spacing: 2px;
+            font-size: 0.47rem; letter-spacing: 2px;
             color: var(--gold); opacity: 0.6;
         }
+        .hub-mini.corp-accent .hm-tag { color: var(--emerald); }
+        .hub-mini.community-accent .hm-tag { color: #7289DA; opacity: 0.8; }
+
         .hm-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1rem; font-weight: 700; color: #fff;
+            font-size: 0.95rem; font-weight: 700; color: #fff;
             line-height: 1.2;
         }
         .hm-desc {
-            font-size: 0.78rem; color: rgba(255,255,255,0.3);
+            font-size: 0.76rem; color: rgba(255,255,255,0.3);
             line-height: 1.55; font-weight: 300;
         }
         .hm-arrow {
             font-family: 'DM Mono', monospace;
-            font-size: 0.55rem; letter-spacing: 1.5px;
+            font-size: 0.52rem; letter-spacing: 1.5px;
             color: rgba(200,150,42,0.45);
             transition: letter-spacing 0.2s, color 0.2s;
             margin-top: auto; padding-top: 8px;
         }
-        .hub-mini:hover .hm-arrow { letter-spacing: 2.5px; color: var(--gold); }
+        .hub-mini.corp-accent .hm-arrow { color: rgba(52,160,106,0.45); }
+        .hub-mini.community-accent .hm-arrow { color: rgba(114,137,218,0.5); }
+        .hub-mini:hover .hm-arrow { letter-spacing: 2.5px; }
+        .hub-mini:hover .hm-arrow { color: var(--gold); }
+        .hub-mini.corp-accent:hover .hm-arrow { color: var(--emerald); }
+        .hub-mini.community-accent:hover .hm-arrow { color: #7289DA; }
 
         /* ─── ABOUT ─── */
         .about-section {
@@ -765,24 +807,27 @@
         .reveal.in { opacity: 1; transform: translateY(0); }
 
         /* ─── RESPONSIVE ─── */
-        @media (max-width: 1100px) {
-            .hub-grid { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 1200px) {
+            .hub-grid   { grid-template-columns: repeat(3, 1fr); }
+            .hub-grid-4 { grid-template-columns: repeat(2, 1fr); }
             .footer-main { grid-template-columns: 1fr 1fr 1fr; }
         }
 
         @media (max-width: 900px) {
-            .hub-featured { grid-template-columns: 1fr; }
-            .hub-grid { grid-template-columns: repeat(2, 1fr); }
-            .about-inner { grid-template-columns: 1fr; gap: 40px; }
+            .hub-featured  { grid-template-columns: 1fr; }
+            .hub-grid      { grid-template-columns: repeat(2, 1fr); }
+            .hub-grid-4    { grid-template-columns: repeat(2, 1fr); }
+            .hub-grid-3    { grid-template-columns: repeat(2, 1fr); }
+            .about-inner   { grid-template-columns: 1fr; gap: 40px; }
             .timeline-cards { grid-template-columns: 1fr 1fr; }
-            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .stats-inner   { grid-template-columns: repeat(2, 1fr); }
             .founders-grid { grid-template-columns: 1fr; }
             .founders-header { grid-template-columns: 1fr; gap: 20px; }
-            .footer-main { grid-template-columns: 1fr 1fr; }
+            .footer-main   { grid-template-columns: 1fr 1fr; }
             .sitenav-links { display: none; }
-            .hamburger { display: flex; }
+            .hamburger     { display: flex; }
             .history-header p { display: none; }
-            .hub-header p { display: none; }
+            .hub-header p     { display: none; }
         }
 
         @media (max-width: 640px) {
@@ -791,43 +836,47 @@
             .sitenav { top: 0 !important; }
             .hero { padding: calc(80px) 5% 5rem; min-height: 100svh; }
             .hero h1 { font-size: clamp(3rem, 13vw, 5rem); letter-spacing: -1px; }
-            .hub-grid { grid-template-columns: 1fr 1fr; }
+            .hub-grid      { grid-template-columns: 1fr 1fr; }
+            .hub-grid-4    { grid-template-columns: 1fr 1fr; }
+            .hub-grid-3    { grid-template-columns: 1fr 1fr; }
             .timeline-cards { grid-template-columns: 1fr; }
-            .stats-inner { grid-template-columns: 1fr 1fr; }
-            .footer-main { grid-template-columns: 1fr; }
+            .stats-inner   { grid-template-columns: 1fr 1fr; }
+            .footer-main   { grid-template-columns: 1fr; }
             .footer-bottom-inner { flex-direction: column; text-align: center; }
-            .hero-actions { flex-direction: column; }
+            .hero-actions  { flex-direction: column; }
             .proclamation-block { flex-direction: column; }
             .proc-btns { width: 100%; }
-            .proc-btn { flex: 1; text-align: center; }
+            .proc-btn  { flex: 1; text-align: center; }
             .hub-header h2 { font-size: 1.8rem; }
-            .contact-btns { flex-direction: column; align-items: center; }
-            .hero-scroll { display: none; }
+            .contact-btns  { flex-direction: column; align-items: center; }
+            .hero-scroll   { display: none; }
         }
 
         @media (max-width: 420px) {
-            .hub-grid { grid-template-columns: 1fr; }
+            .hub-grid, .hub-grid-4, .hub-grid-3 { grid-template-columns: 1fr; }
             .stats-inner { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NETWORK BAR -->
+    <!-- ─── NETWORK BAR ─── -->
+    <!-- Order: PAIZ® CORP · THE LOL · PAIZ SHOP · PAIZ CHICKEN · PAIZPRODUCTIONS · THE LOL MOVIE · GOVERNMENT · ISC · TL RAILWAYS -->
     <nav class="netbar" id="netbar" aria-label="Network">
         <div class="netbar-inner">
             <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
-            <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
-            <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
-            <a href="https://faizzzlol.github.io/thelol/">THE LOL</a>
+            <a href="https://faizzzlol.github.io/thelol/" class="nb-active">THE LOL</a>
             <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
             <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
-            <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
             <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+            <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
         </div>
     </nav>
 
-    <!-- SITE NAV -->
+    <!-- ─── SITE NAV ─── -->
     <header class="sitenav" id="sitenav">
         <a href="/thelol/" class="sitenav-logo">
             <img src="/thelol/assets/TheLoL.png" alt="The LoL" onerror="this.style.display='none'">
@@ -845,19 +894,22 @@
         </button>
     </header>
 
-    <!-- MOBILE MENU -->
+    <!-- ─── MOBILE MENU ─── -->
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
-        <a href="#about" onclick="closeMobile()">ABOUT</a>
-        <a href="#history" onclick="closeMobile()">HISTORY</a>
-        <a href="#network" onclick="closeMobile()">NETWORK HUB</a>
+        <a href="#about"    onclick="closeMobile()">ABOUT</a>
+        <a href="#history"  onclick="closeMobile()">HISTORY</a>
+        <a href="#network"  onclick="closeMobile()">NETWORK HUB</a>
         <a href="#founders" onclick="closeMobile()">FOUNDERS</a>
-        <a href="/thelol/gov/" onclick="closeMobile()">GOVERNMENT PORTAL</a>
-        <a href="/thelol/gov/isc/" onclick="closeMobile()">ISC</a>
-        <a href="/thelol/tlr/" onclick="closeMobile()">TL RAILWAYS</a>
+        <a href="/thelol/gov/"       onclick="closeMobile()">GOVERNMENT PORTAL</a>
+        <a href="/thelol/gov/isc/"   onclick="closeMobile()">ISC</a>
+        <a href="/thelol/tlr/"       onclick="closeMobile()">TL RAILWAYS</a>
+        <a href="/thelol/gov/assets/" onclick="closeMobile()">LEGAL ARCHIVE</a>
+        <a href="https://faizzzlol.github.io/PaizCorp/" onclick="closeMobile()">PAIZ® CORP</a>
+        <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie" onclick="closeMobile()">THE LOL MOVIE</a>
         <a href="/thelol/about" onclick="closeMobile()">FULL HISTORY</a>
     </nav>
 
-    <!-- HERO -->
+    <!-- ─── HERO ─── -->
     <section class="hero" id="home">
         <div class="hero-bg-glow"></div>
         <div class="hero-bg-glow-2"></div>
@@ -881,17 +933,20 @@
         <div class="hero-scroll"><div class="scroll-line"></div></div>
     </section>
 
-    <!-- ─── HUB NETWORK CARDS ─── -->
+    <!-- ─── NETWORK HUB ─── -->
     <section class="hub-section" id="network">
         <div class="hub-inner">
+
             <div class="hub-header reveal">
                 <div>
-                    <div class="section-eyebrow">PAIZ® CORP NETWORK</div>
-                    <h2>Everything<br>in <em>The LoL.</em></h2>
+                    <div class="section-eyebrow">COMPLETE NETWORK DIRECTORY</div>
+                    <h2>Everything<br>in <em>The Network.</em></h2>
                 </div>
-                <p>All portals, agencies, and services of The Legend of Legiona and the Paiz® Corp network in one place.</p>
+                <p>Every portal, studio, store, and service across The LoL and the Paiz® Corp network — all in one place.</p>
             </div>
 
+            <!-- GOVERNMENT PORTALS — Featured -->
+            <div class="hub-sublabel reveal" style="margin-top:0; border-top:none; padding-top:0;">THE LOL — GOVERNMENT PORTALS</div>
             <div class="hub-featured reveal">
                 <a href="/thelol/gov/" class="hub-card">
                     <span class="hc-tag">PORTAL-01 // OFFICIAL GOVERNANCE</span>
@@ -907,72 +962,91 @@
                 </a>
             </div>
 
-            <div class="hub-grid reveal" style="margin-top: 3px;">
-                <a href="/thelol/about" class="hub-mini">
+            <!-- THE LOL — Sub-sites -->
+            <div class="hub-sublabel reveal">THE LOL — SUB-SITES &amp; PORTALS</div>
+            <div class="hub-grid-4 reveal">
+                <a href="/thelol/about" class="hub-mini corp-accent">
                     <span class="hm-tag">HISTORY // THE LOL</span>
                     <span class="hm-name">About The LoL</span>
-                    <p class="hm-desc">The full national timeline — from The Sus to The Legend of Legiona.</p>
+                    <p class="hm-desc">The full national timeline — from The Sus Era to the Altaer Era.</p>
                     <span class="hm-arrow">READ MORE →</span>
                 </a>
-                <a href="/thelol/tlr/" class="hub-mini">
-                    <span class="hm-tag">TRANSPORT // SUBSIDIARY</span>
+                <a href="/thelol/tlr/" class="hub-mini corp-accent">
+                    <span class="hm-tag">TRANSPORT // NATIONAL</span>
                     <span class="hm-name">TL Railways</span>
                     <p class="hm-desc">National rail network. Routes, timetables, and 4,800+ blocks of track.</p>
                     <span class="hm-arrow">VIEW ROUTES →</span>
                 </a>
-                <a href="/thelol/gov/isc/national" class="hub-mini">
+                <a href="/thelol/gov/assets/" class="hub-mini corp-accent">
+                    <span class="hm-tag">DOCUMENTS // LEGAL</span>
+                    <span class="hm-name">Legal Archive</span>
+                    <p class="hm-desc">Proclamations, citizenship acts, decrees and sovereign legal records. Searchable.</p>
+                    <span class="hm-arrow">BROWSE DOCS →</span>
+                </a>
+                <a href="/thelol/gov/isc/national" class="hub-mini corp-accent">
                     <span class="hm-tag">ARCHIVE // PUBLIC ACCESS</span>
                     <span class="hm-name">ISC National Archive</span>
                     <p class="hm-desc">Declassified ISC records and national transparency portal.</p>
                     <span class="hm-arrow">OPEN ARCHIVE →</span>
                 </a>
-                <a href="/thelol/gov/assets/" class="hub-mini">
-                    <span class="hm-tag">DOCUMENTS // LEGAL</span>
-                    <span class="hm-name">Legal Archive</span>
-                    <p class="hm-desc">Proclamations, policies, decrees and sovereign legal records.</p>
-                    <span class="hm-arrow">BROWSE DOCS →</span>
-                </a>
+            </div>
+
+            <!-- PAIZ® CORP — All sites -->
+            <div class="hub-sublabel gold reveal">PAIZ® CORP — FULL NETWORK</div>
+            <div class="hub-grid reveal">
                 <a href="https://faizzzlol.github.io/PaizCorp/" class="hub-mini">
-                    <span class="hm-tag">CORP HUB // PARENT</span>
+                    <span class="hm-tag">HUB // PARENT COMPANY</span>
                     <span class="hm-name">Paiz® Corp</span>
-                    <p class="hm-desc">The conglomerate homepage. Explore all subsidiaries and projects.</p>
+                    <p class="hm-desc">The conglomerate homepage. Explore all subsidiaries, services, and projects under one roof.</p>
                     <span class="hm-arrow">VISIT HUB →</span>
                 </a>
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="hub-mini">
                     <span class="hm-tag">STOREFRONT // CORP</span>
                     <span class="hm-name">Paiz Shop</span>
-                    <p class="hm-desc">Official in-game item shop. Browse and order resources in-world.</p>
+                    <p class="hm-desc">Official in-game item shop. Browse and order resources in-world. Priced in diamonds.</p>
                     <span class="hm-arrow">SHOP NOW →</span>
                 </a>
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/" class="hub-mini">
-                    <span class="hm-tag">FOOD // CORP</span>
+                    <span class="hm-tag">FOOD &amp; BEVERAGE // CORP</span>
                     <span class="hm-name">Paiz Chicken</span>
-                    <p class="hm-desc">Online food ordering across Skyxion. Priced in diamonds.</p>
+                    <p class="hm-desc">Online food ordering across Skyxion. Fast, hot, and priced in diamonds.</p>
                     <span class="hm-arrow">ORDER NOW →</span>
                 </a>
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/" class="hub-mini">
-                    <span class="hm-tag">FILM & MEDIA // CORP</span>
+                    <span class="hm-tag">FILM &amp; MEDIA // CORP</span>
                     <span class="hm-name">PaizProductions</span>
-                    <p class="hm-desc">Official film studio. The LoL Movie, Chronicles, and ISC: Classified.</p>
+                    <p class="hm-desc">Official Paiz® Corp film studio. Home of The LoL Movie, Chronicles, and ISC: Classified.</p>
                     <span class="hm-arrow">VIEW STUDIO →</span>
                 </a>
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie" class="hub-mini">
                     <span class="hm-tag">FILM // PAIZPRODUCTIONS</span>
                     <span class="hm-name">The LoL Movie</span>
-                    <p class="hm-desc">The upcoming cinematic feature based on The LoL's history.</p>
+                    <p class="hm-desc">The upcoming cinematic feature. The story of The Legend of Legiona — on screen.</p>
                     <span class="hm-arrow">LEARN MORE →</span>
                 </a>
-                <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener" class="hub-mini">
+            </div>
+
+            <!-- COMMUNITY -->
+            <div class="hub-sublabel reveal">COMMUNITY &amp; RESOURCES</div>
+            <div class="hub-grid-3 reveal">
+                <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener" class="hub-mini community-accent">
                     <span class="hm-tag">COMMUNITY // DISCORD</span>
                     <span class="hm-name">The LoL Discord</span>
-                    <p class="hm-desc">Join the official Discord server for The Legend of Legiona.</p>
+                    <p class="hm-desc">The official server. Connect, apply for citizenship, and follow announcements.</p>
                     <span class="hm-arrow">JOIN SERVER →</span>
                 </a>
+                <a href="/thelol/download-tlolpack.html" class="hub-mini community-accent">
+                    <span class="hm-tag">RESOURCES // THE LOL</span>
+                    <span class="hm-name">TLoL Resource Pack</span>
+                    <p class="hm-desc">Official Minecraft resource pack for the best in-server visual experience.</p>
+                    <span class="hm-arrow">DOWNLOAD →</span>
+                </a>
             </div>
+
         </div>
     </section>
 
-    <!-- STATS -->
+    <!-- ─── STATS ─── -->
     <div class="stats-strip reveal">
         <div class="stats-inner">
             <div class="stat-block">
@@ -994,7 +1068,7 @@
         </div>
     </div>
 
-    <!-- ABOUT -->
+    <!-- ─── ABOUT ─── -->
     <section class="about-section" id="about">
         <div class="about-inner">
             <div class="about-text reveal">
@@ -1047,7 +1121,7 @@
         </div>
     </section>
 
-    <!-- HISTORY -->
+    <!-- ─── HISTORY ─── -->
     <section class="history-section" id="history">
         <div class="history-inner">
             <div class="history-header reveal">
@@ -1098,7 +1172,7 @@
         </div>
     </section>
 
-    <!-- FOUNDERS -->
+    <!-- ─── FOUNDERS ─── -->
     <section class="founders-section" id="founders">
         <div class="founders-inner">
             <div class="founders-header reveal">
@@ -1142,13 +1216,13 @@
                 </div>
                 <div class="proc-btns">
                     <a href="/thelol/assets/The_LoL_Proclamation.pdf" class="proc-btn green" target="_blank">↓ PROCLAMATION (EN)</a>
-                    <a href="/thelol/assets/Proklamasi_The_LoL.pdf" class="proc-btn gold" target="_blank">↓ PROKLAMASI (BM)</a>
+                    <a href="/thelol/assets/Proklamasi_The_LoL.pdf"  class="proc-btn gold"  target="_blank">↓ PROKLAMASI (BM)</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- ─── CONTACT ─── -->
     <section class="contact-section" id="contact">
         <div class="contact-inner">
             <div class="section-eyebrow" style="justify-content:center;">JOIN THE COMMUNITY</div>
@@ -1164,7 +1238,7 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- ─── FOOTER ─── -->
     <footer>
         <div class="footer-main">
             <div>
@@ -1190,12 +1264,14 @@
                 <a href="/thelol/gov/isc/">ISC</a>
                 <a href="/thelol/tlr/">TL Railways</a>
                 <a href="/thelol/gov/assets/">Legal Archive</a>
+                <a href="/thelol/download-tlolpack.html">Resource Pack</a>
             </div>
             <div class="f-col">
                 <h5>DOCUMENTS</h5>
                 <a href="/thelol/assets/The_LoL_Proclamation.pdf" target="_blank">Proclamation (EN)</a>
-                <a href="/thelol/assets/Proklamasi_The_LoL.pdf" target="_blank">Proklamasi (BM)</a>
+                <a href="/thelol/assets/Proklamasi_The_LoL.pdf"   target="_blank">Proklamasi (BM)</a>
                 <a href="/thelol/gov/isc/search">Public Archive</a>
+                <a href="/thelol/gov/isc/national">ISC Archive</a>
             </div>
             <div class="f-col network">
                 <h5>NETWORK</h5>
@@ -1203,6 +1279,7 @@
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">Paiz Shop</a>
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">Paiz Chicken</a>
                 <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PaizProductions</a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">The LoL Movie</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1216,7 +1293,7 @@
         </div>
     </footer>
 
-    <!-- SITE NAV SCROLL BEHAVIOUR -->
+    <!-- ─── SCRIPTS ─── -->
     <script>
         const sitenav = document.getElementById('sitenav');
         const netbar  = document.getElementById('netbar');
