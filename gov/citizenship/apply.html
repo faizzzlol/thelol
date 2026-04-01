@@ -636,7 +636,7 @@
             <label>Skin Avatar Screenshot <span class="req">*</span></label>
             <p class="field-note">Upload a screenshot of your Minecraft character / skin avatar. A clear front-facing view of your skin is preferred. JPG, PNG accepted. Max 8MB.</p>
             <div class="file-upload-area" id="dropZone">
-              <input type="file" id="skinFile" name="skin" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+              <input type="file" id="skinFile" name="skin_avatar" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
               <span class="upload-icon">↑</span>
               <span class="upload-main">Upload Skin Screenshot</span>
               <span class="upload-sub">Click to browse, or drag and drop // PNG, JPG // Max 8MB</span>
@@ -740,20 +740,6 @@
   </footer>
 
   <script>
-    /* ==========================================================
-       CONFIGURATION — SET YOUR DISCORD WEBHOOK URL BELOW
-       ==========================================================
-       HOW TO GET YOUR WEBHOOK URL:
-         1. Open Discord — go to the private channel you want
-            applications sent to (e.g. #citizenship-applications)
-         2. Right-click the channel → Edit Channel
-         3. Go to Integrations → Webhooks → New Webhook
-         4. Name it (e.g. "The LoL Citizenship") → Copy Webhook URL
-         5. Paste the URL below, replacing the placeholder text
-       ========================================================== */
-    const WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
-    /* ========================================================== */
-
     // ── Hamburger ──
     const burger = document.getElementById('burger');
     const mobileNav = document.getElementById('mobileNav');
@@ -804,16 +790,16 @@
 
     // ── File upload & preview ──
     const skinFileInput = document.getElementById('skinFile');
-    const filePreview = document.getElementById('filePreview');
-    const dropZone = document.getElementById('dropZone');
-    let selectedFile = null;
+    const filePreview   = document.getElementById('filePreview');
+    const dropZone      = document.getElementById('dropZone');
+    let selectedFile    = null;
 
     skinFileInput.addEventListener('change', e => {
       if (e.target.files[0]) handleFile(e.target.files[0]);
     });
 
-    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
+    dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('dragging'); });
+    dropZone.addEventListener('dragleave', ()  => dropZone.classList.remove('dragging'));
     dropZone.addEventListener('drop', e => {
       e.preventDefault(); dropZone.classList.remove('dragging');
       const f = e.dataTransfer.files[0];
@@ -830,8 +816,7 @@
       reader.onload = ev => {
         document.getElementById('previewImg').src = ev.target.result;
         document.getElementById('previewName').textContent = file.name;
-        document.getElementById('previewSize').textContent =
-          (file.size / 1024).toFixed(1) + ' KB';
+        document.getElementById('previewSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
         filePreview.classList.add('show');
       };
       reader.readAsDataURL(file);
@@ -884,7 +869,7 @@
         document.getElementById('skinError').style.display = 'none';
       }
 
-      const checks = document.querySelectorAll('.decl-check');
+      const checks     = document.querySelectorAll('.decl-check');
       const allChecked = Array.from(checks).every(c => c.checked);
       if (!allChecked) {
         document.getElementById('declError').style.display = 'block';
@@ -899,82 +884,68 @@
     // ── Generate reference number ──
     function genRef() {
       const year = new Date().getFullYear();
-      const num = String(Math.floor(1000 + Math.random() * 9000));
-      return `LOL-CTZN-${year}-${num}`;
+      const num  = String(Math.floor(1000 + Math.random() * 9000));
+      return `THELOL-CTZN-${year}-${num}`;
     }
 
-    // ── Submit to Discord ──
+    // ── Submit ──
     document.getElementById('citizenForm').addEventListener('submit', async function (e) {
       e.preventDefault();
       if (!validateForm()) return;
-
-      if (WEBHOOK_URL === 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
-        alert('⚠️ Discord Webhook URL has not been configured yet.\n\nPlease set WEBHOOK_URL in the script section of apply.html.');
-        return;
-      }
 
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.classList.add('loading');
       submitBtn.disabled = true;
 
-      const ref = genRef();
-      const type = document.getElementById('appType').value;
-      const callName = document.getElementById('callName').value.trim();
-      const ign = document.getElementById('ign').value.trim();
+      const ref              = genRef();
+      const type             = document.getElementById('appType').value;
+      const callName         = document.getElementById('callName').value.trim();
+      const ign              = document.getElementById('ign').value.trim();
       const contactMethodVal = document.getElementById('contactMethod').value;
-      const contact = document.getElementById('contactInput').value.trim();
+      const contact          = document.getElementById('contactInput').value.trim();
 
-      const typeLabel = type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION';
-      const embedColor = 0xC6A664; // LoL gold
-
-      const payload = {
-        username: 'The LoL Citizenship Portal',
-        embeds: [{
-          title: type === 'renew'
-            ? '🔄 Citizenship Renewal Application'
-            : '🏛️ New Citizenship Application',
-          color: embedColor,
-          fields: [
-            { name: 'Type',          value: typeLabel,         inline: true  },
-            { name: 'Reference',     value: `\`${ref}\``,      inline: true  },
-            { name: '\u200b',        value: '\u200b',           inline: false },
-            { name: 'Call Name',     value: callName,          inline: true  },
-            { name: 'Minecraft IGN', value: `\`${ign}\``,      inline: true  },
-            {
-              name: contactMethodVal === 'discord' ? 'Discord' : 'WhatsApp',
-              value: contact,
-              inline: false
-            },
-          ],
-          footer: {
-            text: `THELOL.GOV // CITIZENSHIP PORTAL // SKYXION: ALTAER ERA // Submitted via online portal`
-          },
-          timestamp: new Date().toISOString()
-        }]
-      };
+      // ── Build FormData for Formspree ──
+      // Formspree receives this as a structured email / dashboard entry.
+      // The skin image is attached under the field name "skin_avatar".
+      const fd = new FormData();
+      fd.append('Application Type',  type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION');
+      fd.append('Reference Number',  ref);
+      fd.append('Call Name',         callName);
+      fd.append('Minecraft IGN',     ign);
+      fd.append('Contact Method',    contactMethodVal === 'discord' ? 'Discord' : 'WhatsApp');
+      fd.append('Contact Details',   contact);
+      fd.append('Era',               'SKYXION: ALTAER ERA');
+      fd.append('_subject',          `[${type === 'renew' ? 'RENEWAL' : 'NEW APPLICATION'}] The LoL Citizenship — ${callName} (${ign}) // ${ref}`);
+      // _replyto: use contact only if it looks like an email, otherwise leave blank
+      if (contact.includes('@') && !contact.includes(' ')) fd.append('_replyto', contact);
+      if (selectedFile) fd.append('skin_avatar', selectedFile, selectedFile.name);
 
       try {
-        const fd = new FormData();
-        fd.append('payload_json', JSON.stringify(payload));
-        if (selectedFile) {
-          fd.append('files[0]', selectedFile, selectedFile.name);
-        }
+        const res  = await fetch('https://formspree.io/f/mnjovorn', {
+          method:  'POST',
+          body:    fd,
+          headers: { 'Accept': 'application/json' }
+        });
+        const data = await res.json();
 
-        const res = await fetch(WEBHOOK_URL, { method: 'POST', body: fd });
-
-        if (res.ok || res.status === 204) {
-          // Success
+        if (res.ok && data.ok) {
+          // ── Success ──
           document.getElementById('formWrapper').style.display = 'none';
-          document.getElementById('successRef').textContent = 'REF // ' + ref;
+          document.getElementById('successRef').textContent   = 'REF // ' + ref;
           document.getElementById('panelSuccess').classList.add('show');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-          throw new Error(`HTTP ${res.status}`);
+          // ── Formspree returned a structured error ──
+          const errMsg = (data.errors && data.errors.length)
+            ? data.errors.map(err => err.message).join(' ')
+            : 'Submission rejected by server. Check your details and try again.';
+          throw new Error(errMsg);
         }
+
       } catch (err) {
         document.getElementById('panelError').classList.add('show');
         document.getElementById('errorMsg').textContent =
-          'An error occurred while submitting your application. Check your connection and try again. (' + err.message + ')';
+          err.message || 'An error occurred while submitting your application. Check your connection and try again.';
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -989,8 +960,8 @@
     }
 
     // ── Live field clear on input ──
-    document.getElementById('callName').addEventListener('input', () => clearFieldError('fieldCallName'));
-    document.getElementById('ign').addEventListener('input', () => clearFieldError('fieldIGN'));
+    document.getElementById('callName').addEventListener('input',    () => clearFieldError('fieldCallName'));
+    document.getElementById('ign').addEventListener('input',         () => clearFieldError('fieldIGN'));
     document.getElementById('contactInput').addEventListener('input', () => clearFieldError('fieldContact'));
     document.querySelectorAll('.decl-check').forEach(c => {
       c.addEventListener('change', () => {
