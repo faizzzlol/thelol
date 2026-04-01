@@ -22,7 +22,7 @@
             --off-white:    #f5f2eb;
             --border-dark:  rgba(255,255,255,0.07);
             --border-green: rgba(52,160,106,0.18);
-            --netbar-h:     30px;
+            --netbar-h:     32px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -74,88 +74,40 @@
             pointer-events: none;
         }
 
-        /* ── PAIZ® CORP NETWORK BAR ── */
-        .network-bar {
+        /* ── NETWORK BAR — standard style matching index.html ── */
+        .netbar {
             position: relative;
             z-index: 20;
             height: var(--netbar-h);
-            background: var(--green-dark);
-            border-bottom: 1px solid rgba(52,160,106,0.2);
-            display: flex;
-            align-items: center;
-            padding: 0 5%;
+            background: #08080d;
+            border-bottom: 1px solid rgba(52,160,106,0.15);
+            overflow-x: auto; white-space: nowrap;
+            scrollbar-width: none;
             flex-shrink: 0;
         }
+        .netbar::-webkit-scrollbar { display: none; }
 
         .netbar-inner {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .netbar-brand {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.56rem;
-            letter-spacing: 2.5px;
-            color: rgba(255,255,255,0.3);
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .netbar-brand a {
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .netbar-brand a:hover { color: var(--gold-light); }
-
-        .netbar-sep {
-            width: 1px;
-            height: 14px;
-            background: rgba(255,255,255,0.1);
-            margin: 0 14px;
-            flex-shrink: 0;
-        }
-
-        .netbar-links {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-
-        .netbar-links a {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.52rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.28);
-            text-decoration: none;
-            padding: 0 10px;
+            display: flex; align-items: stretch;
             height: var(--netbar-h);
-            display: flex;
-            align-items: center;
+            padding: 0 16px;
+            min-width: max-content;
+        }
+        .netbar-inner a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.5rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.28); text-decoration: none;
+            padding: 0 12px;
+            display: flex; align-items: center;
             border-right: 1px solid rgba(255,255,255,0.05);
             transition: color 0.2s, background 0.2s;
         }
-
-        .netbar-links a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
-        .netbar-links a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
-        .netbar-links a.active { color: var(--emerald); background: rgba(52,160,106,0.1); }
-
-        .netbar-right {
-            margin-left: auto;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.5rem;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.18);
-            white-space: nowrap;
-        }
+        .netbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
+        .netbar-inner a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
+        .netbar-inner a.nb-active { color: var(--emerald); background: rgba(52,160,106,0.1); }
 
         /* ── NAV ── */
-        nav {
+        nav.sitenav {
             position: relative; z-index: 10;
             padding: 0 5%;
             height: 62px;
@@ -421,15 +373,15 @@
         }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 800px) {
-            .netbar-links { display: none; }
-        }
-
         @media (max-width: 500px) {
             .big-num { font-size: clamp(4rem, 22vw, 6rem); margin-bottom: 1rem; }
             .actions { flex-direction: column; align-items: center; }
             footer { flex-direction: column; gap: 6px; text-align: center; }
-            .network-bar { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            :root { --netbar-h: 0px; }
+            .netbar { display: none; }
         }
     </style>
 </head>
@@ -439,30 +391,23 @@
     <div class="bg-glow-2"></div>
     <div class="bg-grid"></div>
 
-    <!-- PAIZ® CORP NETWORK BAR -->
-    <div class="network-bar">
+    <!-- NETWORK BAR — Order: PAIZ® CORP · THE LOL · PAIZ SHOP · PAIZ CHICKEN · PAIZPRODUCTIONS · THE LOL MOVIE · GOVERNMENT · ISC · TL RAILWAYS -->
+    <nav class="netbar" aria-label="Network">
         <div class="netbar-inner">
-            <span class="netbar-brand">
-                PART OF THE <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK
-            </span>
-            <div class="netbar-sep"></div>
-            <div class="netbar-links">
-                <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
-                <a href="https://faizzzlol.github.io/thelol/" class="active">THE LOL</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
-                <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
-                <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
-                <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
-            </div>
-            <span class="netbar-right">SKYXION: RAGNAROK ERA</span>
+            <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+            <a href="https://faizzzlol.github.io/thelol/" class="nb-active">THE LOL</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">PAIZ SHOP</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+            <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">THE LOL MOVIE</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+            <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+            <a href="https://faizzzlol.github.io/thelol/tlr/">TL RAILWAYS</a>
         </div>
-    </div>
+    </nav>
 
     <!-- NAV -->
-    <nav>
+    <nav class="sitenav">
         <a href="/thelol/" class="nav-logo">The <em>LoL</em></a>
         <span class="nav-tag">THE LEGEND OF LEGIONA</span>
     </nav>
@@ -504,7 +449,7 @@
                     <a href="https://faizzzlol.github.io/thelol/gov/" class="ql-btn">GOVERNMENT</a>
                     <a href="https://faizzzlol.github.io/thelol/gov/isc/" class="ql-btn">ISC</a>
                     <a href="https://faizzzlol.github.io/thelol/tlr/" class="ql-btn">TL RAILWAYS</a>
-                    <a href="https://faizzzlol.github.io/thelol/PaizCorp/tlsrl" class="ql-btn">TLSRL</a>
+                    <a href="https://faizzzlol.github.io/thelol/gov/assets/" class="ql-btn">LEGAL ARCHIVE</a>
                     <a href="https://faizzzlol.github.io/PaizCorp/" class="ql-btn corp">PAIZ® CORP HUB</a>
                     <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="ql-btn corp">PAIZ SHOP</a>
                 </div>
@@ -515,7 +460,7 @@
     <!-- FOOTER -->
     <footer>
         <p>© 2026 THE LEGEND OF LEGIONA</p>
-        <p>ERROR 404 // <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: RAGNAROK</p>
+        <p>ERROR 404 // <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a> NETWORK // SKYXION: ALTAER ERA</p>
     </footer>
 
     <script>
