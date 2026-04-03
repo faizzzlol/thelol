@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About This Portal — The Legend of Legiona Government</title>
+  <link rel="icon" type="image/png" href="https://faizzzlol.github.io/thelol/gov/assets/img/TheLoLGovernmentLogo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #fbbf24;
+      --gold-dim: #8a6e2f;
+      --dark: #0a0a0f;
+      --dark-2: #111118;
+      --dark-3: #16161f;
+      --dark-4: #1e1e2a;
+      --dark-5: #252535;
+      --mid: #4a4a6a;
+      --text: #d4d4e8;
+      --text-dim: #8888aa;
+      --text-bright: #f0f0ff;
+      --white: #ffffff;
+      --red: #c0392b;
+      --green: #27ae60;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── TOPBAR ── */
+    #topbar {
+      background: #08080d;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 8px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    #topbar::-webkit-scrollbar { display: none; }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 20px;
+      min-width: max-content;
+    }
+    .topbar-inner a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .topbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.06); }
+    .topbar-inner a:hover, .topbar-inner a.active { color: var(--gold); }
+
+    /* ── NOTICE BANNER ── */
+    .notice-banner {
+      background: linear-gradient(90deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .notice-banner .tag {
+      background: var(--gold);
+      color: #000;
+      padding: 2px 8px;
+      font-weight: 600;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      flex-shrink: 0;
+    }
+    .notice-banner a { color: var(--gold); text-decoration: none; }
+    .notice-banner a:hover { text-decoration: underline; }
+
+    /* ── NAV WRAPPER ── */
+    .nav-wrapper {
+      position: sticky;
+      top: 37px;
+      z-index: 999;
+    }
+    nav {
+      background: var(--dark-2);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 14px 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 14px 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--gold); transition: all 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      background: var(--dark-2);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      padding: 12px 24px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      padding: 10px 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,0.03) 39px, rgba(201,168,76,0.03) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,0.03) 39px, rgba(201,168,76,0.03) 40px);
+      pointer-events: none;
+    }
+    .hero-seal {
+      width: clamp(80px, 10vw, 110px); height: clamp(80px, 10vw, 110px);
+      border-radius: 50%;
+      border: 2px solid rgba(201,168,76,0.4);
+      padding: 8px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero-overline {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 6vw, 68px);
+      font-weight: 900;
+      color: var(--text-bright);
+      line-height: 1.05;
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      color: var(--text-dim);
+      font-weight: 300;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.65s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 13px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.5);
+      padding: 13px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); transform: translateY(-1px); }
+
+    /* ── SECTION WRAPPER ── */
+    section {
+      padding: 100px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-desc {
+      color: var(--text-dim);
+      font-size: 15px;
+      max-width: 640px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    /* ── FULL-WIDTH WRAPPERS ── */
+    .full-bg-dark2 { background: var(--dark-2); }
+    .full-bg-dark { background: var(--dark); }
+
+    /* ── WHY CARDS ── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .why-card {
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 2px solid var(--gold-dim);
+      padding: 28px 24px;
+      transition: border-top-color 0.2s, transform 0.2s;
+    }
+    .why-card:hover { border-top-color: var(--gold); transform: translateY(-3px); }
+    .why-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+      margin-bottom: 12px;
+    }
+    .why-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+    }
+    .why-card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+
+    /* ── SITEMAP / PORTAL NAV ── */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .portal-card {
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 28px;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .portal-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-2px); }
+    .portal-card .portal-id {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .portal-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 10px;
+    }
+    .portal-card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; margin-bottom: 18px; }
+    .portal-arrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── TECH STACK SECTION ── */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .tech-pill {
+      background: var(--dark-3);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 8px 18px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tech-pill:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── MISSION STATEMENT BLOCK ── */
+    .mission-block {
+      background: var(--dark-3);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 56px 48px;
+      max-width: 760px;
+      margin: 48px auto 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .mission-block::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,168,76,0.05), transparent 70%);
+      pointer-events: none;
+    }
+    .mission-block .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      color: var(--gold-dim);
+      line-height: 0.6;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .mission-block blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-bright);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .mission-block .attr {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ── CREDITS / BUILT BY ── */
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .credit-card {
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .credit-card:hover { border-color: rgba(201,168,76,0.2); }
+    .credit-card .credit-id {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .credit-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+    .credit-card p { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #06060a;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 60px 24px 32px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+    .footer-brand .name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+    }
+    .footer-brand .name em { font-style: italic; color: var(--gold); }
+    .footer-brand p { font-size: 13px; color: var(--text-dim); line-height: 1.7; max-width: 280px; }
+    .footer-col h5 {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 13px;
+      color: var(--text-dim);
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--text); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-bottom .copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+    .footer-bottom .era {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em;
+      color: var(--gold-dim);
+    }
+
+    /* ── ANIMATIONS ── */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: #2ecc71;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .live-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #2ecc71;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mission-block { padding: 36px 24px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      #home { padding: 100px 24px 60px; }
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; align-items: center; }
+    }
+
+    /* ════════════════════════════════════
+       pAIz CHATBOT
+    ════════════════════════════════════ */
+    #paiz-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9000;
+      background: var(--gold);
+      color: #000;
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      flex-direction: column;
+      gap: 2px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(201,168,76,0.35);
+    }
+    #paiz-toggle:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.5);
+    }
+    #paiz-toggle .toggle-icon { font-size: 18px; line-height: 1; }
+    #paiz-toggle .toggle-label { font-size: 8px; letter-spacing: 0.12em; }
+
+    #paiz-panel {
+      position: fixed;
+      bottom: 100px;
+      right: 28px;
+      z-index: 8999;
+      width: 360px;
+      max-height: 560px;
+      background: var(--dark-2);
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      transform: scale(0.92) translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      transform-origin: bottom right;
+    }
+    #paiz-panel.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .paiz-header {
+      background: var(--dark-3);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .paiz-header-left {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .paiz-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .paiz-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: var(--text-bright);
+      font-weight: 500;
+    }
+    .paiz-by {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--gold-dim);
+    }
+    .paiz-status {
+      display: flex; align-items: center; gap: 5px;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: #2ecc71;
+    }
+    .paiz-status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #2ecc71;
+      animation: pulse 2s infinite;
+    }
+    .paiz-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-dim); font-size: 18px;
+      padding: 0 4px;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+    .paiz-close:hover { color: var(--text-bright); }
+
+    .paiz-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--dark-4) transparent;
+    }
+    .paiz-messages::-webkit-scrollbar { width: 4px; }
+    .paiz-messages::-webkit-scrollbar-thumb { background: var(--dark-4); }
+
+    .msg {
+      display: flex;
+      gap: 8px;
+      animation: slideIn 0.2s ease;
+    }
+    .msg.user { flex-direction: row-reverse; }
+    .msg-bubble {
+      max-width: 80%;
+      padding: 10px 14px;
+      font-size: 13px;
+      line-height: 1.55;
+      border-radius: 0;
+    }
+    .msg.bot .msg-bubble {
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-left: 2px solid var(--gold-dim);
+      color: var(--text);
+    }
+    .msg.user .msg-bubble {
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--text-bright);
+    }
+    .msg-bubble a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .msg-bubble a:hover { text-decoration: underline; }
+
+    .paiz-suggestions {
+      padding: 0 16px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .suggestion-chip {
+      background: var(--dark-3);
+      border: 1px solid rgba(201,168,76,0.15);
+      color: var(--text-dim);
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .suggestion-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+    .paiz-input-row {
+      padding: 12px 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    #paiz-input {
+      flex: 1;
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-bright);
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    #paiz-input:focus { border-color: rgba(201,168,76,0.4); }
+    #paiz-input::placeholder { color: var(--text-dim); }
+    #paiz-send {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    #paiz-send:hover { background: var(--gold-light); }
+
+    .paiz-powered {
+      padding: 8px 16px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      #paiz-panel {
+        width: calc(100vw - 24px);
+        right: 12px;
+        bottom: 90px;
+      }
+      #paiz-toggle { right: 16px; bottom: 16px; }
+    }
+
+    /* typing indicator */
+    .typing-indicator { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
+    .typing-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      animation: typingBounce 1.2s infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-inner">
+      <a href="https://faizzzlol.github.io/thelol/">THE LOL</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/" >GOVERNMENT</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/citizenship/">CITIZENSHIP</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/assets/">ARCHIVES</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+    </div>
+  </div>
+
+  <!-- NOTICE BANNER -->
+  <div class="notice-banner">
+    <span class="tag">NEW</span>
+    <span>
+      pAIz — our AI navigation assistant — is now live on this portal. Developed by Paiz Corp. —
+      <a href="#" onclick="openPaiz(); return false;">CHAT WITH pAIz →</a>
+    </span>
+  </div>
+
+  <!-- NAV WRAPPER -->
+  <div class="nav-wrapper">
+    <nav>
+      <div class="nav-logo">THELOL.GOV</div>
+      <ul class="nav-links">
+        <li><a href="#home">Overview</a></li>
+        <li><a href="#why" class="active">Why This Portal</a></li>
+        <li><a href="#navigate">Navigate</a></li>
+        <li><a href="#built">Built By</a></li>
+        <li><a href="https://faizzzlol.github.io/thelol/gov/">← Back to Gov</a></li>
+      </ul>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home" onclick="toggleMenu()">Overview</a>
+      <a href="#why" onclick="toggleMenu()">Why This Portal</a>
+      <a href="#navigate" onclick="toggleMenu()">Navigate</a>
+      <a href="#built" onclick="toggleMenu()">Built By</a>
+      <a href="https://faizzzlol.github.io/thelol/gov/" onclick="toggleMenu()">← Back to Gov</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div id="home" style="position:relative;">
+    <div class="hero-bg"></div>
+    <img src="https://faizzzlol.github.io/thelol/gov/assets/img/TheLoLGovernmentLogo.png" alt="The LoL Government" class="hero-seal" />
+    <div class="hero-overline">About This Portal</div>
+    <h1 class="hero-title">Why the <em>Government</em> Portal?</h1>
+    <p class="hero-sub">The official portal for The Legend of Legiona's governance, transparency, and public record &nbsp;·&nbsp; Est. 2023</p>
+    <div class="live-badge" style="opacity:0;animation:fadeUp 0.8s ease 0.75s forwards;">
+      <span class="live-dot"></span> pAIz Online &nbsp;·&nbsp; Ask Anything Below
+    </div>
+    <div class="hero-btns">
+      <a href="#why" class="btn-primary">Read Our Mission</a>
+      <button class="btn-outline" onclick="openPaiz()">Chat with pAIz ↗</button>
+    </div>
+  </div>
+
+  <!-- WHY THIS PORTAL -->
+  <div class="full-bg-dark2" id="why">
+    <div style="max-width:1200px;margin:0 auto;padding:100px 24px;">
+      <div class="section-tag">Portal Purpose</div>
+      <h2 class="section-title">Why The LoL <em>Government</em> Website?</h2>
+      <p class="section-desc">
+        The Legend of Legiona is more than a Minecraft nation — it is a community with a history, a governance structure, and a vision for the future.
+        This portal exists to make that structure visible, accessible, and permanent. Here's why we built it.
+      </p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-num">01 // PURPOSE</div>
+          <h4>Transparency in Governance</h4>
+          <p>Every nation, real or virtual, owes its citizens clarity. This portal publishes official proclamations, national history, legal documents, and governmental structure so every member of The LoL can understand how their nation operates and who is accountable for what.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">02 // PURPOSE</div>
+          <h4>A Permanent Public Record</h4>
+          <p>Minecraft worlds reset. Discord messages get buried. But this portal preserves The LoL's official history — founding documents, election records, crisis timelines, and policy decisions — in a form that outlasts any server era, including the current Skyxion: Altaer Era.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">03 // PURPOSE</div>
+          <h4>Legitimising Governance</h4>
+          <p>A government portal signals that The LoL operates with structure and seriousness. When the ISC publishes intelligence mandates, when the Legal Archive catalogues citizenship law, and when the Proclamation can be downloaded in PDF — it demonstrates that The LoL is a real institution, not just a group of players.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">04 // PURPOSE</div>
+          <h4>Accessible to All Citizens</h4>
+          <p>Not everyone is in every Discord call or in-game when decisions are made. This portal ensures citizens can access official documents, understand their rights under the Rights Charter, and know where to go for information — at any time, from any device.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">05 // PURPOSE</div>
+          <h4>Central Hub for All Branches</h4>
+          <p>The LoL government has multiple branches — the ISC, the Black House, citizen services, and a growing Legal Archive. This portal connects all of them under one domain, so citizens and visitors always have a reliable single point of entry regardless of which branch they need.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-num">06 // PURPOSE</div>
+          <h4>Showcasing What We've Built</h4>
+          <p>The LoL has achieved extraordinary things — 4,800+ block railways, twin towers, democratic elections, crisis recovery. This portal is the place that tells that story with the dignity and presentation it deserves, designed to reflect the nation's pride and ambition.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSION STATEMENT -->
+  <section>
+    <div class="section-tag">Portal Mission Statement</div>
+    <div class="mission-block">
+      <span class="quote-mark">"</span>
+      <blockquote>
+        We built this portal because every act of governance deserves a record,
+        every citizen deserves transparency, and every nation — no matter its scale —
+        deserves to be taken seriously. The LoL Government Website is that commitment
+        made visible.
+      </blockquote>
+      <div class="attr">— The Black House // Office of the President</div>
+    </div>
+  </section>
+
+  <!-- NAVIGATE THE PORTAL -->
+  <div class="full-bg-dark2">
+    <div id="navigate" style="max-width:1200px;margin:0 auto;padding:100px 24px;">
+      <div class="section-tag">Sitemap</div>
+      <h2 class="section-title">Navigate the <em>Portal</em></h2>
+      <p class="section-desc">Every page on this portal has a specific purpose. Here's a guide to what you'll find and where to go.</p>
+      <div class="portal-grid">
+        <a href="https://faizzzlol.github.io/thelol/gov/" class="portal-card">
+          <div class="portal-id">PORTAL-01 // Home</div>
+          <h4>Government Home</h4>
+          <p>The main portal page. Contains the Proclamation of Sovereignty, national history timeline, all government departments, megaprojects, and the founding signatories.</p>
+          <div class="portal-arrow">→ thelol.gov/gov/</div>
+        </a>
+        <a href="https://faizzzlol.github.io/thelol/gov/citizenship/" class="portal-card">
+          <div class="portal-id">PORTAL-02 // Citizenship</div>
+          <h4>Citizenship Portal</h4>
+          <p>Apply for citizenship, understand your rights under the Citizens' Rights Charter, and learn about the Citizenship Act. Includes the full membership process for new and returning citizens.</p>
+          <div class="portal-arrow">→ thelol.gov/gov/citizenship/</div>
+        </a>
+        <a href="https://faizzzlol.github.io/thelol/gov/assets/" class="portal-card">
+          <div class="portal-id">PORTAL-03 // Legal Archive</div>
+          <h4>Legal Archive & Documents</h4>
+          <p>The searchable archive of all official LoL legal documents — citizenship acts, presidential proclamations, rights charters, and policy ordinances. Filterable by category.</p>
+          <div class="portal-arrow">→ thelol.gov/gov/assets/</div>
+        </a>
+        <a href="https://faizzzlol.github.io/thelol/gov/isc/" class="portal-card">
+          <div class="portal-id">PORTAL-04 // ISC</div>
+          <h4>Internal Security Control</h4>
+          <p>The LoL's intelligence and national security agency. The ISC portal covers its mandate, public transparency reports, and the searchable ISC public archive. Successor to TLIO.</p>
+          <div class="portal-arrow">→ thelol.gov/gov/isc/</div>
+        </a>
+        <a href="https://faizzzlol.github.io/thelol/" class="portal-card">
+          <div class="portal-id">PORTAL-05 // Nation</div>
+          <h4>The LoL Main Site</h4>
+          <p>The primary national website — not a government sub-site. Covers the nation's overview, Minecraft server status, TLSRL railway, and the broader Paiz Corp ecosystem.</p>
+          <div class="portal-arrow">→ faizzzlol.github.io/thelol/</div>
+        </a>
+        <a href="#home" class="portal-card">
+          <div class="portal-id">PORTAL-06 // Info</div>
+          <h4>About This Portal</h4>
+          <p>You are here. This page explains the purpose of the government portal, how to navigate it, who built it, and how to interact with pAIz — our AI navigation assistant.</p>
+          <div class="portal-arrow">→ You're here</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUILT BY / CREDITS -->
+  <section id="built">
+    <div class="section-tag">Development & Credits</div>
+    <h2 class="section-title">Built by <em>Paiz Corp</em></h2>
+    <p class="section-desc">
+      This portal was designed and developed under Paiz® Corp — The LoL's national conglomerate — as part of its digital infrastructure mandate.
+      Every page, component, and feature is handcrafted to meet the standard The LoL expects of its public-facing institutions.
+    </p>
+    <div class="credits-grid">
+      <div class="credit-card">
+        <div class="credit-id">DESIGN // Identity</div>
+        <h4>Design System</h4>
+        <p>Built around a unified dark aesthetic — pure dark backgrounds, single-pixel borders, and gold (#C9A84C) as the sole accent colour. Typography: Playfair Display for authority, DM Mono for technical precision, Outfit for readability.</p>
+      </div>
+      <div class="credit-card">
+        <div class="credit-id">TECH // Stack</div>
+        <h4>Technology</h4>
+        <p>Pure HTML, CSS, and vanilla JavaScript — no frameworks, no dependencies. Hosted on GitHub Pages for reliability, speed, and zero cost. Every page loads fast and works on any device.</p>
+      </div>
+      <div class="credit-card">
+        <div class="credit-id">FEATURE // AI</div>
+        <h4>pAIz — AI Assistant</h4>
+        <p>A smart navigation assistant developed by Paiz Corp Intelligence Division. pAIz is trained on The LoL's full knowledge base — history, departments, legal documents, and portal structure — to help citizens and visitors find exactly what they need.</p>
+      </div>
+      <div class="credit-card">
+        <div class="credit-id">STANDARD // Governance</div>
+        <h4>Document Standards</h4>
+        <p>All official documents follow the LoL reference number convention: LOLGOV-YYYY-### for Government, BH-YYYY-### for The Black House, ISC-YYYY-### for the ISC, and PC-[SUB]-YYYY-### for Paiz Corp subsidiaries.</p>
+      </div>
+    </div>
+
+    <!-- Tech pills -->
+    <div style="margin-top:48px;">
+      <div class="section-tag">Technologies Used</div>
+      <div class="tech-row">
+        <span class="tech-pill">HTML5</span>
+        <span class="tech-pill">CSS3 + Custom Properties</span>
+        <span class="tech-pill">Vanilla JavaScript</span>
+        <span class="tech-pill">GitHub Pages</span>
+        <span class="tech-pill">Google Fonts</span>
+        <span class="tech-pill">Playfair Display</span>
+        <span class="tech-pill">DM Mono</span>
+        <span class="tech-pill">Outfit</span>
+        <span class="tech-pill">Responsive Grid</span>
+        <span class="tech-pill">CSS Animations</span>
+        <span class="tech-pill">pAIz Intelligence Engine</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="name">The Legend of <em>Legiona</em></div>
+          <p>The official government of The LoL — a sovereign nation built on unity, equality, and the resilience of its people across the Skyxion world since 2023.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Government</h5>
+          <a href="https://faizzzlol.github.io/thelol/gov/#proclamation">Proclamation</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/#history">History</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/#departments">Departments</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/#founders">Founders</a>
+        </div>
+        <div class="footer-col">
+          <h5>Agencies</h5>
+          <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC Portal</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/isc/national">ISC Transparency</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/isc/search">ISC Public Archive</a>
+        </div>
+        <div class="footer-col">
+          <h5>Documents</h5>
+          <a href="https://faizzzlol.github.io/thelol/assets/The_LoL_Proclamation.pdf">Proclamation (EN)</a>
+          <a href="https://faizzzlol.github.io/thelol/assets/Proklamasi_The_LoL.pdf">Proklamasi (BM)</a>
+          <a href="https://faizzzlol.github.io/thelol/gov/assets/">Legal Archive</a>
+          <a href="#">About This Portal</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copy">© 2026 THE LEGEND OF LEGIONA // OFFICIAL GOVERNMENT</div>
+        <div class="era">SKYXION: ALTAER ERA // BUILT FOR PEACE // SOVEREIGNTY THROUGH UNITY</div>
+      </div>
+      <div style="margin-top:25px;font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);border-top:1px solid rgba(255,255,255,0.05);padding-top:15px;opacity:0.8;line-height:1.6;">
+        <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft.
+        The terms "Skyxion" and "Altaer" used within this project and era designation are not affiliated with, or associated with Kawaiisho.
+        This project is NOT AN OFFICIAL MINECRAFT PRODUCT. Not approved by or associated with Mojang AB or Microsoft Corporation.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════
+       pAIz CHATBOT WIDGET
+  ════════════════════════════════════════════ -->
+
+  <!-- Toggle Button -->
+  <button id="paiz-toggle" onclick="togglePaiz()" aria-label="Open pAIz chatbot">
+    <span class="toggle-icon" id="paiz-icon">✦</span>
+    <span class="toggle-label">pAIz</span>
+  </button>
+
+  <!-- Chat Panel -->
+  <div id="paiz-panel" role="dialog" aria-label="pAIz chat assistant">
+    <div class="paiz-header">
+      <div class="paiz-header-left">
+        <div class="paiz-avatar">p</div>
+        <div>
+          <div class="paiz-name">pAIz</div>
+          <div class="paiz-by">by Paiz Corp Intelligence</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div class="paiz-status">
+          <span class="paiz-status-dot"></span> Online
+        </div>
+        <button class="paiz-close" onclick="togglePaiz()" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="paiz-messages" id="paiz-messages">
+      <!-- Messages injected by JS -->
+    </div>
+
+    <div class="paiz-suggestions" id="paiz-suggestions">
+      <!-- Chips injected by JS -->
+    </div>
+
+    <div class="paiz-input-row">
+      <input type="text" id="paiz-input" placeholder="Ask me anything about The LoL…" autocomplete="off" />
+      <button id="paiz-send" onclick="paizSend()">SEND</button>
+    </div>
+    <div class="paiz-powered">pAIz // PAIZ CORP INTELLIGENCE DIVISION // SKYXION: ALTAER ERA</div>
+  </div>
+
+  <script>
+    /* ── NAV TOGGLE ── */
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    /* ── pAIz CHATBOT ── */
+    let paizOpen = false;
+
+    function openPaiz() {
+      if (!paizOpen) togglePaiz();
+    }
+
+    function togglePaiz() {
+      paizOpen = !paizOpen;
+      const panel = document.getElementById('paiz-panel');
+      const icon = document.getElementById('paiz-icon');
+      panel.classList.toggle('open', paizOpen);
+      icon.textContent = paizOpen ? '✕' : '✦';
+    }
+
+    /* ── KNOWLEDGE BASE ── */
+    const KB = [
+      // Navigation
+      {
+        keys: ['home','main','government home','gov home','gov page','go back','government page'],
+        answer: 'The main Government portal is at <a href="https://faizzzlol.github.io/thelol/gov/">thelol.gov/gov/</a>. It has the Proclamation of Sovereignty, the national history timeline, all departments, megaprojects, and the three Founders.'
+      },
+      {
+        keys: ['citizenship','citizen','apply','join','become','membership','rights charter','citizen rights'],
+        answer: 'The Citizenship Portal is at <a href="https://faizzzlol.github.io/thelol/gov/citizenship/">thelol.gov/gov/citizenship/</a>. You\'ll find the Citizenship Act (LOLGOV-2026-0001), Citizens\' Rights Charter (LOLGOV-2026-0003), and everything you need to apply or understand your rights as a LoL citizen.'
+      },
+      {
+        keys: ['legal','archive','document','law','act','ordinance','proclamation pdf','download','lolgov','bh-2026'],
+        answer: 'The Legal Archive is at <a href="https://faizzzlol.github.io/thelol/gov/assets/">thelol.gov/gov/assets/</a>. It\'s fully searchable and filterable by category. Key documents include: Citizenship Act (LOLGOV-2026-0001), Revocation Ordinance (LOLGOV-2026-0002), Rights Charter (LOLGOV-2026-0003), and Presidential Proclamation (BH-2026-0001).'
+      },
+      {
+        keys: ['isc','internal security','intelligence','security agency','tlio','security'],
+        answer: 'The Internal Security Control (ISC) is The LoL\'s intelligence and national security agency — successor to the former TLIO. Visit the ISC portal at <a href="https://faizzzlol.github.io/thelol/gov/isc/">thelol.gov/gov/isc/</a>. It also has a public transparency report and searchable public archive.'
+      },
+      {
+        keys: ['isc transparency','isc archive','isc public','isc search'],
+        answer: 'ISC Transparency Report: <a href="https://faizzzlol.github.io/thelol/gov/isc/national">thelol.gov/gov/isc/national</a> — ISC Public Search Archive: <a href="https://faizzzlol.github.io/thelol/gov/isc/search">thelol.gov/gov/isc/search</a>.'
+      },
+      // The LoL basics
+      {
+        keys: ['what is the lol','what is legiona','about the lol','tell me about','overview','what is this'],
+        answer: 'The Legend of Legiona (The LoL) is a sovereign Minecraft nation on the Skyxion server, currently in the Skyxion: Altaer Era. Founded in 2023, it is one of the most advanced nations in Skyxion — with a democratic history, a formal government structure, intelligence agency (ISC), a 4,800-block railway, and a full citizenship system.'
+      },
+      {
+        keys: ['founded','founding','when was','established','start','origin','sus','the sus','began'],
+        answer: 'The LoL was originally founded as "The Sus" in early 2023 by three co-founders: Faiz4224, Imii Kun, and Dyno. It was later renamed "The Legend of Legiona" and grew into the most modern and wealthiest nation in Skyxion. Read the full history at <a href="https://faizzzlol.github.io/thelol/gov/#history">thelol.gov/gov/#history</a>.'
+      },
+      {
+        keys: ['founder','faiz','imii','dyno','president','co-founder'],
+        answer: 'The LoL has three Founders who signed the Proclamation of Sovereignty: <strong>Faiz4224</strong> — First President &amp; Founding Leader; <strong>Imii Kun</strong> — Co-Founder &amp; Visionary; <strong>Dyno</strong> — Co-Founder &amp; Strategist. Faiz4224 remains the current President, operating from The Black House.'
+      },
+      {
+        keys: ['black house','office of president','president office','presidential'],
+        answer: 'The Black House is the official executive seat of The Legend of Legiona — the Office of the President. All presidential proclamations are issued under the reference code BH-YYYY-###. The current President is Faiz4224.'
+      },
+      {
+        keys: ['ultrax','ultra','election','presidential election','2nd president','democracy'],
+        answer: 'On May 6, 2023, The LoL held its first democratic election. UltraX2020 and the Parti Harapan Rakyat The LoL (PHRTL) won, becoming the 2nd President. His presidency later led to internal strife — including a bombed city sign and drone attacks on TLCC — before he resigned and power returned to Faiz4224. Full timeline: <a href="https://faizzzlol.github.io/thelol/gov/#history">thelol.gov/gov/#history</a>.'
+      },
+      {
+        keys: ['eheksquad','ehek','phoenixaiman','pandaputih','kagee','sus era'],
+        answer: 'During the "Sus Era," EhekSquad — led by PhoenixAiman, PandaPutih, and Kagee — joined The Sus, though their exact status was never formally defined as The Sus had no governance structure. EhekSquad later departed and re-established independently. They still exist today.'
+      },
+      // Megaprojects
+      {
+        keys: ['tlsrl','railway','rail','train','4800','4,800','transport'],
+        answer: 'TLSRL (The LoL – Spawn Railway Link) is The LoL\'s flagship infrastructure project — a 4,800+ block railway connecting The LoL to Spawn with regular, express, and cargo services. Travel time is approximately 10 minutes. Operated by TL Railways under Paiz® Corp. <a href="https://faizzzlol.github.io/thelol/PaizCorp/tlsrl">View TLSRL page →</a>'
+      },
+      {
+        keys: ['tlcc','twin towers','convention centre','towers','landmark'],
+        answer: 'The TLCC Twin Towers (The LoL Convention Centre) are the most iconic landmark in The LoL City and a symbol of national prosperity. Construction is completed. They were attacked during the UltraX2020 presidency crisis, but have since been restored.'
+      },
+      {
+        keys: ['farm','farms','iron farm','gold farm','totem','economy','resource'],
+        answer: 'The National Farm Complex consists of three automated resource farms: an Iron Farm, Totem Farm, and Gold Farm. Together they power The LoL\'s economic engine and citizen welfare. All three are currently operational.'
+      },
+      {
+        keys: ['paiz corp','paiz corporation','conglomerate','paizshop','paizchicken','paizproductions'],
+        answer: 'Paiz® Corp is The LoL\'s national conglomerate — parent company of TL Railways, Paiz™ Construction, PaizShop, PaizChicken, and PaizProductions (including The LoL Movie). This government portal was designed and built under Paiz Corp\'s digital infrastructure mandate.'
+      },
+      {
+        keys: ['megaproject','infrastructure','projects','national projects'],
+        answer: 'The LoL has four major megaprojects: 1) TLSRL Railway (4,800+ blocks), 2) TLCC Twin Towers, 3) National Farm Complex (Iron, Totem, Gold farms), 4) Paiz® Corp — the national conglomerate. View all at <a href="https://faizzzlol.github.io/thelol/gov/#megaprojects">thelol.gov/gov/#megaprojects</a>.'
+      },
+      // Departments
+      {
+        keys: ['department','dept','branch','ministry','bureau','division','office'],
+        answer: 'The LoL Government has six departments: DEPT-01 ISC (Security), DEPT-02 Office of National Justice, DEPT-03 Ministry of Lore &amp; Archives, DEPT-04 Public Works Division, DEPT-05 Bureau of External Relations, DEPT-06 The LoL Communications. Currently only ISC is fully active. View at <a href="https://faizzzlol.github.io/thelol/gov/#departments">thelol.gov/gov/#departments</a>.'
+      },
+      // Era / server
+      {
+        keys: ['skyxion','altaer','server','era','current era','kawaiisho'],
+        answer: 'The LoL is based on the Skyxion server. The current era is <strong>Skyxion: Altaer Era</strong>, administered by the server admin group Kawaiisho. The LoL operates as an independent sovereign nation within this server.'
+      },
+      // Document references
+      {
+        keys: ['reference number','reference code','document code','lolgov','bh-','isc-','pc-'],
+        answer: 'Official LoL document reference conventions: <strong>LOLGOV-YYYY-###</strong> (Government), <strong>BH-YYYY-###</strong> (Black House / President), <strong>ISC-YYYY-###</strong> (Internal Security Control), <strong>PC-[SUB]-YYYY-###</strong> (Paiz Corp subsidiaries). All documents are archived at <a href="https://faizzzlol.github.io/thelol/gov/assets/">the Legal Archive</a>.'
+      },
+      // About this page / portal
+      {
+        keys: ['about','about this','about page','about portal','about website','why this site','why this website'],
+        answer: 'You\'re already on the About portal page! This page explains why the LoL Government website exists — transparency in governance, permanent public record, legitimising our structure, and making government accessible to all citizens. Scroll down to read the full breakdown, or ask me anything specific.'
+      },
+      {
+        keys: ['paiz','paiz ai','ai assistant','chatbot','who are you','what are you','pAIz'],
+        answer: 'I\'m pAIz — an AI navigation assistant developed by Paiz Corp Intelligence Division. I\'m embedded in the LoL Government portal to help citizens and visitors find information, navigate the site, and learn about The LoL\'s governance, history, and documents. Ask me anything!'
+      },
+      {
+        keys: ['design','style','aesthetic','font','colour','color','gold','dark'],
+        answer: 'This portal uses a unified dark aesthetic: pure dark backgrounds, single-pixel borders, and gold (#C9A84C) as the sole accent colour. Typography: Playfair Display for authority and headings, DM Mono for technical/monospace elements, Outfit for body text. Designed and built by Paiz® Corp.'
+      },
+      // Proclamation
+      {
+        keys: ['proclamation','proclamation of sovereignty','founding document','sovereignty'],
+        answer: 'The Proclamation of Sovereignty is The LoL\'s founding document — signed by all three Founders. It can be downloaded as: <a href="https://faizzzlol.github.io/thelol/assets/The_LoL_Proclamation.pdf">English (EN)</a> or <a href="https://faizzzlol.github.io/thelol/assets/Proklamasi_The_LoL.pdf">Bahasa Malaysia (BM)</a>. It declares The LoL a sovereign nation guided by Unity, Freedom, Innovation, and Defence &amp; Honour.'
+      },
+      {
+        keys: ['pillar','principle','value','unity','freedom','innovation','defence','honor'],
+        answer: 'The LoL is built on four founding pillars: <strong>01 Unity</strong> — all players stand as one; <strong>02 Freedom</strong> — every citizen\'s right to explore and create; <strong>03 Innovation</strong> — harnessing Minecraft\'s possibilities; <strong>04 Defence &amp; Honour</strong> — protecting our lands while upholding fairness.'
+      },
+      // Help
+      {
+        keys: ['help','what can you do','what can i ask','guide','support'],
+        answer: 'I can help you navigate the LoL Government portal, find specific pages, explain The LoL\'s history and governance, look up document references, learn about departments, megaprojects, founders, and more. Try asking: "Where are the legal documents?", "Who founded The LoL?", "What is the ISC?", or "How do I apply for citizenship?"'
+      },
+    ];
+
+    const SUGGESTIONS_DEFAULT = [
+      'Who founded The LoL?',
+      'Where are the legal documents?',
+      'What is the ISC?',
+      'How do I apply for citizenship?',
+      'Tell me about TLSRL',
+    ];
+
+    function paizGetResponse(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) return null;
+
+      // Exact/partial match scanning
+      for (const entry of KB) {
+        for (const key of entry.keys) {
+          if (q.includes(key)) return entry.answer;
+        }
+      }
+
+      // Greetings
+      if (/^(hi|hello|hey|good morning|good evening|yo|sup|helo|hai)/.test(q)) {
+        return 'Hey! I\'m pAIz, your LoL Government assistant. I can help you navigate this portal, find documents, learn about The LoL\'s history, departments, and more. What would you like to know?';
+      }
+
+      // Thanks
+      if (/thank|thanks|ty|terima kasih|tq/.test(q)) {
+        return 'You\'re welcome! Feel free to ask anything else about The LoL Government portal. I\'m always here.';
+      }
+
+      // Fallback
+      return 'I\'m not sure about that specific query. Try asking about: the <a href="https://faizzzlol.github.io/thelol/gov/assets/">Legal Archive</a>, <a href="https://faizzzlol.github.io/thelol/gov/citizenship/">Citizenship</a>, the <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>, The LoL\'s history, founders, megaprojects, or how to navigate this portal. You can also type "help" for a full list of what I can assist with.';
+    }
+
+    function appendMsg(role, html) {
+      const container = document.getElementById('paiz-messages');
+      const msg = document.createElement('div');
+      msg.className = `msg ${role}`;
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble';
+      bubble.innerHTML = html;
+      msg.appendChild(bubble);
+      container.appendChild(msg);
+      container.scrollTop = container.scrollHeight;
+      return msg;
+    }
+
+    function showTyping() {
+      return appendMsg('bot', '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>');
+    }
+
+    function showSuggestions(chips) {
+      const s = document.getElementById('paiz-suggestions');
+      s.innerHTML = '';
+      chips.forEach(text => {
+        const chip = document.createElement('button');
+        chip.className = 'suggestion-chip';
+        chip.textContent = text;
+        chip.onclick = () => { processQuery(text); };
+        s.appendChild(chip);
+      });
+    }
+
+    function processQuery(text) {
+      document.getElementById('paiz-input').value = '';
+      document.getElementById('paiz-suggestions').innerHTML = '';
+      appendMsg('user', text);
+
+      const typing = showTyping();
+      setTimeout(() => {
+        typing.remove();
+        const response = paizGetResponse(text);
+        if (response) appendMsg('bot', response);
+        showSuggestions(['Tell me more', 'Legal Archive', 'ISC Portal', 'Citizenship', 'Founders']);
+      }, 600 + Math.random() * 400);
+    }
+
+    function paizSend() {
+      const input = document.getElementById('paiz-input');
+      const text = input.value.trim();
+      if (!text) return;
+      processQuery(text);
+    }
+
+    document.getElementById('paiz-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') paizSend();
+    });
+
+    // Init greeting
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        appendMsg('bot', 'Hello, I\'m <strong>pAIz</strong> — your LoL Government assistant, developed by Paiz Corp Intelligence Division.<br><br>I can help you navigate this portal, find legal documents, learn about The LoL\'s history, departments, and governance. What would you like to know?');
+        showSuggestions(SUGGESTIONS_DEFAULT);
+      }, 400);
+    });
+  </script>
+
+</body>
+</html>
