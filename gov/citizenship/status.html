@@ -654,7 +654,7 @@
 
       try {
         // Fetch the JSON from GitHub raw (same repo)
-        const url = 'https://raw.githubusercontent.com/faizzzlol/faizzzlol.github.io/main/thelol/gov/citizenship/status.json';
+        const url = '/thelol/gov/citizenship/status.json';
         const res  = await fetch(url + '?nocache=' + Date.now());
 
         if (!res.ok) throw new Error('fetch_failed');
