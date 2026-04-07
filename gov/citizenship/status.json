@@ -1,0 +1,62 @@
+{
+  "_info": {
+    "description": "Official citizenship application status registry — The Legend of Legiona",
+    "era": "SKYXION: ALTAER ERA",
+    "maintained_by": "Office of the President // Faiz4224",
+    "last_updated": "2026-04-07",
+    "instructions": "Add one object per application to the 'applications' array. Status values: pending | under_review | approved | rejected. Save and commit to GitHub — changes go live immediately.",
+    "ref_format": "THELOL-CTZN-YYYY-####"
+  },
+  "applications": [
+    {
+      "ref": "THELOL-CTZN-2026-0001",
+      "status": "approved",
+      "ign": "ExamplePlayer",
+      "type": "apply",
+      "submitted": "2026-04-05",
+      "processed": "2026-04-07",
+      "era": "SKYXION: ALTAER",
+      "note": "JUST AN EXAMPLE NOTE. Test123😋"
+    },
+    {
+      "ref": "THELOL-CTZN-2026-0002",
+      "status": "pending",
+      "ign": "AnotherPlayer",
+      "type": "renew",
+      "submitted": "2026-04-06",
+      "processed": "",
+      "era": "SKYXION: ALTAER",
+      "note": ""
+    },
+    {
+      "ref": "THELOL-CTZN-2026-0003",
+      "status": "under_review",
+      "ign": "Dummy",
+      "type": "renew",
+      "submitted": "2026-04-06",
+      "processed": "",
+      "era": "SKYXION: ALTAER",
+      "note": ""
+    },
+    {
+      "ref": "THELOL-CTZN-2026-0004",
+      "status": "rejected",
+      "ign": "DiddyNotFound",
+      "type": "apply",
+      "submitted": "2026-04-06",
+      "processed": "2026-04-08",
+      "era": "SKYXION: ALTAER",
+      "note": "Potential threats to the nation."
+    },
+    {
+      "ref": "THELOL-CTZN-2026-1633",
+      "status": "approved",
+      "ign": "Faiz4224",
+      "type": "renew",
+      "submitted": "2026-04-02",
+      "processed": "2026-04-02",
+      "era": "SKYXION: ALTAER",
+      "note": ""
+    }
+  ]
+}
