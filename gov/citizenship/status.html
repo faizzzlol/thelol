@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Status — The Legend of Legiona</title>
+  <link rel="icon" type="image/png" href="https://faizzzlol.github.io/thelol/gov/assets/img/TheLoLGovernmentLogo.png" />
+  <meta name="description" content="Check the status of your citizenship application for The Legend of Legiona on Skyxion.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --surface:   #111111;
+      --surface-2: #161616;
+      --border:    #1e1e1e;
+      --gold:      #c6a664;
+      --gold-bg:   rgba(198,166,100,0.08);
+      --gold-mid:  rgba(198,166,100,0.35);
+      --gold-dim:  rgba(198,166,100,0.15);
+      --red:       #c46a6a;
+      --red-bg:    rgba(180,80,80,0.08);
+      --red-border:rgba(180,80,80,0.25);
+      --green:     #6ab87a;
+      --green-bg:  rgba(80,160,100,0.08);
+      --green-border:rgba(80,160,100,0.25);
+      --amber:     #d4a44c;
+      --amber-bg:  rgba(212,164,76,0.08);
+      --amber-border:rgba(212,164,76,0.25);
+      --blue:      #6a9fd4;
+      --blue-bg:   rgba(80,120,180,0.08);
+      --blue-border:rgba(80,120,180,0.25);
+      --text:      #e8e8e8;
+      --muted:     #888888;
+      --dim:       #555555;
+      --fh:        'Barlow Condensed', sans-serif;
+      --fb:        'Barlow', sans-serif;
+      --fm:        'Fira Code', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--fb);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── NOTICE BAR ─── */
+    .notice-bar {
+      background: var(--gold-bg);
+      border-bottom: 1px solid var(--gold-mid);
+      padding: 9px 24px;
+      text-align: center;
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; color: var(--gold);
+    }
+    .notice-bar a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ─── TOP NAV ─── */
+    .topnav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      display: flex; align-items: center;
+      justify-content: space-between; height: 54px;
+    }
+    .topnav-logo {
+      font-family: var(--fh); font-size: 15px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+    }
+    .topnav-logo span { color: var(--gold); }
+    .topnav-links { display: flex; gap: 28px; list-style: none; }
+    .topnav-links a {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .topnav-links a:hover, .topnav-links a.active { color: var(--gold); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--text); transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+    .mobile-nav {
+      display: none; position: fixed;
+      top: 54px; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 28px; z-index: 99;
+      flex-direction: column;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--fm); font-size: 12px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a.active, .mobile-nav a:hover { color: var(--gold); }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 28px;
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.08em; color: var(--dim);
+    }
+    .breadcrumb a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { margin: 0 8px; color: var(--gold); }
+
+    /* ─── MAIN LAYOUT ─── */
+    main {
+      flex: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 64px 28px 100px;
+    }
+
+    /* ─── PAGE HEADER ─── */
+    .page-hd {
+      margin-bottom: 52px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-tag {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 12px;
+    }
+    .page-hd h1 {
+      font-family: var(--fh);
+      font-size: clamp(38px, 8vw, 68px);
+      font-weight: 800; text-transform: uppercase;
+      letter-spacing: -0.02em; line-height: 0.92;
+      margin-bottom: 16px;
+    }
+    .page-hd h1 em { font-style: italic; color: var(--gold); }
+    .page-hd p {
+      font-size: 14px; font-weight: 300;
+      color: var(--muted); line-height: 1.7;
+      max-width: 500px;
+    }
+
+    /* ─── SEARCH BLOCK ─── */
+    .search-block {
+      margin-bottom: 48px;
+    }
+    .search-label {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); display: block; margin-bottom: 10px;
+    }
+    .search-row {
+      display: flex; gap: 0;
+    }
+    .search-row input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-right: none;
+      color: var(--text);
+      font-family: var(--fm); font-size: 13px;
+      letter-spacing: 0.06em;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      text-transform: uppercase;
+    }
+    .search-row input:focus { border-color: var(--gold); }
+    .search-row input::placeholder { color: var(--dim); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .search-row button {
+      background: var(--gold);
+      color: #000;
+      border: 1px solid var(--gold);
+      padding: 14px 24px;
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .search-row button:hover { background: #d4b06e; }
+    .search-row button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .search-row button .spin {
+      display: none; width: 12px; height: 12px;
+      border: 1.5px solid #000; border-top-color: transparent;
+      border-radius: 50%; animation: spin 0.6s linear infinite;
+    }
+    .search-row button.loading .spin { display: block; }
+    .search-row button.loading .btn-txt { opacity: 0.5; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .search-hint {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.06em; color: var(--dim);
+      margin-top: 8px;
+    }
+
+    /* ─── RESULT PANEL ─── */
+    #resultPanel { display: none; }
+    #resultPanel.show { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .result-card {
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    /* status variants */
+    .result-card.status-approved  { border-left-color: var(--green); }
+    .result-card.status-rejected  { border-left-color: var(--red); }
+    .result-card.status-pending   { border-left-color: var(--amber); }
+    .result-card.status-under_review { border-left-color: var(--blue); }
+    .result-card.status-not_found { border-left-color: var(--dim); }
+
+    .result-top {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 16px; flex-wrap: wrap;
+    }
+    .result-ref {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.12em; color: var(--muted);
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .result-title {
+      font-family: var(--fh); font-size: 22px;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+    .status-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%; flex-shrink: 0;
+    }
+
+    .badge-approved   { color: var(--green); border-color: var(--green-border); background: var(--green-bg); }
+    .badge-approved .dot { background: var(--green); animation: pulse 2s infinite; }
+    .badge-rejected   { color: var(--red);   border-color: var(--red-border);   background: var(--red-bg); }
+    .badge-rejected .dot { background: var(--red); }
+    .badge-pending    { color: var(--amber); border-color: var(--amber-border); background: var(--amber-bg); }
+    .badge-pending .dot { background: var(--amber); animation: pulse 2s infinite; }
+    .badge-under_review { color: var(--blue); border-color: var(--blue-border); background: var(--blue-bg); }
+    .badge-under_review .dot { background: var(--blue); animation: pulse 1.5s infinite; }
+    .badge-not_found  { color: var(--muted); border-color: var(--border); background: var(--surface-2); }
+    .badge-not_found .dot { background: var(--dim); }
+
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+    .result-body {
+      padding: 24px 28px;
+    }
+
+    .result-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0;
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .meta-cell {
+      padding: 14px 18px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-cell:nth-child(even):last-child,
+    .meta-cell:last-child { border-right: none; }
+    .meta-lbl {
+      font-family: var(--fm); font-size: 9px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--dim); display: block; margin-bottom: 5px;
+    }
+    .meta-val {
+      font-family: var(--fm); font-size: 12px;
+      color: var(--text); letter-spacing: 0.05em;
+    }
+
+    .result-message {
+      font-size: 13px; font-weight: 300;
+      color: var(--muted); line-height: 1.75;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      margin-bottom: 20px;
+    }
+    .result-message strong { color: var(--text); font-weight: 500; }
+
+    .result-note {
+      font-family: var(--fm); font-size: 11px;
+      letter-spacing: 0.05em; color: var(--dim);
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--gold-dim);
+      font-style: italic;
+    }
+
+    .result-actions {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 20px; padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .action-btn {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; padding: 10px 20px;
+      cursor: pointer; transition: all 0.2s;
+      display: inline-block;
+    }
+    .action-btn-primary {
+      border: 1px solid var(--gold); color: var(--gold); background: transparent;
+    }
+    .action-btn-primary:hover { background: var(--gold); color: var(--bg); }
+    .action-btn-ghost {
+      border: 1px solid var(--border); color: var(--muted); background: transparent;
+    }
+    .action-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── HOW IT WORKS ─── */
+    .how-section {
+      margin-top: 60px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+    .how-tag {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); display: block; margin-bottom: 20px;
+    }
+    .how-grid {
+      display: grid; gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .how-item {
+      background: var(--surface);
+      padding: 20px 22px;
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+    .how-n {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--gold); flex-shrink: 0;
+      margin-top: 1px; letter-spacing: 0.1em;
+    }
+    .how-item h4 {
+      font-family: var(--fh); font-size: 15px;
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.04em; margin-bottom: 4px;
+    }
+    .how-item p {
+      font-size: 12px; color: var(--muted);
+      font-weight: 300; line-height: 1.6;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 28px 28px;
+      margin-top: auto;
+    }
+    .footer-bottom {
+      max-width: 720px; margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.08em; color: var(--dim);
+      text-transform: uppercase;
+    }
+    .footer-bottom a {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--dim); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-bottom a:hover { color: var(--gold); }
+    .disclaimer {
+      max-width: 720px; margin: 14px auto 0;
+      font-size: 11px; color: var(--dim);
+      font-weight: 300; line-height: 1.6;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .topnav-links { display: none; }
+      .hamburger { display: flex; }
+      main { padding: 48px 20px 80px; }
+    }
+    @media (max-width: 480px) {
+      .search-row { flex-direction: column; }
+      .search-row input { border-right: 1px solid var(--border); border-bottom: none; }
+      .result-top { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NOTICE BAR -->
+  <div class="notice-bar">
+    CITIZENSHIP APPLICATION PORTAL // SKYXION: ALTAER ERA //
+    <a href="/thelol/gov/citizenship/apply">SUBMIT A NEW APPLICATION →</a>
+  </div>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <a href="https://faizzzlol.github.io/thelol/" class="topnav-logo">THE <span>LOL</span></a>
+    <ul class="topnav-links">
+      <li><a href="https://faizzzlol.github.io/thelol/">THE LOL</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a></li>
+      <li><a href="/thelol/gov/citizenship/" class="active">CITIZENSHIP</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a></li>
+      <li><a href="https://faizzzlol.github.io/thelol/gov/assets/">ARCHIVES</a></li>
+    </ul>
+    <button class="hamburger" id="burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="https://faizzzlol.github.io/thelol/">THE LOL</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+    <a href="/thelol/gov/citizenship/" class="active">CITIZENSHIP</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/isc/">ISC</a>
+    <a href="https://faizzzlol.github.io/thelol/gov/assets/">ARCHIVES</a>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="https://faizzzlol.github.io/thelol/gov/">Government</a>
+    <span>//</span>
+    <a href="/thelol/gov/citizenship/">Citizenship</a>
+    <span>//</span>
+    Application Status
+  </div>
+
+  <main>
+
+    <!-- PAGE HEADER -->
+    <div class="page-hd">
+      <span class="page-tag">THELOL.GOV // CITIZENSHIP STATUS // ALTAER ERA</span>
+      <h1>Application <em>Status</em></h1>
+      <p>
+        Enter your reference number to check the current status of your citizenship application.
+        Reference numbers were issued upon successful submission — format: <code style="font-family:var(--fm);font-size:12px;color:var(--gold);">THELOL-CTZN-YYYY-####</code>
+      </p>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-block">
+      <label class="search-label" for="refInput">Reference Number</label>
+      <div class="search-row">
+        <input
+          type="text"
+          id="refInput"
+          placeholder="THELOL-CTZN-2026-0000"
+          maxlength="24"
+          autocomplete="off"
+          spellcheck="false"
+          onkeydown="if(event.key==='Enter') checkStatus()"
+        />
+        <button id="checkBtn" onclick="checkStatus()">
+          <span class="spin"></span>
+          <span class="btn-txt">CHECK STATUS →</span>
+        </button>
+      </div>
+      <p class="search-hint">Reference numbers are case-insensitive. Example: THELOL-CTZN-2026-4821</p>
+    </div>
+
+    <!-- RESULT PANEL -->
+    <div id="resultPanel"></div>
+
+    <!-- HOW IT WORKS -->
+    <div class="how-section" id="howSection">
+      <span class="how-tag">How Status Checking Works</span>
+      <div class="how-grid">
+        <div class="how-item">
+          <span class="how-n">01 //</span>
+          <div>
+            <h4>Submit Your Application</h4>
+            <p>After submitting via the application form, you receive a reference number like <code style="font-family:var(--fm);font-size:11px;color:var(--gold);">THELOL-CTZN-2026-####</code>. Save it.</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-n">02 //</span>
+          <div>
+            <h4>Government Reviews</h4>
+            <p>The Office of the President reviews all submissions. This may take time depending on the volume of applications received during the current era.</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-n">03 //</span>
+          <div>
+            <h4>Check Here</h4>
+            <p>Once a decision has been made, your status will appear here. You will also be contacted via the method you provided in your application.</p>
+          </div>
+        </div>
+        <div class="how-item">
+          <span class="how-n">04 //</span>
+          <div>
+            <h4>Status Meanings</h4>
+            <p><strong style="color:var(--amber)">Pending</strong> — received, awaiting review &nbsp;·&nbsp; <strong style="color:var(--blue)">Under Review</strong> — actively being processed &nbsp;·&nbsp; <strong style="color:var(--green)">Approved</strong> — citizen &nbsp;·&nbsp; <strong style="color:var(--red)">Rejected</strong> — not accepted</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <p>© 2026 THE LEGEND OF LEGIONA // CITIZENSHIP PORTAL</p>
+      <a href="/thelol/gov/citizenship/">← Citizenship Info</a>
+    </div>
+    <p class="disclaimer">
+      <strong>LEGAL DISCLAIMER:</strong> The Legend of Legiona (The LoL) is an independent community project within Minecraft. Not affiliated with Kawaiisho, Mojang AB, or Microsoft Corporation.
+    </p>
+  </footer>
+
+  <script>
+    // ── Hamburger ──
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobileNav');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+
+    // ── Auto-fill ref from URL param ──
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const ref = params.get('ref');
+      if (ref) {
+        document.getElementById('refInput').value = ref.toUpperCase();
+        checkStatus();
+      }
+    })();
+
+    // ── Status config ──
+    const STATUS_CONFIG = {
+      approved: {
+        label: 'Approved',
+        badgeClass: 'badge-approved',
+        cardClass: 'status-approved',
+        message: `Your citizenship application has been <strong>approved</strong> by the Office of the President. You are now a recognised citizen of The Legend of Legiona for the current Skyxion: Altaer Era. Welcome to The LoL — uphold your obligations and represent the nation with pride.`,
+        actions: [
+          { label: 'Read Your Rights & Obligations →', href: '/thelol/gov/citizenship/#obligations', primary: true },
+          { label: 'View Citizenship Act', href: 'https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Citizenship_Act_29_3_2026.pdf', primary: false }
+        ]
+      },
+      rejected: {
+        label: 'Rejected',
+        badgeClass: 'badge-rejected',
+        cardClass: 'status-rejected',
+        message: `Your citizenship application has been <strong>rejected</strong> by the Office of the President. The Government's decision on all applications is final. If you believe this is an error, you may contact the Government directly via the contact method provided in your application. Do not resubmit without contacting us first.`,
+        actions: [
+          { label: '← Back to Citizenship Info', href: '/thelol/gov/citizenship/', primary: false }
+        ]
+      },
+      pending: {
+        label: 'Pending Review',
+        badgeClass: 'badge-pending',
+        cardClass: 'status-pending',
+        message: `Your application has been <strong>received</strong> by the Office of the President and is awaiting review. No action is required from you at this time. Do not resubmit. You will be contacted via the method you provided once a decision has been made.`,
+        actions: [
+          { label: '← Back to Citizenship Info', href: '/thelol/gov/citizenship/', primary: false }
+        ]
+      },
+      under_review: {
+        label: 'Under Review',
+        badgeClass: 'badge-under_review',
+        cardClass: 'status-under_review',
+        message: `Your application is <strong>actively being reviewed</strong> by the Office of the President. A decision is expected soon. No further action is required from you. You will be notified via your provided contact details once the review is complete.`,
+        actions: [
+          { label: '← Back to Citizenship Info', href: '/thelol/gov/citizenship/', primary: false }
+        ]
+      },
+      not_found: {
+        label: 'Not Found',
+        badgeClass: 'badge-not_found',
+        cardClass: 'status-not_found',
+        message: `No application matching this reference number was found in the official registry. This may mean:<br><br>
+          &nbsp;&nbsp;· The reference number was entered incorrectly — check for typos<br>
+          &nbsp;&nbsp;· Your application has not yet been processed into the registry<br>
+          &nbsp;&nbsp;· The reference number does not exist<br><br>
+          If you submitted recently, allow some time before checking again. If the issue persists, contact the Government via your application's contact method.`,
+        actions: [
+          { label: 'Submit New Application →', href: '/thelol/gov/citizenship/apply', primary: true },
+          { label: '← Citizenship Info', href: '/thelol/gov/citizenship/', primary: false }
+        ]
+      }
+    };
+
+    // ── Main check function ──
+    async function checkStatus() {
+      const input = document.getElementById('refInput').value.trim().toUpperCase();
+      const btn   = document.getElementById('checkBtn');
+      const panel = document.getElementById('resultPanel');
+
+      if (!input) {
+        document.getElementById('refInput').focus();
+        return;
+      }
+
+      // Validate rough format
+      if (!input.match(/^THELOL-CTZN-\d{4}-\d{4}$/)) {
+        renderResult({ status: 'not_found', ref: input, note: 'The format entered does not match a valid reference number.' });
+        return;
+      }
+
+      btn.classList.add('loading');
+      btn.disabled = true;
+      panel.classList.remove('show');
+
+      try {
+        // Fetch the JSON from GitHub raw (same repo)
+        const url = 'https://raw.githubusercontent.com/faizzzlol/faizzzlol.github.io/main/thelol/gov/citizenship/status.json';
+        const res  = await fetch(url + '?nocache=' + Date.now());
+
+        if (!res.ok) throw new Error('fetch_failed');
+
+        const data = await res.json();
+        const apps = data.applications || [];
+
+        const match = apps.find(a => a.ref.toUpperCase() === input);
+
+        if (match) {
+          renderResult(match);
+        } else {
+          renderResult({ status: 'not_found', ref: input });
+        }
+
+      } catch (err) {
+        // Fallback: if JSON can't be fetched, treat as not yet in registry
+        renderResult({ status: 'pending', ref: input, note: 'Status registry is currently unavailable. If you submitted recently, your application is being processed. Try again shortly.' });
+      }
+
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+
+    // ── Render result card ──
+    function renderResult(entry) {
+      const panel  = document.getElementById('resultPanel');
+      const config = STATUS_CONFIG[entry.status] || STATUS_CONFIG['not_found'];
+      const how    = document.getElementById('howSection');
+
+      // Build meta cells
+      const cells = [];
+      if (entry.ref)       cells.push({ lbl: 'Reference',  val: entry.ref });
+      if (entry.ign)       cells.push({ lbl: 'IGN',        val: entry.ign });
+      if (entry.type)      cells.push({ lbl: 'Type',       val: entry.type === 'renew' ? 'Renewal' : 'New Application' });
+      if (entry.submitted) cells.push({ lbl: 'Submitted',  val: entry.submitted });
+      if (entry.processed) cells.push({ lbl: 'Processed',  val: entry.processed });
+      if (entry.era)       cells.push({ lbl: 'Era',        val: entry.era });
+
+      const metaHTML = cells.length ? `
+        <div class="result-meta-grid">
+          ${cells.map(c => `<div class="meta-cell"><span class="meta-lbl">${c.lbl}</span><span class="meta-val">${c.val}</span></div>`).join('')}
+        </div>
+      ` : '';
+
+      const noteHTML = entry.note ? `<div class="result-note">${entry.note}</div>` : '';
+
+      const actionsHTML = config.actions.map(a =>
+        `<a href="${a.href}" class="action-btn ${a.primary ? 'action-btn-primary' : 'action-btn-ghost'}">${a.label}</a>`
+      ).join('');
+
+      panel.innerHTML = `
+        <div class="result-card ${config.cardClass}">
+          <div class="result-top">
+            <div>
+              <div class="result-ref">${entry.ref}</div>
+              <div class="result-title">Citizenship Application</div>
+            </div>
+            <div class="status-badge ${config.badgeClass}">
+              <span class="dot"></span>
+              ${config.label}
+            </div>
+          </div>
+          <div class="result-body">
+            ${metaHTML}
+            <div class="result-message">${config.message}</div>
+            ${noteHTML}
+            <div class="result-actions">
+              ${actionsHTML}
+              <button onclick="resetSearch()" class="action-btn action-btn-ghost">Check Another</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      panel.classList.add('show');
+      how.style.display = 'none';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetSearch() {
+      const panel = document.getElementById('resultPanel');
+      const how   = document.getElementById('howSection');
+      panel.classList.remove('show');
+      panel.innerHTML = '';
+      how.style.display = '';
+      document.getElementById('refInput').value = '';
+      document.getElementById('refInput').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── Auto-uppercase input ──
+    document.getElementById('refInput').addEventListener('input', function () {
+      const pos = this.selectionStart;
+      this.value = this.value.toUpperCase();
+      this.setSelectionRange(pos, pos);
+    });
+  </script>
+
+</body>
+</html>
