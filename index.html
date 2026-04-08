@@ -7,7 +7,6 @@
     <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
     <meta property="og:title" content="The Legend of Legiona">
     <meta property="og:description" content="A sovereign nation forged in vision, courage, and camaraderie. Welcome to The LoL.">
-    <link rel="icon" type="image/png" href="/thelol/assets/TheLoL.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -67,7 +66,6 @@
             padding: 0 16px;
             min-width: max-content;
         }
-
         .netbar-inner a {
             font-family: 'DM Mono', monospace;
             font-size: 0.5rem;
@@ -175,7 +173,6 @@
             padding: calc(120px + var(--netbar-h)) 5% 6rem;
             position: relative; overflow: hidden;
         }
-
         .hero-bg-glow {
             position: absolute; top: -15%; left: -10%;
             width: 80vw; height: 80vw; max-width: 900px;
@@ -196,12 +193,10 @@
             background-size: 80px 80px;
             mask-image: radial-gradient(ellipse 80% 80% at 25% 50%, black 0%, transparent 100%);
         }
-
         .hero-inner {
             position: relative; max-width: 1300px;
             margin: 0 auto; width: 100%;
         }
-
         .hero-eyebrow {
             font-family: 'DM Mono', monospace;
             font-size: 0.62rem; letter-spacing: 4px;
@@ -213,7 +208,6 @@
             content: ''; width: 28px; height: 1px;
             background: var(--emerald); opacity: 0.6;
         }
-
         .hero h1 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(3.5rem, 9vw, 9rem);
@@ -227,7 +221,6 @@
             -webkit-text-stroke: 1.5px var(--emerald);
         }
         .hero h1 .gold-text { color: var(--gold-light); }
-
         .hero-sub {
             font-size: clamp(0.95rem, 1.4vw, 1.15rem);
             color: rgba(255,255,255,0.4);
@@ -235,12 +228,10 @@
             margin-bottom: 2.8rem;
             opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
         }
-
         .hero-actions {
             display: flex; gap: 12px; flex-wrap: wrap;
             opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
         }
-
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 13px 28px;
@@ -251,7 +242,6 @@
             transition: background 0.25s, transform 0.2s;
         }
         .btn-primary:hover { background: var(--emerald); transform: translateY(-2px); }
-
         .btn-secondary {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 13px 28px;
@@ -262,7 +252,6 @@
             transition: all 0.25s;
         }
         .btn-secondary:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
-
         .hero-scroll {
             position: absolute; bottom: 2.5rem; left: 0; right: 0;
             display: flex; justify-content: center;
@@ -293,7 +282,6 @@
             border-top: 1px solid var(--border-dark);
         }
         .hub-inner { max-width: 1280px; margin: 0 auto; }
-
         .hub-header {
             display: flex; justify-content: space-between; align-items: flex-end;
             margin-bottom: 3rem; flex-wrap: wrap; gap: 16px;
@@ -308,15 +296,11 @@
             font-size: 0.88rem; color: rgba(255,255,255,0.32);
             max-width: 300px; text-align: right; line-height: 1.7;
         }
-
-        /* Featured 2-col cards */
         .hub-featured {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 3px;
-            margin-bottom: 3px;
+            gap: 3px; margin-bottom: 3px;
         }
-
         .hub-card {
             background: var(--charcoal3);
             padding: 2.4rem 2.2rem;
@@ -337,7 +321,6 @@
         .hub-card:hover::before { transform: scaleX(1); }
         .hub-card.gold-card::before { background: linear-gradient(90deg, var(--gold), transparent); }
         .hub-card.gold-card:hover { background: rgba(200,150,42,0.06); }
-
         .hc-tag {
             font-family: 'DM Mono', monospace;
             font-size: 0.52rem; letter-spacing: 2px;
@@ -345,7 +328,6 @@
             margin-bottom: auto; padding-bottom: 1.5rem;
         }
         .hub-card.gold-card .hc-tag { color: var(--gold); }
-
         .hc-title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(1.1rem, 2vw, 1.5rem);
@@ -366,8 +348,6 @@
         .hub-card.gold-card .hc-arrow { color: rgba(200,150,42,0.55); }
         .hub-card:hover .hc-arrow { letter-spacing: 3px; color: var(--emerald); }
         .hub-card.gold-card:hover .hc-arrow { color: var(--gold); }
-
-        /* ── Subsection label ── */
         .hub-sublabel {
             font-family: 'DM Mono', monospace;
             font-size: 0.52rem; letter-spacing: 3px;
@@ -383,24 +363,9 @@
         }
         .hub-sublabel.gold { color: rgba(200,150,42,0.35); }
         .hub-sublabel.gold::after { background: rgba(200,150,42,0.1); }
-
-        /* Mini grid */
-        .hub-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 3px;
-        }
-        .hub-grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 3px;
-        }
-        .hub-grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3px;
-        }
-
+        .hub-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+        .hub-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+        .hub-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
         .hub-mini {
             background: var(--charcoal3);
             padding: 1.6rem 1.5rem;
@@ -418,12 +383,9 @@
             transition: transform 0.3s ease;
         }
         .hub-mini:hover::after { transform: scaleX(1); }
-
-        /* Corp-accent mini */
         .hub-mini.corp-accent::after { background: var(--emerald); }
         .hub-mini.corp-accent:hover { background: rgba(52,160,106,0.06); }
         .hub-mini.community-accent::after { background: #5865F2; }
-
         .hm-tag {
             font-family: 'DM Mono', monospace;
             font-size: 0.47rem; letter-spacing: 2px;
@@ -431,16 +393,12 @@
         }
         .hub-mini.corp-accent .hm-tag { color: var(--emerald); }
         .hub-mini.community-accent .hm-tag { color: #7289DA; opacity: 0.8; }
-
         .hm-name {
             font-family: 'Playfair Display', serif;
             font-size: 0.95rem; font-weight: 700; color: #fff;
             line-height: 1.2;
         }
-        .hm-desc {
-            font-size: 0.76rem; color: rgba(255,255,255,0.3);
-            line-height: 1.55; font-weight: 300;
-        }
+        .hm-desc { font-size: 0.76rem; color: rgba(255,255,255,0.3); line-height: 1.55; font-weight: 300; }
         .hm-arrow {
             font-family: 'DM Mono', monospace;
             font-size: 0.52rem; letter-spacing: 1.5px;
@@ -450,8 +408,7 @@
         }
         .hub-mini.corp-accent .hm-arrow { color: rgba(52,160,106,0.45); }
         .hub-mini.community-accent .hm-arrow { color: rgba(114,137,218,0.5); }
-        .hub-mini:hover .hm-arrow { letter-spacing: 2.5px; }
-        .hub-mini:hover .hm-arrow { color: var(--gold); }
+        .hub-mini:hover .hm-arrow { letter-spacing: 2.5px; color: var(--gold); }
         .hub-mini.corp-accent:hover .hm-arrow { color: var(--emerald); }
         .hub-mini.community-accent:hover .hm-arrow { color: #7289DA; }
 
@@ -466,7 +423,6 @@
             display: grid; grid-template-columns: 1fr 1fr;
             gap: 80px; align-items: center;
         }
-
         .about-text h2 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 3.5vw, 3rem);
@@ -480,7 +436,6 @@
         }
         .about-text p strong { color: rgba(255,255,255,0.75); font-weight: 500; }
         .about-text p em { font-style: italic; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
-
         .about-link {
             display: inline-flex; align-items: center; gap: 8px;
             margin-top: 0.5rem;
@@ -490,7 +445,6 @@
             transition: border-color 0.2s;
         }
         .about-link:hover { border-color: var(--emerald); }
-
         .pillars { display: flex; flex-direction: column; gap: 2px; }
         .pillar {
             display: flex; align-items: center; gap: 18px;
@@ -515,7 +469,6 @@
             border-top: 1px solid var(--border-dark);
         }
         .history-inner { max-width: 1200px; margin: 0 auto; }
-
         .history-header {
             display: flex; justify-content: space-between; align-items: flex-end;
             margin-bottom: 3.5rem; flex-wrap: wrap; gap: 16px;
@@ -527,52 +480,170 @@
         }
         .history-header h2 em { font-style: italic; color: var(--emerald); }
         .history-header p { font-size: 0.85rem; color: rgba(255,255,255,0.3); max-width: 260px; text-align: right; line-height: 1.7; }
-
-        .timeline-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3px;
-            background: var(--border-dark);
-            border: 1px solid var(--border-dark);
-        }
-
-        .t-card {
-            background: var(--charcoal3);
-            padding: 2rem 1.6rem;
-            position: relative;
-            transition: background 0.25s;
-        }
-        .t-card:hover { background: rgba(52,160,106,0.05); }
-        .t-card::before {
-            content: ''; position: absolute;
-            top: 0; left: 0; right: 0; height: 2px;
-            background: var(--border-dark);
-            transition: background 0.25s;
-        }
-        .t-card:hover::before { background: var(--emerald); }
-        .t-card .era {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.56rem; letter-spacing: 2px;
-            color: var(--emerald); opacity: 0.65;
-            margin-bottom: 0.8rem; display: block;
-        }
-        .t-card h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem; font-weight: 700; color: #fff;
-            margin-bottom: 0.6rem; line-height: 1.3;
-        }
-        .t-card p { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.65; font-weight: 300; }
-        .t-badge {
-            display: inline-block; margin-top: 1rem;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.48rem; letter-spacing: 1.5px;
-            padding: 2px 8px;
-            border: 1px solid rgba(52,160,106,0.22); color: rgba(52,160,106,0.65);
-        }
-        .t-badge.chaos { border-color: rgba(180,60,60,0.25); color: rgba(200,100,100,0.65); }
-        .t-badge.current { border-color: rgba(200,150,42,0.3); color: rgba(224,176,69,0.7); }
-
         .history-cta { margin-top: 2.5rem; text-align: center; }
+
+        /* ─── INTERACTIVE TIMELINE ─── */
+        .itl-wrap { margin-top: 0; }
+
+        .itl-track-area { position: relative; padding: 18px 0 62px; }
+        .itl-track { position: relative; height: 1px; background: rgba(255,255,255,0.07); }
+        .itl-fill {
+            position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+            background: linear-gradient(90deg, var(--emerald), rgba(52,160,106,0.45));
+            transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .itl-nodes {
+            position: absolute; top: 0; left: 0; right: 0;
+            transform: translateY(-50%);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .itl-node {
+            display: flex; flex-direction: column; align-items: center;
+            background: none; border: none; cursor: pointer; padding: 0; position: relative;
+        }
+        .itl-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.14);
+            position: relative; z-index: 2;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .itl-dot::after {
+            content: ''; position: absolute; inset: -5px;
+            border-radius: 50%; border: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .itl-node.active .itl-dot::after {
+            border-color: rgba(52,160,106,0.28);
+            animation: itlPulse 2.4s ease infinite;
+        }
+        .itl-node.itl-chaos.active .itl-dot::after { border-color: rgba(192,57,43,0.3); }
+        .itl-node.itl-gold.active  .itl-dot::after { border-color: rgba(200,150,42,0.3); }
+
+        @keyframes itlPulse {
+            0%, 100% { transform: scale(1);   opacity: 0.9; }
+            60%       { transform: scale(2.2); opacity: 0;   }
+        }
+
+        .itl-node:hover .itl-dot { background: rgba(52,160,106,0.35); border-color: var(--emerald); transform: scale(1.5); }
+        .itl-node.itl-chaos:hover .itl-dot { background: rgba(192,57,43,0.3); border-color: #e74c3c; }
+        .itl-node.itl-gold:hover  .itl-dot { background: rgba(200,150,42,0.3); border-color: var(--gold); }
+
+        .itl-node.active .itl-dot {
+            width: 14px; height: 14px;
+            background: var(--emerald); border-color: var(--emerald);
+            box-shadow: 0 0 0 4px rgba(52,160,106,0.15), 0 0 18px rgba(52,160,106,0.35);
+            transform: scale(1) !important;
+        }
+        .itl-node.itl-chaos.active .itl-dot {
+            background: #c0392b; border-color: #e74c3c;
+            box-shadow: 0 0 0 4px rgba(192,57,43,0.15), 0 0 18px rgba(231,76,60,0.35);
+        }
+        .itl-node.itl-gold.active .itl-dot {
+            background: var(--gold); border-color: var(--gold-light);
+            box-shadow: 0 0 0 4px rgba(200,150,42,0.15), 0 0 18px rgba(200,150,42,0.35);
+        }
+
+        .itl-label {
+            position: absolute; top: 20px;
+            display: flex; flex-direction: column; align-items: center; gap: 2px;
+            pointer-events: none; white-space: nowrap;
+        }
+        .itl-ldate {
+            font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1px;
+            color: rgba(255,255,255,0.18); transition: color 0.3s;
+        }
+        .itl-lname {
+            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px;
+            color: rgba(52,160,106,0.3); transition: color 0.3s;
+        }
+        .itl-node.active           .itl-ldate { color: rgba(255,255,255,0.5); }
+        .itl-node.active           .itl-lname { color: var(--emerald); }
+        .itl-node.itl-chaos.active .itl-lname { color: #e74c3c; }
+        .itl-node.itl-gold.active  .itl-lname { color: var(--gold-light); }
+
+        .itl-panel {
+            position: relative; overflow: hidden;
+            background: var(--charcoal3);
+            border: 1px solid var(--border-dark);
+            border-top: 2px solid var(--emerald);
+            min-height: 210px;
+            transition: border-top-color 0.45s ease;
+        }
+        .itl-panel.accent-chaos { border-top-color: #c0392b; }
+        .itl-panel.accent-gold  { border-top-color: var(--gold); }
+
+        .itl-content {
+            padding: 2.6rem 3rem;
+            display: grid; grid-template-columns: 1fr 1.3fr;
+            gap: 3rem; align-items: center;
+            position: relative; z-index: 2;
+            opacity: 1; transform: translateY(0);
+            transition: opacity 0.28s ease, transform 0.28s ease;
+        }
+        .itl-content.is-exiting { opacity: 0; transform: translateY(var(--itl-exit-y, -7px)); }
+        .itl-content.is-entering { opacity: 0; transform: translateY(var(--itl-enter-y, 7px)); transition: none; }
+
+        .itl-era-date {
+            display: block; font-family: 'DM Mono', monospace;
+            font-size: 0.52rem; letter-spacing: 3px;
+            color: var(--emerald); opacity: 0.85;
+            margin-bottom: 0.65rem; transition: color 0.4s;
+        }
+        .itl-panel.accent-chaos .itl-era-date { color: #e74c3c; }
+        .itl-panel.accent-gold  .itl-era-date { color: var(--gold); }
+
+        .itl-badge {
+            display: inline-block; font-family: 'DM Mono', monospace;
+            font-size: 0.44rem; letter-spacing: 2.5px;
+            padding: 3px 10px; margin-bottom: 1rem;
+            border: 1px solid rgba(52,160,106,0.3); color: rgba(52,160,106,0.75);
+        }
+        .itl-badge.badge-chaos   { border-color: rgba(192,57,43,0.35); color: rgba(231,76,60,0.75); }
+        .itl-badge.badge-current { border-color: rgba(200,150,42,0.35); color: rgba(224,176,69,0.75); }
+
+        .itl-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+            font-weight: 700; color: #fff; line-height: 1.2; margin: 0;
+        }
+        .itl-desc {
+            font-size: 0.88rem; color: rgba(255,255,255,0.38);
+            line-height: 1.9; font-weight: 300; margin: 0;
+        }
+        .itl-ghost {
+            position: absolute; right: 1.8rem; bottom: -1.2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(5rem, 11vw, 9.5rem); font-weight: 900;
+            color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.06);
+            line-height: 1; pointer-events: none; z-index: 1; user-select: none;
+            transition: -webkit-text-stroke-color 0.4s;
+        }
+        .itl-panel.accent-chaos .itl-ghost { -webkit-text-stroke-color: rgba(192,57,43,0.07); }
+        .itl-panel.accent-gold  .itl-ghost { -webkit-text-stroke-color: rgba(200,150,42,0.07); }
+
+        .itl-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.85rem 1.5rem;
+            border: 1px solid var(--border-dark); border-top: none;
+            background: rgba(0,0,0,0.12);
+        }
+        .itl-btn {
+            font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 2px;
+            color: rgba(255,255,255,0.25); background: none; border: none;
+            cursor: pointer; padding: 6px 14px; transition: color 0.2s;
+        }
+        .itl-btn:hover:not(:disabled) { color: var(--emerald); }
+        .itl-btn:disabled { opacity: 0.15; cursor: default; }
+        .itl-counter {
+            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 3px;
+            color: rgba(255,255,255,0.16);
+        }
+        .itl-hint {
+            margin-top: 0.75rem; font-family: 'DM Mono', monospace;
+            font-size: 0.4rem; letter-spacing: 2px;
+            color: rgba(255,255,255,0.09); text-align: center;
+        }
 
         /* ─── STATS STRIP ─── */
         .stats-strip {
@@ -583,8 +654,7 @@
         }
         .stats-inner {
             max-width: 1200px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
         }
         .stat-block {
             text-align: center; padding: 2rem 1rem;
@@ -593,46 +663,37 @@
         }
         .stat-block .num {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-            font-weight: 900; color: var(--emerald);
-            display: block; line-height: 1;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
+            color: var(--emerald); display: block; line-height: 1;
         }
         .stat-block .lbl {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 2px;
-            color: rgba(255,255,255,0.3);
-            display: block; margin-top: 6px;
+            font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 2px;
+            color: rgba(255,255,255,0.3); display: block; margin-top: 6px;
         }
 
         /* ─── FOUNDERS ─── */
         .founders-section {
-            padding: 6rem 5%;
-            background: var(--charcoal);
+            padding: 6rem 5%; background: var(--charcoal);
             border-top: 1px solid var(--border-dark);
         }
         .founders-inner { max-width: 1200px; margin: 0 auto; }
-
         .founders-header {
             display: grid; grid-template-columns: 1fr 2fr;
             gap: 60px; align-items: center; margin-bottom: 3.5rem;
         }
         .founders-header h2 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.2rem, 4vw, 3.2rem);
-            font-weight: 900; color: #fff; line-height: 1.1;
+            font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 900; color: #fff; line-height: 1.1;
         }
         .founders-header h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
         .founders-header p { font-size: 0.93rem; color: rgba(255,255,255,0.38); line-height: 1.85; font-weight: 300; }
-
         .founders-grid {
             display: grid; grid-template-columns: repeat(3, 1fr);
             gap: 3px; background: var(--border-dark);
         }
         .founder-card {
-            background: var(--charcoal2);
-            padding: 2.5rem 2rem;
-            position: relative;
-            transition: background 0.2s;
+            background: var(--charcoal2); padding: 2.5rem 2rem;
+            position: relative; transition: background 0.2s;
         }
         .founder-card:hover { background: var(--charcoal3); }
         .founder-ghost {
@@ -646,33 +707,26 @@
             display: flex; align-items: center; justify-content: center;
             font-family: 'Playfair Display', serif; font-size: 1.2rem;
             font-weight: 700; color: var(--emerald);
-            background: rgba(52,160,106,0.05);
-            margin-bottom: 1.4rem;
+            background: rgba(52,160,106,0.05); margin-bottom: 1.4rem;
         }
         .founder-card h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem; font-weight: 700; color: #fff;
-            margin-bottom: 0.35rem;
+            font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;
         }
         .founder-role {
             font-family: 'DM Mono', monospace; font-size: 0.53rem;
-            letter-spacing: 2px; color: var(--emerald); opacity: 0.7;
-            margin-bottom: 1rem;
+            letter-spacing: 2px; color: var(--emerald); opacity: 0.7; margin-bottom: 1rem;
         }
         .founder-card p { font-size: 0.85rem; color: rgba(255,255,255,0.36); line-height: 1.75; font-weight: 300; }
-
         .proclamation-block {
-            margin-top: 3px;
-            background: var(--charcoal2);
-            border: 1px solid var(--border-dark);
-            padding: 2.2rem 2.5rem;
+            margin-top: 3px; background: var(--charcoal2);
+            border: 1px solid var(--border-dark); padding: 2.2rem 2.5rem;
             display: flex; justify-content: space-between; align-items: center;
             gap: 30px; flex-wrap: wrap;
         }
         .proc-title {
             font-family: 'DM Mono', monospace; font-size: 0.56rem;
-            letter-spacing: 3px; color: var(--emerald); opacity: 0.7;
-            margin-bottom: 0.5rem;
+            letter-spacing: 3px; color: var(--emerald); opacity: 0.7; margin-bottom: 0.5rem;
         }
         .proclamation-block h3 {
             font-family: 'Playfair Display', serif; font-size: 1.3rem;
@@ -681,8 +735,7 @@
         .proclamation-block p { font-size: 0.84rem; color: rgba(255,255,255,0.35); }
         .proc-btns { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
         .proc-btn {
-            display: inline-block;
-            padding: 10px 20px; border: 1px solid;
+            display: inline-block; padding: 10px 20px; border: 1px solid;
             font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px;
             text-decoration: none; transition: background 0.2s;
         }
@@ -693,16 +746,13 @@
 
         /* ─── CONTACT ─── */
         .contact-section {
-            padding: 5rem 5%;
-            background: var(--charcoal2);
-            border-top: 1px solid var(--border-dark);
-            text-align: center;
+            padding: 5rem 5%; background: var(--charcoal2);
+            border-top: 1px solid var(--border-dark); text-align: center;
         }
         .contact-inner { max-width: 600px; margin: 0 auto; }
         .contact-section h2 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3.5vw, 3rem);
-            font-weight: 700; color: #fff; margin-bottom: 1rem;
+            font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #fff; margin-bottom: 1rem;
         }
         .contact-section h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
         .contact-section p {
@@ -712,90 +762,38 @@
         .contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
         /* ─── FOOTER ─── */
-        footer {
-            background: var(--green-dark);
-            border-top: 1px solid rgba(52,160,106,0.14);
-        }
+        footer { background: var(--green-dark); border-top: 1px solid rgba(52,160,106,0.14); }
         .footer-main {
-            max-width: 1200px; margin: 0 auto;
-            padding: 4rem 5% 3rem;
-            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 40px;
+            max-width: 1200px; margin: 0 auto; padding: 4rem 5% 3rem;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px;
         }
-        .f-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem; font-weight: 900; color: #fff;
-            margin-bottom: 0.7rem; line-height: 1.2;
-        }
+        .f-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 0.7rem; line-height: 1.2; }
         .f-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
-        .f-desc {
-            font-size: 0.86rem; color: rgba(255,255,255,0.3);
-            line-height: 1.75; font-weight: 300;
-            max-width: 240px; margin-bottom: 1.2rem;
-        }
+        .f-desc { font-size: 0.86rem; color: rgba(255,255,255,0.3); line-height: 1.75; font-weight: 300; max-width: 240px; margin-bottom: 1.2rem; }
         .f-network-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 7px 14px;
-            border: 1px solid rgba(200,150,42,0.22);
-            background: rgba(200,150,42,0.05);
-            text-decoration: none;
-            transition: background 0.2s, border-color 0.2s;
+            display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px;
+            border: 1px solid rgba(200,150,42,0.22); background: rgba(200,150,42,0.05);
+            text-decoration: none; transition: background 0.2s, border-color 0.2s;
         }
         .f-network-badge:hover { background: rgba(200,150,42,0.1); border-color: rgba(200,150,42,0.4); }
         .f-network-badge .fbn-label { font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); line-height: 1.3; }
         .f-network-badge .fbn-name  { font-family: 'DM Mono', monospace; font-size: 0.6rem;  letter-spacing: 1px; color: var(--gold); font-weight: 500; }
-
-        .f-col h5 {
-            font-family: 'DM Mono', monospace; font-size: 0.54rem;
-            letter-spacing: 2.5px; color: var(--emerald); opacity: 0.7;
-            margin-bottom: 1.2rem;
-        }
+        .f-col h5 { font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 2.5px; color: var(--emerald); opacity: 0.7; margin-bottom: 1.2rem; }
         .f-col.network h5 { color: var(--gold); }
-        .f-col a {
-            display: block; font-size: 0.86rem;
-            color: rgba(255,255,255,0.32); text-decoration: none;
-            margin-bottom: 0.6rem; font-weight: 300;
-            transition: color 0.2s;
-        }
+        .f-col a { display: block; font-size: 0.86rem; color: rgba(255,255,255,0.32); text-decoration: none; margin-bottom: 0.6rem; font-weight: 300; transition: color 0.2s; }
         .f-col a:hover { color: rgba(255,255,255,0.72); }
         .f-col.network a:hover { color: var(--gold-light); }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 1.2rem 5%;
-        }
-        .footer-bottom-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 8px;
-        }
-        .footer-bottom p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.54rem; letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.2);
-        }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 1.2rem 5%; }
+        .footer-bottom-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .footer-bottom p { font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.2); }
         .footer-bottom a { color: rgba(200,150,42,0.5); text-decoration: none; transition: color 0.2s; }
         .footer-bottom a:hover { color: var(--gold); }
-        .footer-legal {
-            max-width: 1200px; margin: 0 auto;
-            padding: 0.9rem 5% 1.2rem;
-            border-top: 1px solid rgba(255,255,255,0.04);
-        }
-        .footer-legal p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.44rem; letter-spacing: 1.4px;
-            color: rgba(255,255,255,0.15);
-            line-height: 1.7;
-        }
+        .footer-legal { max-width: 1200px; margin: 0 auto; padding: 0.9rem 5% 1.2rem; border-top: 1px solid rgba(255,255,255,0.04); }
+        .footer-legal p { font-family: 'DM Mono', monospace; font-size: 0.44rem; letter-spacing: 1.4px; color: rgba(255,255,255,0.15); line-height: 1.7; }
 
         /* ─── ANIMATIONS ─── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(22px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scrollPulse {
             0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
             45%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
@@ -812,14 +810,12 @@
             .hub-grid-4 { grid-template-columns: repeat(2, 1fr); }
             .footer-main { grid-template-columns: 1fr 1fr 1fr; }
         }
-
         @media (max-width: 900px) {
             .hub-featured  { grid-template-columns: 1fr; }
             .hub-grid      { grid-template-columns: repeat(2, 1fr); }
             .hub-grid-4    { grid-template-columns: repeat(2, 1fr); }
             .hub-grid-3    { grid-template-columns: repeat(2, 1fr); }
             .about-inner   { grid-template-columns: 1fr; gap: 40px; }
-            .timeline-cards { grid-template-columns: 1fr 1fr; }
             .stats-inner   { grid-template-columns: repeat(2, 1fr); }
             .founders-grid { grid-template-columns: 1fr; }
             .founders-header { grid-template-columns: 1fr; gap: 20px; }
@@ -828,8 +824,9 @@
             .hamburger     { display: flex; }
             .history-header p { display: none; }
             .hub-header p     { display: none; }
+            .itl-content { grid-template-columns: 1fr; gap: 1.4rem; padding: 2rem; }
+            .itl-ghost { font-size: 5rem; right: 1rem; }
         }
-
         @media (max-width: 640px) {
             :root { --netbar-h: 0px; }
             .netbar { display: none; }
@@ -839,7 +836,6 @@
             .hub-grid      { grid-template-columns: 1fr 1fr; }
             .hub-grid-4    { grid-template-columns: 1fr 1fr; }
             .hub-grid-3    { grid-template-columns: 1fr 1fr; }
-            .timeline-cards { grid-template-columns: 1fr; }
             .stats-inner   { grid-template-columns: 1fr 1fr; }
             .footer-main   { grid-template-columns: 1fr; }
             .footer-bottom-inner { flex-direction: column; text-align: center; }
@@ -851,7 +847,13 @@
             .contact-btns  { flex-direction: column; align-items: center; }
             .hero-scroll   { display: none; }
         }
-
+        @media (max-width: 480px) {
+            .itl-ldate, .itl-lname { display: none; }
+            .itl-track-area { padding-bottom: 20px; }
+            .itl-content { padding: 1.6rem 1.4rem; }
+            .itl-nav { padding: 0.8rem 1rem; }
+            .itl-hint { display: none; }
+        }
         @media (max-width: 420px) {
             .hub-grid, .hub-grid-4, .hub-grid-3 { grid-template-columns: 1fr; }
             .stats-inner { grid-template-columns: 1fr; }
@@ -861,7 +863,6 @@
 <body>
 
     <!-- ─── NETWORK BAR ─── -->
-    <!-- Order: PAIZ® CORP · THE LOL · PAIZ SHOP · PAIZ CHICKEN · PAIZPRODUCTIONS · THE LOL MOVIE · GOVERNMENT · ISC · TL RAILWAYS -->
     <nav class="netbar" id="netbar" aria-label="Network">
         <div class="netbar-inner">
             <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
@@ -900,9 +901,9 @@
         <a href="#history"  onclick="closeMobile()">HISTORY</a>
         <a href="#network"  onclick="closeMobile()">NETWORK HUB</a>
         <a href="#founders" onclick="closeMobile()">FOUNDERS</a>
-        <a href="/thelol/gov/"       onclick="closeMobile()">GOVERNMENT PORTAL</a>
-        <a href="/thelol/gov/isc/"   onclick="closeMobile()">ISC</a>
-        <a href="/thelol/tlr/"       onclick="closeMobile()">TL RAILWAYS</a>
+        <a href="/thelol/gov/"        onclick="closeMobile()">GOVERNMENT PORTAL</a>
+        <a href="/thelol/gov/isc/"    onclick="closeMobile()">ISC</a>
+        <a href="/thelol/tlr/"        onclick="closeMobile()">TL RAILWAYS</a>
         <a href="/thelol/gov/assets/" onclick="closeMobile()">LEGAL ARCHIVE</a>
         <a href="https://faizzzlol.github.io/PaizCorp/" onclick="closeMobile()">PAIZ® CORP</a>
         <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie" onclick="closeMobile()">THE LOL MOVIE</a>
@@ -921,8 +922,8 @@
                 of <span class="gold-text">Legiona.</span>
             </h1>
             <p class="hero-sub">
-                A sovereign nation forged in vision, courage, and camaraderie. 
-                From a squad of three to the most modern nation in Skyxion — 
+                A sovereign nation forged in vision, courage, and camaraderie.
+                From a squad of three to the most modern nation in Skyxion —
                 this is <strong>The LoL.</strong>
             </p>
             <div class="hero-actions">
@@ -936,7 +937,6 @@
     <!-- ─── NETWORK HUB ─── -->
     <section class="hub-section" id="network">
         <div class="hub-inner">
-
             <div class="hub-header reveal">
                 <div>
                     <div class="section-eyebrow">COMPLETE NETWORK DIRECTORY</div>
@@ -945,7 +945,6 @@
                 <p>Every portal, studio, store, and service across The LoL and the Paiz® Corp network — all in one place.</p>
             </div>
 
-            <!-- GOVERNMENT PORTALS — Featured -->
             <div class="hub-sublabel reveal" style="margin-top:0; border-top:none; padding-top:0;">THE LOL — GOVERNMENT PORTALS</div>
             <div class="hub-featured reveal">
                 <a href="/thelol/gov/" class="hub-card">
@@ -962,7 +961,6 @@
                 </a>
             </div>
 
-            <!-- THE LOL — Sub-sites -->
             <div class="hub-sublabel reveal">THE LOL — SUB-SITES &amp; PORTALS</div>
             <div class="hub-grid-4 reveal">
                 <a href="/thelol/about" class="hub-mini corp-accent">
@@ -991,7 +989,6 @@
                 </a>
             </div>
 
-            <!-- PAIZ® CORP — All sites -->
             <div class="hub-sublabel gold reveal">PAIZ® CORP — FULL NETWORK</div>
             <div class="hub-grid reveal">
                 <a href="https://faizzzlol.github.io/PaizCorp/" class="hub-mini">
@@ -1026,7 +1023,6 @@
                 </a>
             </div>
 
-            <!-- COMMUNITY -->
             <div class="hub-sublabel reveal">COMMUNITY &amp; RESOURCES</div>
             <div class="hub-grid-3 reveal">
                 <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener" class="hub-mini community-accent">
@@ -1042,29 +1038,16 @@
                     <span class="hm-arrow">DOWNLOAD →</span>
                 </a>
             </div>
-
         </div>
     </section>
 
     <!-- ─── STATS ─── -->
     <div class="stats-strip reveal">
         <div class="stats-inner">
-            <div class="stat-block">
-                <span class="num">2023</span>
-                <span class="lbl">YEAR FOUNDED</span>
-            </div>
-            <div class="stat-block">
-                <span class="num">3</span>
-                <span class="lbl">FOUNDING MEMBERS</span>
-            </div>
-            <div class="stat-block">
-                <span class="num">4,800+</span>
-                <span class="lbl">BLOCKS — TLSRL</span>
-            </div>
-            <div class="stat-block">
-                <span class="num">9</span>
-                <span class="lbl">NETWORK SITES</span>
-            </div>
+            <div class="stat-block"><span class="num">2023</span><span class="lbl">YEAR FOUNDED</span></div>
+            <div class="stat-block"><span class="num">3</span><span class="lbl">FOUNDING MEMBERS</span></div>
+            <div class="stat-block"><span class="num">4,800+</span><span class="lbl">BLOCKS — TLSRL</span></div>
+            <div class="stat-block"><span class="num">9</span><span class="lbl">NETWORK SITES</span></div>
         </div>
     </div>
 
@@ -1075,48 +1058,24 @@
                 <div class="section-eyebrow">THE LEGEND OF LEGIONA</div>
                 <h2>More than a nation —<br>a <em>legacy.</em></h2>
                 <p>
-                    The Legend of Legiona, known as <strong>The LoL</strong>, is a sovereign 
-                    nation within the Skyxion world. Originally founded as a small squad called 
-                    <strong>"The Sus"</strong> by Faiz4224, ItzDynozz, and Imii Kun, the nation 
+                    The Legend of Legiona, known as <strong>The LoL</strong>, is a sovereign
+                    nation within the Skyxion world. Originally founded as a small squad called
+                    <strong>"The Sus"</strong> by Faiz4224, ItzDynozz, and Imii Kun, the nation
                     rapidly grew into the most modern and wealthiest in all of Skyxion.
                 </p>
                 <p>
-                    Through democratic elections, political conflict, a presidential crisis, 
-                    and full recovery — The LoL has proven that unity and perseverance can 
+                    Through democratic elections, political conflict, a presidential crisis,
+                    and full recovery — The LoL has proven that unity and perseverance can
                     overcome anything.
                 </p>
                 <p><em>"In the Name of Unity, Legacy, and Glory." — Proclamation of Sovereignty</em></p>
                 <a href="/thelol/about" class="about-link">READ THE FULL HISTORY →</a>
             </div>
             <div class="pillars reveal">
-                <div class="pillar">
-                    <span class="pillar-num">01</span>
-                    <div>
-                        <h4>Unity</h4>
-                        <p>All players stand as one, striving for collective greatness across Skyxion.</p>
-                    </div>
-                </div>
-                <div class="pillar">
-                    <span class="pillar-num">02</span>
-                    <div>
-                        <h4>Freedom</h4>
-                        <p>Every citizen has the right to explore, create, and thrive within The LoL.</p>
-                    </div>
-                </div>
-                <div class="pillar">
-                    <span class="pillar-num">03</span>
-                    <div>
-                        <h4>Innovation</h4>
-                        <p>Harnessing Minecraft's limitless possibilities to build a nation unlike any other.</p>
-                    </div>
-                </div>
-                <div class="pillar">
-                    <span class="pillar-num">04</span>
-                    <div>
-                        <h4>Defence &amp; Honour</h4>
-                        <p>Protecting our lands while upholding fairness and respect for all citizens.</p>
-                    </div>
-                </div>
+                <div class="pillar"><span class="pillar-num">01</span><div><h4>Unity</h4><p>All players stand as one, striving for collective greatness across Skyxion.</p></div></div>
+                <div class="pillar"><span class="pillar-num">02</span><div><h4>Freedom</h4><p>Every citizen has the right to explore, create, and thrive within The LoL.</p></div></div>
+                <div class="pillar"><span class="pillar-num">03</span><div><h4>Innovation</h4><p>Harnessing Minecraft's limitless possibilities to build a nation unlike any other.</p></div></div>
+                <div class="pillar"><span class="pillar-num">04</span><div><h4>Defence &amp; Honour</h4><p>Protecting our lands while upholding fairness and respect for all citizens.</p></div></div>
             </div>
         </div>
     </section>
@@ -1128,44 +1087,63 @@
                 <h2>The story of<br><em>The LoL.</em></h2>
                 <p>From humble beginnings to a sovereign nation — every chapter shaped who we are.</p>
             </div>
-            <div class="timeline-cards reveal">
-                <div class="t-card">
-                    <span class="era">2023 // EARLY</span>
-                    <h4>The Sus Founded</h4>
-                    <p>Faiz4224, ItzDynozz &amp; Imii Kun form the original squad in Skyxion. Three founders, one shared vision.</p>
-                    <span class="t-badge">ORIGIN</span>
+
+            <!-- INTERACTIVE TIMELINE -->
+            <div class="itl-wrap reveal">
+                <div class="itl-track-area">
+                    <div class="itl-track">
+                        <div class="itl-fill" id="itlFill"></div>
+                    </div>
+                    <div class="itl-nodes">
+                        <button class="itl-node active" data-era="0" aria-label="The Sus Founded">
+                            <div class="itl-dot"></div>
+                            <div class="itl-label"><span class="itl-ldate">2023 EARLY</span><span class="itl-lname">The Sus</span></div>
+                        </button>
+                        <button class="itl-node" data-era="1" aria-label="Renamed and Reborn">
+                            <div class="itl-dot"></div>
+                            <div class="itl-label"><span class="itl-ldate">2023</span><span class="itl-lname">Reborn</span></div>
+                        </button>
+                        <button class="itl-node" data-era="2" aria-label="First Presidential Election">
+                            <div class="itl-dot"></div>
+                            <div class="itl-label"><span class="itl-ldate">MAY 6, 2023</span><span class="itl-lname">Election</span></div>
+                        </button>
+                        <button class="itl-node itl-chaos" data-era="3" aria-label="Chaos and Conflict">
+                            <div class="itl-dot"></div>
+                            <div class="itl-label"><span class="itl-ldate">2023 CRISIS</span><span class="itl-lname">Chaos</span></div>
+                        </button>
+                        <button class="itl-node" data-era="4" aria-label="Resistance and Recovery">
+                            <div class="itl-dot"></div>
+                            <div class="itl-label"><span class="itl-ldate">NOV 8, 2023</span><span class="itl-lname">Recovery</span></div>
+                        </button>
+                        <button class="itl-node itl-gold" data-era="5" aria-label="The Modern Era">
+                            <div class="itl-dot"></div>
+                            <div class="itl-label"><span class="itl-ldate">2025–2026</span><span class="itl-lname">Modern</span></div>
+                        </button>
+                    </div>
                 </div>
-                <div class="t-card">
-                    <span class="era">2023</span>
-                    <h4>Renamed &amp; Reborn</h4>
-                    <p>Renamed "The Legend of Legiona." Becomes the most modern and wealthiest nation in Skyxion.</p>
-                    <span class="t-badge">GOLDEN ERA</span>
+
+                <div class="itl-panel" id="itlPanel">
+                    <div class="itl-content" id="itlContent">
+                        <div class="itl-left">
+                            <span class="itl-era-date" id="itlDate">2023 // EARLY</span>
+                            <span class="itl-badge" id="itlBadge">ORIGIN</span>
+                            <h3 class="itl-title" id="itlTitle">The Sus Founded</h3>
+                        </div>
+                        <div class="itl-right">
+                            <p class="itl-desc" id="itlDesc">Faiz4224, ItzDynozz &amp; Imii Kun form the original squad in Skyxion. Three founders, one shared vision. EhekSquad joined during this era, though their exact status as citizens, allies, or residents was never formally defined — The Sus had no governance structure yet.</p>
+                        </div>
+                    </div>
+                    <div class="itl-ghost" id="itlGhost">01</div>
                 </div>
-                <div class="t-card">
-                    <span class="era">MAY 6, 2023</span>
-                    <h4>First Election</h4>
-                    <p>The LoL's first democratic election. UltraX2020 and PHRTL win, becoming the 2nd President.</p>
-                    <span class="t-badge">DEMOCRACY</span>
+
+                <div class="itl-nav">
+                    <button class="itl-btn" id="itlPrev" disabled>← PREV ERA</button>
+                    <span class="itl-counter" id="itlCounter">01 / 06</span>
+                    <button class="itl-btn" id="itlNext">NEXT ERA →</button>
                 </div>
-                <div class="t-card">
-                    <span class="era">2023 // CRISIS</span>
-                    <h4>Chaos &amp; Conflict</h4>
-                    <p>Internal strife under UltraX2020. The LoL City sign bombed. TLCC attacked. Political chaos grips the nation.</p>
-                    <span class="t-badge chaos">CONFLICT</span>
-                </div>
-                <div class="t-card">
-                    <span class="era">NOV 8, 2023</span>
-                    <h4>Resistance &amp; Recovery</h4>
-                    <p>UltraX2020 resigns. Faiz4224 resumes leadership. TLIO formed as national intelligence. Rebuilding begins.</p>
-                    <span class="t-badge">REBIRTH</span>
-                </div>
-                <div class="t-card">
-                    <span class="era">2025–2026</span>
-                    <h4>The Modern Era</h4>
-                    <p>TLIO reborn as ISC. Skyxion: Altaer era begins. The LoL stands as a symbol of perseverance.</p>
-                    <span class="t-badge current">CURRENT</span>
-                </div>
+                <p class="itl-hint">USE ← → ARROW KEYS OR SWIPE TO NAVIGATE</p>
             </div>
+
             <div class="history-cta reveal">
                 <a href="/thelol/about" class="btn-secondary" style="display:inline-flex;">READ FULL HISTORY →</a>
             </div>
@@ -1177,12 +1155,7 @@
         <div class="founders-inner">
             <div class="founders-header reveal">
                 <h2>The Three<br><em>Founders.</em></h2>
-                <p>
-                    The Legend of Legiona was built by three people who turned a simple squad 
-                    into a sovereign nation. Their names are inscribed in the Proclamation of 
-                    Sovereignty — the founding document of The LoL. Their legacy lives on in every 
-                    block, every railway track, and every citizen of The Legend of Legiona.
-                </p>
+                <p>The Legend of Legiona was built by three people who turned a simple squad into a sovereign nation. Their names are inscribed in the Proclamation of Sovereignty — the founding document of The LoL. Their legacy lives on in every block, every railway track, and every citizen of The Legend of Legiona.</p>
             </div>
             <div class="founders-grid reveal">
                 <div class="founder-card">
@@ -1207,7 +1180,6 @@
                     <p>Whose wisdom and determination illuminated the path toward the nation's glorious future from its earliest days as The Sus. A strategist at heart.</p>
                 </div>
             </div>
-
             <div class="proclamation-block reveal">
                 <div>
                     <div class="proc-title">FOUNDING DOCUMENT</div>
@@ -1227,10 +1199,7 @@
         <div class="contact-inner">
             <div class="section-eyebrow" style="justify-content:center;">JOIN THE COMMUNITY</div>
             <h2>Get involved<br>with <em>The LoL.</em></h2>
-            <p>
-                Join the Discord server to connect with the community, apply for citizenship, 
-                or support the continued development of The Legend of Legiona.
-            </p>
+            <p>Join the Discord server to connect with the community, apply for citizenship, or support the continued development of The Legend of Legiona.</p>
             <div class="contact-btns">
                 <a href="https://discord.gg/TB4T8qwN4R" class="btn-primary" target="_blank" rel="noopener">JOIN DISCORD</a>
                 <a href="https://sociabuzz.com/lyvwiz/donate" class="btn-secondary" target="_blank" rel="noopener">SUPPORT THE LOL</a>
@@ -1251,36 +1220,10 @@
                     </div>
                 </a>
             </div>
-            <div class="f-col">
-                <h5>NATION</h5>
-                <a href="#about">About The LoL</a>
-                <a href="#history">History</a>
-                <a href="#founders">Founders</a>
-                <a href="/thelol/about">Full Timeline</a>
-            </div>
-            <div class="f-col">
-                <h5>PORTALS</h5>
-                <a href="/thelol/gov/">Government</a>
-                <a href="/thelol/gov/isc/">ISC</a>
-                <a href="/thelol/tlr/">TL Railways</a>
-                <a href="/thelol/gov/assets/">Legal Archive</a>
-                <a href="/thelol/download-tlolpack.html">Resource Pack</a>
-            </div>
-            <div class="f-col">
-                <h5>DOCUMENTS</h5>
-                <a href="/thelol/assets/The_LoL_Proclamation.pdf" target="_blank">Proclamation (EN)</a>
-                <a href="/thelol/assets/Proklamasi_The_LoL.pdf"   target="_blank">Proklamasi (BM)</a>
-                <a href="/thelol/gov/isc/search">Public Archive</a>
-                <a href="/thelol/gov/isc/national">ISC Archive</a>
-            </div>
-            <div class="f-col network">
-                <h5>NETWORK</h5>
-                <a href="https://faizzzlol.github.io/PaizCorp/">Paiz® Corp Hub</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">Paiz Shop</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">Paiz Chicken</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PaizProductions</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">The LoL Movie</a>
-            </div>
+            <div class="f-col"><h5>NATION</h5><a href="#about">About The LoL</a><a href="#history">History</a><a href="#founders">Founders</a><a href="/thelol/about">Full Timeline</a></div>
+            <div class="f-col"><h5>PORTALS</h5><a href="/thelol/gov/">Government</a><a href="/thelol/gov/isc/">ISC</a><a href="/thelol/tlr/">TL Railways</a><a href="/thelol/gov/assets/">Legal Archive</a><a href="/thelol/download-tlolpack.html">Resource Pack</a></div>
+            <div class="f-col"><h5>DOCUMENTS</h5><a href="/thelol/assets/The_LoL_Proclamation.pdf" target="_blank">Proclamation (EN)</a><a href="/thelol/assets/Proklamasi_The_LoL.pdf" target="_blank">Proklamasi (BM)</a><a href="/thelol/gov/isc/search">Public Archive</a><a href="/thelol/gov/isc/national">ISC Archive</a></div>
+            <div class="f-col network"><h5>NETWORK</h5><a href="https://faizzzlol.github.io/PaizCorp/">Paiz® Corp Hub</a><a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">Paiz Shop</a><a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">Paiz Chicken</a><a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PaizProductions</a><a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">The LoL Movie</a></div>
         </div>
         <div class="footer-bottom">
             <div class="footer-bottom-inner">
@@ -1295,6 +1238,7 @@
 
     <!-- ─── SCRIPTS ─── -->
     <script>
+        // ── NAV ──────────────────────────────────────────────────────
         const sitenav = document.getElementById('sitenav');
         const netbar  = document.getElementById('netbar');
         const NETBAR_H = 32;
@@ -1330,6 +1274,7 @@
             if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
         });
 
+        // ── REVEAL ───────────────────────────────────────────────────
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
@@ -1340,6 +1285,134 @@
         }, { threshold: 0.06 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ── INTERACTIVE TIMELINE ─────────────────────────────────────
+        (function () {
+            const ERAS = [
+                {
+                    date: "2023 // EARLY", badge: "ORIGIN", badgeClass: "",
+                    title: "The Sus Founded",
+                    desc: "Faiz4224, ItzDynozz & Imii Kun form the original squad in Skyxion. Three founders, one shared vision. EhekSquad joined during this era, though their exact status as citizens, allies, or residents was never formally defined — The Sus had no governance structure yet.",
+                    accent: ""
+                },
+                {
+                    date: "2023", badge: "GOLDEN ERA", badgeClass: "",
+                    title: "Renamed & Reborn",
+                    desc: "Renamed \"The Legend of Legiona.\" The nation rapidly becomes the most modern and wealthiest in all of Skyxion. Under President Faiz4224, The LoL thrives in economy, infrastructure, and innovation.",
+                    accent: ""
+                },
+                {
+                    date: "MAY 6, 2023", badge: "DEMOCRACY", badgeClass: "",
+                    title: "First Presidential Election",
+                    desc: "The LoL holds its first democratic election. UltraX2020 and the Parti Harapan Rakyat The LoL (PHRTL) win, becoming the 2nd President — a significant milestone and turning point in national governance.",
+                    accent: ""
+                },
+                {
+                    date: "2023 // CRISIS", badge: "CONFLICT", badgeClass: "badge-chaos",
+                    title: "Chaos & Conflict",
+                    desc: "Internal strife erupts under UltraX2020. The LoL City sign is bombed. TLCC is attacked by drones. Political chaos grips the nation — the darkest and most turbulent chapter in the history of Legiona.",
+                    accent: "accent-chaos"
+                },
+                {
+                    date: "NOV 8, 2023", badge: "REBIRTH", badgeClass: "",
+                    title: "Resistance & Recovery",
+                    desc: "UltraX2020 resigns. Faiz4224 resumes leadership. Infrastructure projects launch, security is reinforced. The intelligence body TLIO — predecessor to ISC — is established to defend The LoL from future threats.",
+                    accent: ""
+                },
+                {
+                    date: "2025–2026", badge: "CURRENT ERA", badgeClass: "badge-current",
+                    title: "The Modern Era",
+                    desc: "TLIO is reborn as the Internal Security Control (ISC). The Skyxion: Altaer era begins. The LoL stands today as a symbol of perseverance and innovation. The greatest chapter is still being written.",
+                    accent: "accent-gold"
+                }
+            ];
+
+            let current = 0, transitioning = false;
+
+            const fill    = document.getElementById('itlFill');
+            const panel   = document.getElementById('itlPanel');
+            const content = document.getElementById('itlContent');
+            const dateEl  = document.getElementById('itlDate');
+            const badgeEl = document.getElementById('itlBadge');
+            const titleEl = document.getElementById('itlTitle');
+            const descEl  = document.getElementById('itlDesc');
+            const ghostEl = document.getElementById('itlGhost');
+            const counter = document.getElementById('itlCounter');
+            const prevBtn = document.getElementById('itlPrev');
+            const nextBtn = document.getElementById('itlNext');
+            const nodes   = document.querySelectorAll('.itl-node');
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+
+            function updateFill(index) {
+                fill.style.width = ERAS.length > 1
+                    ? (index / (ERAS.length - 1)) * 100 + '%' : '0%';
+            }
+
+            function goTo(index) {
+                if (transitioning || index === current) return;
+                if (index < 0 || index >= ERAS.length) return;
+
+                transitioning = true;
+                const direction = index > current ? 1 : -1;
+                const era = ERAS[index];
+
+                content.style.setProperty('--itl-exit-y', direction > 0 ? '-8px' : '8px');
+                content.classList.add('is-exiting');
+
+                setTimeout(() => {
+                    dateEl.textContent  = era.date;
+                    badgeEl.textContent = era.badge;
+                    badgeEl.className   = 'itl-badge ' + era.badgeClass;
+                    titleEl.textContent = era.title;
+                    descEl.textContent  = era.desc;
+                    ghostEl.textContent = pad(index + 1);
+                    counter.textContent = pad(index + 1) + ' / ' + pad(ERAS.length);
+                    panel.className     = 'itl-panel ' + (era.accent || '');
+
+                    nodes.forEach((n, i) => n.classList.toggle('active', i === index));
+                    updateFill(index);
+                    prevBtn.disabled = index === 0;
+                    nextBtn.disabled = index === ERAS.length - 1;
+                    current = index;
+
+                    content.style.setProperty('--itl-enter-y', direction > 0 ? '8px' : '-8px');
+                    content.classList.remove('is-exiting');
+                    content.classList.add('is-entering');
+
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            content.classList.remove('is-entering');
+                            setTimeout(() => { transitioning = false; }, 320);
+                        });
+                    });
+                }, 290);
+            }
+
+            nodes.forEach((node, i) => node.addEventListener('click', () => goTo(i)));
+            prevBtn.addEventListener('click', () => goTo(current - 1));
+            nextBtn.addEventListener('click', () => goTo(current + 1));
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+                const section = document.getElementById('history');
+                if (!section) return;
+                const r = section.getBoundingClientRect();
+                if (r.top > window.innerHeight || r.bottom < 0) return;
+                e.preventDefault();
+                goTo(e.key === 'ArrowLeft' ? current - 1 : current + 1);
+            });
+
+            let touchStartX = 0;
+            panel.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+            panel.addEventListener('touchend', (e) => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 48) goTo(diff > 0 ? current + 1 : current - 1);
+            }, { passive: true });
+
+            updateFill(0);
+            prevBtn.disabled = true;
+        })();
     </script>
 </body>
 </html>
