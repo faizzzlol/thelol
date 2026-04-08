@@ -3,9 +3,14 @@
     "description": "Official citizenship application status registry — The Legend of Legiona",
     "era": "SKYXION: ALTAER ERA",
     "maintained_by": "Office of the President // Faiz4224",
-    "last_updated": "2026-04-07",
-    "instructions": "Add one object per application to the 'applications' array. Status values: pending | under_review | approved | rejected. Save and commit to GitHub — changes go live immediately.",
-    "ref_format": "THELOL-CTZN-YYYY-####"
+    "last_updated": "2026-04-08",
+    "ref_format": "THELOL-CTZN-YYYY-####",
+    "instructions": {
+      "status_values": ["pending", "under_review", "approved", "rejected"],
+      "public_note": "CITIZEN-VISIBLE — shown on the status page. Use for official messages to the applicant. Leave empty string if no message needed.",
+      "admin_note": "ADMIN-ONLY — NEVER rendered on the status page. Use for internal tracking, reasons, flags. Safe to write candidly.",
+      "workflow": "1. Get Formspree email. 2. Add entry below. 3. Commit to GitHub. 4. Done — live within minutes."
+    }
   },
   "applications": [
     {
@@ -16,7 +21,8 @@
       "submitted": "2026-04-05",
       "processed": "2026-04-07",
       "era": "SKYXION: ALTAER",
-      "note": "JUST AN EXAMPLE NOTE. Test123😋"
+      "public_note": "",
+      "admin_note": "Verified active on server. Clean record. Approved."
     },
     {
       "ref": "THELOL-CTZN-2026-0002",
@@ -26,37 +32,30 @@
       "submitted": "2026-04-06",
       "processed": "",
       "era": "SKYXION: ALTAER",
-      "note": ""
+      "public_note": "",
+      "admin_note": "Awaiting server activity verification."
     },
     {
       "ref": "THELOL-CTZN-2026-0003",
       "status": "under_review",
       "ign": "Dummy",
-      "type": "renew",
+      "type": "apply",
       "submitted": "2026-04-06",
       "processed": "",
       "era": "SKYXION: ALTAER",
-      "note": ""
+      "public_note": "Your application requires additional verification. No action needed from you.",
+      "admin_note": "Check with Imii re: this player history."
     },
     {
       "ref": "THELOL-CTZN-2026-0004",
       "status": "rejected",
-      "ign": "DiddyNotFound",
+      "ign": "SomePlayer",
       "type": "apply",
       "submitted": "2026-04-06",
       "processed": "2026-04-08",
       "era": "SKYXION: ALTAER",
-      "note": "Potential threats to the nation."
-    },
-    {
-      "ref": "THELOL-CTZN-2026-1633",
-      "status": "approved",
-      "ign": "Faiz4224",
-      "type": "renew",
-      "submitted": "2026-04-02",
-      "processed": "2026-04-02",
-      "era": "SKYXION: ALTAER",
-      "note": ""
+      "public_note": "Your application did not meet the eligibility requirements for the current era.",
+      "admin_note": "Known hostile history. Banned from reapplying this era."
     }
   ]
 }
