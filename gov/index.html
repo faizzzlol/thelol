@@ -737,9 +737,42 @@
       .footer-top { grid-template-columns: 1fr; }
       .hero-btns { flex-direction: column; align-items: center; }
     }
+    #isc-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(8px);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease;
+      font-family: 'DM Mono', monospace;
+      color: #2ecc71;
+    }
+    #isc-overlay.active { opacity: 1; pointer-events: auto; }
+    
+    .isc-terminal {
+      background: var(--dark-2); border: 1px solid #2ecc71;
+      width: 90%; max-width: 600px; padding: 30px;
+      box-shadow: 0 0 30px rgba(46, 204, 113, 0.1);
+    }
+    .isc-header { border-bottom: 1px dashed #2ecc71; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between;}
+    .isc-log { height: 200px; overflow-y: hidden; font-size: 12px; line-height: 1.8; }
+    .isc-log span { display: block; opacity: 0; animation: fadeUpLog 0.3s forwards; }
+    .isc-close { background: none; border: 1px solid #2ecc71; color: #2ecc71; padding: 5px 15px; cursor: pointer; font-family: inherit; font-size: 10px;}
+    .isc-close:hover { background: #2ecc71; color: var(--dark); }
+    
+    @keyframes fadeUpLog { to { opacity: 1; } }
   </style>
 </head>
 <body>
+  <div id="isc-overlay">
+    <div class="isc-terminal">
+      <div class="isc-header">
+        <span>// INTERNAL SECURITY CONTROL</span>
+        <button class="isc-close" onclick="closeISC()">TERMINATE</button>
+      </div>
+      <div class="isc-log" id="isc-log"></div>
+    </div>
+  </div>
 
   <!-- TOPBAR -->
   <div id="topbar">
@@ -1104,6 +1137,46 @@
   <script>
     function toggleMenu() {
       document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    const overlay = document.getElementById('isc-overlay');
+    const logBox = document.getElementById('isc-log');
+    const logs = [
+      "> VERIFYING ENCRYPTION KEYS...",
+      "> CLEARANCE LEVEL 4 ACCEPTED.",
+      "> WELCOME, AUTHORIZED PERSONNEL.",
+      "> FETCHING TLSRL RAILWAY STATUS... [OPERATIONAL]",
+      "> PINGING NATIONAL FARM COMPLEX... [ACTIVE]",
+      "> MONITORING BORDERS FOR UNAUTHORIZED ENTITIES...",
+      "> NO THREATS DETECTED IN SKYXION SECTOR.",
+      "> WAITING FOR COMMAND_"
+    ];
+
+    // Intercept Ctrl+Shift+I (or Cmd+Shift+I)
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'i') {
+        e.preventDefault(); 
+        triggerISC();
+      }
+    });
+
+    function triggerISC() {
+      overlay.classList.add('active');
+      logBox.innerHTML = ''; // clear old logs
+      let delay = 0;
+      
+      logs.forEach((text, index) => {
+        setTimeout(() => {
+          const span = document.createElement('span');
+          span.innerText = text;
+          logBox.appendChild(span);
+          logBox.scrollTop = logBox.scrollHeight;
+        }, delay);
+        delay += 600; // Typewriter delay
+      });
+    }
+
+    function closeISC() {
+      overlay.classList.remove('active');
     }
   </script>
 </body>
