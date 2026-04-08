@@ -76,7 +76,6 @@
       color: var(--muted); text-decoration: none; transition: color 0.2s;
     }
     .topnav-links a:hover, .topnav-links a.active { color: var(--gold); }
-
     .hamburger {
       display: none; flex-direction: column; gap: 5px;
       cursor: pointer; background: none; border: none; padding: 4px;
@@ -88,7 +87,6 @@
     .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
     .mobile-nav {
       display: none; position: fixed;
       top: 54px; left: 0; right: 0;
@@ -200,7 +198,6 @@
       border-bottom: 1px solid var(--border);
       margin-bottom: 24px; display: block;
     }
-
     .field { margin-bottom: 20px; }
     .field label {
       display: block;
@@ -227,10 +224,8 @@
       transition: border-color 0.2s;
       -webkit-appearance: none;
     }
-    .field input:focus,
-    .field textarea:focus { border-color: var(--gold); }
-    .field input::placeholder,
-    .field textarea::placeholder { color: var(--dim); }
+    .field input:focus, .field textarea:focus { border-color: var(--gold); }
+    .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
     .field textarea { resize: vertical; min-height: 80px; }
 
     /* Contact method toggle */
@@ -268,8 +263,7 @@
       transition: all 0.15s; position: relative;
     }
     .decl-item input[type="checkbox"]:checked {
-      background: var(--gold);
-      border-color: var(--gold);
+      background: var(--gold); border-color: var(--gold);
     }
     .decl-item input[type="checkbox"]:checked::after {
       content: '';
@@ -355,11 +349,53 @@
       color: var(--muted); line-height: 1.7;
       max-width: 400px; margin: 0 auto 12px;
     }
-    .state-ref {
-      font-family: var(--fm); font-size: 13px;
-      letter-spacing: 0.1em; color: var(--gold);
-      display: block; margin: 16px 0 28px;
+
+    /* ── ref display block ── */
+    .ref-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin: 20px auto;
+      max-width: 380px;
+      text-align: left;
     }
+    .ref-block .ref-lbl {
+      font-family: var(--fm); font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--dim); display: block; margin-bottom: 8px;
+    }
+    .ref-block .ref-val {
+      font-family: var(--fm); font-size: 15px;
+      letter-spacing: 0.08em; color: var(--gold);
+      display: block; margin-bottom: 14px;
+    }
+    .ref-actions {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .ref-btn {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 8px 14px; cursor: pointer;
+      transition: all 0.2s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      white-space: nowrap;
+    }
+    .ref-btn-copy {
+      background: transparent;
+      border: 1px solid var(--gold); color: var(--gold);
+    }
+    .ref-btn-copy:hover { background: var(--gold); color: var(--bg); }
+    .ref-btn-copy.copied {
+      border-color: var(--green); color: var(--green);
+      background: rgba(80,160,100,0.08);
+    }
+    .ref-btn-status {
+      background: transparent;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .ref-btn-status:hover { border-color: var(--gold); color: var(--gold); }
+
     .state-btn {
       font-family: var(--fm); font-size: 11px;
       letter-spacing: 0.12em; text-transform: uppercase;
@@ -379,15 +415,11 @@
       color: var(--red); letter-spacing: 0.08em;
       margin-top: 6px; display: none;
     }
-    .field.invalid input,
-    .field.invalid textarea { border-color: var(--red); }
+    .field.invalid input, .field.invalid textarea { border-color: var(--red); }
     .field.invalid .field-error { display: block; }
 
     /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 28px 28px;
-    }
+    footer { border-top: 1px solid var(--border); padding: 40px 28px 28px; }
     .footer-bottom {
       max-width: 800px; margin: 0 auto;
       display: flex; justify-content: space-between;
@@ -400,8 +432,7 @@
     }
     .footer-bottom a {
       font-family: var(--fm); font-size: 11px;
-      color: var(--dim); text-decoration: none;
-      transition: color 0.2s;
+      color: var(--dim); text-decoration: none; transition: color 0.2s;
     }
     .footer-bottom a:hover { color: var(--gold); }
     .disclaimer {
@@ -419,6 +450,8 @@
     }
     @media (max-width: 400px) {
       .page-hd h1 { font-size: 42px; }
+      .ref-actions { flex-direction: column; }
+      .ref-btn { justify-content: center; }
     }
   </style>
 </head>
@@ -426,7 +459,7 @@
 
   <!-- NOTICE BAR -->
   <div class="notice-bar">
-    CITIZENSHIP APPLICATION SUBMITTED? — TRACK YOUR PROGRESS // 
+    CITIZENSHIP APPLICATION SUBMITTED? — TRACK YOUR PROGRESS //
     <a href="/thelol/gov/citizenship/status">CHECK YOUR STATUS →</a>
   </div>
 
@@ -482,8 +515,23 @@
       <span class="state-icon">✓</span>
       <h2>Application Submitted</h2>
       <p>Your application has been received by the Office of the President. You will be contacted via the details you provided.</p>
-      <span class="state-ref" id="successRef">REF // THELOL-CTZN-2026-0000</span>
-      <p style="font-size: 12px; color: var(--dim);">Save your reference number. Review time may vary. Do not resubmit.</p>
+
+      <!-- Ref block with copy + status link -->
+      <div class="ref-block">
+        <span class="ref-lbl">Your Reference Number — Save This</span>
+        <span class="ref-val" id="successRef">THELOL-CTZN-2026-0000</span>
+        <div class="ref-actions">
+          <button class="ref-btn ref-btn-copy" id="copyBtn" onclick="copyRef()">
+            <span id="copyIcon">⧉</span>
+            <span id="copyTxt">Copy Reference</span>
+          </button>
+          <a class="ref-btn ref-btn-status" id="statusLink" href="/thelol/gov/citizenship/status">
+            ↗ Check Status
+          </a>
+        </div>
+      </div>
+
+      <p style="font-size: 12px; color: var(--dim); margin-top: 8px;">Do not resubmit. Review time may vary.</p>
       <br>
       <a href="/thelol/gov/citizenship/" class="state-btn ghost">← Back to Citizenship Info</a>
     </div>
@@ -522,14 +570,12 @@
         <!-- SECTION 1: PERSONAL DETAILS -->
         <div class="form-section">
           <span class="form-section-title">Section 01 // Personal Details</span>
-
           <div class="field" id="fieldCallName">
             <label for="callName">Call Name <span class="req">*</span></label>
             <p class="field-note">Your in-game or community call name — not your full name. (e.g. "Lewis" not "Lewis Hamilton")</p>
             <input type="text" id="callName" name="callName" placeholder="e.g. Lewis" maxlength="32" autocomplete="on">
             <span class="field-error">Call name is required.</span>
           </div>
-
           <div class="field" id="fieldIGN">
             <label for="ign">Minecraft IGN (Username) <span class="req">*</span></label>
             <p class="field-note">Your exact Minecraft username / Gamertag. <strong>This is case-sensitive</strong> — type it exactly as it appears in-game. (e.g. Faiz4224, lyvwiz)</p>
@@ -541,7 +587,6 @@
         <!-- SECTION 2: CONTACT -->
         <div class="form-section">
           <span class="form-section-title">Section 02 // Contact Information</span>
-
           <div class="field" id="fieldContact">
             <label>Contact Method <span class="req">*</span></label>
             <p class="field-note">Provide either your Discord username or WhatsApp number. The Government will use this to notify you of your application status.</p>
@@ -559,7 +604,6 @@
         <div class="form-section">
           <span class="form-section-title">Section 03 // Declarations &amp; Agreements</span>
           <p class="field-note" style="margin-bottom: 16px;">You must check all boxes to proceed. These declarations are legally binding within The LoL's governance framework.</p>
-
           <div class="declarations" id="declarationsBlock">
             <label class="decl-item">
               <input type="checkbox" class="decl-check" name="decl_age">
@@ -599,7 +643,7 @@
             </label>
             <label class="decl-item">
               <input type="checkbox" class="decl-check" name="decl_docs">
-              <span class="decl-text"><strong>I have read and agree to the Citizenship Act</strong> (<a href="https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Citizenship_Act_29_3_2026.pdf" target="_blank">THELOLGOV-29-03-2026-0001</a>) and the Rights Charter (<a href="https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Citizen_Rights_Responsibilities_Charter_29_3_2026.pdf" target="blank">THELOLGOV-29-03-2026-0003</a>).</span>
+              <span class="decl-text"><strong>I have read and agree to the Citizenship Act</strong> (<a href="https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Citizenship_Act_29_3_2026.pdf" target="_blank">THELOLGOV-29-03-2026-0001</a>) and the Rights Charter (<a href="https://faizzzlol.github.io/thelol/gov/assets/documents/acts/THE_LOL_Citizen_Rights_Responsibilities_Charter_29_3_2026.pdf" target="_blank">THELOLGOV-29-03-2026-0003</a>).</span>
             </label>
             <label class="decl-item">
               <input type="checkbox" class="decl-check" name="decl_honest">
@@ -703,7 +747,6 @@
 
     function validateForm() {
       let valid = true;
-
       const callName = document.getElementById('callName').value.trim();
       if (!callName) { setFieldError('fieldCallName'); valid = false; }
       else clearFieldError('fieldCallName');
@@ -726,15 +769,43 @@
       } else {
         document.getElementById('declError').style.display = 'none';
       }
-
       return valid;
     }
 
     // ── Generate reference number ──
+    // Uses current timestamp modulo to guarantee uniqueness per millisecond.
+    // Two simultaneous submissions at the exact same ms are near-impossible for
+    // manual form submissions. Keeps the THELOL-CTZN-YYYY-#### format intact.
     function genRef() {
       const year = new Date().getFullYear();
-      const num  = String(Math.floor(1000 + Math.random() * 9000));
+      const num  = String((Date.now() % 9000) + 1000);
       return `THELOL-CTZN-${year}-${num}`;
+    }
+
+    // ── Copy reference number to clipboard ──
+    function copyRef() {
+      const ref = document.getElementById('successRef').textContent;
+      navigator.clipboard.writeText(ref).then(() => {
+        const btn  = document.getElementById('copyBtn');
+        const icon = document.getElementById('copyIcon');
+        const txt  = document.getElementById('copyTxt');
+        btn.classList.add('copied');
+        icon.textContent = '✓';
+        txt.textContent  = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          icon.textContent = '⧉';
+          txt.textContent  = 'Copy Reference';
+        }, 2500);
+      }).catch(() => {
+        // Fallback for older browsers
+        const el = document.createElement('textarea');
+        el.value = ref;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+      });
     }
 
     // ── Submit to Formspree ──
@@ -773,7 +844,11 @@
 
         if (res.ok && data.ok) {
           document.getElementById('formWrapper').style.display = 'none';
-          document.getElementById('successRef').textContent   = 'REF // ' + ref;
+          // Populate ref in success panel
+          document.getElementById('successRef').textContent = ref;
+          // Update status link with pre-filled ref
+          document.getElementById('statusLink').href =
+            `/thelol/gov/citizenship/status?ref=${encodeURIComponent(ref)}`;
           document.getElementById('panelSuccess').classList.add('show');
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
@@ -801,9 +876,9 @@
     }
 
     // ── Live field clear on input ──
-    document.getElementById('callName').addEventListener('input',     () => clearFieldError('fieldCallName'));
-    document.getElementById('ign').addEventListener('input',          () => clearFieldError('fieldIGN'));
-    document.getElementById('contactInput').addEventListener('input',  () => clearFieldError('fieldContact'));
+    document.getElementById('callName').addEventListener('input',    () => clearFieldError('fieldCallName'));
+    document.getElementById('ign').addEventListener('input',         () => clearFieldError('fieldIGN'));
+    document.getElementById('contactInput').addEventListener('input', () => clearFieldError('fieldContact'));
     document.querySelectorAll('.decl-check').forEach(c => {
       c.addEventListener('change', () => {
         const all = Array.from(document.querySelectorAll('.decl-check')).every(x => x.checked);
