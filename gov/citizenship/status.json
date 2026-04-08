@@ -56,6 +56,17 @@
       "era": "SKYXION: ALTAER",
       "public_note": "Your application did not meet the eligibility requirements for the current era.",
       "admin_note": "Known hostile history. Banned from reapplying this era."
+    },
+    {
+      "ref": "THELOL-CTZN-2026-2463",
+      "status": "approved",
+      "ign": "Faiz4224",
+      "type": "apply",
+      "submitted": "2026-04-08",
+      "processed": "2026-04-08",
+      "era": "SKYXION: ALTAER",
+      "public_note": "-",
+      "admin_note": "-"
     }
   ]
 }
