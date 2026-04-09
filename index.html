@@ -46,7 +46,112 @@
             pointer-events: none; z-index: 9998;
         }
 
-        /* ─── NETWORK BAR ─── */
+        /* ═══════════════════════════════════════
+           INTERACTIVE LAYER 1 — SCROLL PROGRESS
+           ═══════════════════════════════════════ */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: 2px; z-index: 99999;
+            background: linear-gradient(90deg, var(--emerald), var(--gold-light));
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 0.05s linear;
+        }
+
+        /* ═══════════════════════════════════════
+           INTERACTIVE LAYER 2 — CUSTOM CURSOR
+           ═══════════════════════════════════════ */
+        @media (hover: hover) and (pointer: fine) {
+            *, *::before, *::after { cursor: none !important; }
+        }
+
+        #cur-dot {
+            position: fixed; z-index: 99997;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--emerald);
+            box-shadow: 0 0 10px rgba(52,160,106,0.6), 0 0 24px rgba(52,160,106,0.3);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s, box-shadow 0.2s, opacity 0.2s;
+            opacity: 0;
+        }
+        #cur-ring {
+            position: fixed; z-index: 99996;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(52,160,106,0.5);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.3s, opacity 0.2s;
+            opacity: 0;
+        }
+        #cur-dot.active { width: 6px; height: 6px; }
+        #cur-ring.active { width: 48px; height: 48px; border-color: rgba(52,160,106,0.8); }
+        #cur-dot.on-cta { background: var(--gold-light); box-shadow: 0 0 10px rgba(224,176,69,0.6); }
+        #cur-ring.on-cta { border-color: rgba(224,176,69,0.7); }
+        @media (hover: none), (pointer: coarse) {
+            #cur-dot, #cur-ring { display: none; }
+        }
+
+        /* ═══════════════════════════════════════
+           INTERACTIVE LAYER 7 — KONAMI OVERLAY
+           ═══════════════════════════════════════ */
+        #konami-overlay {
+            position: fixed; inset: 0; z-index: 999999;
+            background: rgba(5, 8, 5, 0.97);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.5s ease;
+            font-family: 'DM Mono', monospace;
+        }
+        #konami-overlay.active { opacity: 1; pointer-events: auto; }
+        .konami-inner {
+            border: 1px solid rgba(52,160,106,0.4);
+            padding: 48px 56px; max-width: 620px; width: 90%;
+            position: relative;
+            background: rgba(15,17,14,0.8);
+            box-shadow: 0 0 60px rgba(52,160,106,0.08), inset 0 0 40px rgba(52,160,106,0.03);
+        }
+        .konami-inner::before {
+            content: '';
+            position: absolute; inset: -1px;
+            background: linear-gradient(135deg, rgba(52,160,106,0.3), transparent 40%, transparent 60%, rgba(200,150,42,0.2));
+            z-index: -1;
+        }
+        .konami-badge {
+            font-size: 0.45rem; letter-spacing: 4px; color: var(--emerald);
+            margin-bottom: 28px; opacity: 0.7;
+        }
+        .konami-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 900;
+            color: #fff; line-height: 1.1; margin-bottom: 8px;
+        }
+        .konami-title em { color: var(--gold-light); font-style: italic; }
+        .konami-sub { font-size: 0.5rem; letter-spacing: 3px; color: var(--emerald); opacity: 0.6; margin-bottom: 32px; }
+        .konami-log {
+            border-top: 1px solid rgba(52,160,106,0.15);
+            padding-top: 20px; font-size: 0.65rem; line-height: 2;
+            color: rgba(52,160,106,0.7);
+        }
+        .konami-log .log-line { display: block; opacity: 0; animation: logFadeIn 0.3s forwards; }
+        .konami-close {
+            margin-top: 28px;
+            background: none; border: 1px solid rgba(52,160,106,0.35);
+            color: var(--emerald); padding: 8px 24px;
+            font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px;
+            cursor: pointer; transition: background 0.2s;
+        }
+        .konami-close:hover { background: var(--emerald-dim); }
+        @keyframes logFadeIn { to { opacity: 1; } }
+
+        /* ═══════════════════════════════════════
+           NETWORK BAR
+           ═══════════════════════════════════════ */
         .netbar {
             position: fixed; top: 0; left: 0; right: 0;
             z-index: 800;
@@ -59,21 +164,14 @@
         }
         .netbar::-webkit-scrollbar { display: none; }
         .netbar.hidden { transform: translateY(-100%); }
-
         .netbar-inner {
             display: flex; align-items: stretch;
-            height: var(--netbar-h);
-            padding: 0 16px;
-            min-width: max-content;
+            height: var(--netbar-h); padding: 0 16px; min-width: max-content;
         }
         .netbar-inner a {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.5rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.28);
-            text-decoration: none;
-            padding: 0 12px;
-            display: flex; align-items: center;
+            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.28); text-decoration: none;
+            padding: 0 12px; display: flex; align-items: center;
             border-right: 1px solid rgba(255,255,255,0.05);
             transition: color 0.2s, background 0.2s;
         }
@@ -81,13 +179,10 @@
         .netbar-inner a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
         .netbar-inner a.nb-active { color: var(--emerald); background: rgba(52,160,106,0.1); }
 
-        /* ─── STICKY NAV ─── */
+        /* STICKY NAV */
         .sitenav {
-            position: fixed;
-            top: var(--netbar-h); left: 0; right: 0;
-            z-index: 700;
-            height: 60px;
-            padding: 0 5%;
+            position: fixed; top: var(--netbar-h); left: 0; right: 0;
+            z-index: 700; height: 60px; padding: 0 5%;
             display: flex; justify-content: space-between; align-items: center;
             transition: background 0.35s, backdrop-filter 0.35s, border-color 0.35s, top 0.3s ease;
         }
@@ -97,46 +192,36 @@
             border-bottom: 1px solid var(--border-dark);
         }
         .sitenav.nb-hidden { top: 0; }
-
         .sitenav-logo {
             display: flex; align-items: center; gap: 10px;
             text-decoration: none; color: inherit;
         }
         .sitenav-logo img { height: 30px; opacity: 0.9; }
         .sitenav-logo span {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.68rem; letter-spacing: 3px;
+            font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 3px;
             color: var(--emerald);
         }
-
         .sitenav-links { display: flex; align-items: center; gap: 2px; }
         .sitenav-links a {
-            padding: 6px 12px;
-            text-decoration: none;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.58rem; letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.45);
-            transition: color 0.2s;
+            padding: 6px 12px; text-decoration: none;
+            font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.45); transition: color 0.2s;
         }
         .sitenav-links a:hover { color: var(--emerald); }
         .sitenav-links .nav-cta {
-            border: 1px solid rgba(52,160,106,0.35);
-            color: var(--emerald) !important;
+            border: 1px solid rgba(52,160,106,0.35); color: var(--emerald) !important;
             transition: background 0.2s !important;
         }
         .sitenav-links .nav-cta:hover { background: var(--emerald-dim) !important; }
 
         /* Hamburger */
         .hamburger {
-            display: none;
-            flex-direction: column; gap: 5px;
-            background: none; border: none;
-            cursor: pointer; padding: 6px;
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 6px;
         }
         .hamburger span {
             display: block; width: 22px; height: 2px;
-            background: rgba(255,255,255,0.6);
-            transition: all 0.3s;
+            background: rgba(255,255,255,0.6); transition: all 0.3s;
         }
         .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.open span:nth-child(2) { opacity: 0; }
@@ -146,30 +231,24 @@
         .mobile-menu {
             position: fixed; top: calc(var(--netbar-h) + 60px);
             left: 0; right: 0; z-index: 690;
-            background: rgba(15,17,14,0.98);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-dark);
-            padding: 1rem 5%;
+            background: rgba(15,17,14,0.98); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dark); padding: 1rem 5%;
             display: none; flex-direction: column; gap: 2px;
         }
         .mobile-menu.open { display: flex; }
         .mobile-menu a {
-            padding: 12px 0;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem; letter-spacing: 2px;
-            color: rgba(255,255,255,0.5);
-            text-decoration: none;
-            border-bottom: 1px solid var(--border-dark);
-            transition: color 0.2s;
+            padding: 12px 0; font-family: 'DM Mono', monospace;
+            font-size: 0.7rem; letter-spacing: 2px; color: rgba(255,255,255,0.5);
+            text-decoration: none; border-bottom: 1px solid var(--border-dark); transition: color 0.2s;
         }
         .mobile-menu a:last-child { border-bottom: none; }
         .mobile-menu a:hover { color: var(--emerald); }
 
-        /* ─── HERO ─── */
+        /* ═══════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════ */
         .hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column;
-            justify-content: center;
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
             padding: calc(120px + var(--netbar-h)) 5% 6rem;
             position: relative; overflow: hidden;
         }
@@ -177,7 +256,7 @@
             position: absolute; top: -15%; left: -10%;
             width: 80vw; height: 80vw; max-width: 900px;
             background: radial-gradient(circle, rgba(29,92,60,0.2) 0%, transparent 65%);
-            pointer-events: none;
+            pointer-events: none; transition: transform 0.1s linear;
         }
         .hero-bg-glow-2 {
             position: absolute; bottom: -20%; right: -5%;
@@ -193,62 +272,60 @@
             background-size: 80px 80px;
             mask-image: radial-gradient(ellipse 80% 80% at 25% 50%, black 0%, transparent 100%);
         }
-        .hero-inner {
-            position: relative; max-width: 1300px;
-            margin: 0 auto; width: 100%;
-        }
+        .hero-inner { position: relative; max-width: 1300px; margin: 0 auto; width: 100%; }
         .hero-eyebrow {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.62rem; letter-spacing: 4px;
+            font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 4px;
             color: var(--emerald); margin-bottom: 1.8rem;
             display: flex; align-items: center; gap: 14px;
             opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
+            min-height: 1.2em;
         }
         .hero-eyebrow::before {
             content: ''; width: 28px; height: 1px;
-            background: var(--emerald); opacity: 0.6;
+            background: var(--emerald); opacity: 0.6; flex-shrink: 0;
         }
         .hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(3.5rem, 9vw, 9rem);
-            font-weight: 900; line-height: 0.94;
-            letter-spacing: -2px; color: #fff;
+            font-size: clamp(3.5rem, 9vw, 9rem); font-weight: 900;
+            line-height: 0.94; letter-spacing: -2px; color: #fff;
             margin-bottom: 1.6rem;
             opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
         }
-        .hero h1 .outline-text {
-            color: transparent;
-            -webkit-text-stroke: 1.5px var(--emerald);
-        }
+        .hero h1 .outline-text { color: transparent; -webkit-text-stroke: 1.5px var(--emerald); }
         .hero h1 .gold-text { color: var(--gold-light); }
         .hero-sub {
-            font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-            color: rgba(255,255,255,0.4);
-            max-width: 520px; font-weight: 300; line-height: 1.85;
-            margin-bottom: 2.8rem;
+            font-size: clamp(0.95rem, 1.4vw, 1.15rem); color: rgba(255,255,255,0.4);
+            max-width: 520px; font-weight: 300; line-height: 1.85; margin-bottom: 2.8rem;
             opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
         }
         .hero-actions {
             display: flex; gap: 12px; flex-wrap: wrap;
             opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
         }
+
+        /* ═══════════════════════════════════════
+           INTERACTIVE LAYER 6 — MAGNETIC BTN
+           ═══════════════════════════════════════ */
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 13px 28px;
-            background: var(--green-light); color: #fff;
-            text-decoration: none;
-            font-family: 'DM Mono', monospace;
+            padding: 13px 28px; background: var(--green-light); color: #fff;
+            text-decoration: none; font-family: 'DM Mono', monospace;
             font-size: 0.65rem; letter-spacing: 2px;
-            transition: background 0.25s, transform 0.2s;
+            transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+            position: relative; overflow: hidden;
         }
-        .btn-primary:hover { background: var(--emerald); transform: translateY(-2px); }
+        .btn-primary::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.12), transparent 60%);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .btn-primary:hover { background: var(--emerald); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(52,160,106,0.3); }
+        .btn-primary:hover::after { opacity: 1; }
         .btn-secondary {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 13px 28px;
-            border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.65);
-            text-decoration: none;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem; letter-spacing: 2px;
+            padding: 13px 28px; border: 1px solid rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.65); text-decoration: none;
+            font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 2px;
             transition: all 0.25s;
         }
         .btn-secondary:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
@@ -263,521 +340,253 @@
             animation: scrollPulse 2.2s ease infinite;
         }
 
-        /* ─── SECTION UTILITY ─── */
+        /* SECTION UTILITY */
         .section-eyebrow {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.58rem; letter-spacing: 3.5px;
+            font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 3.5px;
             color: var(--emerald); margin-bottom: 1rem;
             display: flex; align-items: center; gap: 10px;
         }
-        .section-eyebrow::before {
-            content: ''; width: 18px; height: 1px;
-            background: var(--emerald); opacity: 0.6;
-        }
+        .section-eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--emerald); opacity: 0.6; }
 
-        /* ─── HUB NETWORK SECTION ─── */
-        .hub-section {
-            background: var(--charcoal2);
-            padding: 6rem 5%;
-            border-top: 1px solid var(--border-dark);
-        }
+        /* HUB NETWORK */
+        .hub-section { background: var(--charcoal2); padding: 6rem 5%; border-top: 1px solid var(--border-dark); }
         .hub-inner { max-width: 1280px; margin: 0 auto; }
-        .hub-header {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 3rem; flex-wrap: wrap; gap: 16px;
-        }
-        .hub-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3.5vw, 3rem);
-            font-weight: 700; color: #fff; line-height: 1.15;
-        }
+        .hub-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 16px; }
+        .hub-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #fff; line-height: 1.15; }
         .hub-header h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
-        .hub-header p {
-            font-size: 0.88rem; color: rgba(255,255,255,0.32);
-            max-width: 300px; text-align: right; line-height: 1.7;
-        }
-        .hub-featured {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3px; margin-bottom: 3px;
-        }
+        .hub-header p { font-size: 0.88rem; color: rgba(255,255,255,0.32); max-width: 300px; text-align: right; line-height: 1.7; }
+        .hub-featured { display: grid; grid-template-columns: 2fr 1fr; gap: 3px; margin-bottom: 3px; }
+
+        /* ═══════════════════════════════════════
+           INTERACTIVE LAYER 4 — 3D TILT CARDS
+           ═══════════════════════════════════════ */
         .hub-card {
-            background: var(--charcoal3);
-            padding: 2.4rem 2.2rem;
+            background: var(--charcoal3); padding: 2.4rem 2.2rem;
             text-decoration: none; color: inherit;
             display: flex; flex-direction: column;
             position: relative; overflow: hidden;
-            transition: background 0.25s;
+            transition: background 0.25s, box-shadow 0.3s;
             min-height: 220px;
+            transform-style: preserve-3d;
+            will-change: transform;
         }
-        .hub-card:hover { background: rgba(52,160,106,0.07); }
+        .hub-card:hover { background: rgba(52,160,106,0.07); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
         .hub-card::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
             background: linear-gradient(90deg, var(--emerald), transparent);
-            transform: scaleX(0); transform-origin: left;
-            transition: transform 0.4s ease;
+            transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
         }
         .hub-card:hover::before { transform: scaleX(1); }
         .hub-card.gold-card::before { background: linear-gradient(90deg, var(--gold), transparent); }
         .hub-card.gold-card:hover { background: rgba(200,150,42,0.06); }
-        .hc-tag {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 2px;
-            color: var(--emerald); opacity: 0.7;
-            margin-bottom: auto; padding-bottom: 1.5rem;
+        /* Shimmer layer */
+        .hub-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(52,160,106,0.08), transparent 55%);
+            opacity: 0; transition: opacity 0.4s; pointer-events: none;
         }
+        .hub-card:hover::after { opacity: 1; }
+        .hub-card.gold-card::after { background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(200,150,42,0.08), transparent 55%); }
+
+        .hc-tag { font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.7; margin-bottom: auto; padding-bottom: 1.5rem; }
         .hub-card.gold-card .hc-tag { color: var(--gold); }
-        .hc-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.1rem, 2vw, 1.5rem);
-            font-weight: 700; color: #fff;
-            margin-bottom: 0.5rem; line-height: 1.2;
-        }
-        .hc-desc {
-            font-size: 0.82rem; color: rgba(255,255,255,0.35);
-            line-height: 1.65; font-weight: 300;
-            margin-bottom: 1.4rem;
-        }
-        .hc-arrow {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.6rem; letter-spacing: 1.5px;
-            color: rgba(52,160,106,0.55);
-            transition: letter-spacing 0.2s, color 0.2s;
-        }
+        .hc-title { font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; color: #fff; margin-bottom: 0.5rem; line-height: 1.2; }
+        .hc-desc { font-size: 0.82rem; color: rgba(255,255,255,0.35); line-height: 1.65; font-weight: 300; margin-bottom: 1.4rem; }
+        .hc-arrow { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px; color: rgba(52,160,106,0.55); transition: letter-spacing 0.2s, color 0.2s; }
         .hub-card.gold-card .hc-arrow { color: rgba(200,150,42,0.55); }
         .hub-card:hover .hc-arrow { letter-spacing: 3px; color: var(--emerald); }
         .hub-card.gold-card:hover .hc-arrow { color: var(--gold); }
+
         .hub-sublabel {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 3px;
-            color: rgba(255,255,255,0.18);
-            padding: 18px 0 10px;
-            border-top: 1px solid var(--border-dark);
-            margin-top: 24px;
+            font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 3px;
+            color: rgba(255,255,255,0.18); padding: 18px 0 10px;
+            border-top: 1px solid var(--border-dark); margin-top: 24px;
             display: flex; align-items: center; gap: 12px;
         }
-        .hub-sublabel::after {
-            content: ''; flex: 1; height: 1px;
-            background: var(--border-dark);
-        }
+        .hub-sublabel::after { content: ''; flex: 1; height: 1px; background: var(--border-dark); }
         .hub-sublabel.gold { color: rgba(200,150,42,0.35); }
         .hub-sublabel.gold::after { background: rgba(200,150,42,0.1); }
+
         .hub-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
         .hub-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
         .hub-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+
         .hub-mini {
-            background: var(--charcoal3);
-            padding: 1.6rem 1.5rem;
+            background: var(--charcoal3); padding: 1.6rem 1.5rem;
             text-decoration: none; color: inherit;
             display: flex; flex-direction: column; gap: 7px;
             position: relative; overflow: hidden;
-            transition: background 0.2s;
+            transition: background 0.2s, box-shadow 0.25s;
+            transform-style: preserve-3d; will-change: transform;
         }
-        .hub-mini:hover { background: rgba(52,160,106,0.06); }
+        .hub-mini:hover { background: rgba(52,160,106,0.06); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
         .hub-mini::after {
-            content: '';
-            position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-            background: var(--gold);
-            transform: scaleX(0); transform-origin: left;
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+            background: var(--gold); transform: scaleX(0); transform-origin: left;
             transition: transform 0.3s ease;
         }
         .hub-mini:hover::after { transform: scaleX(1); }
         .hub-mini.corp-accent::after { background: var(--emerald); }
         .hub-mini.corp-accent:hover { background: rgba(52,160,106,0.06); }
         .hub-mini.community-accent::after { background: #5865F2; }
-        .hm-tag {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.47rem; letter-spacing: 2px;
-            color: var(--gold); opacity: 0.6;
-        }
+
+        .hm-tag { font-family: 'DM Mono', monospace; font-size: 0.47rem; letter-spacing: 2px; color: var(--gold); opacity: 0.6; }
         .hub-mini.corp-accent .hm-tag { color: var(--emerald); }
         .hub-mini.community-accent .hm-tag { color: #7289DA; opacity: 0.8; }
-        .hm-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.95rem; font-weight: 700; color: #fff;
-            line-height: 1.2;
-        }
+        .hm-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #fff; line-height: 1.2; }
         .hm-desc { font-size: 0.76rem; color: rgba(255,255,255,0.3); line-height: 1.55; font-weight: 300; }
-        .hm-arrow {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 1.5px;
-            color: rgba(200,150,42,0.45);
-            transition: letter-spacing 0.2s, color 0.2s;
-            margin-top: auto; padding-top: 8px;
-        }
+        .hm-arrow { font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 1.5px; color: rgba(200,150,42,0.45); transition: letter-spacing 0.2s, color 0.2s; margin-top: auto; padding-top: 8px; }
         .hub-mini.corp-accent .hm-arrow { color: rgba(52,160,106,0.45); }
         .hub-mini.community-accent .hm-arrow { color: rgba(114,137,218,0.5); }
         .hub-mini:hover .hm-arrow { letter-spacing: 2.5px; color: var(--gold); }
         .hub-mini.corp-accent:hover .hm-arrow { color: var(--emerald); }
         .hub-mini.community-accent:hover .hm-arrow { color: #7289DA; }
 
-        /* ─── ABOUT ─── */
-        .about-section {
-            padding: 6rem 5%;
-            background: var(--charcoal);
-            border-top: 1px solid var(--border-dark);
-        }
-        .about-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 80px; align-items: center;
-        }
-        .about-text h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3.5vw, 3rem);
-            font-weight: 700; line-height: 1.15; color: #fff;
-            margin-bottom: 1.4rem;
-        }
+        /* ABOUT */
+        .about-section { padding: 6rem 5%; background: var(--charcoal); border-top: 1px solid var(--border-dark); }
+        .about-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.15; color: #fff; margin-bottom: 1.4rem; }
         .about-text h2 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
-        .about-text p {
-            font-size: 0.95rem; color: rgba(255,255,255,0.43);
-            line-height: 1.85; font-weight: 300; margin-bottom: 1.2rem;
-        }
+        .about-text p { font-size: 0.95rem; color: rgba(255,255,255,0.43); line-height: 1.85; font-weight: 300; margin-bottom: 1.2rem; }
         .about-text p strong { color: rgba(255,255,255,0.75); font-weight: 500; }
         .about-text p em { font-style: italic; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
-        .about-link {
-            display: inline-flex; align-items: center; gap: 8px;
-            margin-top: 0.5rem;
-            font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 2px;
-            color: var(--emerald); text-decoration: none;
-            border-bottom: 1px solid rgba(52,160,106,0.3); padding-bottom: 2px;
-            transition: border-color 0.2s;
-        }
+        .about-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 2px; color: var(--emerald); text-decoration: none; border-bottom: 1px solid rgba(52,160,106,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
         .about-link:hover { border-color: var(--emerald); }
         .pillars { display: flex; flex-direction: column; gap: 2px; }
         .pillar {
             display: flex; align-items: center; gap: 18px;
-            padding: 1.1rem 1.4rem;
-            background: var(--charcoal2);
+            padding: 1.1rem 1.4rem; background: var(--charcoal2);
             border: 1px solid var(--border-dark);
-            transition: background 0.2s, border-color 0.2s;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+            transform-style: preserve-3d;
         }
         .pillar:hover { background: rgba(52,160,106,0.05); border-color: var(--border-green); }
-        .pillar-num {
-            font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900;
-            color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.3);
-            flex-shrink: 0; width: 32px; line-height: 1;
-        }
+        .pillar-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.3); flex-shrink: 0; width: 32px; line-height: 1; }
         .pillar h4 { font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.15rem; }
         .pillar p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.5; margin: 0; }
 
-        /* ─── HISTORY ─── */
-        .history-section {
-            background: var(--charcoal2);
-            padding: 6rem 5%;
-            border-top: 1px solid var(--border-dark);
-        }
+        /* HISTORY */
+        .history-section { background: var(--charcoal2); padding: 6rem 5%; border-top: 1px solid var(--border-dark); }
         .history-inner { max-width: 1200px; margin: 0 auto; }
-        .history-header {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 3.5rem; flex-wrap: wrap; gap: 16px;
-        }
-        .history-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3.5vw, 2.8rem);
-            font-weight: 700; color: #fff;
-        }
+        .history-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 16px; }
+        .history-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700; color: #fff; }
         .history-header h2 em { font-style: italic; color: var(--emerald); }
         .history-header p { font-size: 0.85rem; color: rgba(255,255,255,0.3); max-width: 260px; text-align: right; line-height: 1.7; }
         .history-cta { margin-top: 2.5rem; text-align: center; }
 
-        /* ─── INTERACTIVE TIMELINE ─── */
+        /* INTERACTIVE TIMELINE */
         .itl-wrap { margin-top: 0; }
-
         .itl-track-area { position: relative; padding: 18px 0 62px; }
         .itl-track { position: relative; height: 1px; background: rgba(255,255,255,0.07); }
-        .itl-fill {
-            position: absolute; left: 0; top: 0; height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--emerald), rgba(52,160,106,0.45));
-            transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .itl-nodes {
-            position: absolute; top: 0; left: 0; right: 0;
-            transform: translateY(-50%);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .itl-node {
-            display: flex; flex-direction: column; align-items: center;
-            background: none; border: none; cursor: pointer; padding: 0; position: relative;
-        }
-        .itl-dot {
-            width: 10px; height: 10px; border-radius: 50%;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.14);
-            position: relative; z-index: 2;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .itl-dot::after {
-            content: ''; position: absolute; inset: -5px;
-            border-radius: 50%; border: 1px solid transparent;
-            transition: border-color 0.3s;
-        }
-        .itl-node.active .itl-dot::after {
-            border-color: rgba(52,160,106,0.28);
-            animation: itlPulse 2.4s ease infinite;
-        }
+        .itl-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--emerald), rgba(52,160,106,0.45)); transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1); }
+        .itl-nodes { position: absolute; top: 0; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; align-items: center; }
+        .itl-node { display: flex; flex-direction: column; align-items: center; background: none; border: none; cursor: pointer; padding: 0; position: relative; }
+        .itl-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); position: relative; z-index: 2; transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .itl-dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid transparent; transition: border-color 0.3s; }
+        .itl-node.active .itl-dot::after { border-color: rgba(52,160,106,0.28); animation: itlPulse 2.4s ease infinite; }
         .itl-node.itl-chaos.active .itl-dot::after { border-color: rgba(192,57,43,0.3); }
         .itl-node.itl-gold.active  .itl-dot::after { border-color: rgba(200,150,42,0.3); }
-
-        @keyframes itlPulse {
-            0%, 100% { transform: scale(1);   opacity: 0.9; }
-            60%       { transform: scale(2.2); opacity: 0;   }
-        }
-
+        @keyframes itlPulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 60% { transform: scale(2.2); opacity: 0; } }
         .itl-node:hover .itl-dot { background: rgba(52,160,106,0.35); border-color: var(--emerald); transform: scale(1.5); }
         .itl-node.itl-chaos:hover .itl-dot { background: rgba(192,57,43,0.3); border-color: #e74c3c; }
         .itl-node.itl-gold:hover  .itl-dot { background: rgba(200,150,42,0.3); border-color: var(--gold); }
-
-        .itl-node.active .itl-dot {
-            width: 14px; height: 14px;
-            background: var(--emerald); border-color: var(--emerald);
-            box-shadow: 0 0 0 4px rgba(52,160,106,0.15), 0 0 18px rgba(52,160,106,0.35);
-            transform: scale(1) !important;
-        }
-        .itl-node.itl-chaos.active .itl-dot {
-            background: #c0392b; border-color: #e74c3c;
-            box-shadow: 0 0 0 4px rgba(192,57,43,0.15), 0 0 18px rgba(231,76,60,0.35);
-        }
-        .itl-node.itl-gold.active .itl-dot {
-            background: var(--gold); border-color: var(--gold-light);
-            box-shadow: 0 0 0 4px rgba(200,150,42,0.15), 0 0 18px rgba(200,150,42,0.35);
-        }
-
-        .itl-label {
-            position: absolute; top: 20px;
-            display: flex; flex-direction: column; align-items: center; gap: 2px;
-            pointer-events: none; white-space: nowrap;
-        }
-        .itl-ldate {
-            font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1px;
-            color: rgba(255,255,255,0.18); transition: color 0.3s;
-        }
-        .itl-lname {
-            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px;
-            color: rgba(52,160,106,0.3); transition: color 0.3s;
-        }
+        .itl-node.active .itl-dot { width: 14px; height: 14px; background: var(--emerald); border-color: var(--emerald); box-shadow: 0 0 0 4px rgba(52,160,106,0.15), 0 0 18px rgba(52,160,106,0.35); transform: scale(1) !important; }
+        .itl-node.itl-chaos.active .itl-dot { background: #c0392b; border-color: #e74c3c; box-shadow: 0 0 0 4px rgba(192,57,43,0.15), 0 0 18px rgba(231,76,60,0.35); }
+        .itl-node.itl-gold.active .itl-dot { background: var(--gold); border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(200,150,42,0.15), 0 0 18px rgba(200,150,42,0.35); }
+        .itl-label { position: absolute; top: 20px; display: flex; flex-direction: column; align-items: center; gap: 2px; pointer-events: none; white-space: nowrap; }
+        .itl-ldate { font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1px; color: rgba(255,255,255,0.18); transition: color 0.3s; }
+        .itl-lname { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px; color: rgba(52,160,106,0.3); transition: color 0.3s; }
         .itl-node.active           .itl-ldate { color: rgba(255,255,255,0.5); }
         .itl-node.active           .itl-lname { color: var(--emerald); }
         .itl-node.itl-chaos.active .itl-lname { color: #e74c3c; }
         .itl-node.itl-gold.active  .itl-lname { color: var(--gold-light); }
-
-        .itl-panel {
-            position: relative; overflow: hidden;
-            background: var(--charcoal3);
-            border: 1px solid var(--border-dark);
-            border-top: 2px solid var(--emerald);
-            min-height: 210px;
-            transition: border-top-color 0.45s ease;
-        }
+        .itl-panel { position: relative; overflow: hidden; background: var(--charcoal3); border: 1px solid var(--border-dark); border-top: 2px solid var(--emerald); min-height: 210px; transition: border-top-color 0.45s ease; }
         .itl-panel.accent-chaos { border-top-color: #c0392b; }
         .itl-panel.accent-gold  { border-top-color: var(--gold); }
-
-        .itl-content {
-            padding: 2.6rem 3rem;
-            display: grid; grid-template-columns: 1fr 1.3fr;
-            gap: 3rem; align-items: center;
-            position: relative; z-index: 2;
-            opacity: 1; transform: translateY(0);
-            transition: opacity 0.28s ease, transform 0.28s ease;
-        }
+        .itl-content { padding: 2.6rem 3rem; display: grid; grid-template-columns: 1fr 1.3fr; gap: 3rem; align-items: center; position: relative; z-index: 2; opacity: 1; transform: translateY(0); transition: opacity 0.28s ease, transform 0.28s ease; }
         .itl-content.is-exiting { opacity: 0; transform: translateY(var(--itl-exit-y, -7px)); }
         .itl-content.is-entering { opacity: 0; transform: translateY(var(--itl-enter-y, 7px)); transition: none; }
-
-        .itl-era-date {
-            display: block; font-family: 'DM Mono', monospace;
-            font-size: 0.52rem; letter-spacing: 3px;
-            color: var(--emerald); opacity: 0.85;
-            margin-bottom: 0.65rem; transition: color 0.4s;
-        }
+        .itl-era-date { display: block; font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 3px; color: var(--emerald); opacity: 0.85; margin-bottom: 0.65rem; transition: color 0.4s; }
         .itl-panel.accent-chaos .itl-era-date { color: #e74c3c; }
         .itl-panel.accent-gold  .itl-era-date { color: var(--gold); }
-
-        .itl-badge {
-            display: inline-block; font-family: 'DM Mono', monospace;
-            font-size: 0.44rem; letter-spacing: 2.5px;
-            padding: 3px 10px; margin-bottom: 1rem;
-            border: 1px solid rgba(52,160,106,0.3); color: rgba(52,160,106,0.75);
-        }
+        .itl-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.44rem; letter-spacing: 2.5px; padding: 3px 10px; margin-bottom: 1rem; border: 1px solid rgba(52,160,106,0.3); color: rgba(52,160,106,0.75); }
         .itl-badge.badge-chaos   { border-color: rgba(192,57,43,0.35); color: rgba(231,76,60,0.75); }
         .itl-badge.badge-current { border-color: rgba(200,150,42,0.35); color: rgba(224,176,69,0.75); }
-
-        .itl-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.35rem, 2.5vw, 1.9rem);
-            font-weight: 700; color: #fff; line-height: 1.2; margin: 0;
-        }
-        .itl-desc {
-            font-size: 0.88rem; color: rgba(255,255,255,0.38);
-            line-height: 1.9; font-weight: 300; margin: 0;
-        }
-        .itl-ghost {
-            position: absolute; right: 1.8rem; bottom: -1.2rem;
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(5rem, 11vw, 9.5rem); font-weight: 900;
-            color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.06);
-            line-height: 1; pointer-events: none; z-index: 1; user-select: none;
-            transition: -webkit-text-stroke-color 0.4s;
-        }
+        .itl-title { font-family: 'Playfair Display', serif; font-size: clamp(1.35rem, 2.5vw, 1.9rem); font-weight: 700; color: #fff; line-height: 1.2; margin: 0; }
+        .itl-desc { font-size: 0.88rem; color: rgba(255,255,255,0.38); line-height: 1.9; font-weight: 300; margin: 0; }
+        .itl-ghost { position: absolute; right: 1.8rem; bottom: -1.2rem; font-family: 'Playfair Display', serif; font-size: clamp(5rem, 11vw, 9.5rem); font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.06); line-height: 1; pointer-events: none; z-index: 1; user-select: none; transition: -webkit-text-stroke-color 0.4s; }
         .itl-panel.accent-chaos .itl-ghost { -webkit-text-stroke-color: rgba(192,57,43,0.07); }
         .itl-panel.accent-gold  .itl-ghost { -webkit-text-stroke-color: rgba(200,150,42,0.07); }
-
-        .itl-nav {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0.85rem 1.5rem;
-            border: 1px solid var(--border-dark); border-top: none;
-            background: rgba(0,0,0,0.12);
-        }
-        .itl-btn {
-            font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 2px;
-            color: rgba(255,255,255,0.25); background: none; border: none;
-            cursor: pointer; padding: 6px 14px; transition: color 0.2s;
-        }
+        .itl-nav { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.5rem; border: 1px solid var(--border-dark); border-top: none; background: rgba(0,0,0,0.12); }
+        .itl-btn { font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 2px; color: rgba(255,255,255,0.25); background: none; border: none; cursor: pointer; padding: 6px 14px; transition: color 0.2s; }
         .itl-btn:hover:not(:disabled) { color: var(--emerald); }
         .itl-btn:disabled { opacity: 0.15; cursor: default; }
-        .itl-counter {
-            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 3px;
-            color: rgba(255,255,255,0.16);
-        }
-        .itl-hint {
-            margin-top: 0.75rem; font-family: 'DM Mono', monospace;
-            font-size: 0.4rem; letter-spacing: 2px;
-            color: rgba(255,255,255,0.09); text-align: center;
-        }
+        .itl-counter { font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 3px; color: rgba(255,255,255,0.16); }
+        .itl-hint { margin-top: 0.75rem; font-family: 'DM Mono', monospace; font-size: 0.4rem; letter-spacing: 2px; color: rgba(255,255,255,0.09); text-align: center; }
 
-        /* ─── STATS STRIP ─── */
-        .stats-strip {
-            background: var(--green-dark);
-            padding: 3rem 5%;
-            border-top: 1px solid var(--border-green);
-            border-bottom: 1px solid var(--border-green);
-        }
-        .stats-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
-        }
-        .stat-block {
-            text-align: center; padding: 2rem 1rem;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
+        /* ═══════════════════════════════════════
+           INTERACTIVE LAYER 3 — STAT COUNTERS
+           ═══════════════════════════════════════ */
+        .stats-strip { background: var(--green-dark); padding: 3rem 5%; border-top: 1px solid var(--border-green); border-bottom: 1px solid var(--border-green); }
+        .stats-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+        .stat-block { text-align: center; padding: 2rem 1rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: background 0.3s, border-color 0.3s; }
+        .stat-block:hover { background: rgba(52,160,106,0.05); border-color: rgba(52,160,106,0.15); }
         .stat-block .num {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
-            color: var(--emerald); display: block; line-height: 1;
+            font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 900; color: var(--emerald); display: block; line-height: 1;
         }
-        .stat-block .lbl {
-            font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 2px;
-            color: rgba(255,255,255,0.3); display: block; margin-top: 6px;
-        }
+        .stat-block .lbl { font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 2px; color: rgba(255,255,255,0.3); display: block; margin-top: 6px; }
 
-        /* ─── FOUNDERS ─── */
-        .founders-section {
-            padding: 6rem 5%; background: var(--charcoal);
-            border-top: 1px solid var(--border-dark);
-        }
+        /* FOUNDERS */
+        .founders-section { padding: 6rem 5%; background: var(--charcoal); border-top: 1px solid var(--border-dark); }
         .founders-inner { max-width: 1200px; margin: 0 auto; }
-        .founders-header {
-            display: grid; grid-template-columns: 1fr 2fr;
-            gap: 60px; align-items: center; margin-bottom: 3.5rem;
-        }
-        .founders-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 900; color: #fff; line-height: 1.1;
-        }
+        .founders-header { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: center; margin-bottom: 3.5rem; }
+        .founders-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 900; color: #fff; line-height: 1.1; }
         .founders-header h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
         .founders-header p { font-size: 0.93rem; color: rgba(255,255,255,0.38); line-height: 1.85; font-weight: 300; }
-        .founders-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            gap: 3px; background: var(--border-dark);
-        }
+        .founders-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--border-dark); }
         .founder-card {
             background: var(--charcoal2); padding: 2.5rem 2rem;
-            position: relative; transition: background 0.2s;
+            position: relative; transition: background 0.2s, box-shadow 0.3s;
+            transform-style: preserve-3d; will-change: transform;
         }
-        .founder-card:hover { background: var(--charcoal3); }
-        .founder-ghost {
-            font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900;
-            color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.12);
-            position: absolute; top: 1.5rem; right: 1.5rem; line-height: 1;
-        }
-        .founder-init {
-            width: 48px; height: 48px;
-            border: 1px solid rgba(52,160,106,0.3);
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Playfair Display', serif; font-size: 1.2rem;
-            font-weight: 700; color: var(--emerald);
-            background: rgba(52,160,106,0.05); margin-bottom: 1.4rem;
-        }
-        .founder-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem;
-        }
-        .founder-role {
-            font-family: 'DM Mono', monospace; font-size: 0.53rem;
-            letter-spacing: 2px; color: var(--emerald); opacity: 0.7; margin-bottom: 1rem;
-        }
+        .founder-card:hover { background: var(--charcoal3); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .founder-ghost { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(52,160,106,0.12); position: absolute; top: 1.5rem; right: 1.5rem; line-height: 1; transition: -webkit-text-stroke-color 0.3s; }
+        .founder-card:hover .founder-ghost { -webkit-text-stroke-color: rgba(52,160,106,0.22); }
+        .founder-init { width: 48px; height: 48px; border: 1px solid rgba(52,160,106,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--emerald); background: rgba(52,160,106,0.05); margin-bottom: 1.4rem; transition: border-color 0.3s, background 0.3s; }
+        .founder-card:hover .founder-init { border-color: rgba(52,160,106,0.6); background: rgba(52,160,106,0.1); }
+        .founder-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; }
+        .founder-role { font-family: 'DM Mono', monospace; font-size: 0.53rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.7; margin-bottom: 1rem; }
         .founder-card p { font-size: 0.85rem; color: rgba(255,255,255,0.36); line-height: 1.75; font-weight: 300; }
-        .proclamation-block {
-            margin-top: 3px; background: var(--charcoal2);
-            border: 1px solid var(--border-dark); padding: 2.2rem 2.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-            gap: 30px; flex-wrap: wrap;
-        }
-        .proc-title {
-            font-family: 'DM Mono', monospace; font-size: 0.56rem;
-            letter-spacing: 3px; color: var(--emerald); opacity: 0.7; margin-bottom: 0.5rem;
-        }
-        .proclamation-block h3 {
-            font-family: 'Playfair Display', serif; font-size: 1.3rem;
-            font-weight: 700; color: #fff; margin-bottom: 0.25rem;
-        }
+        .proclamation-block { margin-top: 3px; background: var(--charcoal2); border: 1px solid var(--border-dark); padding: 2.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; gap: 30px; flex-wrap: wrap; }
+        .proc-title { font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 3px; color: var(--emerald); opacity: 0.7; margin-bottom: 0.5rem; }
+        .proclamation-block h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
         .proclamation-block p { font-size: 0.84rem; color: rgba(255,255,255,0.35); }
         .proc-btns { display: flex; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
-        .proc-btn {
-            display: inline-block; padding: 10px 20px; border: 1px solid;
-            font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px;
-            text-decoration: none; transition: background 0.2s;
-        }
+        .proc-btn { display: inline-block; padding: 10px 20px; border: 1px solid; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px; text-decoration: none; transition: background 0.2s; }
         .proc-btn.green { border-color: rgba(52,160,106,0.4); color: var(--emerald); }
         .proc-btn.green:hover { background: var(--emerald-dim); }
         .proc-btn.gold { border-color: rgba(200,150,42,0.35); color: var(--gold); }
         .proc-btn.gold:hover { background: var(--gold-dim); }
 
-        /* ─── CONTACT ─── */
-        .contact-section {
-            padding: 5rem 5%; background: var(--charcoal2);
-            border-top: 1px solid var(--border-dark); text-align: center;
-        }
+        /* CONTACT */
+        .contact-section { padding: 5rem 5%; background: var(--charcoal2); border-top: 1px solid var(--border-dark); text-align: center; }
         .contact-inner { max-width: 600px; margin: 0 auto; }
-        .contact-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #fff; margin-bottom: 1rem;
-        }
+        .contact-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #fff; margin-bottom: 1rem; }
         .contact-section h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
-        .contact-section p {
-            font-size: 0.93rem; color: rgba(255,255,255,0.38);
-            line-height: 1.85; font-weight: 300; margin-bottom: 2.5rem;
-        }
+        .contact-section p { font-size: 0.93rem; color: rgba(255,255,255,0.38); line-height: 1.85; font-weight: 300; margin-bottom: 2.5rem; }
         .contact-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-        /* ─── FOOTER ─── */
+        /* FOOTER */
         footer { background: var(--green-dark); border-top: 1px solid rgba(52,160,106,0.14); }
-        .footer-main {
-            max-width: 1200px; margin: 0 auto; padding: 4rem 5% 3rem;
-            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px;
-        }
+        .footer-main { max-width: 1200px; margin: 0 auto; padding: 4rem 5% 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
         .f-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 0.7rem; line-height: 1.2; }
         .f-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
         .f-desc { font-size: 0.86rem; color: rgba(255,255,255,0.3); line-height: 1.75; font-weight: 300; max-width: 240px; margin-bottom: 1.2rem; }
-        .f-network-badge {
-            display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px;
-            border: 1px solid rgba(200,150,42,0.22); background: rgba(200,150,42,0.05);
-            text-decoration: none; transition: background 0.2s, border-color 0.2s;
-        }
+        .f-network-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid rgba(200,150,42,0.22); background: rgba(200,150,42,0.05); text-decoration: none; transition: background 0.2s, border-color 0.2s; }
         .f-network-badge:hover { background: rgba(200,150,42,0.1); border-color: rgba(200,150,42,0.4); }
         .f-network-badge .fbn-label { font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); line-height: 1.3; }
-        .f-network-badge .fbn-name  { font-family: 'DM Mono', monospace; font-size: 0.6rem;  letter-spacing: 1px; color: var(--gold); font-weight: 500; }
+        .f-network-badge .fbn-name  { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1px; color: var(--gold); font-weight: 500; }
         .f-col h5 { font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 2.5px; color: var(--emerald); opacity: 0.7; margin-bottom: 1.2rem; }
         .f-col.network h5 { color: var(--gold); }
         .f-col a { display: block; font-size: 0.86rem; color: rgba(255,255,255,0.32); text-decoration: none; margin-bottom: 0.6rem; font-weight: 300; transition: color 0.2s; }
@@ -791,78 +600,45 @@
         .footer-legal { max-width: 1200px; margin: 0 auto; padding: 0.9rem 5% 1.2rem; border-top: 1px solid rgba(255,255,255,0.04); }
         .footer-legal p { font-family: 'DM Mono', monospace; font-size: 0.44rem; letter-spacing: 1.4px; color: rgba(255,255,255,0.15); line-height: 1.7; }
 
-        /* ─── ANIMATIONS ─── */
+        /* ANIMATIONS */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scrollPulse {
             0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
             45%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
             55%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
             100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
         }
-
         .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .reveal.in { opacity: 1; transform: translateY(0); }
 
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 1200px) {
-            .hub-grid   { grid-template-columns: repeat(3, 1fr); }
-            .hub-grid-4 { grid-template-columns: repeat(2, 1fr); }
-            .footer-main { grid-template-columns: 1fr 1fr 1fr; }
-        }
-        @media (max-width: 900px) {
-            .hub-featured  { grid-template-columns: 1fr; }
-            .hub-grid      { grid-template-columns: repeat(2, 1fr); }
-            .hub-grid-4    { grid-template-columns: repeat(2, 1fr); }
-            .hub-grid-3    { grid-template-columns: repeat(2, 1fr); }
-            .about-inner   { grid-template-columns: 1fr; gap: 40px; }
-            .stats-inner   { grid-template-columns: repeat(2, 1fr); }
-            .founders-grid { grid-template-columns: 1fr; }
-            .founders-header { grid-template-columns: 1fr; gap: 20px; }
-            .footer-main   { grid-template-columns: 1fr 1fr; }
-            .sitenav-links { display: none; }
-            .hamburger     { display: flex; }
-            .history-header p { display: none; }
-            .hub-header p     { display: none; }
-            .itl-content { grid-template-columns: 1fr; gap: 1.4rem; padding: 2rem; }
-            .itl-ghost { font-size: 5rem; right: 1rem; }
-        }
-        @media (max-width: 640px) {
-            :root { --netbar-h: 0px; }
-            .netbar { display: none; }
-            .sitenav { top: 0 !important; }
-            .hero { padding: calc(80px) 5% 5rem; min-height: 100svh; }
-            .hero h1 { font-size: clamp(3rem, 13vw, 5rem); letter-spacing: -1px; }
-            .hub-grid      { grid-template-columns: 1fr 1fr; }
-            .hub-grid-4    { grid-template-columns: 1fr 1fr; }
-            .hub-grid-3    { grid-template-columns: 1fr 1fr; }
-            .stats-inner   { grid-template-columns: 1fr 1fr; }
-            .footer-main   { grid-template-columns: 1fr; }
-            .footer-bottom-inner { flex-direction: column; text-align: center; }
-            .hero-actions  { flex-direction: column; }
-            .proclamation-block { flex-direction: column; }
-            .proc-btns { width: 100%; }
-            .proc-btn  { flex: 1; text-align: center; }
-            .hub-header h2 { font-size: 1.8rem; }
-            .contact-btns  { flex-direction: column; align-items: center; }
-            .hero-scroll   { display: none; }
-        }
-        @media (max-width: 480px) {
-            .itl-ldate, .itl-lname { display: none; }
-            .itl-track-area { padding-bottom: 20px; }
-            .itl-content { padding: 1.6rem 1.4rem; }
-            .itl-nav { padding: 0.8rem 1rem; }
-            .itl-hint { display: none; }
-        }
-        @media (max-width: 420px) {
-            .hub-grid, .hub-grid-4, .hub-grid-3 { grid-template-columns: 1fr; }
-            .stats-inner { grid-template-columns: 1fr; }
-        }
+        /* RESPONSIVE */
+        @media (max-width: 1200px) { .hub-grid { grid-template-columns: repeat(3, 1fr); } .hub-grid-4 { grid-template-columns: repeat(2, 1fr); } .footer-main { grid-template-columns: 1fr 1fr 1fr; } }
+        @media (max-width: 900px) { .hub-featured { grid-template-columns: 1fr; } .hub-grid { grid-template-columns: repeat(2, 1fr); } .hub-grid-4 { grid-template-columns: repeat(2, 1fr); } .hub-grid-3 { grid-template-columns: repeat(2, 1fr); } .about-inner { grid-template-columns: 1fr; gap: 40px; } .stats-inner { grid-template-columns: repeat(2, 1fr); } .founders-grid { grid-template-columns: 1fr; } .founders-header { grid-template-columns: 1fr; gap: 20px; } .footer-main { grid-template-columns: 1fr 1fr; } .sitenav-links { display: none; } .hamburger { display: flex; } .history-header p { display: none; } .hub-header p { display: none; } .itl-content { grid-template-columns: 1fr; gap: 1.4rem; padding: 2rem; } .itl-ghost { font-size: 5rem; right: 1rem; } }
+        @media (max-width: 640px) { :root { --netbar-h: 0px; } .netbar { display: none; } .sitenav { top: 0 !important; } .hero { padding: calc(80px) 5% 5rem; min-height: 100svh; } .hero h1 { font-size: clamp(3rem, 13vw, 5rem); letter-spacing: -1px; } .hub-grid { grid-template-columns: 1fr 1fr; } .hub-grid-4 { grid-template-columns: 1fr 1fr; } .hub-grid-3 { grid-template-columns: 1fr 1fr; } .stats-inner { grid-template-columns: 1fr 1fr; } .footer-main { grid-template-columns: 1fr; } .footer-bottom-inner { flex-direction: column; text-align: center; } .hero-actions { flex-direction: column; } .proclamation-block { flex-direction: column; } .proc-btns { width: 100%; } .proc-btn { flex: 1; text-align: center; } .hub-header h2 { font-size: 1.8rem; } .contact-btns { flex-direction: column; align-items: center; } .hero-scroll { display: none; } }
+        @media (max-width: 480px) { .itl-ldate, .itl-lname { display: none; } .itl-track-area { padding-bottom: 20px; } .itl-content { padding: 1.6rem 1.4rem; } .itl-nav { padding: 0.8rem 1rem; } .itl-hint { display: none; } }
+        @media (max-width: 420px) { .hub-grid, .hub-grid-4, .hub-grid-3 { grid-template-columns: 1fr; } .stats-inner { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <!-- ─── NETWORK BAR ─── -->
+    <!-- ── INTERACTIVE ELEMENTS ── -->
+    <div id="scroll-progress"></div>
+    <div id="cur-dot"></div>
+    <div id="cur-ring"></div>
+
+    <!-- KONAMI OVERLAY -->
+    <div id="konami-overlay">
+        <div class="konami-inner">
+            <div class="konami-badge">// INTERNAL SECURITY CONTROL — CLASSIFIED ACCESS</div>
+            <div class="konami-title">SIGMA<br><em>Clearance Granted.</em></div>
+            <div class="konami-sub">AUTHORIZATION LEVEL: MAXIMUM // EYES ONLY</div>
+            <div class="konami-log" id="konami-log"></div>
+            <button class="konami-close" onclick="closeKonami()">CLOSE TERMINAL</button>
+        </div>
+    </div>
+
+    <!-- NETWORK BAR -->
     <nav class="netbar" id="netbar" aria-label="Network">
         <div class="netbar-inner">
             <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
@@ -877,7 +653,7 @@
         </div>
     </nav>
 
-    <!-- ─── SITE NAV ─── -->
+    <!-- SITE NAV -->
     <header class="sitenav" id="sitenav">
         <a href="/thelol/" class="sitenav-logo">
             <img src="/thelol/assets/TheLoL.png" alt="The LoL" onerror="this.style.display='none'">
@@ -895,7 +671,7 @@
         </button>
     </header>
 
-    <!-- ─── MOBILE MENU ─── -->
+    <!-- MOBILE MENU -->
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
         <a href="#about"    onclick="closeMobile()">ABOUT</a>
         <a href="#history"  onclick="closeMobile()">HISTORY</a>
@@ -910,15 +686,15 @@
         <a href="/thelol/about" onclick="closeMobile()">FULL HISTORY</a>
     </nav>
 
-    <!-- ─── HERO ─── -->
+    <!-- HERO -->
     <section class="hero" id="home">
-        <div class="hero-bg-glow"></div>
+        <div class="hero-bg-glow" id="heroGlow"></div>
         <div class="hero-bg-glow-2"></div>
         <div class="hero-grid-bg"></div>
         <div class="hero-inner">
-            <div class="hero-eyebrow">THE SUS // EST. 2023 // SOVEREIGN NATION // SKYXION: ALTAER ERA</div>
+            <div class="hero-eyebrow" id="heroEyebrow"></div>
             <h1>
-                The <span class="outline-text">Legend</span><br>
+                The <span class="outline-text" id="scrambleTarget">Legend</span><br>
                 of <span class="gold-text">Legiona.</span>
             </h1>
             <p class="hero-sub">
@@ -927,14 +703,14 @@
                 this is <strong>The LoL.</strong>
             </p>
             <div class="hero-actions">
-                <a href="#network" class="btn-primary">EXPLORE THE NETWORK</a>
+                <a href="#network" class="btn-primary" id="ctaBtn">EXPLORE THE NETWORK</a>
                 <a href="/thelol/about" class="btn-secondary">FULL HISTORY →</a>
             </div>
         </div>
         <div class="hero-scroll"><div class="scroll-line"></div></div>
     </section>
 
-    <!-- ─── NETWORK HUB ─── -->
+    <!-- NETWORK HUB -->
     <section class="hub-section" id="network">
         <div class="hub-inner">
             <div class="hub-header reveal">
@@ -944,184 +720,93 @@
                 </div>
                 <p>Every portal, studio, store, and service across The LoL and the Paiz® Corp network — all in one place.</p>
             </div>
-
             <div class="hub-sublabel reveal" style="margin-top:0; border-top:none; padding-top:0;">THE LOL — GOVERNMENT PORTALS</div>
             <div class="hub-featured reveal">
-                <a href="/thelol/gov/" class="hub-card">
+                <a href="/thelol/gov/" class="hub-card tilt-card">
                     <span class="hc-tag">PORTAL-01 // OFFICIAL GOVERNANCE</span>
                     <div class="hc-title">The LoL Government Portal</div>
                     <p class="hc-desc">Legislation, departments, proclamation documents, founding history, and national megaprojects. The official face of The LoL's governance.</p>
                     <span class="hc-arrow">ACCESS GOVERNMENT →</span>
                 </a>
-                <a href="/thelol/gov/isc/" class="hub-card gold-card">
+                <a href="/thelol/gov/isc/" class="hub-card gold-card tilt-card">
                     <span class="hc-tag">PORTAL-02 // INTELLIGENCE AGENCY</span>
                     <div class="hc-title">ISC — Internal Security Control</div>
                     <p class="hc-desc">Sovereignty through oversight. The LoL's primary intelligence and security agency. Successor to TLIO.</p>
                     <span class="hc-arrow">ENTER ISC →</span>
                 </a>
             </div>
-
             <div class="hub-sublabel reveal">THE LOL — SUB-SITES &amp; PORTALS</div>
             <div class="hub-grid-4 reveal">
-                <a href="/thelol/about" class="hub-mini corp-accent">
-                    <span class="hm-tag">HISTORY // THE LOL</span>
-                    <span class="hm-name">About The LoL</span>
-                    <p class="hm-desc">The full national timeline — from The Sus Era to the Altaer Era.</p>
-                    <span class="hm-arrow">READ MORE →</span>
-                </a>
-                <a href="/thelol/tlr/" class="hub-mini corp-accent">
-                    <span class="hm-tag">TRANSPORT // NATIONAL</span>
-                    <span class="hm-name">TL Railways</span>
-                    <p class="hm-desc">National rail network. Routes, timetables, and 4,800+ blocks of track.</p>
-                    <span class="hm-arrow">VIEW ROUTES →</span>
-                </a>
-                <a href="/thelol/gov/assets/" class="hub-mini corp-accent">
-                    <span class="hm-tag">DOCUMENTS // LEGAL</span>
-                    <span class="hm-name">Legal Archive</span>
-                    <p class="hm-desc">Proclamations, citizenship acts, decrees and sovereign legal records. Searchable.</p>
-                    <span class="hm-arrow">BROWSE DOCS →</span>
-                </a>
-                <a href="/thelol/gov/isc/national" class="hub-mini corp-accent">
-                    <span class="hm-tag">ARCHIVE // PUBLIC ACCESS</span>
-                    <span class="hm-name">ISC National Archive</span>
-                    <p class="hm-desc">Declassified ISC records and national transparency portal.</p>
-                    <span class="hm-arrow">OPEN ARCHIVE →</span>
-                </a>
+                <a href="/thelol/about" class="hub-mini corp-accent tilt-card"><span class="hm-tag">HISTORY // THE LOL</span><span class="hm-name">About The LoL</span><p class="hm-desc">The full national timeline — from The Sus Era to the Altaer Era.</p><span class="hm-arrow">READ MORE →</span></a>
+                <a href="/thelol/tlr/" class="hub-mini corp-accent tilt-card"><span class="hm-tag">TRANSPORT // NATIONAL</span><span class="hm-name">TL Railways</span><p class="hm-desc">National rail network. Routes, timetables, and 4,800+ blocks of track.</p><span class="hm-arrow">VIEW ROUTES →</span></a>
+                <a href="/thelol/gov/assets/" class="hub-mini corp-accent tilt-card"><span class="hm-tag">DOCUMENTS // LEGAL</span><span class="hm-name">Legal Archive</span><p class="hm-desc">Proclamations, citizenship acts, decrees and sovereign legal records. Searchable.</p><span class="hm-arrow">BROWSE DOCS →</span></a>
+                <a href="/thelol/gov/isc/national" class="hub-mini corp-accent tilt-card"><span class="hm-tag">ARCHIVE // PUBLIC ACCESS</span><span class="hm-name">ISC National Archive</span><p class="hm-desc">Declassified ISC records and national transparency portal.</p><span class="hm-arrow">OPEN ARCHIVE →</span></a>
             </div>
-
             <div class="hub-sublabel gold reveal">PAIZ® CORP — FULL NETWORK</div>
             <div class="hub-grid reveal">
-                <a href="https://faizzzlol.github.io/PaizCorp/" class="hub-mini">
-                    <span class="hm-tag">HUB // PARENT COMPANY</span>
-                    <span class="hm-name">Paiz® Corp</span>
-                    <p class="hm-desc">The conglomerate homepage. Explore all subsidiaries, services, and projects under one roof.</p>
-                    <span class="hm-arrow">VISIT HUB →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="hub-mini">
-                    <span class="hm-tag">STOREFRONT // CORP</span>
-                    <span class="hm-name">Paiz Shop</span>
-                    <p class="hm-desc">Official in-game item shop. Browse and order resources in-world. Priced in diamonds.</p>
-                    <span class="hm-arrow">SHOP NOW →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/" class="hub-mini">
-                    <span class="hm-tag">FOOD &amp; BEVERAGE // CORP</span>
-                    <span class="hm-name">Paiz Chicken</span>
-                    <p class="hm-desc">Online food ordering across Skyxion. Fast, hot, and priced in diamonds.</p>
-                    <span class="hm-arrow">ORDER NOW →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/" class="hub-mini">
-                    <span class="hm-tag">FILM &amp; MEDIA // CORP</span>
-                    <span class="hm-name">PaizProductions</span>
-                    <p class="hm-desc">Official Paiz® Corp film studio. Home of The LoL Movie, Chronicles, and ISC: Classified.</p>
-                    <span class="hm-arrow">VIEW STUDIO →</span>
-                </a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie" class="hub-mini">
-                    <span class="hm-tag">FILM // PAIZPRODUCTIONS</span>
-                    <span class="hm-name">The LoL Movie</span>
-                    <p class="hm-desc">The upcoming cinematic feature. The story of The Legend of Legiona — on screen.</p>
-                    <span class="hm-arrow">LEARN MORE →</span>
-                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/" class="hub-mini tilt-card"><span class="hm-tag">HUB // PARENT COMPANY</span><span class="hm-name">Paiz® Corp</span><p class="hm-desc">The conglomerate homepage. Explore all subsidiaries, services, and projects under one roof.</p><span class="hm-arrow">VISIT HUB →</span></a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/" class="hub-mini tilt-card"><span class="hm-tag">STOREFRONT // CORP</span><span class="hm-name">Paiz Shop</span><p class="hm-desc">Official in-game item shop. Browse and order resources in-world. Priced in diamonds.</p><span class="hm-arrow">SHOP NOW →</span></a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/" class="hub-mini tilt-card"><span class="hm-tag">FOOD &amp; BEVERAGE // CORP</span><span class="hm-name">Paiz Chicken</span><p class="hm-desc">Online food ordering across Skyxion. Fast, hot, and priced in diamonds.</p><span class="hm-arrow">ORDER NOW →</span></a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/" class="hub-mini tilt-card"><span class="hm-tag">FILM &amp; MEDIA // CORP</span><span class="hm-name">PaizProductions</span><p class="hm-desc">Official Paiz® Corp film studio. Home of The LoL Movie, Chronicles, and ISC: Classified.</p><span class="hm-arrow">VIEW STUDIO →</span></a>
+                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie" class="hub-mini tilt-card"><span class="hm-tag">FILM // PAIZPRODUCTIONS</span><span class="hm-name">The LoL Movie</span><p class="hm-desc">The upcoming cinematic feature. The story of The Legend of Legiona — on screen.</p><span class="hm-arrow">LEARN MORE →</span></a>
             </div>
-
             <div class="hub-sublabel reveal">COMMUNITY &amp; RESOURCES</div>
             <div class="hub-grid-3 reveal">
-                <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener" class="hub-mini community-accent">
-                    <span class="hm-tag">COMMUNITY // DISCORD</span>
-                    <span class="hm-name">The LoL Discord</span>
-                    <p class="hm-desc">The official server. Connect, apply for citizenship, and follow announcements.</p>
-                    <span class="hm-arrow">JOIN SERVER →</span>
-                </a>
-                <a href="/thelol/download-tlolpack.html" class="hub-mini community-accent">
-                    <span class="hm-tag">RESOURCES // THE LOL</span>
-                    <span class="hm-name">TLoL Resource Pack</span>
-                    <p class="hm-desc">Official Minecraft resource pack for the best in-server visual experience.</p>
-                    <span class="hm-arrow">DOWNLOAD →</span>
-                </a>
+                <a href="https://discord.gg/TB4T8qwN4R" target="_blank" rel="noopener" class="hub-mini community-accent tilt-card"><span class="hm-tag">COMMUNITY // DISCORD</span><span class="hm-name">The LoL Discord</span><p class="hm-desc">The official server. Connect, apply for citizenship, and follow announcements.</p><span class="hm-arrow">JOIN SERVER →</span></a>
+                <a href="/thelol/download-tlolpack.html" class="hub-mini community-accent tilt-card"><span class="hm-tag">RESOURCES // THE LOL</span><span class="hm-name">TLoL Resource Pack</span><p class="hm-desc">Official Minecraft resource pack for the best in-server visual experience.</p><span class="hm-arrow">DOWNLOAD →</span></a>
             </div>
         </div>
     </section>
 
-    <!-- ─── STATS ─── -->
-    <div class="stats-strip reveal">
+    <!-- STATS -->
+    <div class="stats-strip reveal" id="statsStrip">
         <div class="stats-inner">
-            <div class="stat-block"><span class="num">2023</span><span class="lbl">YEAR FOUNDED</span></div>
-            <div class="stat-block"><span class="num">3</span><span class="lbl">FOUNDING MEMBERS</span></div>
-            <div class="stat-block"><span class="num">4,800+</span><span class="lbl">BLOCKS — TLSRL</span></div>
-            <div class="stat-block"><span class="num">9</span><span class="lbl">NETWORK SITES</span></div>
+            <div class="stat-block"><span class="num" data-target="2023" data-from="2018" data-suffix="">2023</span><span class="lbl">YEAR FOUNDED</span></div>
+            <div class="stat-block"><span class="num" data-target="3" data-from="0" data-suffix="">3</span><span class="lbl">FOUNDING MEMBERS</span></div>
+            <div class="stat-block"><span class="num" data-target="4800" data-from="0" data-suffix="+">4,800+</span><span class="lbl">BLOCKS — TLSRL</span></div>
+            <div class="stat-block"><span class="num" data-target="9" data-from="0" data-suffix="">9</span><span class="lbl">NETWORK SITES</span></div>
         </div>
     </div>
 
-    <!-- ─── ABOUT ─── -->
+    <!-- ABOUT -->
     <section class="about-section" id="about">
         <div class="about-inner">
             <div class="about-text reveal">
                 <div class="section-eyebrow">THE LEGEND OF LEGIONA</div>
                 <h2>More than a nation —<br>a <em>legacy.</em></h2>
-                <p>
-                    The Legend of Legiona, known as <strong>The LoL</strong>, is a sovereign
-                    nation within the Skyxion world. Originally founded as a small squad called
-                    <strong>"The Sus"</strong> by Faiz4224, ItzDynozz, and Imii Kun, the nation
-                    rapidly grew into the most modern and wealthiest in all of Skyxion.
-                </p>
-                <p>
-                    Through democratic elections, political conflict, a presidential crisis,
-                    and full recovery — The LoL has proven that unity and perseverance can
-                    overcome anything.
-                </p>
+                <p>The Legend of Legiona, known as <strong>The LoL</strong>, is a sovereign nation within the Skyxion world. Originally founded as a small squad called <strong>"The Sus"</strong> by Faiz4224, ItzDynozz, and Imii Kun, the nation rapidly grew into the most modern and wealthiest in all of Skyxion.</p>
+                <p>Through democratic elections, political conflict, a presidential crisis, and full recovery — The LoL has proven that unity and perseverance can overcome anything.</p>
                 <p><em>"In the Name of Unity, Legacy, and Glory." — Proclamation of Sovereignty</em></p>
                 <a href="/thelol/about" class="about-link">READ THE FULL HISTORY →</a>
             </div>
             <div class="pillars reveal">
-                <div class="pillar"><span class="pillar-num">01</span><div><h4>Unity</h4><p>All players stand as one, striving for collective greatness across Skyxion.</p></div></div>
-                <div class="pillar"><span class="pillar-num">02</span><div><h4>Freedom</h4><p>Every citizen has the right to explore, create, and thrive within The LoL.</p></div></div>
-                <div class="pillar"><span class="pillar-num">03</span><div><h4>Innovation</h4><p>Harnessing Minecraft's limitless possibilities to build a nation unlike any other.</p></div></div>
-                <div class="pillar"><span class="pillar-num">04</span><div><h4>Defence &amp; Honour</h4><p>Protecting our lands while upholding fairness and respect for all citizens.</p></div></div>
+                <div class="pillar tilt-card"><span class="pillar-num">01</span><div><h4>Unity</h4><p>All players stand as one, striving for collective greatness across Skyxion.</p></div></div>
+                <div class="pillar tilt-card"><span class="pillar-num">02</span><div><h4>Freedom</h4><p>Every citizen has the right to explore, create, and thrive within The LoL.</p></div></div>
+                <div class="pillar tilt-card"><span class="pillar-num">03</span><div><h4>Innovation</h4><p>Harnessing Minecraft's limitless possibilities to build a nation unlike any other.</p></div></div>
+                <div class="pillar tilt-card"><span class="pillar-num">04</span><div><h4>Defence &amp; Honour</h4><p>Protecting our lands while upholding fairness and respect for all citizens.</p></div></div>
             </div>
         </div>
     </section>
 
-    <!-- ─── HISTORY ─── -->
+    <!-- HISTORY -->
     <section class="history-section" id="history">
         <div class="history-inner">
             <div class="history-header reveal">
                 <h2>The story of<br><em>The LoL.</em></h2>
                 <p>From humble beginnings to a sovereign nation — every chapter shaped who we are.</p>
             </div>
-
-            <!-- INTERACTIVE TIMELINE -->
             <div class="itl-wrap reveal">
                 <div class="itl-track-area">
-                    <div class="itl-track">
-                        <div class="itl-fill" id="itlFill"></div>
-                    </div>
+                    <div class="itl-track"><div class="itl-fill" id="itlFill"></div></div>
                     <div class="itl-nodes">
-                        <button class="itl-node active" data-era="0" aria-label="The Sus Founded">
-                            <div class="itl-dot"></div>
-                            <div class="itl-label"><span class="itl-ldate">2023 EARLY</span><span class="itl-lname">The Sus</span></div>
-                        </button>
-                        <button class="itl-node" data-era="1" aria-label="Renamed and Reborn">
-                            <div class="itl-dot"></div>
-                            <div class="itl-label"><span class="itl-ldate">2023</span><span class="itl-lname">Reborn</span></div>
-                        </button>
-                        <button class="itl-node" data-era="2" aria-label="First Presidential Election">
-                            <div class="itl-dot"></div>
-                            <div class="itl-label"><span class="itl-ldate">MAY 6, 2023</span><span class="itl-lname">Election</span></div>
-                        </button>
-                        <button class="itl-node itl-chaos" data-era="3" aria-label="Chaos and Conflict">
-                            <div class="itl-dot"></div>
-                            <div class="itl-label"><span class="itl-ldate">2023 CRISIS</span><span class="itl-lname">Chaos</span></div>
-                        </button>
-                        <button class="itl-node" data-era="4" aria-label="Resistance and Recovery">
-                            <div class="itl-dot"></div>
-                            <div class="itl-label"><span class="itl-ldate">NOV 8, 2023</span><span class="itl-lname">Recovery</span></div>
-                        </button>
-                        <button class="itl-node itl-gold" data-era="5" aria-label="The Modern Era">
-                            <div class="itl-dot"></div>
-                            <div class="itl-label"><span class="itl-ldate">2025–2026</span><span class="itl-lname">Modern</span></div>
-                        </button>
+                        <button class="itl-node active" data-era="0" aria-label="The Sus Founded"><div class="itl-dot"></div><div class="itl-label"><span class="itl-ldate">2023 EARLY</span><span class="itl-lname">The Sus</span></div></button>
+                        <button class="itl-node" data-era="1" aria-label="Renamed and Reborn"><div class="itl-dot"></div><div class="itl-label"><span class="itl-ldate">2023</span><span class="itl-lname">Reborn</span></div></button>
+                        <button class="itl-node" data-era="2" aria-label="First Presidential Election"><div class="itl-dot"></div><div class="itl-label"><span class="itl-ldate">MAY 6, 2023</span><span class="itl-lname">Election</span></div></button>
+                        <button class="itl-node itl-chaos" data-era="3" aria-label="Chaos and Conflict"><div class="itl-dot"></div><div class="itl-label"><span class="itl-ldate">2023 CRISIS</span><span class="itl-lname">Chaos</span></div></button>
+                        <button class="itl-node" data-era="4" aria-label="Resistance and Recovery"><div class="itl-dot"></div><div class="itl-label"><span class="itl-ldate">NOV 8, 2023</span><span class="itl-lname">Recovery</span></div></button>
+                        <button class="itl-node itl-gold" data-era="5" aria-label="The Modern Era"><div class="itl-dot"></div><div class="itl-label"><span class="itl-ldate">2025–2026</span><span class="itl-lname">Modern</span></div></button>
                     </div>
                 </div>
-
                 <div class="itl-panel" id="itlPanel">
                     <div class="itl-content" id="itlContent">
                         <div class="itl-left">
@@ -1135,7 +820,6 @@
                     </div>
                     <div class="itl-ghost" id="itlGhost">01</div>
                 </div>
-
                 <div class="itl-nav">
                     <button class="itl-btn" id="itlPrev" disabled>← PREV ERA</button>
                     <span class="itl-counter" id="itlCounter">01 / 06</span>
@@ -1143,14 +827,13 @@
                 </div>
                 <p class="itl-hint">USE ← → ARROW KEYS OR SWIPE TO NAVIGATE</p>
             </div>
-
             <div class="history-cta reveal">
                 <a href="/thelol/about" class="btn-secondary" style="display:inline-flex;">READ FULL HISTORY →</a>
             </div>
         </div>
     </section>
 
-    <!-- ─── FOUNDERS ─── -->
+    <!-- FOUNDERS -->
     <section class="founders-section" id="founders">
         <div class="founders-inner">
             <div class="founders-header reveal">
@@ -1158,43 +841,21 @@
                 <p>The Legend of Legiona was built by three people who turned a simple squad into a sovereign nation. Their names are inscribed in the Proclamation of Sovereignty — the founding document of The LoL. Their legacy lives on in every block, every railway track, and every citizen of The Legend of Legiona.</p>
             </div>
             <div class="founders-grid reveal">
-                <div class="founder-card">
-                    <span class="founder-ghost">01</span>
-                    <div class="founder-init">F</div>
-                    <h3>Faiz4224</h3>
-                    <div class="founder-role">FIRST PRESIDENT // FOUNDING LEADER</div>
-                    <p>Whose unwavering resolve and ingenuity laid the foundation of this great nation. Led The LoL through its golden era and rebuilt it stronger after the political crisis of 2023.</p>
-                </div>
-                <div class="founder-card">
-                    <span class="founder-ghost">02</span>
-                    <div class="founder-init">I</div>
-                    <h3>Imii Kun</h3>
-                    <div class="founder-role">CO-FOUNDER // VISIONARY</div>
-                    <p>The visionary who proposed renaming the nation to "The Legend of Legiona." A pillar of strength whose dedication forged the bonds of unity that sustain Legiona to this day.</p>
-                </div>
-                <div class="founder-card">
-                    <span class="founder-ghost">03</span>
-                    <div class="founder-init">D</div>
-                    <h3>Dyno</h3>
-                    <div class="founder-role">CO-FOUNDER // STRATEGIST</div>
-                    <p>Whose wisdom and determination illuminated the path toward the nation's glorious future from its earliest days as The Sus. A strategist at heart.</p>
-                </div>
+                <div class="founder-card tilt-card"><span class="founder-ghost">01</span><div class="founder-init">F</div><h3>Faiz4224</h3><div class="founder-role">FIRST PRESIDENT // FOUNDING LEADER</div><p>Whose unwavering resolve and ingenuity laid the foundation of this great nation. Led The LoL through its golden era and rebuilt it stronger after the political crisis of 2023.</p></div>
+                <div class="founder-card tilt-card"><span class="founder-ghost">02</span><div class="founder-init">I</div><h3>Imii Kun</h3><div class="founder-role">CO-FOUNDER // VISIONARY</div><p>The visionary who proposed renaming the nation to "The Legend of Legiona." A pillar of strength whose dedication forged the bonds of unity that sustain Legiona to this day.</p></div>
+                <div class="founder-card tilt-card"><span class="founder-ghost">03</span><div class="founder-init">D</div><h3>Dyno</h3><div class="founder-role">CO-FOUNDER // STRATEGIST</div><p>Whose wisdom and determination illuminated the path toward the nation's glorious future from its earliest days as The Sus. A strategist at heart.</p></div>
             </div>
             <div class="proclamation-block reveal">
-                <div>
-                    <div class="proc-title">FOUNDING DOCUMENT</div>
-                    <h3>The LoL Proclamation of Sovereignty</h3>
-                    <p>Signed by all three founders. Available in English and Bahasa Melayu.</p>
-                </div>
+                <div><div class="proc-title">FOUNDING DOCUMENT</div><h3>The LoL Proclamation of Sovereignty</h3><p>Signed by all three founders. Available in English and Bahasa Melayu.</p></div>
                 <div class="proc-btns">
                     <a href="/thelol/assets/The_LoL_Proclamation.pdf" class="proc-btn green" target="_blank">↓ PROCLAMATION (EN)</a>
-                    <a href="/thelol/assets/Proklamasi_The_LoL.pdf"  class="proc-btn gold"  target="_blank">↓ PROKLAMASI (BM)</a>
+                    <a href="/thelol/assets/Proklamasi_The_LoL.pdf" class="proc-btn gold" target="_blank">↓ PROKLAMASI (BM)</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ─── CONTACT ─── -->
+    <!-- CONTACT -->
     <section class="contact-section" id="contact">
         <div class="contact-inner">
             <div class="section-eyebrow" style="justify-content:center;">JOIN THE COMMUNITY</div>
@@ -1207,18 +868,13 @@
         </div>
     </section>
 
-    <!-- ─── FOOTER ─── -->
+    <!-- FOOTER -->
     <footer>
         <div class="footer-main">
             <div>
                 <div class="f-logo">The <em>LoL</em></div>
                 <p class="f-desc">The Legend of Legiona. A sovereign nation in Skyxion built on unity, freedom, innovation, and honour since 2023.</p>
-                <a href="https://faizzzlol.github.io/PaizCorp/" class="f-network-badge">
-                    <div>
-                        <div class="fbn-label">PART OF THE</div>
-                        <div class="fbn-name">PAIZ® CORP NETWORK</div>
-                    </div>
-                </a>
+                <a href="https://faizzzlol.github.io/PaizCorp/" class="f-network-badge"><div><div class="fbn-label">PART OF THE</div><div class="fbn-name">PAIZ® CORP NETWORK</div></div></a>
             </div>
             <div class="f-col"><h5>NATION</h5><a href="#about">About The LoL</a><a href="#history">History</a><a href="#founders">Founders</a><a href="/thelol/about">Full Timeline</a></div>
             <div class="f-col"><h5>PORTALS</h5><a href="/thelol/gov/">Government</a><a href="/thelol/gov/isc/">ISC</a><a href="/thelol/tlr/">TL Railways</a><a href="/thelol/gov/assets/">Legal Archive</a><a href="/thelol/download-tlolpack.html">Resource Pack</a></div>
@@ -1236,183 +892,372 @@
         </div>
     </footer>
 
-    <!-- ─── SCRIPTS ─── -->
     <script>
-        // ── NAV ──────────────────────────────────────────────────────
-        const sitenav = document.getElementById('sitenav');
-        const netbar  = document.getElementById('netbar');
-        const NETBAR_H = 32;
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 1 — SCROLL PROGRESS BAR
+    // ════════════════════════════════════════════════════════════════
+    const progressBar = document.getElementById('scroll-progress');
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? scrollTop / docHeight : 0;
+        progressBar.style.transform = `scaleX(${pct})`;
+    }
 
-        window.addEventListener('scroll', () => {
-            const y = window.scrollY;
-            sitenav.classList.toggle('scrolled', y > 60);
-            if (y > NETBAR_H) {
-                netbar.classList.add('hidden');
-                sitenav.classList.add('nb-hidden');
-            } else {
-                netbar.classList.remove('hidden');
-                sitenav.classList.remove('nb-hidden');
+    // ════════════════════════════════════════════════════════════════
+    //  NAV
+    // ════════════════════════════════════════════════════════════════
+    const sitenav = document.getElementById('sitenav');
+    const netbar  = document.getElementById('netbar');
+    const NETBAR_H = 32;
+
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        sitenav.classList.toggle('scrolled', y > 60);
+        if (y > NETBAR_H) { netbar.classList.add('hidden'); sitenav.classList.add('nb-hidden'); }
+        else { netbar.classList.remove('hidden'); sitenav.classList.remove('nb-hidden'); }
+        updateProgress();
+    }, { passive: true });
+
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open);
+    });
+    function closeMobile() {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    //  REVEAL OBSERVER
+    // ════════════════════════════════════════════════════════════════
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('in'), i * 80);
+                observer.unobserve(entry.target);
             }
-        }, { passive: true });
+        });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        const hamburger  = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 2 — CUSTOM CURSOR (desktop only)
+    // ════════════════════════════════════════════════════════════════
+    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (isDesktop) {
+        const dot  = document.getElementById('cur-dot');
+        const ring = document.getElementById('cur-ring');
+        let mx = -100, my = -100, rx = -100, ry = -100;
+        let raf;
 
-        hamburger.addEventListener('click', () => {
-            const open = mobileMenu.classList.toggle('open');
-            hamburger.classList.toggle('open', open);
-            hamburger.setAttribute('aria-expanded', open);
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX; my = e.clientY;
+            dot.style.left = mx + 'px';
+            dot.style.top  = my + 'px';
+            dot.style.opacity = '1';
+            ring.style.opacity = '0.8';
+            if (!raf) raf = requestAnimationFrame(animRing);
         });
 
-        function closeMobile() {
-            mobileMenu.classList.remove('open');
-            hamburger.classList.remove('open');
-            hamburger.setAttribute('aria-expanded', 'false');
+        function animRing() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px';
+            ring.style.top  = ry + 'px';
+            raf = requestAnimationFrame(animRing);
         }
 
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+        // Hover states
+        const interactiveEls = 'a, button, .tilt-card, input, textarea, [role="button"]';
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest(interactiveEls)) {
+                dot.classList.add('active'); ring.classList.add('active');
+                const isCta = e.target.closest('.btn-primary, .nav-cta');
+                dot.classList.toggle('on-cta', !!isCta);
+                ring.classList.toggle('on-cta', !!isCta);
+            }
+        });
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest(interactiveEls)) {
+                dot.classList.remove('active','on-cta');
+                ring.classList.remove('active','on-cta');
+            }
         });
 
-        // ── REVEAL ───────────────────────────────────────────────────
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => entry.target.classList.add('in'), i * 80);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.06 });
+        // Hide when leaving window
+        document.addEventListener('mouseleave', () => { dot.style.opacity='0'; ring.style.opacity='0'; });
+        document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='0.8'; });
+    }
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 3 — ANIMATED STAT COUNTERS
+    // ════════════════════════════════════════════════════════════════
+    function animateCounter(el) {
+        const target  = parseInt(el.dataset.target);
+        const from    = parseInt(el.dataset.from) || 0;
+        const suffix  = el.dataset.suffix || '';
+        const duration = target > 100 ? 1800 : 1200;
+        const startTime = performance.now();
 
-        // ── INTERACTIVE TIMELINE ─────────────────────────────────────
-        (function () {
-            const ERAS = [
-                {
-                    date: "2023 // EARLY", badge: "ORIGIN", badgeClass: "",
-                    title: "The Sus Founded",
-                    desc: "Faiz4224, ItzDynozz & Imii Kun form the original squad in Skyxion. Three founders, one shared vision. EhekSquad joined during this era, though their exact status as citizens, allies, or residents was never formally defined — The Sus had no governance structure yet.",
-                    accent: ""
-                },
-                {
-                    date: "2023", badge: "GOLDEN ERA", badgeClass: "",
-                    title: "Renamed & Reborn",
-                    desc: "Renamed \"The Legend of Legiona.\" The nation rapidly becomes the most modern and wealthiest in all of Skyxion. Under President Faiz4224, The LoL thrives in economy, infrastructure, and innovation.",
-                    accent: ""
-                },
-                {
-                    date: "MAY 6, 2023", badge: "DEMOCRACY", badgeClass: "",
-                    title: "First Presidential Election",
-                    desc: "The LoL holds its first democratic election. UltraX2020 and the Parti Harapan Rakyat The LoL (PHRTL) win, becoming the 2nd President — a significant milestone and turning point in national governance.",
-                    accent: ""
-                },
-                {
-                    date: "2023 // CRISIS", badge: "CONFLICT", badgeClass: "badge-chaos",
-                    title: "Chaos & Conflict",
-                    desc: "Internal strife erupts under UltraX2020. The LoL City sign is bombed. TLCC is attacked by drones. Political chaos grips the nation — the darkest and most turbulent chapter in the history of Legiona.",
-                    accent: "accent-chaos"
-                },
-                {
-                    date: "NOV 8, 2023", badge: "REBIRTH", badgeClass: "",
-                    title: "Resistance & Recovery",
-                    desc: "UltraX2020 resigns. Faiz4224 resumes leadership. Infrastructure projects launch, security is reinforced. The intelligence body TLIO — predecessor to ISC — is established to defend The LoL from future threats.",
-                    accent: ""
-                },
-                {
-                    date: "2025–2026", badge: "CURRENT ERA", badgeClass: "badge-current",
-                    title: "The Modern Era",
-                    desc: "TLIO is reborn as the Internal Security Control (ISC). The Skyxion: Altaer era begins. The LoL stands today as a symbol of perseverance and innovation. The greatest chapter is still being written.",
-                    accent: "accent-gold"
-                }
-            ];
+        function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 
-            let current = 0, transitioning = false;
+        function tick(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const value = Math.round(from + (target - from) * easeOut(progress));
+            el.textContent = value.toLocaleString() + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
 
-            const fill    = document.getElementById('itlFill');
-            const panel   = document.getElementById('itlPanel');
-            const content = document.getElementById('itlContent');
-            const dateEl  = document.getElementById('itlDate');
-            const badgeEl = document.getElementById('itlBadge');
-            const titleEl = document.getElementById('itlTitle');
-            const descEl  = document.getElementById('itlDesc');
-            const ghostEl = document.getElementById('itlGhost');
-            const counter = document.getElementById('itlCounter');
-            const prevBtn = document.getElementById('itlPrev');
-            const nextBtn = document.getElementById('itlNext');
-            const nodes   = document.querySelectorAll('.itl-node');
-
-            function pad(n) { return String(n).padStart(2, '0'); }
-
-            function updateFill(index) {
-                fill.style.width = ERAS.length > 1
-                    ? (index / (ERAS.length - 1)) * 100 + '%' : '0%';
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.num[data-target]').forEach(el => animateCounter(el));
+                statsObserver.unobserve(entry.target);
             }
+        });
+    }, { threshold: 0.3 });
 
-            function goTo(index) {
-                if (transitioning || index === current) return;
-                if (index < 0 || index >= ERAS.length) return;
+    const statsStrip = document.getElementById('statsStrip');
+    if (statsStrip) statsObserver.observe(statsStrip);
 
-                transitioning = true;
-                const direction = index > current ? 1 : -1;
-                const era = ERAS[index];
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 4 — 3D CARD TILT (desktop only)
+    // ════════════════════════════════════════════════════════════════
+    if (isDesktop) {
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const cx = rect.left + rect.width  / 2;
+                const cy = rect.top  + rect.height / 2;
+                const dx = (e.clientX - cx) / (rect.width  / 2);
+                const dy = (e.clientY - cy) / (rect.height / 2);
 
-                content.style.setProperty('--itl-exit-y', direction > 0 ? '-8px' : '8px');
-                content.classList.add('is-exiting');
+                // Limit tilt to ±8deg for subtlety
+                const rotX = -dy * 8;
+                const rotY =  dx * 8;
 
-                setTimeout(() => {
-                    dateEl.textContent  = era.date;
-                    badgeEl.textContent = era.badge;
-                    badgeEl.className   = 'itl-badge ' + era.badgeClass;
-                    titleEl.textContent = era.title;
-                    descEl.textContent  = era.desc;
-                    ghostEl.textContent = pad(index + 1);
-                    counter.textContent = pad(index + 1) + ' / ' + pad(ERAS.length);
-                    panel.className     = 'itl-panel ' + (era.accent || '');
+                card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+                card.style.transition = 'transform 0.05s linear, box-shadow 0.25s';
 
-                    nodes.forEach((n, i) => n.classList.toggle('active', i === index));
-                    updateFill(index);
-                    prevBtn.disabled = index === 0;
-                    nextBtn.disabled = index === ERAS.length - 1;
-                    current = index;
-
-                    content.style.setProperty('--itl-enter-y', direction > 0 ? '8px' : '-8px');
-                    content.classList.remove('is-exiting');
-                    content.classList.add('is-entering');
-
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            content.classList.remove('is-entering');
-                            setTimeout(() => { transitioning = false; }, 320);
-                        });
-                    });
-                }, 290);
-            }
-
-            nodes.forEach((node, i) => node.addEventListener('click', () => goTo(i)));
-            prevBtn.addEventListener('click', () => goTo(current - 1));
-            nextBtn.addEventListener('click', () => goTo(current + 1));
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-                const section = document.getElementById('history');
-                if (!section) return;
-                const r = section.getBoundingClientRect();
-                if (r.top > window.innerHeight || r.bottom < 0) return;
-                e.preventDefault();
-                goTo(e.key === 'ArrowLeft' ? current - 1 : current + 1);
+                // Shimmer position via CSS vars
+                const px = ((e.clientX - rect.left) / rect.width)  * 100;
+                const py = ((e.clientY - rect.top)  / rect.height) * 100;
+                card.style.setProperty('--mx', px + '%');
+                card.style.setProperty('--my', py + '%');
             });
 
-            let touchStartX = 0;
-            panel.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
-            panel.addEventListener('touchend', (e) => {
-                const diff = touchStartX - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 48) goTo(diff > 0 ? current + 1 : current - 1);
-            }, { passive: true });
+            card.addEventListener('mouseleave', () => {
+                card.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.3s';
+                card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+    }
 
-            updateFill(0);
-            prevBtn.disabled = true;
-        })();
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 5 — HERO TYPEWRITER + SCRAMBLE
+    // ════════════════════════════════════════════════════════════════
+    // Typewriter on hero eyebrow
+    const eyebrow = document.getElementById('heroEyebrow');
+    const eyebrowText = 'THE SUS // EST. 2023 // SOVEREIGN NATION // SKYXION: ALTAER ERA';
+    let twIndex = 0;
+
+    function typeWriter() {
+        if (twIndex <= eyebrowText.length) {
+            eyebrow.textContent = eyebrowText.slice(0, twIndex);
+            twIndex++;
+            setTimeout(typeWriter, twIndex === 1 ? 600 : 28);
+        }
+    }
+    setTimeout(typeWriter, 900); // Start after hero animates in
+
+    // Text scramble on "Legend"
+    const scrambleEl = document.getElementById('scrambleTarget');
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$&';
+    const ORIGINAL = 'Legend';
+
+    function scramble(el, finalText, duration) {
+        const startTime = performance.now();
+        function tick(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const revealedCount = Math.floor(progress * finalText.length);
+            let result = '';
+            for (let i = 0; i < finalText.length; i++) {
+                if (i < revealedCount) {
+                    result += finalText[i];
+                } else {
+                    result += CHARS[Math.floor(Math.random() * CHARS.length)];
+                }
+            }
+            el.textContent = result;
+            if (progress < 1) requestAnimationFrame(tick);
+            else el.textContent = finalText;
+        }
+        requestAnimationFrame(tick);
+    }
+
+    // Trigger scramble after page loads
+    setTimeout(() => scramble(scrambleEl, ORIGINAL, 900), 1400);
+
+    // Re-scramble on hover (addictive — try it)
+    scrambleEl.addEventListener('mouseenter', () => {
+        scramble(scrambleEl, ORIGINAL, 600);
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 6 — MAGNETIC CTA BUTTON
+    // ════════════════════════════════════════════════════════════════
+    if (isDesktop) {
+        const ctaBtn = document.getElementById('ctaBtn');
+        if (ctaBtn) {
+            ctaBtn.addEventListener('mousemove', (e) => {
+                const rect = ctaBtn.getBoundingClientRect();
+                const cx = rect.left + rect.width  / 2;
+                const cy = rect.top  + rect.height / 2;
+                const dx = (e.clientX - cx) / (rect.width  / 2);
+                const dy = (e.clientY - cy) / (rect.height / 2);
+                // Magnetic pull — max 6px
+                ctaBtn.style.transform = `translate(${dx * 6}px, ${dy * 6}px) translateY(-2px)`;
+                // Track mouse position for light effect
+                const px = ((e.clientX - rect.left) / rect.width)  * 100;
+                const py = ((e.clientY - rect.top)  / rect.height) * 100;
+                ctaBtn.style.setProperty('--mx', px + '%');
+                ctaBtn.style.setProperty('--my', py + '%');
+            });
+            ctaBtn.addEventListener('mouseleave', () => {
+                ctaBtn.style.transition = 'transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), background 0.25s, box-shadow 0.25s';
+                ctaBtn.style.transform = '';
+                setTimeout(() => { ctaBtn.style.transition = ''; }, 400);
+            });
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 7 — KONAMI CODE EASTER EGG
+    // ════════════════════════════════════════════════════════════════
+    const KONAMI = [38,38,40,40,37,39,37,39,66,65]; // ↑↑↓↓←→←→BA
+    let kSeq = [];
+    const konamiOverlay = document.getElementById('konami-overlay');
+    const konamiLog     = document.getElementById('konami-log');
+
+    const konamiLines = [
+        '> KONAMI SEQUENCE DETECTED...',
+        '> VERIFYING OPERATOR CREDENTIALS...',
+        '> IDENTITY CONFIRMED: FAIZ4224',
+        '> RANK: FIRST PRESIDENT // FOUNDING LEADER',
+        '> CLEARANCE LEVEL: SIGMA (MAXIMUM)',
+        '> ACCESSING CLASSIFIED NATIONAL RECORDS...',
+        '> TLSRL STATUS: OPERATIONAL [4,800+ BLOCKS]',
+        '> TLCC TWIN TOWERS: SECURED',
+        '> ISC THREAT MONITOR: NO ACTIVE THREATS',
+        '> NATIONAL FARMS: ALL SYSTEMS NOMINAL',
+        '> WELCOME BACK, PRESIDENT. THE LOL STANDS STRONG.'
+    ];
+
+    document.addEventListener('keydown', (e) => {
+        kSeq.push(e.keyCode);
+        if (kSeq.length > KONAMI.length) kSeq.shift();
+        if (kSeq.join(',') === KONAMI.join(',')) {
+            konamiOverlay.classList.add('active');
+            konamiLog.innerHTML = '';
+            konamiLines.forEach((line, i) => {
+                const span = document.createElement('span');
+                span.className = 'log-line';
+                span.textContent = line;
+                span.style.animationDelay = (i * 0.22) + 's';
+                konamiLog.appendChild(span);
+            });
+            kSeq = [];
+        }
+    });
+
+    function closeKonami() {
+        konamiOverlay.classList.remove('active');
+    }
+    konamiOverlay.addEventListener('click', (e) => {
+        if (e.target === konamiOverlay) closeKonami();
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    //  INTERACTIVE TIMELINE
+    // ════════════════════════════════════════════════════════════════
+    (function () {
+        const ERAS = [
+            { date:"2023 // EARLY", badge:"ORIGIN", badgeClass:"", title:"The Sus Founded", desc:"Faiz4224, ItzDynozz & Imii Kun form the original squad in Skyxion. Three founders, one shared vision. EhekSquad joined during this era, though their exact status as citizens, allies, or residents was never formally defined — The Sus had no governance structure yet.", accent:"" },
+            { date:"2023", badge:"GOLDEN ERA", badgeClass:"", title:"Renamed & Reborn", desc:"Renamed \"The Legend of Legiona.\" The nation rapidly becomes the most modern and wealthiest in all of Skyxion. Under President Faiz4224, The LoL thrives in economy, infrastructure, and innovation.", accent:"" },
+            { date:"MAY 6, 2023", badge:"DEMOCRACY", badgeClass:"", title:"First Presidential Election", desc:"The LoL holds its first democratic election. UltraX2020 and the Parti Harapan Rakyat The LoL (PHRTL) win, becoming the 2nd President — a significant milestone and turning point in national governance.", accent:"" },
+            { date:"2023 // CRISIS", badge:"CONFLICT", badgeClass:"badge-chaos", title:"Chaos & Conflict", desc:"Internal strife erupts under UltraX2020. The LoL City sign is bombed. TLCC is attacked by drones. Political chaos grips the nation — the darkest and most turbulent chapter in the history of Legiona.", accent:"accent-chaos" },
+            { date:"NOV 8, 2023", badge:"REBIRTH", badgeClass:"", title:"Resistance & Recovery", desc:"UltraX2020 resigns. Faiz4224 resumes leadership. Infrastructure projects launch, security is reinforced. The intelligence body TLIO — predecessor to ISC — is established to defend The LoL from future threats.", accent:"" },
+            { date:"2025–2026", badge:"CURRENT ERA", badgeClass:"badge-current", title:"The Modern Era", desc:"TLIO is reborn as the Internal Security Control (ISC). The Skyxion: Altaer era begins. The LoL stands today as a symbol of perseverance and innovation. The greatest chapter is still being written.", accent:"accent-gold" }
+        ];
+
+        let current = 0, transitioning = false;
+        const fill = document.getElementById('itlFill'), panel = document.getElementById('itlPanel'),
+              content = document.getElementById('itlContent'), dateEl = document.getElementById('itlDate'),
+              badgeEl = document.getElementById('itlBadge'), titleEl = document.getElementById('itlTitle'),
+              descEl = document.getElementById('itlDesc'), ghostEl = document.getElementById('itlGhost'),
+              counter = document.getElementById('itlCounter'), prevBtn = document.getElementById('itlPrev'),
+              nextBtn = document.getElementById('itlNext'), nodes = document.querySelectorAll('.itl-node');
+
+        function pad(n) { return String(n).padStart(2,'0'); }
+        function updateFill(i) { fill.style.width = ERAS.length > 1 ? (i/(ERAS.length-1))*100+'%' : '0%'; }
+
+        function goTo(index) {
+            if (transitioning || index === current || index < 0 || index >= ERAS.length) return;
+            transitioning = true;
+            const dir = index > current ? 1 : -1;
+            const era = ERAS[index];
+            content.style.setProperty('--itl-exit-y', dir > 0 ? '-8px' : '8px');
+            content.classList.add('is-exiting');
+            setTimeout(() => {
+                dateEl.textContent = era.date; badgeEl.textContent = era.badge;
+                badgeEl.className = 'itl-badge ' + era.badgeClass;
+                titleEl.textContent = era.title; descEl.textContent = era.desc;
+                ghostEl.textContent = pad(index+1); counter.textContent = pad(index+1)+' / '+pad(ERAS.length);
+                panel.className = 'itl-panel '+(era.accent||'');
+                nodes.forEach((n,i) => n.classList.toggle('active', i===index));
+                updateFill(index);
+                prevBtn.disabled = index === 0; nextBtn.disabled = index === ERAS.length-1;
+                current = index;
+                content.style.setProperty('--itl-enter-y', dir > 0 ? '8px' : '-8px');
+                content.classList.remove('is-exiting'); content.classList.add('is-entering');
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    content.classList.remove('is-entering');
+                    setTimeout(() => { transitioning = false; }, 320);
+                }));
+            }, 290);
+        }
+
+        nodes.forEach((n,i) => n.addEventListener('click', () => goTo(i)));
+        prevBtn.addEventListener('click', () => goTo(current-1));
+        nextBtn.addEventListener('click', () => goTo(current+1));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+            const s = document.getElementById('history');
+            if (!s) return;
+            const r = s.getBoundingClientRect();
+            if (r.top > window.innerHeight || r.bottom < 0) return;
+            e.preventDefault();
+            goTo(e.key === 'ArrowLeft' ? current-1 : current+1);
+        });
+
+        let tStartX = 0;
+        panel.addEventListener('touchstart', (e) => { tStartX = e.touches[0].clientX; }, { passive:true });
+        panel.addEventListener('touchend',   (e) => { const d = tStartX - e.changedTouches[0].clientX; if (Math.abs(d) > 48) goTo(d > 0 ? current+1 : current-1); }, { passive:true });
+        updateFill(0); prevBtn.disabled = true;
+    })();
     </script>
 </body>
 </html>
