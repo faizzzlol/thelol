@@ -51,126 +51,175 @@
             pointer-events: none; z-index: 9998;
         }
 
-        /* ─── NETWORK BAR ─── */
-        .netbar {
+        /* ════════════════════════════════════════
+           INTERACTIVE LAYER 1 — SCROLL PROGRESS
+           ════════════════════════════════════════ */
+        #scroll-progress {
             position: fixed; top: 0; left: 0; right: 0;
-            z-index: 800;
-            height: var(--netbar-h);
-            background: #08080d;
+            height: 2px; z-index: 99999;
+            background: linear-gradient(90deg, var(--emerald), var(--gold-light));
+            transform-origin: left; transform: scaleX(0);
+            transition: transform 0.05s linear;
+        }
+
+        /* ════════════════════════════════════════
+           INTERACTIVE LAYER 2 — CUSTOM CURSOR
+           ════════════════════════════════════════ */
+        @media (hover: hover) and (pointer: fine) {
+            *, *::before, *::after { cursor: none !important; }
+        }
+        #cur-dot {
+            position: fixed; z-index: 99997; width: 8px; height: 8px; border-radius: 50%;
+            background: var(--emerald);
+            box-shadow: 0 0 10px rgba(52,160,106,0.6), 0 0 24px rgba(52,160,106,0.3);
+            pointer-events: none; transform: translate(-50%,-50%);
+            transition: width 0.2s, height 0.2s, background 0.2s, box-shadow 0.2s, opacity 0.2s;
+            opacity: 0;
+        }
+        #cur-ring {
+            position: fixed; z-index: 99996; width: 32px; height: 32px; border-radius: 50%;
+            border: 1px solid rgba(52,160,106,0.5);
+            pointer-events: none; transform: translate(-50%,-50%);
+            transition: width 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
+                        height 0.35s cubic-bezier(0.25,0.46,0.45,0.94),
+                        border-color 0.3s, opacity 0.2s;
+            opacity: 0;
+        }
+        #cur-dot.active  { width: 6px; height: 6px; }
+        #cur-ring.active { width: 48px; height: 48px; border-color: rgba(52,160,106,0.8); }
+        @media (hover: none), (pointer: coarse) { #cur-dot, #cur-ring { display: none; } }
+
+        /* ════════════════════════════════════════
+           INTERACTIVE: CHAPTER STICKY INDICATOR
+           ════════════════════════════════════════ */
+        #chapter-indicator {
+            position: fixed; right: 24px; top: 50%;
+            transform: translateY(-50%);
+            z-index: 500;
+            display: flex; flex-direction: column; gap: 10px;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        #chapter-indicator.visible { opacity: 1; }
+        .ci-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.15);
+            cursor: pointer; position: relative;
+            transition: all 0.3s ease;
+        }
+        .ci-dot:hover { background: rgba(52,160,106,0.5); border-color: var(--emerald); transform: scale(1.4); }
+        .ci-dot.active { background: var(--emerald); border-color: var(--emerald); box-shadow: 0 0 8px rgba(52,160,106,0.5); transform: scale(1.3); }
+        .ci-dot[data-type="gold"].active  { background: var(--gold); border-color: var(--gold-light); box-shadow: 0 0 8px rgba(200,150,42,0.5); }
+        .ci-dot[data-type="chaos"].active { background: #c0392b; border-color: #e74c3c; box-shadow: 0 0 8px rgba(192,57,43,0.5); }
+        /* Tooltip on hover */
+        .ci-dot::before {
+            content: attr(data-label);
+            position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+            font-family: 'DM Mono', monospace; font-size: 0.45rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.7); white-space: nowrap;
+            background: rgba(15,17,14,0.95); border: 1px solid var(--border-dark);
+            padding: 3px 8px; opacity: 0; pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .ci-dot:hover::before { opacity: 1; }
+        @media (max-width: 900px) { #chapter-indicator { display: none; } }
+
+        /* ════════════════════════════════════════
+           KONAMI OVERLAY
+           ════════════════════════════════════════ */
+        #konami-overlay {
+            position: fixed; inset: 0; z-index: 999999;
+            background: rgba(5,8,5,0.97);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+            font-family: 'DM Mono', monospace;
+        }
+        #konami-overlay.active { opacity: 1; pointer-events: auto; }
+        .konami-inner {
+            border: 1px solid rgba(52,160,106,0.4);
+            padding: 48px 56px; max-width: 620px; width: 90%;
+            position: relative; background: rgba(15,17,14,0.8);
+            box-shadow: 0 0 60px rgba(52,160,106,0.08), inset 0 0 40px rgba(52,160,106,0.03);
+        }
+        .konami-inner::before {
+            content: ''; position: absolute; inset: -1px;
+            background: linear-gradient(135deg, rgba(52,160,106,0.3), transparent 40%, transparent 60%, rgba(200,150,42,0.2));
+            z-index: -1;
+        }
+        .konami-badge  { font-size: 0.45rem; letter-spacing: 4px; color: var(--emerald); margin-bottom: 28px; opacity: 0.7; }
+        .konami-title  { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem,4vw,2.8rem); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 8px; }
+        .konami-title em { color: var(--gold-light); font-style: italic; }
+        .konami-sub    { font-size: 0.5rem; letter-spacing: 3px; color: var(--emerald); opacity: 0.6; margin-bottom: 32px; }
+        .konami-log    { border-top: 1px solid rgba(52,160,106,0.15); padding-top: 20px; font-size: 0.65rem; line-height: 2; color: rgba(52,160,106,0.7); }
+        .konami-log .log-line { display: block; opacity: 0; animation: logFadeIn 0.3s forwards; }
+        .konami-close  { margin-top: 28px; background: none; border: 1px solid rgba(52,160,106,0.35); color: var(--emerald); padding: 8px 24px; font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 2px; cursor: pointer; transition: background 0.2s; }
+        .konami-close:hover { background: var(--emerald-dim); }
+        @keyframes logFadeIn { to { opacity: 1; } }
+
+        /* ════════════════════════════════════════
+           NETWORK BAR
+           ════════════════════════════════════════ */
+        .netbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 800;
+            height: var(--netbar-h); background: #08080d;
             border-bottom: 1px solid rgba(52,160,106,0.15);
-            overflow-x: auto; white-space: nowrap;
-            scrollbar-width: none;
+            overflow-x: auto; white-space: nowrap; scrollbar-width: none;
             transition: transform 0.3s ease;
         }
         .netbar::-webkit-scrollbar { display: none; }
         .netbar.hidden { transform: translateY(-100%); }
-
-        .netbar-inner {
-            display: flex; align-items: stretch;
-            height: var(--netbar-h);
-            padding: 0 16px;
-            min-width: max-content;
-        }
+        .netbar-inner { display: flex; align-items: stretch; height: var(--netbar-h); padding: 0 16px; min-width: max-content; }
         .netbar-inner a {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.5rem; letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.28); text-decoration: none;
-            padding: 0 12px;
-            display: flex; align-items: center;
-            border-right: 1px solid rgba(255,255,255,0.05);
+            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.28); text-decoration: none; padding: 0 12px;
+            display: flex; align-items: center; border-right: 1px solid rgba(255,255,255,0.05);
             transition: color 0.2s, background 0.2s;
         }
         .netbar-inner a:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
         .netbar-inner a:hover { color: var(--emerald); background: rgba(52,160,106,0.07); }
 
-        /* ─── STICKY NAV ─── */
+        /* STICKY NAV */
         .sitenav {
-            position: fixed;
-            top: var(--netbar-h); left: 0; right: 0;
-            z-index: 700;
-            height: 60px;
-            padding: 0 5%;
+            position: fixed; top: var(--netbar-h); left: 0; right: 0;
+            z-index: 700; height: 60px; padding: 0 5%;
             display: flex; justify-content: space-between; align-items: center;
             transition: background 0.35s, backdrop-filter 0.35s, border-color 0.35s, top 0.3s ease;
         }
-        .sitenav.scrolled {
-            background: rgba(15,17,14,0.94);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--border-dark);
-        }
+        .sitenav.scrolled { background: rgba(15,17,14,0.94); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border-dark); }
         .sitenav.nb-hidden { top: 0; }
-
-        .sitenav-logo {
-            display: flex; align-items: center; gap: 10px;
-            text-decoration: none; color: inherit;
-        }
+        .sitenav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
         .sitenav-logo img { height: 30px; opacity: 0.9; }
-        .sitenav-logo span {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.68rem; letter-spacing: 3px;
-            color: var(--emerald);
-        }
-
+        .sitenav-logo span { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 3px; color: var(--emerald); }
         .sitenav-links { display: flex; align-items: center; gap: 2px; }
         .sitenav-links a {
             padding: 6px 12px; text-decoration: none;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.58rem; letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.45);
-            transition: color 0.2s; position: relative;
+            font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.45); transition: color 0.2s; position: relative;
         }
         .sitenav-links a.active { color: var(--emerald); }
-        .sitenav-links a.active::after {
-            content: ''; position: absolute;
-            bottom: 0; left: 12px; right: 12px;
-            height: 2px; background: var(--emerald);
-        }
+        .sitenav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 12px; right: 12px; height: 2px; background: var(--emerald); }
         .sitenav-links a:hover { color: var(--emerald); }
-        .sitenav-links .nav-cta {
-            border: 1px solid rgba(52,160,106,0.35);
-            color: var(--emerald) !important;
-            transition: background 0.2s !important;
-        }
+        .sitenav-links .nav-cta { border: 1px solid rgba(52,160,106,0.35); color: var(--emerald) !important; transition: background 0.2s !important; }
         .sitenav-links .nav-cta:hover { background: var(--emerald-dim) !important; }
-
-        /* Hamburger */
-        .hamburger {
-            display: none; flex-direction: column; gap: 5px;
-            background: none; border: none; cursor: pointer; padding: 6px;
-        }
-        .hamburger span {
-            display: block; width: 22px; height: 2px;
-            background: rgba(255,255,255,0.6);
-            transition: all 0.3s;
-        }
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.6); transition: all 0.3s; }
         .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
         .hamburger.open span:nth-child(2) { opacity: 0; }
         .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
-
-        /* Mobile menu */
         .mobile-menu {
-            position: fixed;
-            top: calc(var(--netbar-h) + 60px);
-            left: 0; right: 0; z-index: 690;
-            background: rgba(15,17,14,0.98);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-dark);
-            padding: 1rem 5%;
+            position: fixed; top: calc(var(--netbar-h) + 60px); left: 0; right: 0; z-index: 690;
+            background: rgba(15,17,14,0.98); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-dark); padding: 1rem 5%;
             display: none; flex-direction: column; gap: 2px;
         }
         .mobile-menu.open { display: flex; }
-        .mobile-menu a {
-            padding: 12px 0;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem; letter-spacing: 2px;
-            color: rgba(255,255,255,0.5); text-decoration: none;
-            border-bottom: 1px solid var(--border-dark);
-            transition: color 0.2s;
-        }
+        .mobile-menu a { padding: 12px 0; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 1px solid var(--border-dark); transition: color 0.2s; }
         .mobile-menu a:last-child { border-bottom: none; }
         .mobile-menu a:hover { color: var(--emerald); }
 
-        /* ─── PAGE HEADER ─── */
+        /* ════════════════════════════════════════
+           PAGE HEADER
+           ════════════════════════════════════════ */
         .page-header {
             padding: calc(var(--netbar-h) + 80px) 5% 5rem;
             background: var(--green-dark);
@@ -184,8 +233,7 @@
                 repeating-linear-gradient(-55deg, transparent, transparent 38px, rgba(255,255,255,0.012) 38px, rgba(255,255,255,0.012) 39px);
         }
         .page-header::after {
-            content: '';
-            position: absolute; inset: 0;
+            content: ''; position: absolute; inset: 0;
             background-image:
                 linear-gradient(rgba(52,160,106,0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(52,160,106,0.04) 1px, transparent 1px);
@@ -195,251 +243,307 @@
         .ph-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
 
         .ph-eyebrow {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.58rem; letter-spacing: 3.5px;
-            color: var(--emerald); opacity: 0.75;
-            margin-bottom: 1.4rem;
+            font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 3.5px;
+            color: var(--emerald); opacity: 0.75; margin-bottom: 1.4rem;
             display: flex; align-items: center; gap: 12px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
         }
         .ph-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--emerald); opacity: 0.6; }
 
         .page-header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.8rem, 6vw, 5rem);
-            font-weight: 900; line-height: 1.0;
-            letter-spacing: -1px; color: #fff;
-            margin-bottom: 1.2rem;
+            font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 900;
+            line-height: 1.0; letter-spacing: -1px; color: #fff; margin-bottom: 1.2rem;
+            opacity: 0; animation: fadeUp 0.8s ease 0.35s forwards;
         }
         .page-header h1 em { font-style: italic; color: var(--gold-light); font-weight: 400; }
 
         .page-header p {
             font-size: 1rem; color: rgba(255,255,255,0.42);
             max-width: 540px; font-weight: 300; line-height: 1.85;
+            opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
         }
 
-        .proc-btns { display: flex; gap: 10px; margin-top: 2.5rem; flex-wrap: wrap; }
+        /* ════════════════════════════════════════
+           INTERACTIVE: CHAPTER COUNTER IN HEADER
+           ════════════════════════════════════════ */
+        .ph-chapter-track {
+            margin-top: 2rem;
+            font-family: 'DM Mono', monospace; font-size: 0.5rem; letter-spacing: 3px;
+            color: rgba(52,160,106,0.5);
+            display: flex; align-items: center; gap: 16px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+        .ph-chapter-track .track-bar {
+            flex: 1; max-width: 200px; height: 1px;
+            background: rgba(255,255,255,0.08);
+            position: relative;
+        }
+        .ph-chapter-track .track-fill {
+            position: absolute; left: 0; top: 0; height: 100%;
+            background: var(--emerald);
+            transition: width 0.5s ease;
+        }
+
+        .proc-btns {
+            display: flex; gap: 10px; margin-top: 2.5rem; flex-wrap: wrap;
+            opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+        }
         .proc-btn {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 11px 22px; border: 1px solid; text-decoration: none;
             font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 1.5px;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.15s;
         }
+        .proc-btn:hover { transform: translateY(-1px); }
         .proc-btn.green { border-color: rgba(52,160,106,0.4); color: var(--emerald); }
         .proc-btn.green:hover { background: var(--emerald-dim); }
         .proc-btn.gold { border-color: rgba(200,150,42,0.35); color: var(--gold); }
         .proc-btn.gold:hover { background: var(--gold-dim); }
 
-        /* ─── CONTENT WRAP ─── */
+        /* CONTENT WRAP */
         .content-wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 5%; }
 
         /* Timeline label */
-        .timeline-label {
-            display: flex; align-items: center; gap: 16px;
-            margin-bottom: 3.5rem;
-        }
-        .timeline-label h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; color: var(--off-white);
-        }
+        .timeline-label { display: flex; align-items: center; gap: 16px; margin-bottom: 3.5rem; }
+        .timeline-label h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,3vw,2.4rem); font-weight: 700; color: var(--off-white); }
         .timeline-label h2 em { font-style: italic; color: var(--emerald); font-weight: 400; }
-        .timeline-label span {
-            font-family: 'DM Mono', monospace; font-size: 0.52rem;
-            letter-spacing: 2.5px; color: rgba(255,255,255,0.2);
-            padding: 3px 10px; border: 1px solid var(--border-dark);
-        }
+        .timeline-label span { font-family: 'DM Mono', monospace; font-size: 0.52rem; letter-spacing: 2.5px; color: rgba(255,255,255,0.2); padding: 3px 10px; border: 1px solid var(--border-dark); }
 
-        /* ─── TIMELINE ─── */
+        /* ════════════════════════════════════════
+           TIMELINE — INTERACTIVE ENHANCED
+           ════════════════════════════════════════ */
         .timeline { display: flex; flex-direction: column; position: relative; }
         .timeline::before {
             content: ''; position: absolute;
             left: 96px; top: 8px; bottom: 8px;
-            width: 1px; background: var(--border-dark);
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--border-dark) 10%, var(--border-dark) 90%, transparent);
+        }
+
+        /* Live fill line as you scroll */
+        .timeline-live-line {
+            position: absolute; left: 96px; top: 8px;
+            width: 1px; background: var(--emerald);
+            height: 0%; transition: height 0.3s ease;
+            opacity: 0.5;
         }
 
         .event {
             display: grid; grid-template-columns: 96px 1fr;
-            gap: 32px; padding: 2.2rem 0;
-            border-bottom: 1px solid var(--border-dark);
+            gap: 32px; padding: 2.4rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             position: relative;
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0; transform: translateX(-12px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
         }
-        .event.in { opacity: 1; transform: translateY(0); }
+        .event.in { opacity: 1; transform: translateX(0); }
         .event:last-child { border-bottom: none; }
 
-        .event-year {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.58rem; letter-spacing: 1px;
-            color: rgba(255,255,255,0.22); text-align: right;
-            padding-top: 5px; line-height: 1.6;
+        /* Hover: highlight entire row */
+        .event::before {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(52,160,106,0.02);
+            opacity: 0; transition: opacity 0.3s;
+            pointer-events: none;
         }
+        .event:hover::before { opacity: 1; }
+        .event.chaos-event:hover::before { background: rgba(192,57,43,0.03); }
+        .event.gold-event:hover::before  { background: rgba(200,150,42,0.03); }
 
+        .event-year {
+            font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 1px;
+            color: rgba(255,255,255,0.22); text-align: right; padding-top: 5px; line-height: 1.6;
+            transition: color 0.3s;
+        }
+        .event.in-view .event-year { color: rgba(255,255,255,0.45); }
+
+        /* ────── DIAMOND DOT ────── */
         .event-dot {
             position: absolute; left: 89px; top: 2.4rem;
             width: 14px; height: 14px;
             border: 1px solid var(--border-green);
             background: var(--charcoal);
             transform: rotate(45deg);
-            transition: border-color 0.2s, background 0.2s;
+            transition: border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.3s;
+            z-index: 2;
         }
-        .event:hover .event-dot { border-color: var(--emerald); background: var(--emerald-dim); }
+        .event:hover .event-dot {
+            border-color: var(--emerald);
+            background: var(--emerald-dim);
+            box-shadow: 0 0 12px rgba(52,160,106,0.3);
+            transform: rotate(45deg) scale(1.3);
+        }
+        .event.in-view .event-dot { border-color: var(--emerald); background: var(--emerald-dim); }
+
         .event-dot.highlight { border-color: var(--emerald); background: var(--emerald-dim); }
-        .event-dot.gold { border-color: rgba(200,150,42,0.5); background: rgba(200,150,42,0.08); }
-        .event-dot.red  { border-color: rgba(180,60,60,0.5);  background: rgba(180,60,60,0.06); }
+        .event-dot.gold      { border-color: rgba(200,150,42,0.5); background: rgba(200,150,42,0.08); }
+        .event-dot.red       { border-color: rgba(180,60,60,0.5);  background: rgba(180,60,60,0.06); }
+
+        .event.gold-event:hover .event-dot  { border-color: var(--gold); background: var(--gold-dim); box-shadow: 0 0 12px rgba(200,150,42,0.3); }
+        .event.chaos-event:hover .event-dot { border-color: #e74c3c; background: rgba(192,57,43,0.1); box-shadow: 0 0 12px rgba(192,57,43,0.3); }
+        .event.in-view.gold-event .event-dot  { border-color: var(--gold); background: var(--gold-dim); }
+        .event.in-view.chaos-event .event-dot { border-color: #e74c3c; background: rgba(192,57,43,0.08); }
+
+        /* Pulse ring on active event dot */
+        .event.in-view .event-dot::after {
+            content: ''; position: absolute; inset: -6px;
+            border: 1px solid rgba(52,160,106,0.2);
+            transform: rotate(0deg);
+            animation: dotPulse 2.5s ease infinite;
+        }
+        .event.in-view.gold-event .event-dot::after  { border-color: rgba(200,150,42,0.2); }
+        .event.in-view.chaos-event .event-dot::after { border-color: rgba(192,57,43,0.2); }
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50%       { transform: scale(1.8); opacity: 0; }
+        }
 
         .event-content { padding-left: 24px; }
 
         .event-num {
             font-family: 'DM Mono', monospace; font-size: 0.5rem;
-            letter-spacing: 2px; color: var(--emerald); opacity: 0.6;
-            margin-bottom: 0.5rem;
+            letter-spacing: 2px; color: var(--emerald); opacity: 0.6; margin-bottom: 0.5rem;
+            transition: opacity 0.3s;
         }
+        .event:hover .event-num { opacity: 1; }
+
         .event-content h2 {
-            font-family: 'Playfair Display', serif; font-size: 1.3rem;
-            font-weight: 700; color: var(--off-white);
-            margin-bottom: 0.3rem; line-height: 1.25;
+            font-family: 'Playfair Display', serif; font-size: clamp(1.15rem,2.2vw,1.5rem);
+            font-weight: 700; color: var(--off-white); margin-bottom: 0.3rem; line-height: 1.25;
+            transition: color 0.3s;
         }
+        .event:hover .event-content h2 { color: #fff; }
+
         .event-content h3 {
-            font-family: 'DM Mono', monospace; font-size: 0.56rem;
-            letter-spacing: 1.5px; color: rgba(255,255,255,0.3);
-            margin-bottom: 1rem; font-weight: 300;
+            font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.25); margin-bottom: 1rem; font-weight: 300;
+            transition: color 0.3s;
         }
+        .event:hover .event-content h3 { color: rgba(255,255,255,0.4); }
+
         .event-content p {
-            font-size: 0.93rem; color: rgba(255,255,255,0.45);
-            line-height: 1.85; font-weight: 300; max-width: 680px;
+            font-size: 0.93rem; color: rgba(255,255,255,0.4);
+            line-height: 1.9; font-weight: 300; max-width: 680px;
+            transition: color 0.3s;
         }
+        .event:hover .event-content p { color: rgba(255,255,255,0.55); }
         .event-content p strong { color: rgba(255,255,255,0.72); font-weight: 500; }
 
         .event-badge {
             display: inline-block; margin-top: 0.9rem;
             font-family: 'DM Mono', monospace; font-size: 0.48rem;
             letter-spacing: 1.5px; padding: 3px 10px; border: 1px solid;
+            transition: background 0.2s;
         }
         .event-badge.green { border-color: rgba(52,160,106,0.3);  color: rgba(52,160,106,0.7); }
         .event-badge.gold  { border-color: rgba(200,150,42,0.3);  color: rgba(200,150,42,0.7); }
         .event-badge.red   { border-color: rgba(180,60,60,0.3);   color: rgba(200,100,100,0.7); }
         .event-badge.white { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.38); }
+        .event:hover .event-badge.green { background: rgba(52,160,106,0.07); }
+        .event:hover .event-badge.gold  { background: rgba(200,150,42,0.07); }
+        .event:hover .event-badge.red   { background: rgba(180,60,60,0.06); }
 
-        /* ─── SECTION DIVIDER ─── */
+        /* ════════════════════════════════════════
+           SECTION DIVIDER
+           ════════════════════════════════════════ */
         .section-divider { height: 1px; background: var(--border-dark); margin: 4rem 0; }
 
-        /* ─── DONATE ─── */
+        /* ════════════════════════════════════════
+           FOUNDERS STRIP (NEW — after timeline)
+           ════════════════════════════════════════ */
+        .founders-strip {
+            background: var(--charcoal2);
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+            padding: 3rem 0; margin-bottom: 0;
+        }
+        .founders-strip .fs-inner {
+            max-width: 1200px; margin: 0 auto; padding: 0 5%;
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 3px;
+        }
+        .founder-block {
+            padding: 2rem 1.8rem;
+            background: var(--charcoal3);
+            position: relative; overflow: hidden;
+            transition: background 0.25s;
+        }
+        .founder-block:hover { background: rgba(52,160,106,0.05); }
+        .founder-block::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+            background: var(--emerald); transform: scaleX(0); transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+        .founder-block:hover::after { transform: scaleX(1); }
+        .fb-init {
+            width: 40px; height: 40px; border: 1px solid rgba(52,160,106,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
+            color: var(--emerald); background: rgba(52,160,106,0.05); margin-bottom: 1rem;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .founder-block:hover .fb-init { border-color: rgba(52,160,106,0.6); background: rgba(52,160,106,0.1); }
+        .fb-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+        .fb-role { font-family: 'DM Mono', monospace; font-size: 0.48rem; letter-spacing: 2px; color: var(--emerald); opacity: 0.65; }
+
+        /* DONATE */
         .donate-block {
-            background: var(--charcoal3); border: 1px solid var(--border-dark);
-            padding: 2.5rem;
-            display: flex; justify-content: space-between; align-items: center;
-            gap: 24px; flex-wrap: wrap;
+            background: var(--charcoal3); border: 1px solid var(--border-dark); padding: 2.5rem;
+            display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap;
+            transition: border-color 0.3s;
         }
-        .donate-block h3 {
-            font-family: 'Playfair Display', serif; font-size: 1.3rem;
-            font-weight: 700; color: var(--off-white); margin-bottom: 0.35rem;
-        }
+        .donate-block:hover { border-color: rgba(52,160,106,0.2); }
+        .donate-block h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--off-white); margin-bottom: 0.35rem; }
         .donate-block p { font-size: 0.88rem; color: rgba(255,255,255,0.35); font-weight: 300; }
         .donate-btn {
-            display: inline-block; padding: 12px 26px;
-            background: var(--green-light); color: #fff; text-decoration: none;
-            font-family: 'DM Mono', monospace; font-size: 0.63rem; letter-spacing: 2px;
-            flex-shrink: 0; transition: background 0.25s;
+            display: inline-block; padding: 12px 26px; background: var(--green-light); color: #fff;
+            text-decoration: none; font-family: 'DM Mono', monospace; font-size: 0.63rem; letter-spacing: 2px;
+            flex-shrink: 0; transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
         }
-        .donate-btn:hover { background: var(--emerald); }
+        .donate-btn:hover { background: var(--emerald); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(52,160,106,0.25); }
 
-        /* ─── FOOTER ─── */
-        footer {
-            background: var(--green-dark);
-            border-top: 1px solid rgba(52,160,106,0.14);
-        }
-        .footer-main {
-            max-width: 1200px; margin: 0 auto;
-            padding: 4rem 5% 3rem;
-            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 40px;
-        }
-        .f-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem; font-weight: 900; color: #fff;
-            margin-bottom: 0.7rem; line-height: 1.2;
-        }
+        /* FOOTER */
+        footer { background: var(--green-dark); border-top: 1px solid rgba(52,160,106,0.14); }
+        .footer-main { max-width: 1200px; margin: 0 auto; padding: 4rem 5% 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; }
+        .f-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 0.7rem; line-height: 1.2; }
         .f-logo em { font-style: italic; color: var(--emerald); font-weight: 400; }
-        .f-desc {
-            font-size: 0.86rem; color: rgba(255,255,255,0.3);
-            line-height: 1.75; font-weight: 300;
-            max-width: 240px; margin-bottom: 1.2rem;
-        }
-        .f-network-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 7px 14px;
-            border: 1px solid rgba(200,150,42,0.22);
-            background: rgba(200,150,42,0.05);
-            text-decoration: none;
-            transition: background 0.2s, border-color 0.2s;
-        }
+        .f-desc { font-size: 0.86rem; color: rgba(255,255,255,0.3); line-height: 1.75; font-weight: 300; max-width: 240px; margin-bottom: 1.2rem; }
+        .f-network-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border: 1px solid rgba(200,150,42,0.22); background: rgba(200,150,42,0.05); text-decoration: none; transition: background 0.2s, border-color 0.2s; }
         .f-network-badge:hover { background: rgba(200,150,42,0.1); border-color: rgba(200,150,42,0.4); }
         .fbn-label { font-family: 'DM Mono', monospace; font-size: 0.46rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); line-height: 1.3; }
-        .fbn-name  { font-family: 'DM Mono', monospace; font-size: 0.6rem;  letter-spacing: 1px; color: var(--gold); font-weight: 500; }
-
-        .f-col h5 {
-            font-family: 'DM Mono', monospace; font-size: 0.54rem;
-            letter-spacing: 2.5px; color: var(--emerald); opacity: 0.7;
-            margin-bottom: 1.2rem;
-        }
+        .fbn-name  { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 1px; color: var(--gold); font-weight: 500; }
+        .f-col h5 { font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 2.5px; color: var(--emerald); opacity: 0.7; margin-bottom: 1.2rem; }
         .f-col.network h5 { color: var(--gold); }
-        .f-col a {
-            display: block; font-size: 0.86rem;
-            color: rgba(255,255,255,0.32); text-decoration: none;
-            margin-bottom: 0.6rem; font-weight: 300;
-            transition: color 0.2s;
-        }
+        .f-col a { display: block; font-size: 0.86rem; color: rgba(255,255,255,0.32); text-decoration: none; margin-bottom: 0.6rem; font-weight: 300; transition: color 0.2s; }
         .f-col a:hover { color: rgba(255,255,255,0.72); }
         .f-col.network a:hover { color: var(--gold-light); }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 1.2rem 5%;
-        }
-        .footer-bottom-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 8px;
-        }
-        .footer-bottom p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.54rem; letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.2);
-        }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 1.2rem 5%; }
+        .footer-bottom-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .footer-bottom p { font-family: 'DM Mono', monospace; font-size: 0.54rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.2); }
         .footer-bottom a { color: rgba(200,150,42,0.5); text-decoration: none; transition: color 0.2s; }
         .footer-bottom a:hover { color: var(--gold); }
+        .footer-legal { max-width: 1200px; margin: 0 auto; padding: 0.9rem 5% 1.2rem; border-top: 1px solid rgba(255,255,255,0.04); }
+        .footer-legal p { font-family: 'DM Mono', monospace; font-size: 0.44rem; letter-spacing: 1.4px; color: rgba(255,255,255,0.15); line-height: 1.7; }
 
-        /* ─── REVEAL ANIMATION ─── */
+        /* REVEAL */
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .reveal.in { opacity: 1; transform: translateY(0); }
 
-        .footer-legal {
-            max-width: 1200px; margin: 0 auto;
-            padding: 0.9rem 5% 1.2rem;
-            border-top: 1px solid rgba(255,255,255,0.04);
-        }
-        .footer-legal p {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.44rem; letter-spacing: 1.4px;
-            color: rgba(255,255,255,0.15);
-            line-height: 1.7;
-        }
+        /* ANIMATIONS */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 1100px) {
-            .footer-main { grid-template-columns: 1fr 1fr 1fr; }
-        }
+        /* RESPONSIVE */
+        @media (max-width: 1100px) { .footer-main { grid-template-columns: 1fr 1fr 1fr; } }
         @media (max-width: 900px) {
-            .sitenav-links { display: none; }
-            .hamburger { display: flex; }
+            .sitenav-links { display: none; } .hamburger { display: flex; }
             .footer-main { grid-template-columns: 1fr 1fr; }
+            .founders-strip .fs-inner { grid-template-columns: 1fr; }
         }
         @media (max-width: 640px) {
             :root { --netbar-h: 0px; }
-            .netbar { display: none; }
-            .sitenav { top: 0 !important; }
+            .netbar { display: none; } .sitenav { top: 0 !important; }
             .page-header { padding: calc(80px) 5% 4rem; }
-            .timeline::before { left: 48px; }
+            .timeline::before, .timeline-live-line { left: 48px; }
             .event { grid-template-columns: 48px 1fr; gap: 12px; }
             .event-dot { left: 41px; top: 2.2rem; }
             .event-content { padding-left: 12px; }
@@ -455,15 +559,42 @@
         @media (max-width: 420px) {
             .page-header h1 { font-size: 2.2rem; }
             .event-year { font-size: 0.5rem; }
-            .timeline::before { left: 42px; }
+            .timeline::before, .timeline-live-line { left: 42px; }
             .event { grid-template-columns: 42px 1fr; gap: 10px; }
             .event-dot { left: 35px; }
         }
     </style>
 </head>
-<body id="body">
+<body>
 
-    <!-- NETWORK BAR — Order: PAIZ® CORP · THE LOL · PAIZ SHOP · PAIZ CHICKEN · PAIZPRODUCTIONS · THE LOL MOVIE · GOVERNMENT · ISC · TL RAILWAYS -->
+    <!-- INTERACTIVE ELEMENTS -->
+    <div id="scroll-progress"></div>
+    <div id="cur-dot"></div>
+    <div id="cur-ring"></div>
+
+    <!-- CHAPTER INDICATOR (right-side nav dots) -->
+    <div id="chapter-indicator">
+        <div class="ci-dot active" data-chapter="0" data-type="green"  data-label="CH.01 — The Founding"></div>
+        <div class="ci-dot"        data-chapter="1" data-type="green"  data-label="CH.02 — Renaming"></div>
+        <div class="ci-dot"        data-chapter="2" data-type="white"  data-label="CH.03 — First Election"></div>
+        <div class="ci-dot"        data-chapter="3" data-type="chaos"  data-label="CH.04 — Chaos Era"></div>
+        <div class="ci-dot"        data-chapter="4" data-type="white"  data-label="CH.05 — Resignation"></div>
+        <div class="ci-dot"        data-chapter="5" data-type="green"  data-label="CH.06 — Recovery"></div>
+        <div class="ci-dot"        data-chapter="6" data-type="gold"   data-label="CH.07 — Modern Era"></div>
+    </div>
+
+    <!-- KONAMI OVERLAY -->
+    <div id="konami-overlay">
+        <div class="konami-inner">
+            <div class="konami-badge">// INTERNAL SECURITY CONTROL — CLASSIFIED ACCESS</div>
+            <div class="konami-title">SIGMA<br><em>Clearance Granted.</em></div>
+            <div class="konami-sub">AUTHORIZATION LEVEL: MAXIMUM // EYES ONLY</div>
+            <div class="konami-log" id="konami-log"></div>
+            <button class="konami-close" onclick="closeKonami()">CLOSE TERMINAL</button>
+        </div>
+    </div>
+
+    <!-- NETWORK BAR -->
     <nav class="netbar" id="netbar" aria-label="Network">
         <div class="netbar-inner">
             <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
@@ -510,17 +641,15 @@
         <div class="ph-inner">
             <div class="ph-eyebrow">THE LEGEND OF LEGIONA // OFFICIAL HISTORY</div>
             <h1>The History of<br><em>The LoL.</em></h1>
-            <p>
-                From a squad of three to the most sovereign nation in Skyxion — 
-                this is the full story of The Legend of Legiona.
-            </p>
+            <p>From a squad of three to the most sovereign nation in Skyxion — this is the full story of The Legend of Legiona.</p>
+            <div class="ph-chapter-track">
+                <span id="chapterLabel">CHAPTER 01 / 07</span>
+                <div class="track-bar"><div class="track-fill" id="trackFill" style="width:0%"></div></div>
+                <span id="chapterName">THE FOUNDING</span>
+            </div>
             <div class="proc-btns">
-                <a href="assets/The_LoL_Proclamation.pdf" class="proc-btn green" target="_blank">
-                    ↓ PROCLAMATION (EN)
-                </a>
-                <a href="assets/Proklamasi_The_LoL.pdf" class="proc-btn gold" target="_blank">
-                    ↓ PROKLAMASI (BM)
-                </a>
+                <a href="assets/The_LoL_Proclamation.pdf" class="proc-btn green" target="_blank">↓ PROCLAMATION (EN)</a>
+                <a href="assets/Proklamasi_The_LoL.pdf" class="proc-btn gold" target="_blank">↓ PROKLAMASI (BM)</a>
             </div>
         </div>
     </div>
@@ -534,133 +663,96 @@
                 <span>7 CHAPTERS</span>
             </div>
 
-            <div class="timeline">
+            <div class="timeline" id="timeline">
+                <div class="timeline-live-line" id="timelineLiveLine"></div>
 
                 <!-- 1 -->
-                <div class="event">
+                <div class="event" id="ch-0" data-chapter-name="THE FOUNDING">
                     <div class="event-year">2023<br>EARLY</div>
                     <div class="event-dot highlight"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 01</div>
                         <h2>The Founding</h2>
                         <h3>ORIGINAL NAME: THE SUS</h3>
-                        <p>
-                            The LoL was originally called <strong>"The Sus"</strong>, founded by <strong>Faiz4224</strong>, 
-                            alongside <strong>ItzDynozz</strong> and <strong>Imii Kun</strong>. During its inception, 
-                            the nation was small, but the collaboration between these three founders laid the 
-                            groundwork for future developments. EhekSquad — led by PhoenixAiman, PandaPutih, 
-                            and Kagee — also joined during this era, though their exact status was never 
-                            formally defined as The Sus had no policy or governance structure. They later 
-                            departed and re-established EhekSquad independently.
-                        </p>
+                        <p>The LoL was originally called <strong>"The Sus"</strong>, founded by <strong>Faiz4224</strong>, alongside <strong>ItzDynozz</strong> and <strong>Imii Kun</strong>. During its inception, the nation was small, but the collaboration between these three founders laid the groundwork for future developments. EhekSquad — led by PhoenixAiman, PandaPutih, and Kagee — also joined during this era, though their exact status was never formally defined as The Sus had no policy or governance structure. They later departed and re-established EhekSquad independently.</p>
                         <span class="event-badge green">ORIGIN ERA</span>
                     </div>
                 </div>
 
                 <!-- 2 -->
-                <div class="event">
+                <div class="event" id="ch-1" data-chapter-name="RENAMING &amp; EXPANSION">
                     <div class="event-year">2023</div>
                     <div class="event-dot highlight"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 02</div>
                         <h2>Renaming &amp; Expansion</h2>
                         <h3>THE LEGEND OF LEGIONA IS BORN</h3>
-                        <p>
-                            As the nation grew, the founders decided to rename it <strong>"The Legend of Legiona"</strong>, 
-                            abbreviated as The LoL. The LoL rapidly transformed into the most modern and wealthiest 
-                            nation in Skyxion — a region known for its diverse cultures and nations. Under President 
-                            Faiz4224, The LoL thrived in economy, infrastructure, and innovation.
-                        </p>
+                        <p>As the nation grew, the founders decided to rename it <strong>"The Legend of Legiona"</strong>, abbreviated as The LoL. The LoL rapidly transformed into the most modern and wealthiest nation in Skyxion — a region known for its diverse cultures and nations. Under President Faiz4224, The LoL thrived in economy, infrastructure, and innovation.</p>
                         <span class="event-badge gold">GOLDEN ERA</span>
                     </div>
                 </div>
 
                 <!-- 3 -->
-                <div class="event">
+                <div class="event" id="ch-2" data-chapter-name="FIRST ELECTION">
                     <div class="event-year">MAY 6<br>2023</div>
                     <div class="event-dot gold"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 03</div>
                         <h2>The First Presidential Election</h2>
                         <h3>ELECTION ANNOUNCEMENT</h3>
-                        <p>
-                            On May 6, 2023, The LoL held its first democratic election — marking a significant 
-                            turning point in its governance. Despite Faiz4224's strong leadership, 
-                            <strong>UltraX2020</strong> and the <strong>PHRTL party</strong> won the election, 
-                            making UltraX2020 the 2nd President of The LoL.
-                        </p>
+                        <p>On May 6, 2023, The LoL held its first democratic election — marking a significant turning point in its governance. Despite Faiz4224's strong leadership, <strong>UltraX2020</strong> and the <strong>PHRTL party</strong> won the election, making UltraX2020 the 2nd President of The LoL.</p>
                         <span class="event-badge white">DEMOCRATIC MILESTONE</span>
                     </div>
                 </div>
 
                 <!-- 4 -->
-                <div class="event">
+                <div class="event chaos-event" id="ch-3" data-chapter-name="DIVISION &amp; CHAOS">
                     <div class="event-year">2023<br>CRISIS</div>
                     <div class="event-dot red"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 04</div>
                         <h2>UltraX2020's Presidency</h2>
                         <h3>DIVISION AND CHAOS</h3>
-                        <p>
-                            Under UltraX2020's rule, internal strife and divisions surfaced. The iconic 
-                            <strong>LoL City sign was bombed</strong>, <strong>TLCC was attacked by drones</strong>, 
-                            and political conflicts gripped the city. The nation's stability was tested like never before.
-                        </p>
+                        <p>Under UltraX2020's rule, internal strife and divisions surfaced. The iconic <strong>LoL City sign was bombed</strong>, <strong>TLCC was attacked by drones</strong>, and political conflicts gripped the city. The nation's stability was tested like never before — the darkest chapter in The LoL's history.</p>
                         <span class="event-badge red">CONFLICT ERA</span>
                     </div>
                 </div>
 
                 <!-- 5 -->
-                <div class="event">
+                <div class="event" id="ch-4" data-chapter-name="RESTORATION">
                     <div class="event-year">2023<br>LATE</div>
                     <div class="event-dot"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 05</div>
                         <h2>The Resignation of UltraX2020</h2>
                         <h3>LEADERSHIP CRISIS AND RESIGNATION</h3>
-                        <p>
-                            UltraX2020 resigned from the presidency following the chaos. He returned full power 
-                            back to <strong>Faiz4224</strong>, restoring peace to The LoL. Faiz4224 continued 
-                            to lead with a renewed vision of progress and unity.
-                        </p>
+                        <p>UltraX2020 resigned from the presidency following the chaos. He returned full power back to <strong>Faiz4224</strong>, restoring peace to The LoL. Faiz4224 continued to lead with a renewed vision of progress and unity.</p>
                         <span class="event-badge white">RESTORATION</span>
                     </div>
                 </div>
 
                 <!-- 6 -->
-                <div class="event">
+                <div class="event" id="ch-5" data-chapter-name="REBUILDING">
                     <div class="event-year">NOV 8<br>2023</div>
                     <div class="event-dot highlight"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 06</div>
                         <h2>Post-Chaos Recovery</h2>
                         <h3>REBUILDING AND MOVING FORWARD</h3>
-                        <p>
-                            After the political turmoil, The LoL began a rebuilding phase. Faiz4224's government 
-                            initiated several infrastructure projects, improved security with the founding of 
-                            <strong>TLIO</strong> (later reborn as ISC), and focused on uniting the nation under 
-                            one banner once again. The Black House — The LoL's presidential office — was 
-                            established as the seat of executive governance.
-                        </p>
+                        <p>After the political turmoil, The LoL began a rebuilding phase. Faiz4224's government initiated several infrastructure projects, improved security with the founding of <strong>TLIO</strong> (later reborn as ISC), and focused on uniting the nation under one banner once again. The Black House — The LoL's presidential office — was established as the seat of executive governance.</p>
                         <span class="event-badge green">REBIRTH</span>
                     </div>
                 </div>
 
                 <!-- 7 -->
-                <div class="event">
+                <div class="event gold-event" id="ch-6" data-chapter-name="THE MODERN ERA">
                     <div class="event-year">2025–<br>2026</div>
                     <div class="event-dot gold"></div>
                     <div class="event-content">
                         <div class="event-num">CHAPTER 07</div>
                         <h2>The Modern Era</h2>
                         <h3>SKYXION: ALTAER ERA // LOOKING AHEAD</h3>
-                        <p>
-                            Today, The LoL stands as a symbol of perseverance and innovation. TLIO has been 
-                            reborn as <strong>ISC (Internal Security Control)</strong>. Under Skyxion: Altaer era, 
-                            The LoL continues to operate with full sovereignty, the Landen Accord, and an active 
-                            egalitarian governance model. The LoL is poised to continue its legacy as one of the 
-                            most modern and successful nations in Skyxion.
-                        </p>
+                        <p>Today, The LoL stands as a symbol of perseverance and innovation. TLIO has been reborn as <strong>ISC (Internal Security Control)</strong>. Under Skyxion: Altaer era, The LoL continues to operate with full sovereignty, the Landen Accord, and an active egalitarian governance model. The LoL is poised to continue its legacy as one of the most modern and successful nations in Skyxion.</p>
                         <span class="event-badge gold">CURRENT ERA</span>
                     </div>
                 </div>
@@ -669,6 +761,30 @@
 
             <div class="section-divider"></div>
 
+        </div><!-- .content-wrap -->
+
+        <!-- FOUNDERS STRIP -->
+        <div class="founders-strip reveal">
+            <div class="fs-inner">
+                <div class="founder-block">
+                    <div class="fb-init">F</div>
+                    <div class="fb-name">Faiz4224</div>
+                    <div class="fb-role">FIRST PRESIDENT // FOUNDING LEADER</div>
+                </div>
+                <div class="founder-block">
+                    <div class="fb-init">I</div>
+                    <div class="fb-name">Imii Kun</div>
+                    <div class="fb-role">CO-FOUNDER // VISIONARY</div>
+                </div>
+                <div class="founder-block">
+                    <div class="fb-init">D</div>
+                    <div class="fb-name">Dyno</div>
+                    <div class="fb-role">CO-FOUNDER // STRATEGIST</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-wrap" style="padding-top:3rem;">
             <!-- DONATE -->
             <div class="donate-block reveal">
                 <div>
@@ -677,7 +793,6 @@
                 </div>
                 <a href="https://sociabuzz.com/lyvwiz/donate" class="donate-btn" target="_blank">DONATE NOW →</a>
             </div>
-
         </div>
     </main>
 
@@ -688,38 +803,13 @@
                 <div class="f-logo">The <em>LoL</em></div>
                 <p class="f-desc">The Legend of Legiona. A sovereign nation in Skyxion built on unity, freedom, innovation, and honour since 2023.</p>
                 <a href="https://faizzzlol.github.io/PaizCorp/" class="f-network-badge">
-                    <div>
-                        <div class="fbn-label">PART OF THE</div>
-                        <div class="fbn-name">PAIZ® CORP NETWORK</div>
-                    </div>
+                    <div><div class="fbn-label">PART OF THE</div><div class="fbn-name">PAIZ® CORP NETWORK</div></div>
                 </a>
             </div>
-            <div class="f-col">
-                <h5>NATION</h5>
-                <a href="/thelol/about">About The LoL</a>
-                <a href="/thelol/#history">History</a>
-                <a href="/thelol/#founders">Founders</a>
-            </div>
-            <div class="f-col">
-                <h5>PORTALS</h5>
-                <a href="/thelol/gov/">Government</a>
-                <a href="/thelol/gov/isc/">ISC</a>
-                <a href="/thelol/tlr/">TL Railways</a>
-                <a href="/thelol/gov/assets/">Legal Archive</a>
-            </div>
-            <div class="f-col">
-                <h5>DOCUMENTS</h5>
-                <a href="/thelol/assets/The_LoL_Proclamation.pdf" target="_blank">Proclamation (EN)</a>
-                <a href="/thelol/assets/Proklamasi_The_LoL.pdf" target="_blank">Proklamasi (BM)</a>
-            </div>
-            <div class="f-col network">
-                <h5>NETWORK</h5>
-                <a href="https://faizzzlol.github.io/PaizCorp/">Paiz® Corp Hub</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">Paiz Shop</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">Paiz Chicken</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PaizProductions</a>
-                <a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">The LoL Movie</a>
-            </div>
+            <div class="f-col"><h5>NATION</h5><a href="/thelol/about">About The LoL</a><a href="/thelol/#history">History</a><a href="/thelol/#founders">Founders</a></div>
+            <div class="f-col"><h5>PORTALS</h5><a href="/thelol/gov/">Government</a><a href="/thelol/gov/isc/">ISC</a><a href="/thelol/tlr/">TL Railways</a><a href="/thelol/gov/assets/">Legal Archive</a></div>
+            <div class="f-col"><h5>DOCUMENTS</h5><a href="/thelol/assets/The_LoL_Proclamation.pdf" target="_blank">Proclamation (EN)</a><a href="/thelol/assets/Proklamasi_The_LoL.pdf" target="_blank">Proklamasi (BM)</a></div>
+            <div class="f-col network"><h5>NETWORK</h5><a href="https://faizzzlol.github.io/PaizCorp/">Paiz® Corp Hub</a><a href="https://faizzzlol.github.io/PaizCorp/PaizShop/">Paiz Shop</a><a href="https://faizzzlol.github.io/PaizCorp/PaizChicken/">Paiz Chicken</a><a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/">PaizProductions</a><a href="https://faizzzlol.github.io/PaizCorp/PaizProductions/thelolmovie">The LoL Movie</a></div>
         </div>
         <div class="footer-bottom">
             <div class="footer-bottom-inner">
@@ -733,49 +823,217 @@
     </footer>
 
     <script>
-        const sitenav = document.getElementById('sitenav');
-        const netbar  = document.getElementById('netbar');
-        const NETBAR_H = 32;
+    // ════════════════════════════════════════════════════════════════
+    //  NAV
+    // ════════════════════════════════════════════════════════════════
+    const sitenav = document.getElementById('sitenav');
+    const netbar  = document.getElementById('netbar');
+    const NETBAR_H = 32;
 
-        window.addEventListener('scroll', () => {
-            const y = window.scrollY;
-            sitenav.classList.toggle('scrolled', y > 60);
-            if (y > NETBAR_H) {
-                netbar.classList.add('hidden');
-                sitenav.classList.add('nb-hidden');
-            } else {
-                netbar.classList.remove('hidden');
-                sitenav.classList.remove('nb-hidden');
-            }
-        }, { passive: true });
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open);
+    });
+    function closeMobile() {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+    });
 
-        // Timeline reveal
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => entry.target.classList.add('in'), i * 100);
-                    observer.unobserve(entry.target);
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 1 — SCROLL PROGRESS
+    // ════════════════════════════════════════════════════════════════
+    const progressBar = document.getElementById('scroll-progress');
+
+    // ════════════════════════════════════════════════════════════════
+    //  CHAPTER TRACKING SYSTEM
+    // ════════════════════════════════════════════════════════════════
+    const chapters     = document.querySelectorAll('.event[id^="ch-"]');
+    const ciDots       = document.querySelectorAll('.ci-dot');
+    const indicator    = document.getElementById('chapter-indicator');
+    const trackFill    = document.getElementById('trackFill');
+    const chapterLabel = document.getElementById('chapterLabel');
+    const chapterName  = document.getElementById('chapterName');
+    const liveLine     = document.getElementById('timelineLiveLine');
+    const timeline     = document.getElementById('timeline');
+
+    const CHAPTER_NAMES = [
+        'THE FOUNDING', 'RENAMING & EXPANSION', 'FIRST ELECTION',
+        'DIVISION & CHAOS', 'RESTORATION', 'REBUILDING', 'THE MODERN ERA'
+    ];
+
+    let currentChapter = -1;
+
+    function updateChapterTracking() {
+        const y = window.scrollY;
+        const docH = document.documentElement.scrollHeight - window.innerHeight;
+
+        // Scroll progress bar
+        progressBar.style.transform = `scaleX(${docH > 0 ? y / docH : 0})`;
+
+        // Nav hide/show
+        sitenav.classList.toggle('scrolled', y > 60);
+        if (y > NETBAR_H) { netbar.classList.add('hidden'); sitenav.classList.add('nb-hidden'); }
+        else { netbar.classList.remove('hidden'); sitenav.classList.remove('nb-hidden'); }
+
+        // Chapter indicator visibility — show when past page header
+        const headerH = document.querySelector('.page-header').offsetHeight;
+        indicator.classList.toggle('visible', y > headerH * 0.5);
+
+        // Determine active chapter
+        let active = -1;
+        chapters.forEach((el, i) => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.45) active = i;
+        });
+
+        if (active !== currentChapter) {
+            currentChapter = active;
+
+            if (active >= 0) {
+                // Update header tracker
+                const pct = ((active + 1) / chapters.length) * 100;
+                trackFill.style.width = pct + '%';
+                chapterLabel.textContent = `CHAPTER 0${active + 1} / 0${chapters.length}`;
+                chapterName.textContent  = CHAPTER_NAMES[active] || '';
+
+                // Update side dots
+                ciDots.forEach((dot, i) => dot.classList.toggle('active', i === active));
+
+                // Update in-view class on events
+                chapters.forEach((el, i) => {
+                    el.classList.toggle('in-view', i <= active);
+                    el.querySelector('.event-year').style.color = i <= active ? 'rgba(255,255,255,0.45)' : '';
+                });
+
+                // Live timeline line fill
+                if (active < chapters.length - 1) {
+                    const tlRect    = timeline.getBoundingClientRect();
+                    const dotEl     = chapters[active].querySelector('.event-dot');
+                    const dotRect   = dotEl.getBoundingClientRect();
+                    const relTop    = dotRect.top - tlRect.top + window.scrollY;
+                    const tlScrollT = timeline.getBoundingClientRect().top + window.scrollY;
+                    const pctLine   = ((dotRect.top + window.scrollY - tlScrollT) / timeline.offsetHeight) * 100;
+                    liveLine.style.height = Math.min(pctLine + 5, 95) + '%';
                 }
-            });
-        }, { threshold: 0.08 });
-        document.querySelectorAll('.event, .reveal').forEach(el => observer.observe(el));
-
-        // Hamburger
-        const hamburger  = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        hamburger.addEventListener('click', () => {
-            const open = mobileMenu.classList.toggle('open');
-            hamburger.classList.toggle('open', open);
-            hamburger.setAttribute('aria-expanded', open);
-        });
-        function closeMobile() {
-            mobileMenu.classList.remove('open');
-            hamburger.classList.remove('open');
-            hamburger.setAttribute('aria-expanded', 'false');
+            }
         }
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMobile();
+    }
+
+    window.addEventListener('scroll', updateChapterTracking, { passive: true });
+
+    // Click on chapter indicator dot → scroll to chapter
+    ciDots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            chapters[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
+    });
+
+    // ════════════════════════════════════════════════════════════════
+    //  TIMELINE REVEAL OBSERVER
+    // ════════════════════════════════════════════════════════════════
+    const eventObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('in'), i * 80);
+                eventObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('in'), i * 80);
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.06 });
+
+    chapters.forEach(el => eventObserver.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ════════════════════════════════════════════════════════════════
+    //  LAYER 2 — CUSTOM CURSOR
+    // ════════════════════════════════════════════════════════════════
+    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (isDesktop) {
+        const dot  = document.getElementById('cur-dot');
+        const ring = document.getElementById('cur-ring');
+        let mx = -100, my = -100, rx = -100, ry = -100, raf;
+
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX; my = e.clientY;
+            dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
+            dot.style.opacity = '1'; ring.style.opacity = '0.8';
+            if (!raf) raf = requestAnimationFrame(animRing);
+        });
+        function animRing() {
+            rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px'; ring.style.top  = ry + 'px';
+            raf = requestAnimationFrame(animRing);
+        }
+        const interactiveEls = 'a, button, .event-dot, .ci-dot, .proc-btn, .donate-btn, input, [role="button"]';
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest(interactiveEls)) { dot.classList.add('active'); ring.classList.add('active'); }
+        });
+        document.addEventListener('mouseout', (e) => {
+            if (e.target.closest(interactiveEls)) { dot.classList.remove('active'); ring.classList.remove('active'); }
+        });
+        document.addEventListener('mouseleave', () => { dot.style.opacity='0'; ring.style.opacity='0'; });
+        document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='0.8'; });
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  KONAMI CODE
+    // ════════════════════════════════════════════════════════════════
+    const KONAMI = [38,38,40,40,37,39,37,39,66,65];
+    let kSeq = [];
+    const konamiOverlay = document.getElementById('konami-overlay');
+    const konamiLog     = document.getElementById('konami-log');
+
+    const konamiLines = [
+        '> KONAMI SEQUENCE DETECTED...',
+        '> VERIFYING OPERATOR CREDENTIALS...',
+        '> IDENTITY CONFIRMED: FAIZ4224',
+        '> RANK: FIRST PRESIDENT // FOUNDING LEADER',
+        '> CLEARANCE LEVEL: SIGMA (MAXIMUM)',
+        '> ACCESSING CLASSIFIED NATIONAL RECORDS...',
+        '> TLSRL STATUS: OPERATIONAL [4,800+ BLOCKS]',
+        '> TLCC TWIN TOWERS: SECURED',
+        '> ISC THREAT MONITOR: NO ACTIVE THREATS',
+        '> NATIONAL FARMS: ALL SYSTEMS NOMINAL',
+        '> WELCOME BACK, PRESIDENT. THE LOL STANDS STRONG.'
+    ];
+
+    document.addEventListener('keydown', (e) => {
+        kSeq.push(e.keyCode);
+        if (kSeq.length > KONAMI.length) kSeq.shift();
+        if (kSeq.join(',') === KONAMI.join(',')) {
+            konamiOverlay.classList.add('active');
+            konamiLog.innerHTML = '';
+            konamiLines.forEach((line, i) => {
+                const span = document.createElement('span');
+                span.className = 'log-line';
+                span.textContent = line;
+                span.style.animationDelay = (i * 0.22) + 's';
+                konamiLog.appendChild(span);
+            });
+            kSeq = [];
+        }
+    });
+
+    function closeKonami() { konamiOverlay.classList.remove('active'); }
+    konamiOverlay.addEventListener('click', (e) => { if (e.target === konamiOverlay) closeKonami(); });
+
+    // Initial call
+    updateChapterTracking();
     </script>
 
 </body>
