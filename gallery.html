@@ -374,37 +374,342 @@
 // ════════════════════════════════════════════════════════════════════
 const GALLERY_DATA = [
 
-    // ── ERA 0: PRE-ERA (2020–early 2022) ─────────────────────────
-    // { era:0, src:"assets/pre-era-01.jpg", title:"Early Skyxion", rawDate:"2020-01", date:"2020", by:"Faiz4224", desc:"", span:1 },
+// ── ERA 0: PRE-ERA — NEVERLAND (2020) ────────────────────────────
+{
+    era: 0,
+    src: "assets/neverland-group-selfie.jpg",
+    title: "Neverland — Group Selfie",
+    rawDate: "2020",
+    date: "2020",
+    by: "Dyno",
+    desc: "A group selfie from the Neverland days — before The Sus, before The LoL, before any nation existed. Just players hanging out.",
+    span: 1
+},
+{
+    era: 0,
+    src: "assets/neverland-bloodmoon-event.jpg",
+    title: "The Flowey Bloodmoon Event",
+    rawDate: "2020",
+    date: "2020",
+    by: "Dyno",
+    desc: "Faiz4224 caught mid-combat during what may be the Flowey Bloodmoon server event. The blood-red sky over Neverland.",
+    span: 1
+},
+{
+    era: 0,
+    src: "assets/neverland-skyxion-rookie.jpg",
+    title: "Skyxion — Early Server Days",
+    rawDate: "2020",
+    date: "2020",
+    by: "Dyno",
+    desc: "Early Skyxion server days. Rank: Rookie. The server that would one day become home to The Sus, and then The Legend of Legiona.",
+    span: 1
+},
+{
+    era: 0,
+    src: "assets/neverland-cave-boat.jpg",
+    title: "Underground — Neverland",
+    rawDate: "2020",
+    date: "2020",
+    by: "Dyno",
+    desc: "A lone player in a boat inside an underground cave. Early Neverland days.",
+    span: 1
+},
 
-    // ── ERA 1: THE SUS (2022–early 2023) ─────────────────────────
-    // { era:1, src:"assets/thesus-01.jpg", title:"The Sus — Base", rawDate:"2022-06", date:"JUNE 2022", by:"Faiz4224", desc:"", span:2 },
-    // { era:1, src:"assets/thesus-02.jpg", title:"EhekSquad Era",  rawDate:"2022-08", date:"AUG 2022",  by:"Dyno",     desc:"", span:1 },
+// ── ERA 1: THE SUS ────────────────────────────────────────────────
+{
+    era: 1,
+    src: "assets/the-sus-first-base.jpg",
+    title: "The First Sus Base",
+    rawDate: "2022",
+    date: "2022",
+    by: "Dyno",
+    desc: "The artificial island where it all began. Faiz4224, ItzDynozz, and Imii Kun built The Sus base here — farms, chests, furnaces, and all. This is the moment that started everything. EhekSquad saw what was being built and wanted in.",
+    span: 2
+},
+// ── ERA 2: GOLDEN ERA — THE LOL FOUNDED & FIRST CITY ─────────────
 
-    // ── ERA 2: GOLDEN ERA (2023) ──────────────────────────────────
-    // { era:2, src:"assets/golden-01.jpg",  title:"LoL City",          rawDate:"2023-01", date:"JAN 2023",  by:"Faiz4224", desc:"", span:2 },
-    // { era:2, src:"assets/tlcc-build.jpg", title:"TLCC Construction",  rawDate:"2023-03", date:"MAR 2023",  by:"Faiz4224", desc:"", span:1 },
+{ era:2, src:"assets/2023-02-20-first-spawn.png",
+  title:"First Spawn on the New Server",
+  rawDate:"2023-02-20", date:"FEB 20, 2023", by:"Faiz4224",
+  desc:"The very first moment Faiz4224 spawned into the new Skyxion server — a snow biome at night, empty inventory, and everything ahead of them.",
+  span:1 },
 
-    // ── ERA 3: ELECTION (May 6, 2023) ────────────────────────────
-    // { era:3, src:"assets/election-01.jpg", title:"Election Day", rawDate:"2023-05-06", date:"MAY 6, 2023", by:"Faiz4224", desc:"", span:2 },
+{ era:2, src:"assets/2023-02-21-the-lol-founded.png",
+  title:"The LoL Was Founded",
+  rawDate:"2023-02-21", date:"FEB 21, 2023 — 7:12 PM", by:"Faiz4224",
+  desc:"The moment The Legend of Legiona was founded. The first signs placed, the first plots claimed. Imii Kun renamed The Sus, and history began.",
+  span:2 },
 
-    // ── ERA 4: CHAOS (2023) ───────────────────────────────────────
-    // { era:4, src:"assets/sign-bombed.jpg", title:"The Sign Bombing", rawDate:"2023-07", date:"2023 CRISIS", by:"Faiz4224", desc:"", span:2 },
-    // { era:4, src:"assets/tlcc-attack.jpg", title:"TLCC Attack",      rawDate:"2023-07", date:"2023 CRISIS", by:"Ikan",     desc:"", span:1 },
+{ era:2, src:"assets/2023-02-21-before-leaving-spawnpoint.png",
+  title:"Before Leaving the Spawnpoint",
+  rawDate:"2023-02-21", date:"FEB 21, 2023 — 9:38 PM", by:"Faiz4224",
+  desc:"Standing in a ravine near the world spawn. Faiz4224 was about to leave and find the perfect land to build The LoL on.",
+  span:1 },
 
-    // ── ERA 5: RESTORATION (late 2023) ───────────────────────────
-    // { era:5, src:"assets/restore-01.jpg", title:"Faiz Returns", rawDate:"2023-10", date:"OCT 2023", by:"Faiz4224", desc:"", span:2 },
+{ era:2, src:"assets/2023-02-21-otw-with-imii.png",
+  title:"On the Way — With Imii Kun",
+  rawDate:"2023-02-21", date:"FEB 21, 2023", by:"Faiz4224",
+  desc:"Imii Kun sailing across the open ocean at night in a wooden boat, iron sword in hand. The journey to find The LoL's founding land.",
+  span:1 },
 
-    // ── ERA 6: REBUILDING (late 2023–mid 2024) ────────────────────
-    // Matches your folder: 2024-03-06, 2024-04-05, 2024-06-XX etc.
-    // { era:6, src:"assets/2024-03-06.jpg",   title:"March 2024",       rawDate:"2024-03-06", date:"MAR 6, 2024",   by:"Faiz4224", desc:"", span:1 },
-    // { era:6, src:"assets/2024-04-05.jpg",   title:"April Build",      rawDate:"2024-04-05", date:"APR 5, 2024",   by:"Faiz4224", desc:"", span:1 },
-    // { era:6, src:"assets/2024-06-14-4.jpg", title:"June 14",          rawDate:"2024-06-14", date:"JUNE 14, 2024", by:"Faiz4224", desc:"", span:1 },
+{ era:2, src:"assets/2023-02-22-early.png",
+  title:"The LoL — Early Settlement",
+  rawDate:"2023-02-22", date:"FEB 22, 2023", by:"Faiz4224",
+  desc:"The earliest view of The LoL settlement at night. Wooden structures, sandy paths, and the ocean surrounding the young nation.",
+  span:2 },
 
-    // ── ERA 7: FINAL ERA (to Aug 24, 2024) ───────────────────────
-    // { era:7, src:"assets/2024-07-01.jpg", title:"July 2024",    rawDate:"2024-07-01", date:"JULY 1, 2024",  by:"Faiz4224", desc:"", span:1 },
-    // { era:7, src:"assets/2024-08-24.jpg", title:"The Last Day", rawDate:"2024-08-24", date:"AUG 24, 2024",  by:"Faiz4224", desc:"The final screenshot before the server went offline.", span:2 },
+{ era:2, src:"assets/2023-02-22-projek-menambak-laut.png",
+  title:"Projek Menambak Laut",
+  rawDate:"2023-02-22", date:"FEB 22, 2023", by:"Faiz4224",
+  desc:"Land reclamation begins. Faiz4224 expanding The LoL's territory into the ocean — dirt by dirt, block by block.",
+  span:1 },
 
+{ era:2, src:"assets/2023-02-24-first-funicular.png",
+  title:"First Funicular Railway to The LoL Hill",
+  rawDate:"2023-02-24", date:"FEB 24, 2023", by:"Faiz4224",
+  desc:"The first funicular railway ever built in The LoL — a minecart track climbing up the hill. The nation's first infrastructure project.",
+  span:1 },
+
+{ era:2, src:"assets/2023-03-02-villager-breeding-farm.png",
+  title:"Villager Breeding Farm",
+  rawDate:"2023-03-02", date:"MAR 2, 2023", by:"Faiz4224",
+  desc:"The underground villager breeding farm. The LoL was already investing in long-term economic infrastructure just weeks after founding.",
+  span:1 },
+
+{ era:2, src:"assets/2023-03-03-highest-structure.png",
+  title:"Top of TLCC — Height Limit",
+  rawDate:"2023-03-03", date:"MAR 3, 2023", by:"Faiz4224",
+  desc:"Standing at Y=320 — the absolute height limit of Minecraft. TLCC was the tallest structure in The LoL and in all of Skyxion.",
+  span:1 },
+
+{ era:2, src:"assets/2023-03-03-city-view-from-tlcc.png",
+  title:"The LoL City View from TLCC",
+  rawDate:"2023-03-03", date:"MAR 3, 2023", by:"Faiz4224",
+  desc:"The entire LoL City seen from the top of TLCC. Snow mountains to the left, the city and farms below. The proudest view in the nation.",
+  span:2 },
+
+{ era:2, src:"assets/2023-03-07-program-penanaman-pokok.png",
+  title:"Program Penanaman Semula Pokok",
+  rawDate:"2023-03-07", date:"MAR 7, 2023", by:"Faiz4224",
+  desc:"The LoL's tree replanting programme — a national environmental initiative. PandaPutih2099 was also present during this session.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-14-1.png",
+  title:"Plot Sign — Rumah Orang Paling Handsome",
+  rawDate:"2023-04-14", date:"APR 14, 2023", by:"Faiz4224",
+  desc:"A sign reads: 'Rumah orang paling handsome ★★★'. An empty plot in The LoL city, waiting to be developed. Classic LoL energy.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-14-2.png",
+  title:"Early Resident — April 2023",
+  rawDate:"2023-04-14", date:"APR 14, 2023", by:"Faiz4224",
+  desc:"A player standing in the open land of The LoL, a nether portal behind them. The city was growing and new faces were arriving.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-14-3.png",
+  title:"The LoL Territory Map",
+  rawDate:"2023-04-14", date:"APR 14, 2023", by:"Faiz4224",
+  desc:"A Minecraft map displayed on a stone wall, showing the full extent of The LoL's territory — land, ocean, snow biome and all.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-15-6.png",
+  title:"View from Inside TLCC Elevator",
+  rawDate:"2023-04-15", date:"APR 15, 2023", by:"Faiz4224",
+  desc:"Looking down through the glass elevator shaft of TLCC. The city stretches below in the night sky. The mountain glows in the background.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-15-first-elevator-tlcc.png",
+  title:"First Elevator Inside TLCC",
+  rawDate:"2023-04-15", date:"APR 15, 2023", by:"Faiz4224",
+  desc:"The first elevator ever built inside TLCC — sign reads 'LIFT TINGKAT / FLOOR 2'. A major engineering milestone for The LoL.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-19-4.png",
+  title:"LoL City Main Road",
+  rawDate:"2023-04-19", date:"APR 19, 2023", by:"Faiz4224",
+  desc:"Walking down the main road of LoL City. TLCC towers overhead, bamboo farms line the sides, and the THE LOL globe structure is visible to the right.",
+  span:2 },
+
+{ era:2, src:"assets/2023-04-20-first-iron-farm-by-ikan.png",
+  title:"First Iron Farm — Built by Ikan",
+  rawDate:"2023-04-20", date:"APR 20, 2023", by:"Faiz4224",
+  desc:"The first iron farm in The LoL, built by Ikan. Aerial view of the water platform surrounded by bamboo and crops.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-22-1.png",
+  title:"Faiz4224 — Surveying The LoL",
+  rawDate:"2023-04-22", date:"APR 22, 2023", by:"Faiz4224",
+  desc:"Faiz4224 standing on a pillar high above a massive flattened development area. 11 days, 16 hours of server playtime logged.",
+  span:1 },
+
+{ era:2, src:"assets/2023-04-29-2.png",
+  title:"TLCC Tower 2 — Groundbreaking",
+  rawDate:"2023-04-29", date:"APR 29, 2023", by:"Faiz4224",
+  desc:"Sign reads: 'TAPAK PROJEK PEMBINAAN MENARA 2 TLCC'. Imii Kun just joined the server. The second TLCC tower groundbreaking begins.",
+  span:1 },
+{ era:2, src:"assets/2023-04-29-4.png",
+  title:"TLCC — Street Level View",
+  rawDate:"2023-04-29", date:"APR 29, 2023", by:"Faiz4224",
+  desc:"Looking straight up at TLCC from the main road. Bamboo lines both sides, THE LOL globe structure visible to the right. The city at its most cinematic.",
+  span:2 },
+
+{ era:2, src:"assets/2023-04-29-first-expressway-tunnel.png",
+  title:"First Expressway & Tunnel — Groundbreaking",
+  rawDate:"2023-04-29", date:"APR 29, 2023", by:"Faiz4224",
+  desc:"Signs read: 'KAWASAN LETUPAN', 'DIJANGKA SIAP AKHIR TAHUN 2023', 'PROJEK PEMBINAAN TEROWONG THE LOL – OUTPOST'. The first expressway tunnel connecting The LoL to its Outpost — announced, not yet built.",
+  span:1 },
+
+{ era:2, src:"assets/2023-05-01-2.png",
+  title:"LoL City — May Day",
+  rawDate:"2023-05-01", date:"MAY 1, 2023", by:"Faiz4224",
+  desc:"Standing beside the main road with TLCC soaring overhead and THE LOL globe in the background. The city was near its peak of development. A sign reads 'Faiz4224 & Imii Kun, 21/02/2023' — the founding date.",
+  span:1 },
+
+{ era:2, src:"assets/2023-05-01-3.png",
+  title:"TLCC Tower 2 — Under Construction",
+  rawDate:"2023-05-01", date:"MAY 1, 2023", by:"Faiz4224",
+  desc:"Looking up at TLCC Tower 2 rising alongside Tower 1. The golden scaffolding frames the structure. 10 days, 16 hours of playtime on the server clock.",
+  span:1 },
+
+{ era:2, src:"assets/2023-05-12-5.png",
+  title:"LoL City — Aerial from TLCC",
+  rawDate:"2023-05-12", date:"MAY 12, 2023", by:"Faiz4224",
+  desc:"Aerial view looking down from TLCC alongside the golden scaffolding. Cherry blossom trees, a pond, the main road and the mountain in the background. The most beautiful view of The LoL City.",
+  span:2 },
+
+{ era:2, src:"assets/the-lol-map-ingame.png",
+  title:"The LoL — In-Game Territory Map",
+  rawDate:"2023-05-12", date:"MAY 12, 2023", by:"Faiz4224",
+  desc:"The expanded in-game map of The LoL's territory displayed on a stone wall — showing the full reach of the nation including cherry blossom zones and the river to the south.",
+  span:1 },
+
+{ era:2, src:"assets/the-lol-map-chunkbase.png",
+  title:"The LoL — Official Seed Map (ChunkBase)",
+  rawDate:"2023-05-12", date:"2023", by:"Faiz4224",
+  desc:"The official ChunkBase map of The LoL's world — Seed 1371621129, Bedrock 1.19. Marked locations: The LoL City, The LoL Highlands, The LoL Hi-Tech, The LoL 2, Outpost, Flutopia, and Bandar The LoL. The full extent of the nation's sovereign territory.",
+  span:2 },
+// ── ERA 5: RESTORATION — NEW SERVER, TLSRL & TERMINAL ─────────────
+
+{ era:5, src:"assets/2023-12-09.png",
+  title:"TL$ Exchange Rate Board",
+  rawDate:"2023-12-09", date:"DEC 9, 2023", by:"Faiz4224",
+  desc:"The official TL Dollar noticeboard: 1 TL$ = 10 Emerald = 32 Iron Block = 5 Gold Ingot. Rooms also listed for sale. The LoL's economy was already formalised on the new server.",
+  span:1 },
+
+{ era:5, src:"assets/2024-01-06-2.png",
+  title:"Under the Railway Viaduct",
+  rawDate:"2024-01-06", date:"JAN 6, 2024", by:"Faiz4224",
+  desc:"Standing beneath an early TLSRL viaduct bridge crossing a river valley. The railway was already reaching across the landscape.",
+  span:1 },
+
+{ era:5, src:"assets/2024-01-13-1.png",
+  title:"TLSRL — Riding the Line",
+  rawDate:"2024-01-13", date:"JAN 13, 2024", by:"Faiz4224",
+  desc:"Riding the TLSRL through an autumn forest valley. The fenced trackbed stretches into the distance alongside the road, with a floating island lake in the background.",
+  span:2 },
+
+{ era:5, src:"assets/2024-01-24.png",
+  title:"The LoL Railway Station — Platform at Night",
+  rawDate:"2024-01-24", date:"JAN 24, 2024", by:"Faiz4224",
+  desc:"The LoL Railway Station platform lit up at night — lanterns, wooden beams, signage, and cherry blossom trees visible beyond the tracks. The first proper railway station in The LoL.",
+  span:2 },
+
+{ era:5, src:"assets/2024-01-27-1.png",
+  title:"TLSRL — Track Laying in the Rain",
+  rawDate:"2024-01-27", date:"JAN 27, 2024", by:"Faiz4224",
+  desc:"Laying TLSRL track in the pouring rain at Block 3058, 65, 399. The railway was being extended block by block across open plains — this is how 4,800+ blocks gets built.",
+  span:1 },
+
+{ era:5, src:"assets/2024-01-30.png",
+  title:"Night Patrol — Zombies on the Fence",
+  rawDate:"2024-01-30", date:"JAN 30, 2024", by:"Faiz4224",
+  desc:"A line of zombies crowding the fence at night near the TLSRL corridor. Block 3551, 66, 682 — far from the city core. Building a national railway comes with hazards.",
+  span:1 },
+
+{ era:5, src:"assets/2024-02-01.png",
+  title:"Surveying New Territory",
+  rawDate:"2024-02-01", date:"FEB 1, 2024", by:"Faiz4224",
+  desc:"Faiz4224 on a stone path climbing a hill at Block 661, 76, 0. Scouting and surveying land for the expanding TLSRL route and new LoL districts.",
+  span:1 },
+
+{ era:5, src:"assets/2024-02-03-1.png",
+  title:"Sunset Over the Jungle — TLSRL Route",
+  rawDate:"2024-02-03", date:"FEB 3, 2024", by:"Faiz4224",
+  desc:"Standing on a lamp post above a dense jungle canopy as the sun sets. Respawn point set. Block 1488, 92, 1 — deep in the TLSRL expansion corridor.",
+  span:1 },
+
+{ era:5, src:"assets/2024-02-04-1.png",
+  title:"TLSRL — Jungle Viaduct Construction",
+  rawDate:"2024-02-04", date:"FEB 4, 2024", by:"Faiz4224",
+  desc:"On the stone viaduct deck crossing a jungle gorge at Block 1654, 93, 0. The TLSRL was being carved through dense terrain to connect The LoL's districts.",
+  span:1 },
+
+{ era:5, src:"assets/2024-02-04.png",
+  title:"New Settlement — Lamp Post District",
+  rawDate:"2024-02-04", date:"FEB 4, 2024", by:"Faiz4224",
+  desc:"Open grassland at Block 2078, 66, 16 with stone lamp posts planted — a new district being marked out. A pig wanders nearby. The LoL was expanding its footprint.",
+  span:1 },
+
+{ era:5, src:"assets/2024-02-18.png",
+  title:"TLSRL — Elevated Station at Block 4929",
+  rawDate:"2024-02-18", date:"FEB 18, 2024", by:"Faiz4224",
+  desc:"On an elevated railway platform at Y=124, Block 4929, 742 — cherry blossom above, brick buildings below, track running through. The TLSRL was reaching remarkable heights.",
+  span:2 },
+
+{ era:5, src:"assets/2024-02-23-1.png",
+  title:"TLSRL — Grand Plaza & White Pillars",
+  rawDate:"2024-02-23", date:"FEB 23, 2024", by:"Faiz4224",
+  desc:"A vast stone plaza with white pillars and a single rail track running through. Block 503, 72, -7 — early construction of what would become the Terminal Bersepadu Spawn precinct.",
+  span:1 },
+
+{ era:5, src:"assets/2024-02-27-6.png",
+  title:"TLSRL — Three-Way Junction & Station Arch",
+  rawDate:"2024-02-27", date:"FEB 27, 2024", by:"Faiz4224",
+  desc:"Standing at a three-way rail junction facing a station building with a grand arch entrance, lanterns and wooden detailing. Block 533, 71, 2 — the network was becoming a real system.",
+  span:1 },
+
+{ era:5, src:"assets/2024-03-06-1.png",
+  title:"Pig on the TLSRL — Only in The LoL",
+  rawDate:"2024-03-06", date:"MAR 6, 2024", by:"Faiz4224",
+  desc:"A pig standing on the TLSRL track at night with lantern lamp posts lining the route. Bow Faiz4224 in the action bar. An iconic and very LoL moment.",
+  span:1 },
+
+{ era:5, src:"assets/2024-03-06-2.png",
+  title:"TLSRL Corridor — Track & Farms",
+  rawDate:"2024-03-06", date:"MAR 6, 2024", by:"Faiz4224",
+  desc:"Along the TLSRL fenced corridor at Block 3034, 63, 385. Track, farmland and countryside — the railway passing through the agricultural heart of The LoL.",
+  span:1 },
+
+{ era:5, src:"assets/2024-04-05.png",
+  title:"Terminal Bersepadu Spawn — Grand Hall",
+  rawDate:"2024-04-05", date:"APR 5, 2024", by:"Faiz4224",
+  desc:"The grand hall of Terminal Bersepadu Spawn (Spawn Integrated Terminal) — the centrepiece of TLSRL. Directional signs point to MRT Station, Platform 1&2, HSB Platform, Platform 3, Food Court, Hall, E-Chest, and Info. Artwork lines the walls.",
+  span:2 },
+
+{ era:5, src:"assets/2024-04-05-1.png",
+  title:"Terminal Bersepadu Spawn — Hall View 2",
+  rawDate:"2024-04-05", date:"APR 5, 2024", by:"Faiz4224",
+  desc:"Second angle of the Terminal's grand hall. High ceilings, sandstone beams, honeycomb lanterns, and player portraits on the walls. The most ambitious interior build in The LoL.",
+  span:1 },
+
+{ era:5, src:"assets/2024-04-05-2.png",
+  title:"Terminal — Platform 3 Arrivals",
+  rawDate:"2024-04-05", date:"APR 5, 2024", by:"Faiz4224",
+  desc:"Platform 3 arrivals side of Terminal Bersepadu Spawn — signs read 'PLATFORM 3 KETIBAAN ARRIVALS'. Glass shopfronts, portrait artwork, and directional signs to HSB Platform and Food Court.",
+  span:1 },
+
+{ era:5, src:"assets/2024-04-05-3.png",
+  title:"Terminal — Lower Ground Floor (Level G)",
+  rawDate:"2024-04-05", date:"APR 5, 2024", by:"Faiz4224",
+  desc:"Level G (Ground/Lower Ground) of Terminal Bersepadu Spawn — glass shopfronts, player portrait displays, yellow platform edge markings, and retail signage. A full multi-level terminal.",
+  span:1 },
+
+{ era:5, src:"assets/2024-04-05-4.png",
+  title:"Terminal — Information Counter",
+  rawDate:"2024-04-05", date:"APR 5, 2024", by:"Faiz4224",
+  desc:"The Information Counter of Terminal Bersepadu Spawn — a Creeper painting hangs above, signs read 'INFORMATION' and 'COUNTER'. The terminal had full passenger amenities, connecting MRT and HSB routes.",
+  span:1 },
 ];
 
 const ERA_CONFIG = [
