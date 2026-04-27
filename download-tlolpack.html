@@ -3,24 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download TLoL Pack — The Legend of Legiona</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>TLoL Pack — The Legend of Legiona</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Barlow+Condensed:wght@300;400;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* ══════════════════════════════════════
+           TOKENS
+        ══════════════════════════════════════ */
         :root {
-            --gold: #c6a664;
-            --gold-dim: rgba(198, 166, 100, 0.12);
-            --gold-border: rgba(198, 166, 100, 0.3);
-            --bg: #0a0a0a;
-            --surface: #111111;
-            --surface-2: #161616;
-            --text: #e8e8e8;
-            --text-dim: #666;
-            --text-muted: #444;
-            --border: rgba(255,255,255,0.07);
+            --gold:         #c6a664;
+            --gold-bright:  #e0be82;
+            --gold-dim:     rgba(198,166,100,0.10);
+            --gold-glow:    rgba(198,166,100,0.18);
+            --gold-border:  rgba(198,166,100,0.28);
+            --green:        #4ade80;
+            --red:          #f87171;
+            --amber:        #fbbf24;
+            --bg:           #080808;
+            --bg-mid:       #0d0d0d;
+            --surface:      #111111;
+            --surface-2:    #161616;
+            --surface-3:    #1c1c1c;
+            --text:         #ebebeb;
+            --text-dim:     #888;
+            --text-muted:   #444;
+            --border:       rgba(255,255,255,0.07);
+            --border-light: rgba(255,255,255,0.12);
+            --radius:       4px;
+            --radius-lg:    8px;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         html { scroll-behavior: smooth; }
 
         body {
@@ -33,172 +46,719 @@
             overflow-x: hidden;
         }
 
-        /* ── NAV ── */
+        /* ══════════════════════════════════════
+           NETBAR
+        ══════════════════════════════════════ */
+        .netbar {
+            background: #050505;
+            border-bottom: 1px solid rgba(198,166,100,0.12);
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .netbar-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .netbar a {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0 14px;
+            transition: color 0.2s;
+        }
+
+        .netbar a:hover { color: var(--gold); }
+        .netbar a.nb-active { color: var(--gold); }
+
+        .netbar-dot {
+            color: rgba(198,166,100,0.25);
+            font-size: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .netbar { display: none; }
+        }
+
+        /* ══════════════════════════════════════
+           NAV
+        ══════════════════════════════════════ */
         nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 10%;
+            padding: 0 8%;
             height: 60px;
             border-bottom: 1px solid var(--border);
-            background: rgba(10,10,10,0.85);
-            backdrop-filter: blur(16px);
+            background: rgba(8,8,8,0.92);
+            backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 200;
         }
 
         .logo {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--gold);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-badge {
+            font-size: 0.55rem;
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            color: var(--gold);
+            padding: 2px 5px;
+            border-radius: 2px;
+            letter-spacing: 0.12em;
+            font-family: 'Fira Code', monospace;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 32px;
+            align-items: center;
+            gap: 0;
         }
 
         .nav-links a {
-            font-size: 0.78rem;
-            font-weight: 500;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 0 18px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
+        .nav-gh {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid var(--border-light) !important;
+            border-radius: var(--radius) !important;
+            margin-left: 8px;
+            padding: 0 14px !important;
+            height: 32px !important;
+            font-size: 0.68rem !important;
+            transition: border-color 0.2s, color 0.2s !important;
+        }
+
+        .nav-gh:hover {
+            border-color: var(--gold-border) !important;
+            color: var(--gold) !important;
+        }
+
+        .nav-gh svg { width: 13px; height: 13px; fill: currentColor; }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            z-index: 300;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--text-dim);
+            transition: all 0.3s;
+            transform-origin: center;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); background: var(--gold); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); background: var(--gold); }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(8,8,8,0.98);
+            backdrop-filter: blur(24px);
+            z-index: 250;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--text-dim);
             text-decoration: none;
+            padding: 10px 40px;
             transition: color 0.2s;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--gold);
+        .mobile-menu a:hover, .mobile-menu a.active { color: var(--gold); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
         }
 
-        /* ── MAIN ── */
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 20px;
+        /* ══════════════════════════════════════
+           HERO SECTION
+        ══════════════════════════════════════ */
+        .hero {
             position: relative;
+            padding: 80px 8% 60px;
+            overflow: hidden;
         }
 
-        /* Ambient background glow */
-        main::before {
+        /* Grid background */
+        .hero::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -60%);
-            width: 600px;
-            height: 300px;
-            background: radial-gradient(ellipse, rgba(198,166,100,0.05) 0%, transparent 70%);
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(198,166,100,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(198,166,100,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
             pointer-events: none;
         }
 
-        .download-wrapper {
-            width: 100%;
-            max-width: 520px;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both;
+        /* Ambient glow */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(198,166,100,0.07) 0%, transparent 65%);
+            pointer-events: none;
         }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 860px;
+            margin: 0 auto;
         }
 
-        /* ── HEADER BLOCK ── */
-        .pack-header {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-bottom: none;
-            border-radius: 6px 6px 0 0;
-            padding: 36px 36px 28px;
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-        }
-
-        .pack-icon-wrap {
-            flex-shrink: 0;
-            width: 56px;
-            height: 56px;
-            border: 1px solid var(--gold-border);
-            border-radius: 4px;
-            display: flex;
+        .hero-tag {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            background: var(--gold-dim);
-        }
-
-        .pack-icon-wrap svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--gold);
-        }
-
-        .pack-title-block {
-            flex: 1;
-        }
-
-        .pack-label {
+            gap: 8px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.68rem;
-            color: var(--gold);
-            letter-spacing: 0.14em;
+            font-size: 0.65rem;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            margin-bottom: 6px;
+            color: var(--gold);
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            padding: 5px 12px;
+            border-radius: 2px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.5s 0.1s both;
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .hero-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            animation: fadeUp 0.5s 0.2s both;
+        }
+
+        .hero-title .line1 { color: var(--text); display: block; }
+        .hero-title .line2 {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(198,166,100,0.5);
             display: block;
         }
 
-        .pack-name {
+        .hero-desc {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--text-dim);
+            line-height: 1.7;
+            max-width: 500px;
+            margin-bottom: 40px;
+            animation: fadeUp 0.5s 0.3s both;
+        }
+
+        /* ══════════════════════════════════════
+           VERSION SWITCHER
+        ══════════════════════════════════════ */
+        .version-switcher {
+            display: inline-flex;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            overflow: hidden;
+            animation: fadeUp 0.5s 0.35s both;
+        }
+
+        .v-tab {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 9px 20px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-dim);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border-right: 1px solid var(--border);
+        }
+
+        .v-tab:last-child { border-right: none; }
+
+        .v-tab.active {
+            background: var(--gold-dim);
+            color: var(--gold);
+        }
+
+        .v-tab .v-badge {
+            font-size: 0.55rem;
+            padding: 1px 5px;
+            border-radius: 2px;
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            color: var(--gold);
+        }
+
+        .v-tab.alpha .v-badge {
+            background: rgba(251,191,36,0.1);
+            border-color: rgba(251,191,36,0.3);
+            color: var(--amber);
+        }
+
+        .v-tab.active.alpha {
+            background: rgba(251,191,36,0.07);
+            color: var(--amber);
+        }
+
+        /* ══════════════════════════════════════
+           MAIN CONTENT GRID
+        ══════════════════════════════════════ */
+        .content-grid {
+            padding: 0 8% 80px;
+            max-width: 860px + 16%;
+            margin: 0 auto;
+        }
+
+        .content-inner {
+            max-width: 860px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .content-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Version panels */
+        .version-panel { display: none; }
+        .version-panel.active { display: contents; }
+
+        /* ══════════════════════════════════════
+           PACK CARD (LEFT)
+        ══════════════════════════════════════ */
+        .pack-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            animation: fadeUp 0.5s 0.4s both;
+        }
+
+        .card-top {
+            padding: 28px 28px 24px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-top::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .card-type {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-type::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .card-name {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 2rem;
+            font-size: 1.9rem;
             font-weight: 700;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
             color: var(--text);
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .pack-desc {
+        .card-subtitle {
             font-size: 0.83rem;
-            color: var(--text-dim);
-            line-height: 1.6;
             font-weight: 300;
+            color: var(--text-dim);
+            line-height: 1.65;
         }
 
-        /* ── META STRIP ── */
-        .meta-strip {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-top: 1px solid rgba(198,166,100,0.1);
-            border-bottom: none;
+        /* Meta grid */
+        .meta-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid var(--border);
         }
 
-        .meta-item {
-            padding: 14px 20px;
+        .meta-cell {
+            padding: 14px 18px;
             border-right: 1px solid var(--border);
+        }
+
+        .meta-cell:last-child { border-right: none; }
+
+        .meta-k {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.56rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .meta-v {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .meta-v.gold { color: var(--gold); }
+        .meta-v.amber { color: var(--amber); }
+        .meta-v.green { color: var(--green); }
+
+        /* Changelog */
+        .changelog {
+            padding: 22px 28px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .change-list {
+            list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 8px;
         }
 
-        .meta-item:last-child { border-right: none; }
+        .change-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            font-weight: 300;
+            line-height: 1.5;
+        }
 
-        .meta-key {
+        .change-icon {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            font-weight: 700;
+            margin-top: 1px;
+        }
+
+        .ci-new { background: rgba(74,222,128,0.12); color: var(--green); }
+        .ci-fix { background: rgba(251,191,36,0.12); color: var(--amber); }
+        .ci-del { background: rgba(248,113,113,0.12); color: var(--red); }
+        .ci-upd { background: rgba(198,166,100,0.12); color: var(--gold); }
+
+        /* Install steps */
+        .install-steps {
+            padding: 22px 28px 24px;
+        }
+
+        .step-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .step-check {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--border-light);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-top: 1px;
+        }
+
+        .step-item.done .step-check {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .step-check svg {
+            width: 10px;
+            height: 10px;
+            fill: none;
+            stroke: #0a0a0a;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .step-item.done .step-check svg { opacity: 1; }
+
+        .step-text {
+            font-size: 0.82rem;
+            font-weight: 300;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .step-text code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            background: rgba(255,255,255,0.05);
+            padding: 1px 5px;
+            border-radius: 2px;
+            color: var(--gold);
+        }
+
+        .step-item.done .step-text {
+            color: var(--text-muted);
+            text-decoration: line-through;
+            text-decoration-color: var(--text-muted);
+        }
+
+        /* ══════════════════════════════════════
+           SIDEBAR (RIGHT)
+        ══════════════════════════════════════ */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadeUp 0.5s 0.5s both;
+        }
+
+        /* Download card */
+        .dl-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .dl-card-inner {
+            padding: 24px 22px 22px;
+        }
+
+        .dl-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .btn-dl {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--gold);
+            color: #060606;
+            text-decoration: none;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-dl::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .btn-dl:hover {
+            background: var(--gold-bright);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(198,166,100,0.3);
+        }
+
+        .btn-dl:active { transform: translateY(0); box-shadow: none; }
+
+        .btn-dl svg {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .dl-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 16px 0;
+        }
+
+        .dl-file-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .dfi-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dfi-k {
             font-family: 'Fira Code', monospace;
             font-size: 0.6rem;
             letter-spacing: 0.12em;
@@ -206,80 +766,178 @@
             color: var(--text-muted);
         }
 
-        .meta-val {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--text);
+        .dfi-v {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.68rem;
+            color: var(--text-dim);
         }
 
-        .meta-val.gold { color: var(--gold); }
-
-        /* ── DOWNLOAD BLOCK ── */
-        .download-block {
+        /* Status card */
+        .status-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 0 0 6px 6px;
-            padding: 24px 36px 28px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
         }
 
-        .btn-download {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--gold);
-            color: #0a0a0a;
-            text-decoration: none;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 700;
+        .status-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            padding: 14px 28px;
-            border-radius: 3px;
-            transition: background 0.2s, transform 0.15s;
-            border: none;
-            cursor: pointer;
+            color: var(--text-muted);
+            margin-bottom: 12px;
         }
 
-        .btn-download:hover {
-            background: #d4b47a;
-            transform: translateY(-2px);
+        .status-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .btn-download:active {
-            transform: translateY(0);
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .btn-download svg {
-            width: 16px;
-            height: 16px;
-            fill: #0a0a0a;
+        .status-k {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            font-weight: 300;
+        }
+
+        .status-v {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+        .dot-amber { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+        .dot-red   { background: var(--red);   box-shadow: 0 0 6px var(--red); }
+
+        /* Compat card */
+        .compat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 18px 20px;
+        }
+
+        .compat-title {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .compat-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .compat-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 10px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .compat-ver {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        .compat-badge {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.08em;
+            padding: 2px 7px;
+            border-radius: 2px;
+        }
+
+        .cb-yes { background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+        .cb-partial { background: rgba(251,191,36,0.1); color: var(--amber); border: 1px solid rgba(251,191,36,0.2); }
+        .cb-no { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+
+        /* ══════════════════════════════════════
+           TOAST
+        ══════════════════════════════════════ */
+        .toast-wrap {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--surface-3);
+            border: 1px solid var(--border-light);
+            border-left: 3px solid var(--gold);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--text);
+            pointer-events: auto;
+            animation: toastIn 0.35s cubic-bezier(0.22,1,0.36,1) both;
+            min-width: 240px;
+        }
+
+        .toast.removing {
+            animation: toastOut 0.25s ease-in both;
+        }
+
+        .toast svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
             flex-shrink: 0;
         }
 
-        .install-note {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            padding: 12px 14px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            border-radius: 3px;
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
         }
 
-        .install-note span {
-            color: var(--gold);
+        @keyframes toastOut {
+            from { opacity: 1; transform: translateX(0); }
+            to   { opacity: 0; transform: translateX(20px); }
         }
 
-        /* ── FOOTER ── */
+        /* ══════════════════════════════════════
+           FOOTER
+        ══════════════════════════════════════ */
         footer {
+            margin-top: auto;
             border-top: 1px solid var(--border);
-            padding: 20px 10%;
+            padding: 18px 8%;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -287,104 +945,513 @@
             gap: 8px;
         }
 
-        .footer-left {
+        .footer-l, .footer-r {
             font-family: 'Fira Code', monospace;
-            font-size: 0.68rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
             color: var(--text-muted);
-            letter-spacing: 0.06em;
         }
 
-        .footer-right {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            letter-spacing: 0.06em;
+        .footer-era {
+            color: var(--gold);
+            opacity: 0.7;
         }
 
-        /* ── RESPONSIVE ── */
+        /* ══════════════════════════════════════
+           ANIMATIONS
+        ══════════════════════════════════════ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════ */
         @media (max-width: 600px) {
-            nav { padding: 0 6%; }
-            .pack-header { padding: 24px 22px 20px; }
-            .download-block { padding: 18px 22px 22px; }
-            .meta-item { padding: 12px 14px; }
-            .pack-name { font-size: 1.6rem; }
-            footer { padding: 18px 6%; }
-        }
-
-        @media (max-width: 400px) {
-            .nav-links { gap: 18px; }
-            .meta-strip { grid-template-columns: 1fr 1fr; }
-            .meta-item:nth-child(2) { border-right: none; }
-            .meta-item:nth-child(3) { border-top: 1px solid var(--border); grid-column: 1 / -1; }
+            nav { padding: 0 5%; }
+            .hero { padding: 50px 5% 40px; }
+            .content-grid { padding: 0 5% 60px; }
+            .meta-grid { grid-template-columns: repeat(2, 1fr); }
+            .meta-cell:nth-child(2) { border-right: none; }
+            .meta-cell:nth-child(3) { border-top: 1px solid var(--border); }
+            .meta-cell:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+            footer { padding: 16px 5%; }
+            .toast-wrap { right: 16px; bottom: 16px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- NETBAR -->
+    <div class="netbar">
+        <div class="netbar-inner">
+            <a href="https://faizzzlol.github.io/PaizCorp/">PAIZ® CORP</a>
+            <span class="netbar-dot">·</span>
+            <a href="https://faizzzlol.github.io/thelol/" class="nb-active">THE LoL</a>
+            <span class="netbar-dot">·</span>
+            <a href="#">PAIZ SHOP</a>
+            <span class="netbar-dot">·</span>
+            <a href="#">PAIZ CHICKEN</a>
+            <span class="netbar-dot">·</span>
+            <a href="#">PAIZPRODUCTIONS</a>
+            <span class="netbar-dot">·</span>
+            <a href="#">THE LOL MOVIE</a>
+            <span class="netbar-dot">·</span>
+            <a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a>
+            <span class="netbar-dot">·</span>
+            <a href="#">ISC</a>
+            <span class="netbar-dot">·</span>
+            <a href="#">TL RAILWAYS</a>
+        </div>
+    </div>
+
+    <!-- NAV -->
     <nav>
-        <a href="index.html" class="logo">The LoL</a>
+        <a href="index.html" class="logo">
+            The LoL
+            <span class="logo-badge">ALTAER ERA</span>
+        </a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="download-tlolpack.html" class="active">Downloads</a></li>
-            <li><a href="https://github.com/faizzzlol/thelol" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://faizzzlol.github.io/thelol/gov/" target="_blank">Government</a></li>
+            <li>
+                <a href="https://github.com/faizzzlol/thelolpack" target="_blank" rel="noopener" class="nav-gh">
+                    <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                    GitHub
+                </a>
+            </li>
         </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
-    <main>
-        <div class="download-wrapper">
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="download-tlolpack.html" class="active">Downloads</a>
+        <a href="https://faizzzlol.github.io/thelol/gov/" target="_blank">Government</a>
+        <a href="https://github.com/faizzzlol/thelolpack" target="_blank" rel="noopener">GitHub</a>
+    </div>
 
-            <div class="pack-header">
-                <div class="pack-icon-wrap">
-                    <!-- Pixel/pack icon -->
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                        <path d="M12 2L2 7l10 5 10-5-10-5z" opacity="0.4"/>
-                    </svg>
-                </div>
-                <div class="pack-title-block">
-                    <span class="pack-label">Resource Pack</span>
-                    <div class="pack-name">TLoL Pack</div>
-                    <div class="pack-desc">Official resource pack for The Legend of Legiona server. Recommended for the full in-server experience.</div>
-                </div>
-            </div>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-tag">Official Resource Pack</div>
+            <h1 class="hero-title">
+                <span class="line1">TLoL</span>
+                <span class="line2">Pack</span>
+            </h1>
+            <p class="hero-desc">
+                The official resource pack for The Legend of Legiona — Skyxion: Altaer Era.
+                Enhances your in-server visual experience with custom textures and assets.
+            </p>
 
-            <div class="meta-strip">
-                <div class="meta-item">
-                    <span class="meta-key">Version</span>
-                    <span class="meta-val gold">1.0.0</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-key">MC Version</span>
-                    <span class="meta-val">1.20+</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-key">Format</span>
-                    <span class="meta-val">.ZIP</span>
-                </div>
+            <!-- VERSION SWITCHER -->
+            <div class="version-switcher" id="versionSwitcher">
+                <button class="v-tab active" data-version="stable" onclick="switchVersion('stable', this)">
+                    <span>v1.1.0</span>
+                    <span class="v-badge">Stable</span>
+                </button>
+                <button class="v-tab alpha" data-version="alpha" onclick="switchVersion('alpha', this)">
+                    <span>v1.0.0</span>
+                    <span class="v-badge">Alpha</span>
+                </button>
             </div>
+        </div>
+    </section>
 
-            <div class="download-block">
-                <a href="#" class="btn-download">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                    </svg>
-                    Download Pack
-                </a>
-                <div class="install-note">
-                    <span>// INSTALL GUIDE</span><br>
-                    1. Download the .zip file — do not extract.<br>
-                    2. Move to <span>%appdata%\.minecraft\resourcepacks\</span><br>
-                    3. Enable in Options → Resource Packs → TLoL Pack.
+    <!-- CONTENT -->
+    <div class="content-grid">
+        <div class="content-inner">
+
+            <!-- STABLE PANEL -->
+            <div class="version-panel active" id="panel-stable">
+
+                <!-- PACK CARD -->
+                <div class="pack-card">
+                    <div class="card-top">
+                        <div class="card-type">Resource Pack</div>
+                        <div class="card-name">TLoL Pack v1.1.0</div>
+                        <p class="card-subtitle">
+                            Latest stable release. Custom textures, UI adjustments, and visual enhancements tailored for the Legiona server experience.
+                        </p>
+                    </div>
+
+                    <div class="meta-grid">
+                        <div class="meta-cell">
+                            <div class="meta-k">Version</div>
+                            <div class="meta-v gold">1.1.0</div>
+                        </div>
+                        <div class="meta-cell">
+                            <div class="meta-k">MC Version</div>
+                            <div class="meta-v">1.20+</div>
+                        </div>
+                        <div class="meta-cell">
+                            <div class="meta-k">Format</div>
+                            <div class="meta-v">.mcpack</div>
+                        </div>
+                        <div class="meta-cell">
+                            <div class="meta-k">Status</div>
+                            <div class="meta-v green">Stable</div>
+                        </div>
+                    </div>
+
+                    <div class="changelog">
+                        <div class="section-label">Changelog — v1.1.0</div>
+                        <ul class="change-list">
+                            <li class="change-item">
+                                <div class="change-icon ci-new">N</div>
+                                <span>Added custom pack icon and branding assets</span>
+                            </li>
+                            <li class="change-item">
+                                <div class="change-icon ci-upd">U</div>
+                                <span>Updated texture mappings for Altaer Era environment</span>
+                            </li>
+                            <li class="change-item">
+                                <div class="change-icon ci-fix">F</div>
+                                <span>Fixed broken texture references from v1.0.0 ALPHA</span>
+                            </li>
+                            <li class="change-item">
+                                <div class="change-icon ci-new">N</div>
+                                <span>New cobbled deepslate surface textures for The Black House</span>
+                            </li>
+                            <li class="change-item">
+                                <div class="change-icon ci-del">D</div>
+                                <span>Removed deprecated placeholder textures</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="install-steps">
+                        <div class="section-label">Installation Guide</div>
+                        <ul class="step-list" id="steps-stable">
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">Download the <code>.mcpack</code> file below</span>
+                            </li>
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">Open the file — Minecraft will import it automatically <em>(Bedrock)</em></span>
+                            </li>
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">For Java: move to <code>%appdata%\.minecraft\resourcepacks\</code></span>
+                            </li>
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">Enable in <code>Options → Resource Packs → TLoL Pack</code></span>
+                            </li>
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">Join the Skyxion server and enjoy the full experience</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+
+                <!-- SIDEBAR -->
+                <div class="sidebar">
+                    <div class="dl-card">
+                        <div class="dl-card-inner">
+                            <div class="dl-title">Download · v1.1.0 Stable</div>
+                            <a
+                                href="https://github.com/faizzzlol/thelolpack/raw/main/The%20LoL%20Pack%20%5B1.1.0%5D.mcpack"
+                                class="btn-dl"
+                                onclick="onDownload('v1.1.0 Stable')"
+                                download
+                            >
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Download Pack
+                            </a>
+                            <hr class="dl-divider">
+                            <div class="dl-file-info">
+                                <div class="dfi-row">
+                                    <span class="dfi-k">Filename</span>
+                                    <span class="dfi-v">TLoL_Pack_1.1.0.mcpack</span>
+                                </div>
+                                <div class="dfi-row">
+                                    <span class="dfi-k">Host</span>
+                                    <span class="dfi-v">github.com</span>
+                                </div>
+                                <div class="dfi-row">
+                                    <span class="dfi-k">Repo</span>
+                                    <span class="dfi-v">faizzzlol/thelolpack</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">Pack Status</div>
+                        <div class="status-rows">
+                            <div class="status-row">
+                                <span class="status-k">Release</span>
+                                <span class="status-v"><div class="dot dot-green"></div> Stable</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-k">Server Era</span>
+                                <span class="status-v" style="color:var(--gold); font-size:0.62rem;">ALTAER ERA</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-k">Maintained</span>
+                                <span class="status-v"><div class="dot dot-green"></div> Active</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-k">Required</span>
+                                <span class="status-v" style="color:var(--text-dim);">Optional</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="compat-card">
+                        <div class="compat-title">Compatibility</div>
+                        <div class="compat-rows">
+                            <div class="compat-row">
+                                <span class="compat-ver">MC 1.21+</span>
+                                <span class="compat-badge cb-yes">✓ Compatible</span>
+                            </div>
+                            <div class="compat-row">
+                                <span class="compat-ver">MC 1.20.x</span>
+                                <span class="compat-badge cb-yes">✓ Compatible</span>
+                            </div>
+                            <div class="compat-row">
+                                <span class="compat-ver">MC 1.19.x</span>
+                                <span class="compat-badge cb-partial">~ Partial</span>
+                            </div>
+                            <div class="compat-row">
+                                <span class="compat-ver">MC 1.18 &amp; below</span>
+                                <span class="compat-badge cb-no">✗ Unsupported</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /panel-stable -->
+
+            <!-- ALPHA PANEL -->
+            <div class="version-panel" id="panel-alpha">
+
+                <div class="pack-card">
+                    <div class="card-top">
+                        <div class="card-type" style="color:var(--amber);">Resource Pack · Alpha</div>
+                        <div class="card-name">TLoL Pack v1.0.0 <span style="color:var(--amber);font-size:1rem;">ALPHA</span></div>
+                        <p class="card-subtitle">
+                            Early access release. May contain bugs and incomplete textures. Use for testing purposes only — not recommended for the main server experience.
+                        </p>
+                    </div>
+
+                    <div class="meta-grid">
+                        <div class="meta-cell">
+                            <div class="meta-k">Version</div>
+                            <div class="meta-v amber">1.0.0</div>
+                        </div>
+                        <div class="meta-cell">
+                            <div class="meta-k">MC Version</div>
+                            <div class="meta-v">1.20+</div>
+                        </div>
+                        <div class="meta-cell">
+                            <div class="meta-k">Format</div>
+                            <div class="meta-v">.mcpack</div>
+                        </div>
+                        <div class="meta-cell">
+                            <div class="meta-k">Status</div>
+                            <div class="meta-v amber">Alpha</div>
+                        </div>
+                    </div>
+
+                    <div class="changelog">
+                        <div class="section-label">Notes — v1.0.0 ALPHA</div>
+                        <ul class="change-list">
+                            <li class="change-item">
+                                <div class="change-icon ci-new">N</div>
+                                <span>Initial pack release — first ever TLoL resource pack build</span>
+                            </li>
+                            <li class="change-item">
+                                <div class="change-icon ci-new">N</div>
+                                <span>Base texture set included</span>
+                            </li>
+                            <li class="change-item">
+                                <div class="change-icon ci-fix">!</div>
+                                <span>Known: Some texture paths may be broken or incomplete</span>
+                            </li>
+                            <li class="change-item">
+                                <div class="change-icon ci-fix">!</div>
+                                <span>Known: Pack icon placeholder — not yet finalized</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="install-steps">
+                        <div class="section-label">Installation Guide</div>
+                        <ul class="step-list" id="steps-alpha">
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">Download the <code>.mcpack</code> file below</span>
+                            </li>
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">Open the file — Minecraft will import it automatically <em>(Bedrock)</em></span>
+                            </li>
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">For Java: move to <code>%appdata%\.minecraft\resourcepacks\</code></span>
+                            </li>
+                            <li class="step-item" onclick="toggleStep(this)">
+                                <div class="step-check">
+                                    <svg viewBox="0 0 12 10"><polyline points="1,5 4,8 11,1"/></svg>
+                                </div>
+                                <span class="step-text">Enable in <code>Options → Resource Packs → TLoL Pack</code></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- SIDEBAR ALPHA -->
+                <div class="sidebar">
+                    <div class="dl-card">
+                        <div class="dl-card-inner">
+                            <div class="dl-title">Download · v1.0.0 Alpha</div>
+                            <a
+                                href="https://github.com/faizzzlol/thelolpack/raw/main/The%20LoL%20Pack%20%5Bv1.0.0%20ALPHA%5D.mcpack"
+                                class="btn-dl"
+                                style="background:var(--amber);"
+                                onclick="onDownload('v1.0.0 Alpha')"
+                                download
+                            >
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Download Alpha
+                            </a>
+                            <hr class="dl-divider">
+                            <div class="dl-file-info">
+                                <div class="dfi-row">
+                                    <span class="dfi-k">Filename</span>
+                                    <span class="dfi-v">TLoL_v1.0.0_ALPHA.mcpack</span>
+                                </div>
+                                <div class="dfi-row">
+                                    <span class="dfi-k">Superseded by</span>
+                                    <span class="dfi-v" style="color:var(--gold);">v1.1.0 Stable</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">Pack Status</div>
+                        <div class="status-rows">
+                            <div class="status-row">
+                                <span class="status-k">Release</span>
+                                <span class="status-v"><div class="dot dot-amber"></div> Alpha</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-k">Recommended</span>
+                                <span class="status-v"><div class="dot dot-red"></div> No</span>
+                            </div>
+                            <div class="status-row">
+                                <span class="status-k">Maintained</span>
+                                <span class="status-v" style="color:var(--text-dim);">Archived</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommend stable -->
+                    <div class="compat-card" style="border-color:var(--gold-border); background: var(--gold-dim);">
+                        <div class="status-title" style="color:var(--gold);">💡 Recommendation</div>
+                        <p style="font-size:0.8rem;color:var(--text-dim);font-weight:300;line-height:1.65;margin-top:8px;">
+                            You're viewing an alpha build. For the best experience, download the
+                            <button onclick="switchVersion('stable', document.querySelector('[data-version=stable]'))" style="background:none;border:none;color:var(--gold);font-size:0.8rem;cursor:pointer;text-decoration:underline;font-family:inherit;">v1.1.0 Stable</button> version instead.
+                        </p>
+                    </div>
+                </div>
+
+            </div><!-- /panel-alpha -->
 
         </div>
-    </main>
+    </div>
 
+    <!-- TOAST CONTAINER -->
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <!-- FOOTER -->
     <footer>
-        <span class="footer-left">&copy; 2026 The Legend of Legiona. All rights reserved.</span>
-        <span class="footer-right">SKYXION: ALTAER ERA</span>
+        <span class="footer-l">&copy; 2026 The Legend of Legiona. All rights reserved.</span>
+        <span class="footer-r"><span class="footer-era">SKYXION: ALTAER ERA</span></span>
     </footer>
+
+    <script>
+        /* ── HAMBURGER ── */
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        /* ── VERSION SWITCHER ── */
+        function switchVersion(version, btn) {
+            // Deactivate all tabs
+            document.querySelectorAll('.v-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Hide all panels
+            document.querySelectorAll('.version-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel-' + version).classList.add('active');
+        }
+
+        /* ── INSTALL CHECKLIST ── */
+        function toggleStep(el) {
+            el.classList.toggle('done');
+        }
+
+        /* ── TOAST ── */
+        function showToast(message) {
+            const wrap = document.getElementById('toastWrap');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                ${message}
+            `;
+            wrap.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('removing');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function onDownload(version) {
+            showToast('Downloading ' + version + '...');
+        }
+    </script>
 
 </body>
 </html>
