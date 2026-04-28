@@ -1,62 +1,178 @@
-# ⚔️ The Legend of Legiona (The LoL)
-**The official hub for the mystical world of Skyxion.**
+<div align="center">
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Website](https://img.shields.io/badge/Visit-Website-blue)](https://faizzzlol.github.io/thelol)
+<img src="https://faizzzlol.github.io/thelol/assets/img/logo.png" alt="The Legend of Legiona" width="120"/>
 
-Welcome to the repository for **The Legend of Legiona**. This site serves as the central command for players, offering high-quality resources, lore updates, and the community-favorite **TLoL Resource Pack**.
+# ⚔️ The Legend of Legiona
 
----
+**Official digital infrastructure of The LoL — a sovereign Minecraft nation on the Skyxion server.**
 
-## 🌌 Overview
-**The Legend of Legiona** is an immersive adventure experience. This website is designed to be the gateway for players to enhance their journey through our mystical world, providing seamless access to game-changing assets and community news.
+[![Era](https://img.shields.io/badge/Era-SKYXION%3A%20ALTAER-blueviolet?style=flat-square)](https://faizzzlol.github.io/thelol)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Website](https://img.shields.io/badge/Visit-thelol-blue?style=flat-square)](https://faizzzlol.github.io/thelol)
+[![Gov Portal](https://img.shields.io/badge/Gov-Portal-darkgreen?style=flat-square)](https://faizzzlol.github.io/thelol/gov)
+[![ISC](https://img.shields.io/badge/Agency-ISC-red?style=flat-square)](https://faizzzlol.github.io/thelol/gov/isc)
 
-### ✨ Key Features
-* **Resource Hub:** Direct access to the **TLoL Pack** and curated mods.
-* **Deep Lore:** Explore the history and creatures of the Legiona universe.
-* **Modern Interface:** A clean, responsive dark-themed UI built for speed.
-* **Community Focused:** Quick links to support channels and social updates.
+</div>
 
 ---
 
-## 🛠️ Local Development
-Want to test changes to the site locally? It’s a lightweight, static build—no heavy frameworks required.
+## 🌌 What Is This?
 
-1.  **Clone the realm:**
-    ```bash
-    git clone [https://github.com/faizzzlol/thelol.git](https://github.com/faizzzlol/thelol.git)
-    ```
-2.  **Navigate to the folder:**
-    ```bash
-    cd thelol
-    ```
-3.  **Launch:**
-    Open `index.html` in any modern browser.
+**The Legend of Legiona** (abbr. **The LoL**) is a structured Minecraft nation on the **Skyxion: Altaer Era** server. This repository hosts the full web infrastructure of The LoL — a multi-site ecosystem covering the public-facing hub, government portal, citizenship system, intelligence agency, and the broader Paiz® Corp conglomerate network.
+
+This is not a hobby site. It's a serious civic and community platform built to professional standards.
+
+---
+
+## 🗂️ Ecosystem Overview
+
+| Property | URL | Description |
+| :--- | :--- | :--- |
+| 🏠 **Main Hub** | `/thelol/` | Public-facing portal: lore, resources, server info |
+| 🏛️ **Government Portal** | `/thelol/gov/` | Official legislation, proclamations & policy docs |
+| 📜 **Legal Archive** | `/thelol/gov/assets/` | Searchable archive of all official documents |
+| 🪪 **Citizenship Portal** | `/thelol/thelol/` | Citizenship applications & information |
+| 🕵️ **ISC** | `/thelol/gov/isc/` | Internal Security Control — classified intel agency |
+| 🤖 **pAIz Chatbot** | `gov/about-us.html` | Live AI assistant (Anthropic API, BM/EN, multi-turn) |
+| 🏢 **Paiz® Corp** | `/PaizCorp/` | Parent conglomerate — five subsidiaries |
+
+---
+
+## 🏗️ Project Structure
+
+```
+thelol/
+├── index.html              # Main public hub
+├── about.html              # Nation overview
+├── 404.html                # Custom error page
+│
+├── gov/                    # Government portal
+│   ├── index.html          # Gov landing page
+│   ├── about-us.html       # About + pAIz chatbot
+│   ├── assets/
+│   │   └── index.html      # Legal archive (live search + filters)
+│   └── isc/                # Internal Security Control
+│       ├── index.html      # ISC public face
+│       └── intel.html      # Classified (auth-gated)
+│
+└── thelol/                 # Citizenship portal
+    ├── index.html          # Landing page
+    └── apply.html          # Formspree application form
+```
+
+---
+
+## 📋 Official Documents
+
+All legislation follows the reference format `LOLGOV-YYYY-###` (Government) or `BH-YYYY-###` (Black House Presidential).
+
+| Doc ID | Title | Status |
+| :--- | :--- | :--- |
+| `LOLGOV-2026-0001` | Citizenship Act | ✅ Active |
+| `LOLGOV-2026-0002` | Citizenship Revocation Ordinance | ✅ Active |
+| `LOLGOV-2026-0003` | Citizens' Rights Charter | ✅ Active |
+| `LOLGOV-2026-0004` | Government Policy Framework | ✅ Active |
+| `BH-2026-0001` | Presidential Proclamation | ✅ Active |
+| `BH-2026-0002` | Official Naming & Style Directive | ✅ Active |
+
+> The full archive with live search is available at the [Legal Archive](https://faizzzlol.github.io/thelol/gov/assets/).
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Vanilla HTML · CSS · JavaScript (no frameworks)
+- **Fonts:** Playfair Display · DM Mono · Outfit · Barlow Condensed
+- **Palette:** Charcoal · Emerald · Gold
+- **AI:** Anthropic Claude API (`claude-sonnet-4-20250514`) — powers the pAIz chatbot
+- **Forms:** Formspree (citizenship applications)
+- **Auth:** SHA-256 client-side (ISC intel gate)
+- **Hosting:** GitHub Pages
+
+---
+
+## 🤖 pAIz — The National AI Assistant
+
+The LoL's government portal features **pAIz**, a live AI assistant embedded in `gov/about-us.html`.
+
+**Capabilities:**
+- 🇲🇾 Bahasa Melayu + English (bilingual)
+- 💬 Multi-turn conversation memory
+- ⚡ Dynamic follow-up suggestion chips
+- 🧠 Powered by the Anthropic Claude API
+
+---
+
+## 🏢 Paiz® Corp Network
+
+The LoL is part of the broader **Paiz® Corp** conglomerate. Sites under the network share a unified topbar and design system.
+
+| Subsidiary | Description |
+| :--- | :--- |
+| 🚂 **TL Railways** | National transit authority of The LoL |
+| 🏗️ **Paiz™ Construction** | Infrastructure & development |
+| 🛒 **PaizShop** | E-commerce with GitHub-backed product management |
+| 🎬 **PaizProductions** | Media & film division |
+| 🍗 **PaizChicken** | Food & beverage brand |
+
+---
+
+## 🚀 Local Development
+
+Static build — no package manager or framework required.
+
+```bash
+# Clone the repository
+git clone https://github.com/faizzzlol/thelol.git
+
+# Navigate into it
+cd thelol
+
+# Open in browser
+open index.html
+```
+
+> For the pAIz chatbot to function, an Anthropic API key must be present in the environment or configured in the backend proxy.
 
 ---
 
 ## 🤝 Contributing
-The Legiona community thrives on collaboration. Whether it's a bug fix or a new feature suggestion, we value your input.
 
-1.  **Fork** the project.
-2.  **Create** your feature branch (`git checkout -b feature/EpicNewFeature`).
-3.  **Commit** your changes (`git commit -m 'Add some EpicNewFeature'`).
-4.  **Push** to the branch (`git push origin feature/EpicNewFeature`).
-5.  **Open** a Pull Request.
+1. **Fork** this repository
+2. **Create** your branch → `git checkout -b feature/YourFeature`
+3. **Commit** your changes → `git commit -m 'feat: add YourFeature'`
+4. **Push** → `git push origin feature/YourFeature`
+5. **Open** a Pull Request
+
+> Please follow the naming conventions defined in **BH-2026-0002** in all written materials. The approved abbreviation is **The LoL** — never standalone "LoL".
 
 ---
 
-## 📬 Get in Touch
-Have questions or want to report a bug? Reach out through our official channels:
+## 👥 Leadership
+
+| Role | Handle |
+| :--- | :--- |
+| 🏛️ **First President & Founder** | `Faiz4224` |
+| 🤝 **Co-Founder** | `Imii Kun` |
+| 🤝 **Co-Founder** | `Dyno` |
+
+---
+
+## 📬 Contact
 
 | Channel | Link |
 | :--- | :--- |
-| **Official Website** | [faizzzlol.github.io/thelol](https://faizzzlol.github.io/thelol) |
-| **Twitter / X** | [@tlol_gg](https://twitter.com/tlol_gg) |
-| **Email Support** | [thelegendoflegiona@gmail.com](mailto:thelegendoflegiona@gmail.com) |
+| 🌐 **Official Website** | [faizzzlol.github.io/thelol](https://faizzzlol.github.io/thelol) |
+| 🏛️ **Government Portal** | [faizzzlol.github.io/thelol/gov](https://faizzzlol.github.io/thelol/gov) |
+| 🐦 **Twitter / X** | [@tlol_gg](https://twitter.com/tlol_gg) |
+| 📧 **Email** | [thelegendoflegiona@gmail.com](mailto:thelegendoflegiona@gmail.com) |
 
 ---
 
-> **Note:** This project is licensed under the MIT License.
+<div align="center">
 
----
+**The Legend of Legiona** · Est. Skyxion: Altaer Era · Licensed under [MIT](https://opensource.org/licenses/MIT)
+
+*"Built different. Governed seriously."*
+
+</div>
