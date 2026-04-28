@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://faizzzlol.github.io/thelol/assets/img/logo.png" alt="The Legend of Legiona" width="120"/>
+<img src="https://raw.githubusercontent.com/faizzzlol/thelol/refs/heads/main/assets/TheLoL.png" alt="The Legend of Legiona" width="120"/>
 
 # ⚔️ The Legend of Legiona
 
