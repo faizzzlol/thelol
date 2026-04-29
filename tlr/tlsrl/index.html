@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLSRL — The LoL–Spawn Railway Link</title>
+    <link rel="icon" type="image/png" href="/thelol/TheLoL2.png">
+    <meta name="description" content="TLSRL — The LoL–Spawn Railway Link. Megaproject-01 by Paiz® Corp. 4,800+ blocks connecting The Legend of Legiona to Skyxion Spawn.">
+    <meta property="og:title" content="TLSRL — The LoL–Spawn Railway Link">
+    <meta property="og:description" content="The most ambitious infrastructure project in The Legend of Legiona.">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════
+           TLSRL — DESIGN TOKENS
+        ═══════════════════════════════════════ */
+        :root {
+            --bg:           #0e1012;
+            --bg-2:         #131619;
+            --bg-3:         #191d22;
+            --bg-card:      #171b21;
+            --border:       rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --txt:          #e8eaf0;
+            --txt-muted:    rgba(232,234,240,0.45);
+            --txt-faint:    rgba(232,234,240,0.2);
+
+            --green:        #34a06a;
+            --green-bright: #3dba7b;
+            --green-dim:    rgba(52,160,106,0.1);
+            --green-glow:   rgba(52,160,106,0.25);
+
+            --mono:    #5b9cf6;
+            --lrt:     #f6a035;
+            --hsb:     #38c9c9;
+
+            --topbar-h: 30px;
+            --nav-h:    60px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--txt);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* grain overlay */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999;
+        }
+
+        /* ─── NETWORK TOPBAR ─── */
+        .net-topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--topbar-h);
+            z-index: 500;
+            background: #090b0e;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex; align-items: center;
+            padding: 0 5%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .net-topbar::-webkit-scrollbar { display: none; }
+
+        .net-topbar-links {
+            display: flex; align-items: center;
+            gap: 0; white-space: nowrap; flex-shrink: 0;
+        }
+        .net-topbar-links a {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.47rem;
+            letter-spacing: 1.8px;
+            color: rgba(232,234,240,0.26);
+            text-decoration: none;
+            padding: 0 12px;
+            height: var(--topbar-h);
+            display: flex; align-items: center;
+            transition: color 0.2s, background 0.2s;
+            border-right: 1px solid rgba(255,255,255,0.04);
+        }
+        .net-topbar-links a:first-child { border-left: 1px solid rgba(255,255,255,0.04); }
+        .net-topbar-links a:hover { color: rgba(232,234,240,0.6); }
+        .net-topbar-links a.active-site {
+            color: var(--green);
+            background: rgba(52,160,106,0.07);
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: sticky;
+            top: var(--topbar-h);
+            z-index: 400;
+            height: var(--nav-h);
+            display: flex; align-items: center;
+            padding: 0 5%;
+            background: rgba(14,16,18,0.97);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            gap: 32px;
+        }
+
+        .nav-brand {
+            display: flex; align-items: center; gap: 14px;
+            text-decoration: none; color: inherit; flex-shrink: 0;
+        }
+
+        .tlsrl-mark {
+            height: 36px;
+            padding: 0 12px;
+            background: var(--green);
+            display: flex; align-items: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 1px;
+            transition: box-shadow 0.3s;
+        }
+        .nav-brand:hover .tlsrl-mark {
+            box-shadow: 0 0 18px rgba(52,160,106,0.5);
+        }
+
+        .nav-brand-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1rem;
+            color: var(--txt);
+            line-height: 1;
+            display: block;
+        }
+        .nav-brand-sub {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.48rem;
+            letter-spacing: 2px;
+            color: var(--txt-faint);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex; gap: 2px; flex: 1;
+        }
+        .nav-links a {
+            padding: 5px 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.57rem;
+            letter-spacing: 1.5px;
+            color: var(--txt-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--green); }
+
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+        .nav-badge {
+            padding: 4px 12px;
+            border: 1px solid rgba(52,160,106,0.3);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 1.5px;
+            color: var(--green);
+            background: rgba(52,160,106,0.06);
+        }
+
+        .nav-back {
+            padding: 5px 14px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 1.5px;
+            color: var(--txt-faint);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        .nav-back:hover { color: var(--txt); border-color: var(--border-hover); }
+
+        /* hamburger */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none; border: none;
+            margin-left: auto;
+        }
+        .nav-hamburger span {
+            display: block; width: 22px; height: 1.5px;
+            background: var(--txt-muted);
+            transition: all 0.25s;
+        }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .nav-drawer {
+            display: none;
+            position: fixed;
+            top: calc(var(--topbar-h) + var(--nav-h));
+            left: 0; right: 0;
+            background: rgba(10,12,14,0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 390;
+            padding: 1.5rem 5%;
+            flex-direction: column; gap: 0;
+        }
+        .nav-drawer.open { display: flex; }
+        .nav-drawer a {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 2px;
+            color: var(--txt-muted);
+            text-decoration: none;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s;
+        }
+        .nav-drawer a:hover { color: var(--green); }
+        .nav-drawer a:last-child { border-bottom: none; }
+
+        /* ─── HERO ─── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 100px 5% 80px;
+            overflow: hidden;
+            margin-top: var(--topbar-h);
+        }
+
+        /* animated track lines bg */
+        .hero-tracks {
+            position: absolute; inset: 0;
+            overflow: hidden; pointer-events: none;
+        }
+        .hero-tracks::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: -10%;
+            width: 120%; height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(52,160,106,0.06) 20%,
+                rgba(52,160,106,0.18) 50%,
+                rgba(52,160,106,0.06) 80%,
+                transparent 100%
+            );
+            transform: translateY(-50%);
+        }
+        .hero-tracks::after {
+            content: '';
+            position: absolute;
+            top: calc(50% + 24px); left: -10%;
+            width: 120%; height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(52,160,106,0.04) 20%,
+                rgba(52,160,106,0.12) 50%,
+                rgba(52,160,106,0.04) 80%,
+                transparent 100%
+            );
+        }
+
+        /* diagonal stripes */
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                -55deg,
+                transparent, transparent 60px,
+                rgba(255,255,255,0.01) 60px, rgba(255,255,255,0.01) 61px
+            );
+            pointer-events: none;
+        }
+
+        /* ambient glow */
+        .hero-glow-left {
+            position: absolute;
+            top: 10%; left: -10%;
+            width: 70vw; height: 70vw;
+            background: radial-gradient(circle, rgba(52,160,106,0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero-glow-right {
+            position: absolute;
+            bottom: -10%; right: -5%;
+            width: 40vw; height: 40vw;
+            background: radial-gradient(circle, rgba(52,160,106,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            max-width: 1200px; margin: 0 auto; width: 100%;
+        }
+
+        .hero-project-tag {
+            display: inline-flex; align-items: center; gap: 10px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.1s forwards;
+        }
+        .hero-project-tag span {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 3px;
+            color: var(--txt-faint);
+        }
+        .hero-project-tag .tag-badge {
+            background: var(--green-dim);
+            border: 1px solid rgba(52,160,106,0.3);
+            color: var(--green);
+            padding: 3px 10px;
+            font-size: 0.52rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-code {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(4rem, 12vw, 10rem);
+            font-weight: 600;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(52,160,106,0.3);
+            line-height: 0.9;
+            letter-spacing: -2px;
+            display: block;
+            margin-bottom: -0.5rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.2s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2rem, 4vw, 3.6rem);
+            line-height: 1.15;
+            color: var(--txt);
+            margin-bottom: 1.4rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.3s forwards;
+        }
+        .hero h1 em { font-style: italic; color: var(--green); }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--txt-muted);
+            font-weight: 300;
+            line-height: 1.85;
+            max-width: 560px;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.4s forwards;
+        }
+
+        /* inline stat pills */
+        .hero-stats {
+            display: flex; gap: 1px; flex-wrap: wrap;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.5s forwards;
+        }
+        .hstat {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1rem 1.8rem;
+            min-width: 120px;
+        }
+        .hstat-val {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.8rem;
+            color: var(--green);
+            line-height: 1;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+        .hstat-key {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.48rem;
+            letter-spacing: 2px;
+            color: var(--txt-faint);
+        }
+
+        .hero-actions {
+            display: flex; gap: 10px; flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.6s forwards;
+        }
+
+        .btn-primary {
+            padding: 13px 30px;
+            background: var(--green);
+            color: #fff;
+            text-decoration: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            opacity: 0.9; transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(52,160,106,0.35);
+        }
+        .btn-ghost {
+            padding: 13px 30px;
+            border: 1px solid var(--border-hover);
+            color: var(--txt-muted);
+            text-decoration: none;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            transition: all 0.2s;
+        }
+        .btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: var(--txt); }
+
+        /* scroll indicator */
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem; right: 5%;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+        .hero-scroll span {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.45rem;
+            letter-spacing: 2.5px;
+            color: var(--txt-faint);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        .scroll-line {
+            width: 1px; height: 50px;
+            background: linear-gradient(to bottom, var(--green), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        /* ─── OVERVIEW BAND ─── */
+        .overview-band {
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
+        }
+        .overview-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(5, 1fr);
+        }
+        .ov-item {
+            padding: 2rem 1.8rem;
+            border-right: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+        .ov-item:last-child { border-right: none; }
+        .ov-item:hover { background: rgba(52,160,106,0.04); }
+        .ov-key {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.48rem;
+            letter-spacing: 2px;
+            color: var(--txt-faint);
+            margin-bottom: 0.5rem;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .ov-key::before { content: ''; width: 10px; height: 1px; background: var(--green); opacity: 0.5; }
+        .ov-val {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.6rem;
+            color: var(--txt);
+            line-height: 1.1;
+            display: block;
+        }
+        .ov-val em { font-style: italic; color: var(--green); }
+        .ov-sub {
+            font-size: 0.78rem;
+            color: var(--txt-muted);
+            font-weight: 300;
+            margin-top: 0.2rem;
+        }
+
+        /* ─── SECTIONS ─── */
+        .section { padding: 5.5rem 5%; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+
+        .section-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 3px;
+            color: var(--green);
+            margin-bottom: 0.8rem;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-label::before { content: ''; width: 24px; height: 1px; background: var(--green); opacity: 0.6; }
+
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            color: var(--txt);
+            margin-bottom: 3rem;
+            line-height: 1.1;
+        }
+        .section-title em { font-style: italic; color: var(--green); }
+
+        /* ─── ROUTE VISUALIZATION ─── */
+        .route-section {
+            padding: 5.5rem 5%;
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+        }
+        .route-inner { max-width: 1200px; margin: 0 auto; }
+
+        .route-map-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 3rem;
+            position: relative; overflow: hidden;
+        }
+        .route-map-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent, transparent 79px,
+                rgba(255,255,255,0.018) 79px, rgba(255,255,255,0.018) 80px
+            );
+            pointer-events: none;
+        }
+
+        .route-map-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2.5rem; position: relative;
+            flex-wrap: wrap; gap: 12px;
+        }
+        .route-map-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 2.5px;
+            color: var(--txt-faint);
+        }
+        .route-distance-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            padding: 5px 14px;
+            background: var(--green-dim);
+            border: 1px solid rgba(52,160,106,0.25);
+            color: var(--green);
+        }
+
+        /* large route SVG */
+        .route-svg-large { width: 100%; height: auto; display: block; }
+
+        /* ─── STATIONS ─── */
+        .stations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--border);
+        }
+
+        .station-card {
+            background: var(--bg-card);
+            padding: 2.2rem 2rem;
+            position: relative; overflow: hidden;
+            transition: background 0.25s, box-shadow 0.3s;
+        }
+        .station-card:hover {
+            background: var(--bg-3);
+            box-shadow: inset 0 0 60px rgba(52,160,106,0.05);
+        }
+
+        /* left colour bar */
+        .station-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--green);
+            opacity: 0.4;
+            transition: opacity 0.25s, width 0.25s;
+        }
+        .station-card:hover::before { opacity: 1; width: 4px; }
+
+        .station-card.terminus::before { opacity: 1; }
+
+        .stn-top {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 1.2rem;
+        }
+        .stn-code-wrap {}
+        .stn-code {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--green);
+            display: block;
+            line-height: 1;
+        }
+        .stn-type {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.45rem;
+            letter-spacing: 1.5px;
+            color: var(--txt-faint);
+            display: block;
+            margin-top: 3px;
+        }
+        .stn-order {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            color: rgba(52,160,106,0.12);
+            line-height: 1;
+        }
+
+        .stn-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: var(--txt);
+            margin-bottom: 0.3rem;
+            line-height: 1.2;
+        }
+        .stn-desc {
+            font-size: 0.86rem;
+            color: var(--txt-muted);
+            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .stn-features {
+            display: flex; flex-wrap: wrap; gap: 5px;
+        }
+        .stn-feat {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.46rem;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border: 1px solid var(--border);
+            color: var(--txt-faint);
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .station-card:hover .stn-feat {
+            border-color: rgba(52,160,106,0.18);
+            color: rgba(52,160,106,0.55);
+        }
+
+        /* connector arrow between cards */
+        .station-connector {
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg-2);
+            border-bottom: 2px solid var(--border);
+            padding: 0.5rem;
+        }
+        .station-connector span {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            color: var(--txt-faint);
+        }
+
+        /* ─── SERVICES ─── */
+        .services-section {
+            padding: 5.5rem 5%;
+            border-top: 1px solid var(--border);
+        }
+        .services-inner { max-width: 1200px; margin: 0 auto; }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--border);
+            margin-top: 3rem;
+        }
+
+        .svc-card {
+            background: var(--bg-card);
+            padding: 2.5rem 2rem;
+            position: relative; overflow: hidden;
+            transition: background 0.25s;
+        }
+        .svc-card:hover { background: var(--bg-3); }
+
+        .svc-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 4rem;
+            color: rgba(52,160,106,0.08);
+            line-height: 1;
+            position: absolute;
+            top: 1rem; right: 1.5rem;
+        }
+
+        .svc-icon-wrap {
+            width: 46px; height: 46px;
+            background: var(--green-dim);
+            border: 1px solid rgba(52,160,106,0.18);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 1.4rem;
+            position: relative; z-index: 1;
+            transition: background 0.25s, border-color 0.25s;
+        }
+        .svc-card:hover .svc-icon-wrap {
+            background: rgba(52,160,106,0.18);
+            border-color: rgba(52,160,106,0.4);
+        }
+
+        .svc-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            color: var(--txt);
+            margin-bottom: 0.5rem;
+            position: relative; z-index: 1;
+        }
+        .svc-card p {
+            font-size: 0.88rem;
+            color: var(--txt-muted);
+            line-height: 1.75;
+            font-weight: 300;
+            position: relative; z-index: 1;
+            margin-bottom: 1.2rem;
+        }
+
+        .svc-details {
+            display: flex; flex-direction: column; gap: 6px;
+            position: relative; z-index: 1;
+        }
+        .svc-detail-row {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 1px;
+            color: var(--txt-faint);
+        }
+        .svc-detail-row::before {
+            content: '→';
+            color: var(--green);
+            opacity: 0.7;
+        }
+
+        /* ─── SPECS ─── */
+        .specs-section {
+            padding: 5.5rem 5%;
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+        }
+        .specs-inner { max-width: 1200px; margin: 0 auto; }
+
+        .specs-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--border);
+            margin-top: 3rem;
+        }
+
+        .spec-block {
+            background: var(--bg-card);
+            padding: 2.5rem 2.5rem;
+        }
+
+        .spec-block-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 2.5px;
+            color: var(--green);
+            margin-bottom: 1.8rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .spec-block-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(52,160,106,0.15);
+        }
+
+        .spec-rows {}
+        .spec-row-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .spec-row-item:hover { margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; background: rgba(52,160,106,0.03); }
+        .spec-row-item:last-child { border-bottom: none; }
+        .spec-row-k {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 1.5px;
+            color: var(--txt-faint);
+        }
+        .spec-row-v {
+            font-size: 0.9rem;
+            color: var(--txt);
+            font-weight: 500;
+            text-align: right;
+        }
+        .spec-row-v.accent { color: var(--green); font-weight: 600; }
+
+        /* Features list */
+        .features-list {
+            display: flex; flex-direction: column; gap: 0;
+        }
+        .feature-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--txt-muted);
+            font-weight: 300;
+            transition: color 0.2s;
+        }
+        .feature-item:hover { color: var(--txt); }
+        .feature-item:last-child { border-bottom: none; }
+        .feature-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--green);
+            flex-shrink: 0;
+        }
+
+        /* ─── CONSTRUCTION ─── */
+        .build-section {
+            padding: 5.5rem 5%;
+            border-top: 1px solid var(--border);
+        }
+        .build-inner { max-width: 1200px; margin: 0 auto; }
+
+        .build-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--border);
+            margin-top: 3rem;
+        }
+
+        .build-card {
+            background: var(--bg-card);
+            padding: 2.5rem 2rem;
+            transition: background 0.25s;
+        }
+        .build-card:hover { background: var(--bg-3); }
+
+        .build-card-eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            color: var(--green);
+            margin-bottom: 0.6rem;
+        }
+        .build-card h4 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            color: var(--txt);
+            margin-bottom: 0.7rem;
+        }
+        .build-card p {
+            font-size: 0.87rem;
+            color: var(--txt-muted);
+            line-height: 1.75;
+            font-weight: 300;
+        }
+        .build-stat {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border);
+            display: flex; align-items: baseline; gap: 8px;
+        }
+        .build-stat-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--green);
+            line-height: 1;
+        }
+        .build-stat-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            color: var(--txt-faint);
+        }
+
+        /* ─── PAIZ CORP STRIP ─── */
+        .corp-strip {
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 4rem 5%;
+        }
+        .corp-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 60px;
+            align-items: center;
+        }
+        .corp-inner h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--txt);
+            margin-bottom: 0.6rem;
+        }
+        .corp-inner h3 em { font-style: italic; color: var(--green); }
+        .corp-inner p {
+            font-size: 0.92rem;
+            color: var(--txt-muted);
+            line-height: 1.85;
+            font-weight: 300;
+            max-width: 560px;
+        }
+        .corp-links { display: flex; gap: 10px; margin-top: 1.5rem; flex-wrap: wrap; }
+
+        .corp-subsidiaries {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1px;
+            background: var(--border);
+            min-width: 220px;
+        }
+        .corp-sub-item {
+            background: var(--bg-card);
+            padding: 0.9rem 1.4rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.2s;
+        }
+        .corp-sub-item:hover { background: var(--bg-3); }
+        .corp-sub-name {
+            font-size: 0.85rem;
+            color: var(--txt-muted);
+            font-weight: 300;
+        }
+        .corp-sub-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.47rem;
+            letter-spacing: 1.5px;
+            color: var(--green);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            background: var(--bg-2);
+            padding: 3rem 5%;
+        }
+        .footer-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 2rem;
+        }
+
+        .f-brand {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .f-brand-full {
+            font-family: 'DM Serif Display', serif;
+            font-size: 0.95rem;
+            color: var(--txt-faint);
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .f-desc {
+            font-size: 0.83rem;
+            color: var(--txt-faint);
+            line-height: 1.75;
+            font-weight: 300;
+            max-width: 260px;
+        }
+
+        .f-col h5 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 2.5px;
+            color: var(--txt-faint);
+            margin-bottom: 1.2rem;
+        }
+        .f-col a {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(232,234,240,0.3);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            transition: color 0.2s;
+        }
+        .f-col a:hover { color: var(--green); }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .footer-bottom p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 1.5px;
+            color: var(--txt-faint);
+        }
+        .footer-line-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--green);
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+        @keyframes scrollPulse {
+            0%   { opacity: 1; transform: scaleY(1); transform-origin: top; }
+            50%  { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1000px) {
+            .overview-inner { grid-template-columns: repeat(3, 1fr); }
+            .ov-item:nth-child(4) { border-top: 1px solid var(--border); }
+            .ov-item:nth-child(5) { border-top: 1px solid var(--border); }
+            .stations-grid { grid-template-columns: 1fr 1fr; }
+            .specs-layout { grid-template-columns: 1fr; }
+            .corp-inner { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 700px) {
+            :root { --topbar-h: 28px; --nav-h: 56px; }
+            .net-topbar-links a { padding: 0 8px; font-size: 0.43rem; letter-spacing: 1.2px; }
+            .nav-links { display: none; }
+            .nav-badge { display: none; }
+            .nav-back  { display: none; }
+            .nav-hamburger { display: flex; }
+
+            .hero { padding: 60px 5% 60px; min-height: auto; }
+            .hero-scroll { display: none; }
+
+            .overview-inner { grid-template-columns: 1fr 1fr; }
+            .ov-item { border-right: none; border-bottom: 1px solid var(--border); }
+            .ov-item:last-child { border-bottom: none; }
+
+            .stations-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .build-grid    { grid-template-columns: 1fr; }
+            .footer-inner  { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+
+            .section { padding: 3.5rem 5%; }
+            .route-map-card { padding: 1.8rem 1.4rem; }
+            .corp-inner { gap: 2.5rem; }
+        }
+
+        @media (max-width: 420px) {
+            .net-topbar-links a { padding: 0 7px; font-size: 0.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NETWORK TOPBAR -->
+    <div class="net-topbar">
+        <nav class="net-topbar-links">
+            <a href="/PaizCorp/">PAIZ® CORP</a>
+            <a href="/thelol/">THE LoL</a>
+            <a href="/PaizCorp/PaizShop/">PAIZ SHOP</a>
+            <a href="/PaizCorp/PaizChicken/">PAIZ CHICKEN</a>
+            <a href="/PaizCorp/PaizProductions/">PAIZPRODUCTIONS</a>
+            <a href="/thelol/movie/">THE LOL MOVIE</a>
+            <a href="/gov/">GOVERNMENT</a>
+            <a href="/gov/isc/">ISC</a>
+            <a href="/thelol/tlr/" class="active-site">TL RAILWAYS</a>
+        </nav>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="/thelol/tlr/tlsrl/" class="nav-brand">
+            <div class="tlsrl-mark">TLSRL</div>
+            <div>
+                <span class="nav-brand-name">The LoL–Spawn Railway Link</span>
+                <span class="nav-brand-sub">MEGAPROJECT-01 // TL RAILWAYS // PAIZ® CORP</span>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="#route">ROUTE</a>
+            <a href="#stations">STATIONS</a>
+            <a href="#services">SERVICES</a>
+            <a href="#specs">SPECS</a>
+        </div>
+        <div class="nav-right">
+            <div class="nav-badge">OPERATIONAL</div>
+            <a href="/thelol/tlr/" class="nav-back">← TL RAILWAYS</a>
+        </div>
+        <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- MOBILE DRAWER -->
+    <div class="nav-drawer" id="nav-drawer">
+        <a href="#route"    onclick="closeDrawer()">ROUTE</a>
+        <a href="#stations" onclick="closeDrawer()">STATIONS</a>
+        <a href="#services" onclick="closeDrawer()">SERVICES</a>
+        <a href="#specs"    onclick="closeDrawer()">SPECS</a>
+        <a href="/thelol/tlr/">← TL RAILWAYS</a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-tracks"></div>
+        <div class="hero-glow-left"></div>
+        <div class="hero-glow-right"></div>
+        <div class="hero-inner">
+            <div class="hero-project-tag">
+                <span class="tag-badge">MEGAPROJECT-01</span>
+                <span>PAIZ® CORP // TL RAILWAYS // 2023–PRESENT</span>
+            </div>
+            <span class="hero-code">TLSRL</span>
+            <h1>The <em>LoL–Spawn</em><br>Railway Link.</h1>
+            <p class="hero-desc">
+                The most ambitious infrastructure project ever undertaken by The Legend of Legiona.
+                4,800+ blocks of track connecting The LoL to the heart of Skyxion —
+                built, operated, and maintained by the Paiz® Corp family.
+            </p>
+            <div class="hero-stats">
+                <div class="hstat">
+                    <span class="hstat-val">4,800+</span>
+                    <span class="hstat-key">BLOCKS OF TRACK</span>
+                </div>
+                <div class="hstat">
+                    <span class="hstat-val">~10</span>
+                    <span class="hstat-key">MIN END TO END</span>
+                </div>
+                <div class="hstat">
+                    <span class="hstat-val">6</span>
+                    <span class="hstat-key">STATIONS</span>
+                </div>
+                <div class="hstat">
+                    <span class="hstat-val">3</span>
+                    <span class="hstat-key">SERVICE TIERS</span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <a href="#route" class="btn-primary">VIEW ROUTE MAP →</a>
+                <a href="#stations" class="btn-ghost">ALL STATIONS</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            <span>SCROLL</span>
+        </div>
+    </section>
+
+    <!-- OVERVIEW BAND -->
+    <div class="overview-band">
+        <div class="overview-inner">
+            <div class="ov-item">
+                <div class="ov-key">OPERATOR</div>
+                <span class="ov-val">TL <em>Railways</em></span>
+                <div class="ov-sub">Subsidiary of Paiz® Corp</div>
+            </div>
+            <div class="ov-item">
+                <div class="ov-key">CONSTRUCTOR</div>
+                <span class="ov-val">Paiz™ <em>Construction</em></span>
+                <div class="ov-sub">All track & stations</div>
+            </div>
+            <div class="ov-item">
+                <div class="ov-key">PROPOSED BY</div>
+                <span class="ov-val"><em>Faiz</em>4224</span>
+                <div class="ov-sub">First President, The LoL</div>
+            </div>
+            <div class="ov-item">
+                <div class="ov-key">LINE CODE</div>
+                <span class="ov-val"><em>TLSRL</em></span>
+                <div class="ov-sub">Emerald green line</div>
+            </div>
+            <div class="ov-item">
+                <div class="ov-key">STATUS</div>
+                <span class="ov-val" style="color:var(--green)"><em>Operational</em></span>
+                <div class="ov-sub">All services running</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROUTE MAP -->
+    <section class="route-section" id="route">
+        <div class="route-inner">
+            <div class="reveal">
+                <div class="section-label">ROUTE OVERVIEW</div>
+                <div class="section-title">The <em>Line.</em></div>
+            </div>
+            <div class="route-map-card reveal">
+                <div class="route-map-header">
+                    <div class="route-map-title">TLSRL ROUTE SCHEMATIC — THE LOL TO SPAWN</div>
+                    <div class="route-distance-badge">4,800+ BLOCKS // ~10 MIN</div>
+                </div>
+                <!-- Extended detailed SVG route -->
+                <svg class="route-svg-large" viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" style="font-family:'IBM Plex Mono',monospace;">
+                    <defs>
+                        <linearGradient id="trackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%"   stop-color="#34a06a" stop-opacity="0.5"/>
+                            <stop offset="50%"  stop-color="#34a06a" stop-opacity="1"/>
+                            <stop offset="100%" stop-color="#34a06a" stop-opacity="0.5"/>
+                        </linearGradient>
+                        <filter id="stationGlow">
+                            <feGaussianBlur stdDeviation="3" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Grid -->
+                    <line x1="0" y1="100" x2="900" y2="100" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    <line x1="150" y1="0" x2="150" y2="200" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    <line x1="300" y1="0" x2="300" y2="200" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    <line x1="450" y1="0" x2="450" y2="200" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    <line x1="600" y1="0" x2="600" y2="200" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    <line x1="750" y1="0" x2="750" y2="200" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+                    <!-- Shadow track (lower rail) -->
+                    <line x1="50" y1="108" x2="850" y2="108" stroke="rgba(52,160,106,0.15)" stroke-width="3"/>
+                    <!-- Main track -->
+                    <line x1="50" y1="100" x2="850" y2="100" stroke="url(#trackGrad)" stroke-width="5"/>
+
+                    <!-- Track ties / sleepers detail -->
+                    <line x1="80"  y1="92" x2="80"  y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="110" y1="92" x2="110" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="200" y1="92" x2="200" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="240" y1="92" x2="240" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="370" y1="92" x2="370" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="410" y1="92" x2="410" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="530" y1="92" x2="530" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="570" y1="92" x2="570" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="680" y1="92" x2="680" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="720" y1="92" x2="720" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="800" y1="92" x2="800" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+                    <line x1="830" y1="92" x2="830" y2="108" stroke="rgba(52,160,106,0.08)" stroke-width="1.5"/>
+
+                    <!-- Station 1: The LoL (terminus) -->
+                    <circle cx="50" cy="100" r="10" fill="#34a06a" filter="url(#stationGlow)"/>
+                    <circle cx="50" cy="100" r="6"  fill="#34a06a" stroke="#0e1012" stroke-width="2"/>
+                    <text x="50" y="72"  fill="#e8eaf0" font-size="9" text-anchor="middle" font-weight="600">THE LOL</text>
+                    <text x="50" y="83"  fill="rgba(52,160,106,0.8)" font-size="7" text-anchor="middle">TLL</text>
+                    <text x="50" y="128" fill="rgba(232,234,240,0.28)" font-size="6" text-anchor="middle">TERMINUS</text>
+
+                    <!-- Station 2: LoL City Central -->
+                    <rect x="176" y="88" width="14" height="14" fill="rgba(52,160,106,0.3)" stroke="#34a06a" stroke-width="2" transform="rotate(45,183,95)"/>
+                    <text x="183" y="72"  fill="#e8eaf0" font-size="8.5" text-anchor="middle" font-weight="600">LOL CITY</text>
+                    <text x="183" y="82"  fill="#e8eaf0" font-size="8.5" text-anchor="middle" font-weight="600">CENTRAL</text>
+                    <text x="183" y="113" fill="rgba(52,160,106,0.8)" font-size="7" text-anchor="middle">LLC</text>
+                    <text x="183" y="128" fill="rgba(232,234,240,0.28)" font-size="6" text-anchor="middle">INTERCHANGE</text>
+                    <!-- MONO interchange indicator -->
+                    <rect x="168" y="72" width="6" height="6" fill="#5b9cf6" opacity="0.6"/>
+                    <text x="176" y="78"  fill="rgba(91,156,246,0.6)" font-size="6">MONO</text>
+
+                    <!-- Station 3: LoL Outpost -->
+                    <circle cx="330" cy="100" r="7" fill="#0e1012" stroke="#34a06a" stroke-width="2"/>
+                    <text x="330" y="78"  fill="rgba(232,234,240,0.8)" font-size="8.5" text-anchor="middle">LOL</text>
+                    <text x="330" y="88"  fill="rgba(232,234,240,0.8)" font-size="8.5" text-anchor="middle">OUTPOST</text>
+                    <text x="330" y="117" fill="rgba(52,160,106,0.7)" font-size="7" text-anchor="middle">LLO</text>
+
+                    <!-- Station 4: Midpoint Station -->
+                    <circle cx="480" cy="100" r="7" fill="#0e1012" stroke="#34a06a" stroke-width="2"/>
+                    <text x="480" y="78"  fill="rgba(232,234,240,0.8)" font-size="8.5" text-anchor="middle">MIDPOINT</text>
+                    <text x="480" y="88"  fill="rgba(232,234,240,0.8)" font-size="8.5" text-anchor="middle">STATION</text>
+                    <text x="480" y="117" fill="rgba(52,160,106,0.7)" font-size="7" text-anchor="middle">MPS</text>
+                    <text x="480" y="128" fill="rgba(232,234,240,0.2)" font-size="6" text-anchor="middle">MID-ROUTE</text>
+
+                    <!-- Station 5: Skyxion Junction -->
+                    <rect x="639" y="88" width="14" height="14" fill="rgba(52,160,106,0.3)" stroke="#34a06a" stroke-width="2" transform="rotate(45,646,95)"/>
+                    <text x="646" y="78"  fill="rgba(232,234,240,0.8)" font-size="8.5" text-anchor="middle">SKYXION</text>
+                    <text x="646" y="88"  fill="rgba(232,234,240,0.8)" font-size="8.5" text-anchor="middle">JUNCTION</text>
+                    <text x="646" y="113" fill="rgba(52,160,106,0.7)" font-size="7" text-anchor="middle">SXJ</text>
+                    <text x="646" y="128" fill="rgba(232,234,240,0.28)" font-size="6" text-anchor="middle">JUNCTION</text>
+
+                    <!-- Station 6: Spawn (terminus) -->
+                    <circle cx="850" cy="100" r="10" fill="#34a06a" filter="url(#stationGlow)"/>
+                    <circle cx="850" cy="100" r="6"  fill="#34a06a" stroke="#0e1012" stroke-width="2"/>
+                    <text x="850" y="72"  fill="#e8eaf0" font-size="9" text-anchor="middle" font-weight="600">SPAWN</text>
+                    <text x="850" y="83"  fill="rgba(52,160,106,0.8)" font-size="7" text-anchor="middle">SPN</text>
+                    <text x="850" y="128" fill="rgba(232,234,240,0.28)" font-size="6" text-anchor="middle">TERMINUS</text>
+
+                    <!-- Distance markers -->
+                    <text x="450" y="185" fill="rgba(52,160,106,0.3)" font-size="8" text-anchor="middle">← 4,800+ BLOCKS →</text>
+                    <line x1="60" y1="182" x2="840" y2="182" stroke="rgba(52,160,106,0.15)" stroke-width="0.5" stroke-dasharray="3 3"/>
+
+                    <!-- Legend -->
+                    <circle cx="20" cy="192" r="5" fill="#34a06a"/>
+                    <text x="28" y="196" fill="rgba(232,234,240,0.3)" font-size="7">TERMINUS</text>
+                    <rect x="94" y="187" width="10" height="10" fill="rgba(52,160,106,0.3)" stroke="#34a06a" stroke-width="1.5" transform="rotate(45,99,192)"/>
+                    <text x="107" y="196" fill="rgba(232,234,240,0.3)" font-size="7">INTERCHANGE</text>
+                    <circle cx="175" cy="192" r="5" fill="#0e1012" stroke="#34a06a" stroke-width="1.5"/>
+                    <text x="183" y="196" fill="rgba(232,234,240,0.3)" font-size="7">STATION</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATIONS -->
+    <section class="section" id="stations">
+        <div class="section-inner">
+            <div class="reveal">
+                <div class="section-label">STATION NETWORK</div>
+                <div class="section-title">The <em>Stations.</em></div>
+            </div>
+            <div class="stations-grid reveal">
+
+                <!-- TLL -->
+                <div class="station-card terminus">
+                    <div class="stn-top">
+                        <div class="stn-code-wrap">
+                            <span class="stn-code">TLL</span>
+                            <span class="stn-type">TERMINUS // STOP 1 OF 6</span>
+                        </div>
+                        <div class="stn-order">01</div>
+                    </div>
+                    <div class="stn-name">The LoL</div>
+                    <p class="stn-desc">
+                        The southern terminus and origin of the TLSRL. Located at the heart of The Legend of Legiona, 
+                        this station serves as the primary gateway connecting the nation to the broader Skyxion rail network.
+                    </p>
+                    <div class="stn-features">
+                        <span class="stn-feat">TERMINUS</span>
+                        <span class="stn-feat">MAIN GATEWAY</span>
+                        <span class="stn-feat">ESCALATOR</span>
+                        <span class="stn-feat">ENDER CHEST</span>
+                    </div>
+                </div>
+
+                <!-- LLC -->
+                <div class="station-card">
+                    <div class="stn-top">
+                        <div class="stn-code-wrap">
+                            <span class="stn-code">LLC</span>
+                            <span class="stn-type">INTERCHANGE // STOP 2 OF 6</span>
+                        </div>
+                        <div class="stn-order">02</div>
+                    </div>
+                    <div class="stn-name">LoL City Central</div>
+                    <p class="stn-desc">
+                        The primary interchange station within The LoL's urban core. Connects TLSRL passengers 
+                        to the TL Monorail (MONO line) for onward travel to northern districts.
+                    </p>
+                    <div class="stn-features">
+                        <span class="stn-feat">MONO INTERCHANGE</span>
+                        <span class="stn-feat">URBAN CORE</span>
+                        <span class="stn-feat">ESCALATOR</span>
+                    </div>
+                </div>
+
+                <!-- LLO -->
+                <div class="station-card">
+                    <div class="stn-top">
+                        <div class="stn-code-wrap">
+                            <span class="stn-code">LLO</span>
+                            <span class="stn-type">WAYSIDE // STOP 3 OF 6</span>
+                        </div>
+                        <div class="stn-order">03</div>
+                    </div>
+                    <div class="stn-name">LoL Outpost</div>
+                    <p class="stn-desc">
+                        An intermediate station marking the outer boundary of The LoL's territorial core. 
+                        Serves the outpost settlement at the edge of Legiona's established borders.
+                    </p>
+                    <div class="stn-features">
+                        <span class="stn-feat">OUTPOST</span>
+                        <span class="stn-feat">BORDER ZONE</span>
+                    </div>
+                </div>
+
+                <!-- MPS -->
+                <div class="station-card">
+                    <div class="stn-top">
+                        <div class="stn-code-wrap">
+                            <span class="stn-code">MPS</span>
+                            <span class="stn-type">WAYSIDE // STOP 4 OF 6</span>
+                        </div>
+                        <div class="stn-order">04</div>
+                    </div>
+                    <div class="stn-name">Midpoint Station</div>
+                    <p class="stn-desc">
+                        The geographic midpoint of the TLSRL route. Positioned roughly 2,400 blocks from each terminus, 
+                        it serves as a waypoint for long-distance passengers and cargo transfers.
+                    </p>
+                    <div class="stn-features">
+                        <span class="stn-feat">MID-ROUTE</span>
+                        <span class="stn-feat">CARGO STOP</span>
+                    </div>
+                </div>
+
+                <!-- SXJ -->
+                <div class="station-card">
+                    <div class="stn-top">
+                        <div class="stn-code-wrap">
+                            <span class="stn-code">SXJ</span>
+                            <span class="stn-type">JUNCTION // STOP 5 OF 6</span>
+                        </div>
+                        <div class="stn-order">05</div>
+                    </div>
+                    <div class="stn-name">Skyxion Junction</div>
+                    <p class="stn-desc">
+                        The Skyxion network interchange — where TLSRL meets the wider Skyxion rail infrastructure. 
+                        A critical node for passengers connecting to other server destinations.
+                    </p>
+                    <div class="stn-features">
+                        <span class="stn-feat">SKYXION NETWORK</span>
+                        <span class="stn-feat">JUNCTION</span>
+                        <span class="stn-feat">CONNECTIONS</span>
+                    </div>
+                </div>
+
+                <!-- SPN -->
+                <div class="station-card terminus">
+                    <div class="stn-top">
+                        <div class="stn-code-wrap">
+                            <span class="stn-code">SPN</span>
+                            <span class="stn-type">TERMINUS // STOP 6 OF 6</span>
+                        </div>
+                        <div class="stn-order">06</div>
+                    </div>
+                    <div class="stn-name">Spawn</div>
+                    <p class="stn-desc">
+                        The northern terminus and destination of TLSRL. Spawn is the administrative and commercial 
+                        heart of the Skyxion server — making this station The LoL's most strategically vital connection.
+                    </p>
+                    <div class="stn-features">
+                        <span class="stn-feat">TERMINUS</span>
+                        <span class="stn-feat">SKYXION HUB</span>
+                        <span class="stn-feat">ENDER CHEST</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services-section" id="services">
+        <div class="services-inner">
+            <div class="reveal">
+                <div class="section-label">SERVICE TIERS</div>
+                <div class="section-title">How We <em>Run.</em></div>
+            </div>
+            <div class="services-grid reveal">
+
+                <div class="svc-card">
+                    <div class="svc-num">01</div>
+                    <div class="svc-icon-wrap">🚃</div>
+                    <h3>Regular Service</h3>
+                    <p>
+                        The standard TLSRL passenger service, running the full route from The LoL to Spawn 
+                        with stops at all six stations. The backbone of daily travel within The LoL's rail network.
+                    </p>
+                    <div class="svc-details">
+                        <div class="svc-detail-row">Stops at all 6 stations</div>
+                        <div class="svc-detail-row">Full route: TLL → SPN</div>
+                        <div class="svc-detail-row">Everyday passenger travel</div>
+                        <div class="svc-detail-row">~10 min end to end</div>
+                    </div>
+                </div>
+
+                <div class="svc-card">
+                    <div class="svc-num">02</div>
+                    <div class="svc-icon-wrap">⚡</div>
+                    <h3>Express Service</h3>
+                    <p>
+                        A limited-stop or non-stop service for passengers travelling directly between 
+                        The LoL and Spawn. Faster journey times by skipping intermediate stations on the route.
+                    </p>
+                    <div class="svc-details">
+                        <div class="svc-detail-row">Limited stops: TLL / SPN only</div>
+                        <div class="svc-detail-row">Faster journey times</div>
+                        <div class="svc-detail-row">Priority boarding</div>
+                        <div class="svc-detail-row">Long-distance passengers</div>
+                    </div>
+                </div>
+
+                <div class="svc-card">
+                    <div class="svc-num">03</div>
+                    <div class="svc-icon-wrap">📦</div>
+                    <h3>Cargo Transport</h3>
+                    <p>
+                        Dedicated freight service for moving resources, goods, and materials between 
+                        The LoL and Spawn. Features full ender chest integration for secure item storage during transit.
+                    </p>
+                    <div class="svc-details">
+                        <div class="svc-detail-row">Ender chest integration</div>
+                        <div class="svc-detail-row">Resource transport</div>
+                        <div class="svc-detail-row">Dedicated cargo wagons</div>
+                        <div class="svc-detail-row">Stops at key stations</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECS & FEATURES -->
+    <section class="specs-section" id="specs">
+        <div class="specs-inner">
+            <div class="reveal">
+                <div class="section-label">TECHNICAL SPECIFICATIONS</div>
+                <div class="section-title">By the <em>Numbers.</em></div>
+            </div>
+            <div class="specs-layout reveal">
+
+                <!-- Specs -->
+                <div class="spec-block">
+                    <div class="spec-block-title">PROJECT SPECIFICATIONS</div>
+                    <div class="spec-rows">
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">LINE CODE</span>
+                            <span class="spec-row-v accent">TLSRL</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">DISTANCE</span>
+                            <span class="spec-row-v accent">4,800+ blocks</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">TRAVEL TIME</span>
+                            <span class="spec-row-v">~10 minutes</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">STATIONS</span>
+                            <span class="spec-row-v">6</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">SERVICE TIERS</span>
+                            <span class="spec-row-v">3 (Regular / Express / Cargo)</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">TERMINUS A</span>
+                            <span class="spec-row-v">The LoL (TLL)</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">TERMINUS B</span>
+                            <span class="spec-row-v">Spawn (SPN)</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">LINE COLOUR</span>
+                            <span class="spec-row-v accent">Emerald Green #34A06A</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">OPERATOR</span>
+                            <span class="spec-row-v">TL Railways</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">CONSTRUCTOR</span>
+                            <span class="spec-row-v">Paiz™ Construction</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">PARENT CORP</span>
+                            <span class="spec-row-v">Paiz® Corp</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">PROPOSED BY</span>
+                            <span class="spec-row-v">Faiz4224</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">ESTABLISHED</span>
+                            <span class="spec-row-v">2023</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">PROJECT CODE</span>
+                            <span class="spec-row-v">MEGAPROJECT-01</span>
+                        </div>
+                        <div class="spec-row-item">
+                            <span class="spec-row-k">STATUS</span>
+                            <span class="spec-row-v accent">OPERATIONAL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="spec-block">
+                    <div class="spec-block-title">INFRASTRUCTURE FEATURES</div>
+                    <div class="features-list">
+                        <div class="feature-item"><div class="feature-dot"></div>Fully enclosed track throughout entire route</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Purpose-built station structures at all 6 stops</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Escalator access at key stations</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Ender chest storage at terminal stations</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Interchange connection at LoL City Central (MONO)</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Skyxion network connection at Junction station</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Dedicated cargo lanes on select sections</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Powered minecart infrastructure throughout</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Lit and maintained tunnels for day/night operation</div>
+                        <div class="feature-item"><div class="feature-dot"></div>Signage and wayfinding at all stations</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONSTRUCTION -->
+    <section class="build-section">
+        <div class="build-inner">
+            <div class="reveal">
+                <div class="section-label">BUILD & CONSTRUCTION</div>
+                <div class="section-title">Built by <em>Paiz™ Construction.</em></div>
+            </div>
+            <div class="build-grid reveal">
+
+                <div class="build-card">
+                    <div class="build-card-eyebrow">TRACK INFRASTRUCTURE</div>
+                    <h4>The Railway Itself</h4>
+                    <p>
+                        Every block of the TLSRL track was laid by Paiz™ Construction — the engineering arm of 
+                        Paiz® Corp. Spanning 4,800+ blocks, the enclosed track design protects passengers and 
+                        cargo from mob interference and environmental obstacles throughout the entire route.
+                    </p>
+                    <div class="build-stat">
+                        <span class="build-stat-num">4,800+</span>
+                        <span class="build-stat-label">BLOCKS OF ENCLOSED TRACK</span>
+                    </div>
+                </div>
+
+                <div class="build-card">
+                    <div class="build-card-eyebrow">STATION CONSTRUCTION</div>
+                    <h4>Six Purpose-Built Stations</h4>
+                    <p>
+                        Each of the 6 stations along the TLSRL route was designed and constructed to serve 
+                        its specific role — from the grand terminus facilities at The LoL and Spawn, 
+                        to the interchange architecture at LoL City Central and Skyxion Junction.
+                    </p>
+                    <div class="build-stat">
+                        <span class="build-stat-num">6</span>
+                        <span class="build-stat-label">STATIONS CONSTRUCTED</span>
+                    </div>
+                </div>
+
+                <div class="build-card">
+                    <div class="build-card-eyebrow">ORIGIN</div>
+                    <h4>Faiz4224's Vision</h4>
+                    <p>
+                        The TLSRL was conceived and proposed by Faiz4224, First President of The Legend of Legiona. 
+                        The project was driven by a vision to give The LoL a permanent, high-quality link to 
+                        Skyxion Spawn — cementing The LoL's place in the server's infrastructure landscape.
+                    </p>
+                    <div class="build-stat">
+                        <span class="build-stat-num">01</span>
+                        <span class="build-stat-label">MEGAPROJECT — FIRST OF ITS KIND</span>
+                    </div>
+                </div>
+
+                <div class="build-card">
+                    <div class="build-card-eyebrow">ROLLING STOCK & SYSTEMS</div>
+                    <h4>Operational Excellence</h4>
+                    <p>
+                        TL Railways operates all rolling stock and system management across the TLSRL route. 
+                        Three distinct service tiers — Regular, Express, and Cargo — are maintained daily, 
+                        with operational oversight provided by TL Railways' network control.
+                    </p>
+                    <div class="build-stat">
+                        <span class="build-stat-num">3</span>
+                        <span class="build-stat-label">SERVICE TIERS MAINTAINED</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PAIZ CORP STRIP -->
+    <div class="corp-strip reveal">
+        <div class="corp-inner">
+            <div>
+                <h3>Part of the <em>Paiz® Corp</em> ecosystem.</h3>
+                <p>
+                    TLSRL is the flagship project of TL Railways, itself a subsidiary of Paiz® Corp — 
+                    The Legend of Legiona's national conglomerate. The project spans two subsidiaries: 
+                    TL Railways (operator) and Paiz™ Construction (constructor), 
+                    demonstrating the full range of Paiz® Corp's capabilities.
+                </p>
+                <div class="corp-links">
+                    <a href="/thelol/tlr/" class="btn-primary" style="font-size:0.58rem; padding:10px 22px;">TL RAILWAYS →</a>
+                    <a href="/PaizCorp/" class="btn-ghost" style="font-size:0.58rem; padding:10px 22px;">PAIZ® CORP</a>
+                </div>
+            </div>
+            <div class="corp-subsidiaries">
+                <div class="corp-sub-item">
+                    <span class="corp-sub-name">TL Railways</span>
+                    <span class="corp-sub-tag">OPERATOR</span>
+                </div>
+                <div class="corp-sub-item">
+                    <span class="corp-sub-name">Paiz™ Construction</span>
+                    <span class="corp-sub-tag">CONSTRUCTOR</span>
+                </div>
+                <div class="corp-sub-item">
+                    <span class="corp-sub-name">Paiz® Corp</span>
+                    <span class="corp-sub-tag">PARENT CORP</span>
+                </div>
+                <div class="corp-sub-item">
+                    <span class="corp-sub-name">Faiz4224</span>
+                    <span class="corp-sub-tag">FOUNDER</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <span class="f-brand">TLSRL</span>
+                <span class="f-brand-full">The LoL–Spawn Railway Link</span>
+                <p class="f-desc">
+                    The flagship infrastructure project of The Legend of Legiona. 
+                    Operated by TL Railways. Built by Paiz™ Construction. 
+                    A Paiz® Corp megaproject. Est. 2023.
+                </p>
+            </div>
+            <div class="f-col">
+                <h5>ROUTE</h5>
+                <a href="#route">Route Map</a>
+                <a href="#stations">All Stations</a>
+                <a href="#services">Services</a>
+                <a href="#specs">Specifications</a>
+            </div>
+            <div class="f-col">
+                <h5>TL RAILWAYS</h5>
+                <a href="/thelol/tlr/">Network Home</a>
+                <a href="/thelol/tlr/#lines">All Lines</a>
+                <a href="/thelol/tlr/#services">Services</a>
+            </div>
+            <div class="f-col">
+                <h5>THE LOL</h5>
+                <a href="/thelol/">Nation Home</a>
+                <a href="/gov/">Government</a>
+                <a href="/gov/isc/">ISC</a>
+                <a href="/PaizCorp/">Paiz® Corp</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 TLSRL — TL RAILWAYS — A SUBSIDIARY OF PAIZ® CORP — THE LEGEND OF LEGIONA</p>
+            <div class="footer-line-dot"></div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('in'), i * 80);
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.07 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // Active nav on scroll
+        const sections  = ['route','stations','services','specs'];
+        const navLinks  = document.querySelectorAll('.nav-links a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && window.scrollY >= el.offsetTop - 120) current = id;
+            });
+            navLinks.forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+            });
+        });
+
+        // Hamburger
+        const hamburger = document.getElementById('hamburger');
+        const drawer    = document.getElementById('nav-drawer');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            drawer.classList.toggle('open');
+        });
+        function closeDrawer() {
+            hamburger.classList.remove('open');
+            drawer.classList.remove('open');
+        }
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !drawer.contains(e.target)) closeDrawer();
+        });
+    </script>
+
+</body>
+</html>
