@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>National ID Portal — The Legend of Legiona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── VARIABLES ── */
+    :root {
+      --bg:           #0f0f0f;
+      --bg-surface:   #141414;
+      --bg-card:      #1a1a1a;
+      --bg-card-h:    #1f1f1f;
+      --border:       #2a2a2a;
+      --border-h:     #3d6b52;
+      --emerald:      #3d6b52;
+      --emerald-l:    #4e8f6b;
+      --emerald-dim:  rgba(61,107,82,0.12);
+      --emerald-glow: rgba(61,107,82,0.25);
+      --gold:         #c9a84c;
+      --gold-l:       #e0be6f;
+      --gold-dim:     rgba(201,168,76,0.10);
+      --text:         #e8e2d9;
+      --text-muted:   #7a7570;
+      --text-dim:     #4a4540;
+      --white:        #ffffff;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-mono:    'DM Mono', 'Courier New', monospace;
+      --font-body:    'Outfit', sans-serif;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 180px;
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NETBAR ── */
+    .netbar {
+      width: 100%;
+      background: #0a0a0a;
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      scrollbar-width: none;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .netbar::-webkit-scrollbar { display: none; }
+    .netbar a {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      padding: 0 14px;
+      border-right: 1px solid var(--border);
+      transition: color 0.2s;
+      text-transform: uppercase;
+    }
+    .netbar a:first-child { border-left: 1px solid var(--border); }
+    .netbar a:hover { color: var(--gold); }
+    .netbar a.active { color: var(--emerald-l); }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-crest {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .header-sup {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+    }
+    .header-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .header-sub {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .header-nav a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: var(--text); }
+    .header-nav a.active { color: var(--emerald-l); }
+    .btn-admin-hdr {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.35);
+      padding: 7px 18px;
+      transition: all 0.2s;
+    }
+    .btn-admin-hdr:hover {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 96px 48px 80px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-bg-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(61,107,82,0.04) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(61,107,82,0.04) 60px);
+      pointer-events: none;
+    }
+    .hero-bg-glow {
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(61,107,82,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-bg-glow2 {
+      position: absolute;
+      bottom: -200px;
+      left: 10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow-line {
+      width: 32px;
+      height: 1px;
+      background: var(--emerald);
+    }
+    .hero-eyebrow-text {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+    }
+    .hero-doc-ref {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+    }
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .hero-h1 em {
+      font-style: italic;
+      color: var(--emerald-l);
+    }
+    .hero-h1 .gold { color: var(--gold); font-style: normal; }
+    .hero-desc {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--emerald);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border: 1px solid var(--emerald);
+      transition: all 0.25s;
+    }
+    .btn-primary:hover {
+      background: var(--emerald-l);
+      border-color: var(--emerald-l);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(61,107,82,0.3);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border: 1px solid var(--border);
+      transition: all 0.25s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-h);
+      color: var(--text);
+    }
+    .hero-id-preview {
+      position: absolute;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      opacity: 0.45;
+    }
+    .hero-id-sample {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--emerald-l);
+      border: 1px solid rgba(61,107,82,0.2);
+      padding: 8px 16px;
+      background: rgba(61,107,82,0.04);
+    }
+    .hero-id-sample span { color: var(--text-dim); }
+
+    /* ── VERIFY STRIP ── */
+    .verify-strip {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 48px;
+    }
+    .verify-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 700px;
+    }
+    .verify-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .verify-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+    .verify-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 10px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      text-transform: uppercase;
+    }
+    .verify-input::placeholder {
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+    .verify-input:focus { border-color: var(--emerald); }
+    .verify-btn {
+      background: transparent;
+      border: 1px solid var(--emerald);
+      color: var(--emerald-l);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .verify-btn:hover {
+      background: var(--emerald-dim);
+    }
+    .verify-result {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      margin-top: 10px;
+      display: none;
+    }
+    .verify-result.show { display: block; }
+    .verify-result.ok { color: var(--emerald-l); }
+    .verify-result.err { color: #c0392b; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .section-label-line { width: 24px; height: 1px; background: var(--emerald); }
+    .section-label-text {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+    }
+
+    /* ── PORTAL CARDS ── */
+    .portals {
+      padding: 72px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .portals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+    }
+    .portal-card {
+      background: var(--bg-card);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: background 0.2s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .portal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--emerald);
+      transition: height 0.35s ease;
+    }
+    .portal-card:hover::before { height: 100%; }
+    .portal-card:hover { background: var(--bg-card-h); }
+    .portal-card.gold-accent::before { background: var(--gold); }
+    .portal-card-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .portal-card:hover .portal-card-icon { border-color: var(--border-h); }
+    .portal-card.gold-accent:hover .portal-card-icon { border-color: rgba(201,168,76,0.5); }
+    .portal-card-icon svg { width: 18px; height: 18px; }
+    .portal-card-num {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      position: absolute;
+      top: 20px;
+      right: 24px;
+    }
+    .portal-card-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .portal-card-desc {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .portal-card-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+      transition: gap 0.2s;
+    }
+    .portal-card.gold-accent .portal-card-link { color: var(--gold); }
+    .portal-card:hover .portal-card-link { gap: 12px; }
+    .portal-card-link-arrow { font-size: 12px; }
+
+    /* ── INFO GRID ── */
+    .info-section {
+      padding: 72px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+    }
+    .info-block {
+      background: var(--bg-surface);
+      padding: 40px 36px;
+    }
+    .info-block-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .info-block-title-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--emerald);
+      flex-shrink: 0;
+    }
+    .info-block-title-dot.gold { background: var(--gold); }
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .info-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .info-list-item:last-child { border-bottom: none; }
+    .info-list-num {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      padding-top: 2px;
+      flex-shrink: 0;
+      width: 24px;
+    }
+    .info-id-format {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-top: 0;
+    }
+    .id-format-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .id-format-display {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: var(--emerald-l);
+      margin-bottom: 20px;
+    }
+    .id-format-parts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .id-format-part {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+    }
+    .id-format-part-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .id-format-part-val {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── STATUS ── */
+    .status-section {
+      padding: 40px 48px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .status-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .status-item-label {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .status-item-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .status-item-val.green { color: var(--emerald-l); }
+    .status-item-val.gold { color: var(--gold); }
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(61,107,82,0.3);
+      padding: 8px 16px;
+      background: rgba(61,107,82,0.06);
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald-l);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .status-badge-text {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .footer-brand-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col-title {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--emerald-l);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .footer-col a {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--text-muted); }
+    .footer-bottom {
+      width: 100%;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+    .footer-ref {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .fade-up:nth-child(1) { animation-delay: 0.05s; }
+    .fade-up:nth-child(2) { animation-delay: 0.15s; }
+    .fade-up:nth-child(3) { animation-delay: 0.25s; }
+    .fade-up:nth-child(4) { animation-delay: 0.35s; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .site-header { padding: 16px 24px; }
+      .header-nav { display: none; }
+      .hero { padding: 60px 24px 56px; }
+      .hero-id-preview { display: none; }
+      .portals { padding: 48px 24px; }
+      .portals-grid { grid-template-columns: 1fr; }
+      .info-section { padding: 48px 24px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .status-section { padding: 28px 24px; }
+      .footer { padding: 40px 24px; }
+      .verify-strip { padding: 16px 24px; }
+    }
+    @media (max-width: 600px) {
+      .netbar a { padding: 0 10px; font-size: 8px; }
+      .hero-h1 { font-size: 30px; }
+      .status-left { gap: 20px; flex-wrap: wrap; }
+      .footer-links { flex-direction: column; gap: 24px; }
+      .id-format-parts { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NETBAR -->
+  <nav class="netbar" aria-label="Network">
+    <a href="/PaizCorp">PAIZ® CORP</a>
+    <a href="/thelol" class="active">THE LoL</a>
+    <a href="/PaizCorp/paizshop">PAIZ SHOP</a>
+    <a href="/PaizCorp/paizchicken">PAIZ CHICKEN</a>
+    <a href="/PaizCorp/paizproductions">PAIZPRODUCTIONS</a>
+    <a href="/thelol/movie">THE LoL MOVIE</a>
+    <a href="/thelol/gov">GOVERNMENT</a>
+    <a href="/isc">ISC</a>
+    <a href="/PaizCorp/tlrailways">TL RAILWAYS</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-brand">
+      <!-- Cobbled Deepslate-style crest SVG -->
+      <svg class="header-crest" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="40" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+        <rect x="2" y="2" width="8" height="8" fill="#222" stroke="#333" stroke-width="0.5"/>
+        <rect x="12" y="2" width="16" height="8" fill="#1e1e1e" stroke="#2d2d2d" stroke-width="0.5"/>
+        <rect x="30" y="2" width="8" height="8" fill="#242424" stroke="#333" stroke-width="0.5"/>
+        <rect x="2" y="12" width="16" height="8" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="0.5"/>
+        <rect x="20" y="12" width="18" height="8" fill="#212121" stroke="#2e2e2e" stroke-width="0.5"/>
+        <rect x="2" y="22" width="10" height="8" fill="#1f1f1f" stroke="#2c2c2c" stroke-width="0.5"/>
+        <rect x="14" y="22" width="14" height="8" fill="#1d1d1d" stroke="#2a2a2a" stroke-width="0.5"/>
+        <rect x="30" y="22" width="8" height="8" fill="#232323" stroke="#303030" stroke-width="0.5"/>
+        <rect x="2" y="32" width="18" height="6" fill="#1e1e1e" stroke="#2b2b2b" stroke-width="0.5"/>
+        <rect x="22" y="32" width="16" height="6" fill="#212121" stroke="#2d2d2d" stroke-width="0.5"/>
+        <!-- Emerald L emblem -->
+        <text x="20" y="26" font-family="serif" font-size="14" font-weight="900" fill="#3d6b52" text-anchor="middle" letter-spacing="1">L</text>
+        <rect x="8" y="8" width="24" height="24" fill="none" stroke="#3d6b52" stroke-width="0.75" opacity="0.4"/>
+      </svg>
+      <div class="header-titles">
+        <span class="header-sup">The Legend of Legiona</span>
+        <span class="header-title">National ID Portal</span>
+        <span class="header-sub">Office of Citizen Registry · SKYXION: ALTAER ERA</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="/thelol/gov/id" class="active">ID HOME</a>
+      <a href="/thelol/gov/id/registry">REGISTRY</a>
+      <a href="/thelol/gov/id/id-card">ID CARD</a>
+      <a href="/thelol/gov">GOV HOME</a>
+      <a href="/thelol/gov/id/admin" class="btn-admin-hdr">ADMIN</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-lines"></div>
+    <div class="hero-bg-glow"></div>
+    <div class="hero-bg-glow2"></div>
+
+    <div class="hero-inner">
+      <div class="hero-eyebrow fade-up">
+        <span class="hero-eyebrow-line"></span>
+        <span class="hero-eyebrow-text">National Identification System</span>
+        <span class="hero-doc-ref">// LOLGOV-2026 · NIS-DIVISION</span>
+      </div>
+      <h1 class="hero-h1 fade-up">
+        The <em>LoL</em> <span class="gold">ID</span><br/>System
+      </h1>
+      <p class="hero-desc fade-up">
+        Every citizen of The Legend of Legiona is assigned a unique National Identification number upon citizenship approval. Your LoL ID is the singular key to all government services — including the TL$ Digital Wallet.
+      </p>
+      <div class="hero-actions fade-up">
+        <a href="/thelol/gov/id/registry" class="btn-primary">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0.5" y="0.5" width="11" height="11" stroke="currentColor" stroke-width="1"/><rect x="3" y="3" width="6" height="1" fill="currentColor"/><rect x="3" y="5.5" width="6" height="1" fill="currentColor"/><rect x="3" y="8" width="4" height="1" fill="currentColor"/></svg>
+          Verify an ID
+        </a>
+        <a href="/thelol/gov/id/id-card" class="btn-secondary">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0.5" y="2.5" width="11" height="7" stroke="currentColor" stroke-width="1"/><rect x="2" y="4.5" width="3" height="3" fill="currentColor" opacity="0.5"/><rect x="6" y="4.5" width="4" height="1" fill="currentColor" opacity="0.4"/><rect x="6" y="6" width="2.5" height="0.8" fill="currentColor" opacity="0.3"/></svg>
+          View My ID Card
+        </a>
+      </div>
+    </div>
+
+    <!-- Floating ID samples -->
+    <div class="hero-id-preview" aria-hidden="true">
+      <div class="hero-id-sample">LOL-2026-<span>00001</span></div>
+      <div class="hero-id-sample">LOL-2026-<span>00002</span></div>
+      <div class="hero-id-sample">LOL-2026-<span>00003</span></div>
+      <div class="hero-id-sample" style="color:var(--text-dim)">LOL-????-<span>?????</span></div>
+    </div>
+  </section>
+
+  <!-- QUICK VERIFY STRIP -->
+  <section class="verify-strip">
+    <div class="verify-inner">
+      <span class="verify-label">Quick Verify</span>
+      <div class="verify-input-wrap">
+        <input
+          class="verify-input"
+          id="verifyInput"
+          type="text"
+          maxlength="13"
+          placeholder="LOL-2026-00001"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+      <button class="verify-btn" onclick="quickVerify()">CHECK ID →</button>
+    </div>
+    <div class="verify-result" id="verifyResult"></div>
+  </section>
+
+  <!-- PORTAL CARDS -->
+  <section class="portals">
+    <div class="section-label">
+      <span class="section-label-line"></span>
+      <span class="section-label-text">Portal Services</span>
+    </div>
+    <div class="portals-grid">
+
+      <!-- Registry -->
+      <a href="/thelol/gov/id/registry" class="portal-card">
+        <span class="portal-card-num">01</span>
+        <div class="portal-card-icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="16" height="16" stroke="#3d6b52" stroke-width="1"/>
+            <rect x="3.5" y="4" width="11" height="1" fill="#3d6b52" opacity="0.7"/>
+            <rect x="3.5" y="7" width="11" height="1" fill="#3d6b52" opacity="0.5"/>
+            <rect x="3.5" y="10" width="7" height="1" fill="#3d6b52" opacity="0.4"/>
+            <rect x="3.5" y="13" width="5" height="1" fill="#3d6b52" opacity="0.3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="portal-card-title">Citizen Registry</div>
+        </div>
+        <p class="portal-card-desc">
+          Publicly verify any LoL ID. Look up a citizen's registration status, citizenship tier, and issuance date. Open to all.
+        </p>
+        <span class="portal-card-link">
+          Open Registry <span class="portal-card-link-arrow">→</span>
+        </span>
+      </a>
+
+      <!-- ID Card -->
+      <a href="/thelol/gov/id/id-card" class="portal-card">
+        <span class="portal-card-num">02</span>
+        <div class="portal-card-icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="3.5" width="16" height="11" stroke="#3d6b52" stroke-width="1"/>
+            <rect x="3" y="6" width="4" height="4" fill="#3d6b52" opacity="0.4"/>
+            <rect x="9" y="6" width="6" height="1" fill="#3d6b52" opacity="0.6"/>
+            <rect x="9" y="8.5" width="4" height="0.8" fill="#3d6b52" opacity="0.4"/>
+            <rect x="9" y="10.5" width="3" height="0.8" fill="#3d6b52" opacity="0.3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="portal-card-title">Digital ID Card</div>
+        </div>
+        <p class="portal-card-desc">
+          Access and display your official digital National Identification Card. Enter your LoL ID to retrieve your citizen profile.
+        </p>
+        <span class="portal-card-link">
+          View ID Card <span class="portal-card-link-arrow">→</span>
+        </span>
+      </a>
+
+      <!-- Admin -->
+      <a href="/thelol/gov/id/admin" class="portal-card gold-accent">
+        <span class="portal-card-num">03</span>
+        <div class="portal-card-icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="16" height="16" stroke="#c9a84c" stroke-width="1"/>
+            <circle cx="9" cy="7" r="2.5" stroke="#c9a84c" stroke-width="1" opacity="0.7"/>
+            <path d="M4 15c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="portal-card-title" style="color:var(--gold)">Admin Console</div>
+        </div>
+        <p class="portal-card-desc">
+          Black House restricted. Issue new LoL IDs, manage citizen records, revoke or update status. Authorised personnel only.
+        </p>
+        <span class="portal-card-link" style="color:var(--gold)">
+          Enter Console <span class="portal-card-link-arrow">→</span>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- INFO SECTION -->
+  <section class="info-section">
+    <div class="section-label">
+      <span class="section-label-line"></span>
+      <span class="section-label-text">System Reference</span>
+    </div>
+    <div class="info-grid">
+
+      <!-- ID Format -->
+      <div class="info-block">
+        <div class="info-block-title">
+          <span class="info-block-title-dot"></span>
+          ID Number Format
+        </div>
+        <div class="info-id-format">
+          <div class="id-format-label">Standard Format</div>
+          <div class="id-format-display">LOL-YYYY-#####</div>
+          <div class="id-format-parts">
+            <div class="id-format-part">
+              <div class="id-format-part-label">Prefix</div>
+              <div class="id-format-part-val">LOL</div>
+            </div>
+            <div class="id-format-part">
+              <div class="id-format-part-label">Issuance Year</div>
+              <div class="id-format-part-val">YYYY</div>
+            </div>
+            <div class="id-format-part">
+              <div class="id-format-part-label">Sequence</div>
+              <div class="id-format-part-val">00001 – 99999</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Citizenship flow -->
+      <div class="info-block">
+        <div class="info-block-title">
+          <span class="info-block-title-dot"></span>
+          Issuance Process
+        </div>
+        <div class="info-list">
+          <div class="info-list-item">
+            <span class="info-list-num">01.</span>
+            <span>Submit citizenship application at the LoL Citizenship Portal</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">02.</span>
+            <span>Application reviewed and approved by the Office of the President (The Black House)</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">03.</span>
+            <span>LoL ID issued by admin via this system — unique, permanent, non-transferable</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">04.</span>
+            <span>Citizen registers their LoL ID to access the TL$ Digital Wallet and future services</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">05.</span>
+            <span>Digital ID card available immediately upon issuance</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Linked Services -->
+      <div class="info-block">
+        <div class="info-block-title">
+          <span class="info-block-title-dot gold"></span>
+          Linked Services
+        </div>
+        <div class="info-list">
+          <div class="info-list-item">
+            <span class="info-list-num">—</span>
+            <span><strong style="color:var(--text)">TL$ Wallet</strong> — LoL ID required to open a wallet account and transact in TL$</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">—</span>
+            <span><strong style="color:var(--text)">ISC Records</strong> — Intelligence records indexed by LoL ID (restricted)</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">—</span>
+            <span><strong style="color:var(--text)">Citizenship Portal</strong> — ID ties back to original application and status</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">—</span>
+            <span><strong style="color:var(--text)">TL Railways</strong> — Future pass system integration planned</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Important notes -->
+      <div class="info-block">
+        <div class="info-block-title">
+          <span class="info-block-title-dot gold"></span>
+          Important Notes
+        </div>
+        <div class="info-list">
+          <div class="info-list-item">
+            <span class="info-list-num">i.</span>
+            <span>Your LoL ID is permanent — it does not change even if your Minecraft username changes</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">ii.</span>
+            <span>LoL IDs are non-transferable between citizens under any circumstances</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">iii.</span>
+            <span>Upon citizenship revocation, the ID is archived — it is never reissued to another citizen</span>
+          </div>
+          <div class="info-list-item">
+            <span class="info-list-num">iv.</span>
+            <span>Landen SAT citizens (Ikanuwu & ImanHafizz jurisdiction) fall under standard LoL ID issuance</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATUS BAR -->
+  <section class="status-section">
+    <div class="status-left">
+      <div class="status-item">
+        <span class="status-item-label">System Status</span>
+        <span class="status-item-val green">OPERATIONAL</span>
+      </div>
+      <div class="status-item">
+        <span class="status-item-label">Era</span>
+        <span class="status-item-val">SKYXION: ALTAER ERA</span>
+      </div>
+      <div class="status-item">
+        <span class="status-item-label">Registry</span>
+        <span class="status-item-val gold">OPEN</span>
+      </div>
+      <div class="status-item">
+        <span class="status-item-label">Administered by</span>
+        <span class="status-item-val">THE BLACK HOUSE</span>
+      </div>
+    </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      <span class="status-badge-text">NIS Live · v1.0</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <span class="footer-brand-name">The Legend of Legiona</span>
+      <span class="footer-brand-sub">National Identification System</span>
+      <span class="footer-brand-sub" style="margin-top:4px">LOLGOV · NIS Division</span>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <span class="footer-col-title">ID Services</span>
+        <a href="/thelol/gov/id">Portal Home</a>
+        <a href="/thelol/gov/id/registry">Registry</a>
+        <a href="/thelol/gov/id/id-card">ID Card</a>
+        <a href="/thelol/gov/id/admin">Admin Console</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Government</span>
+        <a href="/thelol/gov">Gov Home</a>
+        <a href="/thelol/gov/assets">Legal Archive</a>
+        <a href="/thelol">The LoL Home</a>
+        <a href="/isc">ISC</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Network</span>
+        <a href="/PaizCorp">Paiz® Corp</a>
+        <a href="/PaizCorp/tlrailways">TL Railways</a>
+        <a href="/PaizCorp/paizshop">Paiz Shop</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 The Legend of Legiona · All rights reserved · Founded by Faiz4224</span>
+      <span class="footer-ref">DOC-REF: LOLGOV-NIS-2026 · Administered: The Black House</span>
+    </div>
+  </footer>
+
+  <script>
+    // ── QUICK VERIFY FORMAT ──
+    const vi = document.getElementById('verifyInput');
+    if (vi) {
+      vi.addEventListener('input', function () {
+        let v = this.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+        this.value = v;
+      });
+      vi.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') quickVerify();
+      });
+    }
+
+    function quickVerify() {
+      const val = document.getElementById('verifyInput').value.trim().toUpperCase();
+      const res = document.getElementById('verifyResult');
+      res.className = 'verify-result';
+
+      if (!val) {
+        res.textContent = '// Enter a LoL ID to verify.';
+        res.classList.add('show', 'err');
+        return;
+      }
+
+      // Format check: LOL-YYYY-#####
+      const fmt = /^LOL-\d{4}-\d{5}$/;
+      if (!fmt.test(val)) {
+        res.textContent = '// INVALID FORMAT — Expected: LOL-YYYY-##### (e.g. LOL-2026-00001)';
+        res.classList.add('show', 'err');
+        return;
+      }
+
+      // Pass format check → redirect to registry with query
+      res.textContent = `// FORMAT VALID — Redirecting to registry for full verification...`;
+      res.classList.add('show', 'ok');
+      setTimeout(() => {
+        window.location.href = `/thelol/gov/id/registry?id=${encodeURIComponent(val)}`;
+      }, 900);
+    }
+  </script>
+
+</body>
+</html>
