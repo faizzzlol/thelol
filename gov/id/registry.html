@@ -351,15 +351,9 @@
 
   <!-- NETBAR -->
   <nav class="netbar">
-    <a href="/PaizCorp">PAIZ® CORP</a>
-    <a href="/thelol" class="active">THE LoL</a>
-    <a href="/PaizCorp/paizshop">PAIZ SHOP</a>
-    <a href="/PaizCorp/paizchicken">PAIZ CHICKEN</a>
-    <a href="/PaizCorp/paizproductions">PAIZPRODUCTIONS</a>
-    <a href="/thelol/movie">THE LoL MOVIE</a>
+    <a href="/thelol" class="active">THE LOL</a>
     <a href="/thelol/gov">GOVERNMENT</a>
     <a href="/isc">ISC</a>
-    <a href="/PaizCorp/tlrailways">TL RAILWAYS</a>
   </nav>
 
   <!-- HEADER -->
@@ -387,10 +381,10 @@
       </div>
     </div>
     <nav class="header-nav">
-      <a href="/thelol/gov/id">ID HOME</a>
+      <a href="/thelol/gov/id/">ID HOME</a>
       <a href="/thelol/gov/id/registry" class="active">REGISTRY</a>
       <a href="/thelol/gov/id/id-card">ID CARD</a>
-      <a href="/thelol/gov">GOV HOME</a>
+      <a href="/thelol/gov/">GOV HOME</a>
       <a href="/thelol/gov/id/admin" class="btn-admin-hdr">ADMIN</a>
     </nav>
   </header>
@@ -398,9 +392,9 @@
   <!-- PAGE TOP -->
   <div class="page-top">
     <div class="breadcrumb">
-      <a href="/thelol/gov">Government</a>
+      <a href="/thelol/gov/">Government</a>
       <span class="breadcrumb-sep">/</span>
-      <a href="/thelol/gov/id">National ID Portal</a>
+      <a href="/thelol/gov/id/">National ID Portal</a>
       <span class="breadcrumb-sep">/</span>
       <span>Registry</span>
     </div>
@@ -411,7 +405,7 @@
         <p class="page-desc">Enter a The LoL ID to verify citizenship status, tier, and registration date. All verified citizens of The Legend of Legiona appear in this registry.</p>
       </div>
       <div class="page-top-meta">
-        <span class="meta-badge">LOLGOV · NIS-REG-2026</span>
+        <span class="meta-badge">THELOLGOV · NIS-REG-2026</span>
         <span class="meta-badge" style="color:var(--emerald-l); border-color: rgba(61,107,82,0.3);">PUBLIC ACCESS</span>
       </div>
     </div>
@@ -429,7 +423,7 @@
           type="text"
           placeholder="2026-00001"
           maxlength="10"
-          autocomplete="off"
+          autocomplete="on"
           spellcheck="false"
         />
         <button class="search-submit" onclick="lookupID()">VERIFY →</button>
@@ -528,7 +522,7 @@
 
         <!-- Footer -->
         <div class="result-footer">
-          <span class="result-footer-note" id="resFooterNote">// Record served by LOLGOV-NIS · The Black House</span>
+          <span class="result-footer-note" id="resFooterNote">// Record served by THELOLGOV-NIS · The Black House</span>
           <span class="result-footer-ts" id="resFooterTs"></span>
         </div>
 
@@ -722,7 +716,7 @@
       }
 
       // Footer
-      document.getElementById('resFooterNote').textContent = `// Record served by LOLGOV-NIS · The Black House`;
+      document.getElementById('resFooterNote').textContent = `// Record served by THELOLGOV-NIS · The Black House`;
       document.getElementById('resFooterTs').textContent   = `Queried: ${new Date().toUTCString()}`;
 
       showState('stateResult');
