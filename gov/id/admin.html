@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Console — National ID Portal · The Legend of Legiona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:          #0c0c0c;
+      --bg-surface:  #111111;
+      --bg-card:     #171717;
+      --bg-card-h:   #1c1c1c;
+      --border:      #252525;
+      --border-h:    #3d6b52;
+      --emerald:     #3d6b52;
+      --emerald-l:   #4e8f6b;
+      --emerald-dim: rgba(61,107,82,0.12);
+      --gold:        #c9a84c;
+      --gold-l:      #e0be6f;
+      --gold-dim:    rgba(201,168,76,0.10);
+      --red:         #8b3a3a;
+      --red-l:       #c0392b;
+      --red-dim:     rgba(139,58,58,0.14);
+      --orange:      #b5622a;
+      --orange-l:    #e07a34;
+      --orange-dim:  rgba(181,98,42,0.12);
+      --text:        #e8e2d9;
+      --text-muted:  #7a7570;
+      --text-dim:    #4a4540;
+      --white:       #ffffff;
+      --font-display:'Playfair Display', Georgia, serif;
+      --font-mono:   'DM Mono', 'Courier New', monospace;
+      --font-body:   'Outfit', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font-body); font-size: 15px;
+      line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font-body); cursor: pointer; }
+    input, select, textarea { font-family: var(--font-body); }
+
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 180px; opacity: 0.03; pointer-events: none; z-index: 9999;
+    }
+
+    /* ══════════════════════════════════════
+       AUTH GATE
+    ══════════════════════════════════════ */
+    #authGate {
+      position: fixed; inset: 0; z-index: 8000;
+      background: #080808;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+    }
+    #authGate.hidden { display: none; }
+
+    .auth-wrap {
+      width: 100%; max-width: 420px;
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      animation: authFadeIn 0.6s ease;
+    }
+    @keyframes authFadeIn { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+
+    .auth-crest {
+      margin-bottom: 32px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .auth-crest-svg { opacity: 0.9; }
+    .auth-crest-label {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.28em;
+      color: var(--gold); text-transform: uppercase; text-align: center;
+    }
+
+    .auth-box {
+      width: 100%;
+      border: 1px solid var(--gold);
+      background: rgba(201,168,76,0.03);
+      padding: 40px;
+    }
+    .auth-box-title {
+      font-family: var(--font-display); font-size: 22px; font-weight: 900;
+      color: var(--white); text-align: center; margin-bottom: 6px;
+    }
+    .auth-box-sub {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+      color: var(--text-dim); text-transform: uppercase; text-align: center;
+      margin-bottom: 32px;
+    }
+    .auth-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .auth-field-label {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em;
+      color: var(--text-muted); text-transform: uppercase;
+    }
+    .auth-input {
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text); font-family: var(--font-mono); font-size: 14px;
+      letter-spacing: 0.15em; padding: 14px 16px; outline: none;
+      transition: border-color 0.2s; width: 100%;
+    }
+    .auth-input:focus { border-color: var(--gold); }
+    .auth-submit {
+      width: 100%; background: var(--gold); border: 1px solid var(--gold);
+      color: #0c0c0c; font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.22em; text-transform: uppercase; padding: 16px;
+      cursor: pointer; transition: all 0.2s; font-weight: 500;
+    }
+    .auth-submit:hover { background: var(--gold-l); }
+    .auth-error {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em;
+      color: var(--red-l); text-align: center; margin-top: 12px;
+      display: none;
+    }
+    .auth-error.show { display: block; }
+    .auth-footer {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em;
+      color: var(--text-dim); text-align: center; margin-top: 24px;
+    }
+
+    /* ══════════════════════════════════════
+       MAIN LAYOUT (hidden until authed)
+    ══════════════════════════════════════ */
+    #mainContent { display: none; }
+    #mainContent.visible { display: block; }
+
+    /* NETBAR */
+    .netbar {
+      width: 100%; background: #080808; border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 30px; display: flex; align-items: center;
+      justify-content: center; gap: 0; overflow-x: auto; overflow-y: hidden;
+      white-space: nowrap; scrollbar-width: none; position: sticky; top: 0; z-index: 1000;
+    }
+    .netbar::-webkit-scrollbar { display: none; }
+    .netbar a {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em;
+      color: var(--text-muted); padding: 0 14px; border-right: 1px solid var(--border);
+      transition: color 0.2s; text-transform: uppercase;
+    }
+    .netbar a:first-child { border-left: 1px solid var(--border); }
+    .netbar a:hover { color: var(--gold); }
+    .netbar a.active { color: var(--emerald-l); }
+
+    /* HEADER */
+    .site-header {
+      background: var(--bg-surface); border-bottom: 1px solid var(--border);
+      padding: 18px 40px; display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
+    }
+    .header-brand { display: flex; align-items: center; gap: 14px; }
+    .header-crest { width: 38px; height: 38px; flex-shrink: 0; }
+    .header-titles { display: flex; flex-direction: column; gap: 1px; }
+    .header-sup { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
+    .header-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--white); }
+    .header-sub { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .admin-session-badge {
+      display: flex; align-items: center; gap: 8px;
+      border: 1px solid rgba(201,168,76,0.3); padding: 6px 14px;
+      background: rgba(201,168,76,0.05);
+    }
+    .admin-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1}50%{opacity:0.3} }
+    .admin-session-text { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; }
+    .btn-logout {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-dim); border: 1px solid var(--border);
+      padding: 6px 14px; background: transparent; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-logout:hover { border-color: var(--red-l); color: var(--red-l); }
+
+    /* ADMIN NAV */
+    .admin-nav {
+      background: var(--bg-surface); border-bottom: 1px solid var(--border);
+      padding: 0 40px; display: flex; align-items: center; gap: 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .admin-nav::-webkit-scrollbar { display: none; }
+    .admin-tab {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 14px 20px; color: var(--text-muted);
+      border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s;
+      white-space: nowrap; background: none; border-left: none; border-right: none; border-top: none;
+    }
+    .admin-tab:hover { color: var(--text); }
+    .admin-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    /* MAIN CONTENT */
+    .admin-body { padding: 40px; max-width: 1200px; margin: 0 auto; }
+
+    /* TAB PANELS */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── SECTION HEADER ── */
+    .sec-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+    }
+    .sec-header-left { display: flex; flex-direction: column; gap: 4px; }
+    .sec-eyebrow { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+    .sec-title { font-family: var(--font-display); font-size: 24px; font-weight: 900; color: var(--white); }
+
+    /* ══════════════════════
+       DASHBOARD TAB
+    ══════════════════════ */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      background: var(--border); margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--bg-card); padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .stat-label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.22em; color: var(--text-dim); text-transform: uppercase; }
+    .stat-val { font-family: var(--font-display); font-size: 36px; font-weight: 900; color: var(--white); line-height: 1; }
+    .stat-val.emerald { color: var(--emerald-l); }
+    .stat-val.gold    { color: var(--gold); }
+    .stat-val.red     { color: var(--red-l); }
+    .stat-val.orange  { color: var(--orange-l); }
+    .stat-sub { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; color: var(--text-dim); }
+
+    .dash-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .dash-panel { background: var(--bg-card); border: 1px solid var(--border); }
+    .dash-panel-head {
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dash-panel-dot { width: 6px; height: 6px; flex-shrink: 0; }
+    .dash-panel-dot.green { background: var(--emerald-l); }
+    .dash-panel-dot.gold  { background: var(--gold); }
+    .dash-panel-title { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; color: var(--text-muted); text-transform: uppercase; }
+    .dash-panel-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 0; }
+
+    .recent-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid var(--border); gap: 12px;
+    }
+    .recent-row:last-child { border-bottom: none; }
+    .recent-row-id { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--emerald-l); }
+    .recent-row-name { font-family: var(--font-body); font-size: 13px; color: var(--text-muted); flex: 1; }
+    .recent-row-date { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em; color: var(--text-dim); }
+
+    .log-row {
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.04em;
+    }
+    .log-row:last-child { border-bottom: none; }
+    .log-row-ts { color: var(--text-dim); margin-right: 8px; }
+    .log-row-action { color: var(--emerald-l); }
+    .log-row-action.warn { color: var(--orange-l); }
+    .log-row-action.danger { color: var(--red-l); }
+
+    .empty-panel { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); padding: 20px 0; text-align: center; }
+
+    /* ══════════════════════
+       ISSUE ID TAB
+    ══════════════════════ */
+    .issue-layout { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
+
+    .form-box { background: var(--bg-card); border: 1px solid var(--border); }
+    .form-box-head {
+      padding: 20px 28px; border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+      color: var(--text-muted); text-transform: uppercase;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-box-head-dot { width: 6px; height: 6px; background: var(--gold); }
+    .form-body { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-label {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em;
+      color: var(--text-muted); text-transform: uppercase;
+    }
+    .form-input, .form-select, .form-textarea {
+      background: var(--bg); border: 1px solid var(--border); color: var(--text);
+      font-family: var(--font-body); font-size: 14px; padding: 11px 14px;
+      outline: none; transition: border-color 0.2s; width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234a4540'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-textarea { resize: vertical; min-height: 80px; font-size: 13px; }
+    .form-hint { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em; color: var(--text-dim); }
+
+    .form-divider { height: 1px; background: var(--border); }
+
+    .id-preview-box {
+      background: var(--bg); border: 1px solid var(--border); padding: 16px 20px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .id-preview-label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; color: var(--text-dim); text-transform: uppercase; }
+    .id-preview-val { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.1em; color: var(--gold); }
+    .id-preview-val .dim { color: var(--text-dim); }
+
+    .form-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .btn-issue {
+      background: var(--gold); border: 1px solid var(--gold); color: #0c0c0c;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase; padding: 14px 32px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-issue:hover { background: var(--gold-l); }
+    .btn-issue:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-clear {
+      background: transparent; border: 1px solid var(--border); color: var(--text-dim);
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 14px 20px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-clear:hover { border-color: #444; color: var(--text-muted); }
+
+    .issue-feedback {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em;
+      padding: 14px 16px; border: 1px solid; display: none;
+    }
+    .issue-feedback.ok { color: var(--emerald-l); border-color: rgba(61,107,82,0.4); background: var(--emerald-dim); }
+    .issue-feedback.err { color: var(--red-l); border-color: rgba(192,57,43,0.4); background: var(--red-dim); }
+    .issue-feedback.show { display: block; }
+
+    /* Issue right panel */
+    .issue-right { display: flex; flex-direction: column; gap: 20px; }
+    .info-card { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; }
+    .info-card-title {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.22em;
+      color: var(--text-dim); text-transform: uppercase; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .info-card-title::before { content: ''; width: 16px; height: 1px; background: var(--gold); }
+    .info-card-list { display: flex; flex-direction: column; gap: 0; }
+    .info-card-item {
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-family: var(--font-body); font-size: 12px; color: var(--text-muted);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .info-card-item:last-child { border-bottom: none; }
+    .info-card-num { font-family: var(--font-mono); font-size: 8px; color: var(--text-dim); flex-shrink: 0; }
+
+    /* ══════════════════════
+       MANAGE TAB
+    ══════════════════════ */
+    .manage-controls {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .search-input {
+      background: var(--bg-card); border: 1px solid var(--border); color: var(--text);
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
+      padding: 10px 14px; outline: none; transition: border-color 0.2s;
+      flex: 1; min-width: 200px; text-transform: uppercase;
+    }
+    .search-input::placeholder { color: var(--text-dim); font-size: 11px; }
+    .search-input:focus { border-color: var(--emerald); }
+    .filter-select {
+      background: var(--bg-card); border: 1px solid var(--border); color: var(--text-muted);
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+      padding: 10px 14px; outline: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234a4540'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 30px;
+      cursor: pointer;
+    }
+    .btn-refresh {
+      background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 10px 16px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-refresh:hover { border-color: var(--emerald); color: var(--emerald-l); }
+    .manage-count { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; color: var(--text-dim); margin-left: auto; }
+
+    /* TABLE */
+    .citizens-table-wrap { overflow-x: auto; }
+    .citizens-table { width: 100%; border-collapse: collapse; }
+    .citizens-table th {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em;
+      color: var(--text-dim); text-transform: uppercase; padding: 10px 16px;
+      border-bottom: 1px solid var(--border); text-align: left; background: var(--bg-surface);
+      white-space: nowrap;
+    }
+    .citizens-table td {
+      padding: 14px 16px; border-bottom: 1px solid var(--border);
+      vertical-align: middle; font-size: 13px;
+    }
+    .citizens-table tr:hover td { background: var(--bg-card); }
+    .citizens-table tr:last-child td { border-bottom: none; }
+
+    .td-id { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--emerald-l); white-space: nowrap; }
+    .td-name { color: var(--text); font-weight: 500; }
+    .td-date { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+    .td-territory { color: var(--text-muted); font-size: 12px; }
+
+    .status-pill {
+      display: inline-block; font-family: var(--font-mono); font-size: 8px;
+      letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 10px; border: 1px solid;
+    }
+    .status-pill.active    { color: var(--emerald-l); border-color: rgba(61,107,82,0.4); background: var(--emerald-dim); }
+    .status-pill.revoked   { color: var(--red-l);     border-color: rgba(192,57,43,0.4); background: var(--red-dim); }
+    .status-pill.suspended { color: var(--gold);      border-color: rgba(201,168,76,0.4); background: var(--gold-dim); }
+
+    .tier-chip {
+      display: inline-block; font-family: var(--font-mono); font-size: 7.5px;
+      letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border: 1px solid;
+    }
+    .tier-chip.citizen   { color: var(--text-dim);  border-color: var(--border); }
+    .tier-chip.senior    { color: var(--emerald-l); border-color: rgba(61,107,82,0.3); }
+    .tier-chip.elder     { color: var(--gold);      border-color: rgba(201,168,76,0.3); }
+    .tier-chip.founding  { color: var(--gold-l);    border-color: rgba(201,168,76,0.5); }
+
+    .td-actions { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+    .action-pill {
+      font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 4px 10px; border: 1px solid;
+      cursor: pointer; background: none; transition: all 0.15s; white-space: nowrap;
+    }
+    .action-pill.edit     { color: var(--text-muted); border-color: var(--border); }
+    .action-pill.edit:hover { border-color: var(--gold); color: var(--gold); }
+    .action-pill.revoke   { color: var(--red-l);    border-color: rgba(192,57,43,0.3); }
+    .action-pill.revoke:hover { background: var(--red-dim); }
+    .action-pill.reinstate { color: var(--emerald-l); border-color: rgba(61,107,82,0.3); }
+    .action-pill.reinstate:hover { background: var(--emerald-dim); }
+    .action-pill.suspend  { color: var(--orange-l); border-color: rgba(181,98,42,0.3); }
+    .action-pill.suspend:hover { background: var(--orange-dim); }
+
+    .table-loading { text-align: center; padding: 48px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--text-dim); }
+    .table-empty { text-align: center; padding: 48px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--text-dim); }
+
+    /* ══════════════════════
+       EDIT MODAL
+    ══════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 5000;
+      background: rgba(0,0,0,0.85);
+      display: none; align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--bg-surface); border: 1px solid var(--border);
+      width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn { from { opacity:0; transform: scale(0.97); } to { opacity:1; transform: scale(1); } }
+    .modal-head {
+      padding: 20px 28px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      position: sticky; top: 0; background: var(--bg-surface); z-index: 1;
+    }
+    .modal-head-left { display: flex; flex-direction: column; gap: 2px; }
+    .modal-label { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
+    .modal-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--white); }
+    .modal-close {
+      background: none; border: 1px solid var(--border); color: var(--text-muted);
+      font-family: var(--font-mono); font-size: 12px; padding: 6px 12px;
+      cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+    }
+    .modal-close:hover { border-color: var(--red-l); color: var(--red-l); }
+    .modal-body { padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .modal-actions { padding: 20px 28px; border-top: 1px solid var(--border); display: flex; gap: 12px; }
+    .btn-save {
+      background: var(--emerald); border: 1px solid var(--emerald); color: var(--white);
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 12px 28px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-save:hover { background: var(--emerald-l); }
+    .btn-cancel {
+      background: none; border: 1px solid var(--border); color: var(--text-muted);
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 12px 20px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-cancel:hover { border-color: #444; }
+    .modal-feedback { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; padding: 10px 14px; border: 1px solid; display: none; }
+    .modal-feedback.ok  { color: var(--emerald-l); border-color: rgba(61,107,82,0.4); background: var(--emerald-dim); }
+    .modal-feedback.err { color: var(--red-l);     border-color: rgba(192,57,43,0.4); background: var(--red-dim); }
+    .modal-feedback.show { display: block; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 32px; right: 32px; z-index: 9000;
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 14px 20px; font-family: var(--font-mono); font-size: 11px;
+      letter-spacing: 0.06em; color: var(--text); display: none;
+      animation: toastIn 0.3s ease;
+      max-width: 360px;
+    }
+    .toast.ok  { border-left: 3px solid var(--emerald-l); }
+    .toast.err { border-left: 3px solid var(--red-l); }
+    .toast.show { display: block; }
+    @keyframes toastIn { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+
+    /* MOBILE */
+    @media (max-width: 1000px) { .issue-layout { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 700px) {
+      .site-header { padding: 14px 20px; }
+      .admin-body { padding: 24px 20px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .dash-two-col { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     AUTH GATE
+══════════════════════════════════════ -->
+<div id="authGate">
+  <div class="auth-wrap">
+    <div class="auth-crest">
+      <svg class="auth-crest-svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+        <rect width="64" height="64" fill="#111" stroke="#2a2a2a"/>
+        <rect x="3" y="3" width="13" height="13" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="0.6"/>
+        <rect x="19" y="3" width="26" height="13" fill="#161616" stroke="#282828" stroke-width="0.6"/>
+        <rect x="48" y="3" width="13" height="13" fill="#1e1e1e" stroke="#2d2d2d" stroke-width="0.6"/>
+        <rect x="3" y="19" width="26" height="13" fill="#141414" stroke="#262626" stroke-width="0.6"/>
+        <rect x="32" y="19" width="29" height="13" fill="#181818" stroke="#2a2a2a" stroke-width="0.6"/>
+        <rect x="3" y="35" width="16" height="13" fill="#161616" stroke="#282828" stroke-width="0.6"/>
+        <rect x="22" y="35" width="22" height="13" fill="#141414" stroke="#262626" stroke-width="0.6"/>
+        <rect x="47" y="35" width="14" height="13" fill="#1a1a1a" stroke="#2c2c2c" stroke-width="0.6"/>
+        <rect x="3" y="51" width="30" height="10" fill="#161616" stroke="#272727" stroke-width="0.6"/>
+        <rect x="36" y="51" width="25" height="10" fill="#181818" stroke="#2a2a2a" stroke-width="0.6"/>
+        <text x="32" y="42" font-family="serif" font-size="22" font-weight="900" fill="#c9a84c" text-anchor="middle" opacity="0.9">L</text>
+        <rect x="12" y="12" width="40" height="40" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.3"/>
+      </svg>
+      <span class="auth-crest-label">The Black House · Restricted Access</span>
+    </div>
+    <div class="auth-box">
+      <div class="auth-box-title">Admin Console</div>
+      <div class="auth-box-sub">National ID Portal · Authorised Personnel Only</div>
+      <div class="auth-field">
+        <label class="auth-field-label">Access Passphrase</label>
+        <input class="auth-input" id="authInput" type="password" placeholder="Enter passphrase" autocomplete="off" />
+      </div>
+      <button class="auth-submit" onclick="attemptAuth()">AUTHENTICATE →</button>
+      <div class="auth-error" id="authError">// INCORRECT PASSPHRASE — ACCESS DENIED</div>
+    </div>
+    <div class="auth-footer">LOLGOV-NIS · The Black House · Faiz4224 Administration</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════ -->
+<div id="mainContent">
+
+  <!-- NETBAR -->
+  <nav class="netbar">
+    <a href="/PaizCorp">PAIZ® CORP</a>
+    <a href="/thelol" class="active">THE LoL</a>
+    <a href="/PaizCorp/paizshop">PAIZ SHOP</a>
+    <a href="/PaizCorp/paizchicken">PAIZ CHICKEN</a>
+    <a href="/PaizCorp/paizproductions">PAIZPRODUCTIONS</a>
+    <a href="/thelol/movie">THE LoL MOVIE</a>
+    <a href="/thelol/gov">GOVERNMENT</a>
+    <a href="/isc">ISC</a>
+    <a href="/PaizCorp/tlrailways">TL RAILWAYS</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-brand">
+      <svg class="header-crest" viewBox="0 0 38 38" fill="none">
+        <rect width="38" height="38" fill="#1a1a1a" stroke="#2a2a2a"/>
+        <rect x="2" y="2" width="7" height="7" fill="#222" stroke="#333" stroke-width="0.5"/>
+        <rect x="11" y="2" width="16" height="7" fill="#1e1e1e" stroke="#2d2d2d" stroke-width="0.5"/>
+        <rect x="29" y="2" width="7" height="7" fill="#242424" stroke="#333" stroke-width="0.5"/>
+        <rect x="2" y="11" width="16" height="7" fill="#1c1c1c" stroke="#2a2a2a" stroke-width="0.5"/>
+        <rect x="20" y="11" width="16" height="7" fill="#212121" stroke="#2e2e2e" stroke-width="0.5"/>
+        <rect x="2" y="20" width="10" height="7" fill="#1f1f1f" stroke="#2c2c2c" stroke-width="0.5"/>
+        <rect x="14" y="20" width="13" height="7" fill="#1d1d1d" stroke="#2a2a2a" stroke-width="0.5"/>
+        <rect x="29" y="20" width="7" height="7" fill="#232323" stroke="#303030" stroke-width="0.5"/>
+        <rect x="2" y="29" width="17" height="7" fill="#1e1e1e" stroke="#2b2b2b" stroke-width="0.5"/>
+        <rect x="21" y="29" width="15" height="7" fill="#212121" stroke="#2d2d2d" stroke-width="0.5"/>
+        <text x="19" y="25" font-family="serif" font-size="13" font-weight="900" fill="#c9a84c" text-anchor="middle">L</text>
+        <rect x="7" y="7" width="24" height="24" fill="none" stroke="#c9a84c" stroke-width="0.6" opacity="0.4"/>
+      </svg>
+      <div class="header-titles">
+        <span class="header-sup">The Black House · Restricted</span>
+        <span class="header-title">NIS Admin Console</span>
+        <span class="header-sub">National ID Portal · LOLGOV-NIS-2026</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="admin-session-badge">
+        <span class="admin-dot"></span>
+        <span class="admin-session-text">Admin Session Active</span>
+      </div>
+      <button class="btn-logout" onclick="logout()">LOCK ×</button>
+    </div>
+  </header>
+
+  <!-- ADMIN NAV TABS -->
+  <nav class="admin-nav">
+    <button class="admin-tab active" onclick="switchTab('dashboard', this)">Dashboard</button>
+    <button class="admin-tab" onclick="switchTab('issue', this)">Issue New ID</button>
+    <button class="admin-tab" onclick="switchTab('manage', this)">Manage Citizens</button>
+  </nav>
+
+  <!-- BODY -->
+  <div class="admin-body">
+
+    <!-- ═══════════ DASHBOARD ═══════════ -->
+    <div class="tab-panel active" id="tab-dashboard">
+      <div class="sec-header">
+        <div class="sec-header-left">
+          <span class="sec-eyebrow">Overview</span>
+          <span class="sec-title">Registry Dashboard</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+          <span class="stat-label">Total Issued</span>
+          <span class="stat-val gold" id="statTotal">—</span>
+          <span class="stat-sub">All time</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Active Citizens</span>
+          <span class="stat-val emerald" id="statActive">—</span>
+          <span class="stat-sub">Currently active</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Revoked</span>
+          <span class="stat-val red" id="statRevoked">—</span>
+          <span class="stat-sub">Citizenship ended</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Suspended</span>
+          <span class="stat-val orange" id="statSuspended">—</span>
+          <span class="stat-sub">Under review</span>
+        </div>
+      </div>
+
+      <!-- Two col -->
+      <div class="dash-two-col">
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <span class="dash-panel-dot green"></span>
+            <span class="dash-panel-title">Recently Issued IDs</span>
+          </div>
+          <div class="dash-panel-body" id="recentIssued">
+            <div class="empty-panel">// Loading...</div>
+          </div>
+        </div>
+        <div class="dash-panel">
+          <div class="dash-panel-head">
+            <span class="dash-panel-dot gold"></span>
+            <span class="dash-panel-title">Session Activity Log</span>
+          </div>
+          <div class="dash-panel-body" id="activityLog">
+            <div class="empty-panel">// No activity this session</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ ISSUE ═══════════ -->
+    <div class="tab-panel" id="tab-issue">
+      <div class="sec-header">
+        <div class="sec-header-left">
+          <span class="sec-eyebrow">Issue New ID</span>
+          <span class="sec-title">Register Citizen</span>
+        </div>
+      </div>
+
+      <div class="issue-layout">
+        <!-- FORM -->
+        <div>
+          <div class="form-box">
+            <div class="form-box-head">
+              <span class="form-box-head-dot"></span>
+              Citizen Information
+            </div>
+            <div class="form-body">
+
+              <!-- ID Preview -->
+              <div class="id-preview-box">
+                <span class="id-preview-label">Assigned ID Number</span>
+                <span class="id-preview-val"><span class="dim">THELOL-</span><span id="previewIdFull">Loading...</span></span>
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Minecraft Username *</label>
+                  <input class="form-input" id="f_username" type="text" placeholder="e.g. Faiz4224" maxlength="30" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Citizenship Tier *</label>
+                  <select class="form-select" id="f_tier">
+                    <option value="citizen">Citizen</option>
+                    <option value="senior">Senior Citizen</option>
+                    <option value="elder">Elder</option>
+                    <option value="founding">Founding Citizen</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label class="form-label">Date of Issue *</label>
+                  <input class="form-input" id="f_issued" type="text" placeholder="01 January 2026" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">Territory</label>
+                  <input class="form-input" id="f_territory" type="text" placeholder="Mainland Legiona" />
+                </div>
+              </div>
+
+              <div class="form-field full">
+                <label class="form-label">Public Note (Optional)</label>
+                <textarea class="form-textarea" id="f_note" placeholder="Optional public note visible on registry..."></textarea>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Initial Status</label>
+                <select class="form-select" id="f_status">
+                  <option value="active">Active</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="issue-feedback" id="issueFeedback"></div>
+
+              <div class="form-actions">
+                <button class="btn-issue" id="btnIssue" onclick="issueID()">ISSUE ID →</button>
+                <button class="btn-clear" onclick="clearForm()">Clear Form</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT INFO -->
+        <div class="issue-right">
+          <div class="info-card">
+            <div class="info-card-title">Issuance Rules</div>
+            <div class="info-card-list">
+              <div class="info-card-item"><span class="info-card-num">01.</span>IDs are permanent and non-reusable — once issued, the sequence never resets</div>
+              <div class="info-card-item"><span class="info-card-num">02.</span>The year in the ID reflects the current issuance year, not the era</div>
+              <div class="info-card-item"><span class="info-card-num">03.</span>Minecraft username must exactly match the citizen's in-game name</div>
+              <div class="info-card-item"><span class="info-card-num">04.</span>Revoked IDs are archived — they are never reissued to a new citizen</div>
+              <div class="info-card-item"><span class="info-card-num">05.</span>Landen SAT citizens use the same issuance process as mainland citizens</div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-title">Tier Definitions</div>
+            <div class="info-card-list">
+              <div class="info-card-item"><span class="info-card-num">—</span><strong style="color:var(--text)">Citizen</strong> — Standard approved citizen</div>
+              <div class="info-card-item"><span class="info-card-num">—</span><strong style="color:var(--emerald-l)">Senior Citizen</strong> — Long-standing, active contribution</div>
+              <div class="info-card-item"><span class="info-card-num">—</span><strong style="color:var(--gold)">Elder</strong> — Highest honour, bestowed by President</div>
+              <div class="info-card-item"><span class="info-card-num">—</span><strong style="color:var(--gold-l)">Founding Citizen</strong> — Present at nation's founding</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ MANAGE ═══════════ -->
+    <div class="tab-panel" id="tab-manage">
+      <div class="sec-header">
+        <div class="sec-header-left">
+          <span class="sec-eyebrow">Citizen Management</span>
+          <span class="sec-title">All Citizens</span>
+        </div>
+      </div>
+
+      <div class="manage-controls">
+        <input class="search-input" id="manageSearch" type="text" placeholder="SEARCH USERNAME OR ID..." oninput="filterTable()" />
+        <select class="filter-select" id="filterStatus" onchange="filterTable()">
+          <option value="">All Status</option>
+          <option value="active">Active</option>
+          <option value="suspended">Suspended</option>
+          <option value="revoked">Revoked</option>
+        </select>
+        <select class="filter-select" id="filterTier" onchange="filterTable()">
+          <option value="">All Tiers</option>
+          <option value="citizen">Citizen</option>
+          <option value="senior">Senior</option>
+          <option value="elder">Elder</option>
+          <option value="founding">Founding</option>
+        </select>
+        <button class="btn-refresh" onclick="loadAllCitizens()">↻ Refresh</button>
+        <span class="manage-count" id="manageCount">0 citizens</span>
+      </div>
+
+      <div class="citizens-table-wrap">
+        <table class="citizens-table">
+          <thead>
+            <tr>
+              <th>The LoL ID</th>
+              <th>Username</th>
+              <th>Status</th>
+              <th>Tier</th>
+              <th>Issued</th>
+              <th>Territory</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="citizensBody">
+            <tr><td colspan="7" class="table-loading">// Loading citizen registry...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /admin-body -->
+</div><!-- /mainContent -->
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <span class="modal-label">Edit Record</span>
+        <span class="modal-title" id="editModalTitle">THETHETHELOL-????-?????</span>
+      </div>
+      <button class="modal-close" onclick="closeModal()">CLOSE ×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit_id" />
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Minecraft Username</label>
+          <input class="form-input" id="edit_username" type="text" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="edit_status">
+            <option value="active">Active</option>
+            <option value="suspended">Suspended</option>
+            <option value="revoked">Revoked</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Citizenship Tier</label>
+          <select class="form-select" id="edit_tier">
+            <option value="citizen">Citizen</option>
+            <option value="senior">Senior Citizen</option>
+            <option value="elder">Elder</option>
+            <option value="founding">Founding Citizen</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Territory</label>
+          <input class="form-input" id="edit_territory" type="text" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Date of Issue</label>
+        <input class="form-input" id="edit_issued" type="text" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Wallet Linked</label>
+        <select class="form-select" id="edit_wallet">
+          <option value="false">Not Linked</option>
+          <option value="true">Linked (TL$)</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Public Note</label>
+        <textarea class="form-textarea" id="edit_note"></textarea>
+      </div>
+      <div class="modal-feedback" id="editFeedback"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" onclick="saveEdit()">SAVE CHANGES</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ══ FIREBASE ══ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getFirestore, collection, doc,
+    getDoc, getDocs, setDoc, updateDoc,
+    orderBy, query, limit, runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  /* ─────────────────────────────────────────────
+     🔧 PLUG YOUR FIREBASE CONFIG HERE
+  ───────────────────────────────────────────── */
+  const firebaseConfig = {
+    apiKey:            "YOUR_API_KEY",
+    authDomain:        "YOUR_PROJECT.firebaseapp.com",
+    projectId:         "YOUR_PROJECT_ID",
+    storageBucket:     "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId:             "YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  window._db = db;
+  window._fire = { collection, doc, getDoc, getDocs, setDoc, updateDoc, orderBy, query, limit, runTransaction };
+  window._fbReady = true;
+</script>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   SHA-256 PASSWORD HASH
+   To change password: run   sha256('YOURNEWPASSWORD')
+   in browser console → paste the hash below
+══════════════════════════════════════════════════════ */
+const ADMIN_HASH = "c7f5b2f93e8b7e5d1a4c6f9e2b8d3a7c5f1e4b9d6a2c8f3b7e5d9a1c4f6e2b8";
+// Default passphrase: BLACKHOUSE2026
+// ⚠️ CHANGE THIS — generate your real hash:
+// open browser console → copy-paste this function:
+//   async function h(s){const b=new TextEncoder().encode(s);const d=await crypto.subtle.digest('SHA-256',b);return Array.from(new Uint8Array(d)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+// then run: h('YOUR_NEW_PASSPHRASE').then(console.log)
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+// ── ACTIVITY LOG ──
+const actLog = [];
+function logActivity(type, msg) {
+  const ts = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  actLog.unshift({ ts, type, msg });
+  renderActivityLog();
+}
+function renderActivityLog() {
+  const el = document.getElementById('activityLog');
+  if (!el) return;
+  if (actLog.length === 0) { el.innerHTML = '<div class="empty-panel">// No activity this session</div>'; return; }
+  el.innerHTML = actLog.slice(0, 10).map(l =>
+    `<div class="log-row"><span class="log-row-ts">${l.ts}</span><span class="log-row-action ${l.type}">${l.msg}</span></div>`
+  ).join('');
+}
+
+// ── AUTH ──
+async function attemptAuth() {
+  const val  = document.getElementById('authInput').value;
+  const hash = await sha256(val);
+  if (hash === ADMIN_HASH) {
+    document.getElementById('authGate').classList.add('hidden');
+    document.getElementById('mainContent').classList.add('visible');
+    sessionStorage.setItem('nis_admin', '1');
+    onAdminLoaded();
+  } else {
+    const err = document.getElementById('authError');
+    err.classList.add('show');
+    document.getElementById('authInput').value = '';
+    setTimeout(() => err.classList.remove('show'), 3000);
+  }
+}
+window.attemptAuth = attemptAuth;
+
+document.getElementById('authInput')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') attemptAuth();
+});
+
+function logout() {
+  sessionStorage.removeItem('nis_admin');
+  document.getElementById('authGate').classList.remove('hidden');
+  document.getElementById('mainContent').classList.remove('visible');
+  document.getElementById('authInput').value = '';
+}
+window.logout = logout;
+
+// Auto-restore session
+if (sessionStorage.getItem('nis_admin') === '1') {
+  document.getElementById('authGate').classList.add('hidden');
+  document.getElementById('mainContent').classList.add('visible');
+  onAdminLoaded();
+}
+
+// ── TABS ──
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'manage') loadAllCitizens();
+  if (id === 'issue')  loadNextID();
+}
+window.switchTab = switchTab;
+
+// ── TOAST ──
+function showToast(msg, type = 'ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ── ON ADMIN LOADED ──
+function onAdminLoaded() {
+  waitForFB(() => {
+    loadDashboardStats();
+    loadRecentIssued();
+    loadNextID();
+  });
+}
+
+function waitForFB(cb) {
+  if (window._fbReady) { cb(); return; }
+  const t = setInterval(() => { if (window._fbReady) { clearInterval(t); cb(); } }, 100);
+}
+
+/* ══════════════════════════════════════════
+   NEXT ID PREVIEW
+══════════════════════════════════════════ */
+async function loadNextID() {
+  const el = document.getElementById('previewIdFull');
+  if (!el) return;
+  el.textContent = 'Loading...';
+  try {
+    const { doc, getDoc } = window._fire;
+    const snap = await getDoc(doc(window._db, 'meta', 'counter'));
+    const year = new Date().getFullYear();
+    const seq  = snap.exists() ? (snap.data().lastSequence || 0) + 1 : 1;
+    el.textContent = `${year}-${String(seq).padStart(5, '0')}`;
+  } catch (e) {
+    el.textContent = '????-?????';
+  }
+}
+window.loadNextID = loadNextID;
+
+/* ══════════════════════════════════════════
+   DASHBOARD STATS
+══════════════════════════════════════════ */
+async function loadDashboardStats() {
+  try {
+    const { collection, getDocs } = window._fire;
+    const snap = await getDocs(collection(window._db, 'citizens'));
+    let total = 0, active = 0, revoked = 0, suspended = 0;
+    snap.forEach(d => {
+      total++;
+      const s = (d.data().status || 'active').toLowerCase();
+      if (s === 'active')    active++;
+      else if (s === 'revoked')   revoked++;
+      else if (s === 'suspended') suspended++;
+    });
+    document.getElementById('statTotal').textContent     = total;
+    document.getElementById('statActive').textContent    = active;
+    document.getElementById('statRevoked').textContent   = revoked;
+    document.getElementById('statSuspended').textContent = suspended;
+  } catch (e) {
+    ['statTotal','statActive','statRevoked','statSuspended'].forEach(id => {
+      document.getElementById(id).textContent = 'ERR';
+    });
+  }
+}
+
+async function loadRecentIssued() {
+  const el = document.getElementById('recentIssued');
+  try {
+    const { collection, getDocs } = window._fire;
+    const snap = await getDocs(collection(window._db, 'citizens'));
+    const docs = [];
+    snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+    docs.sort((a, b) => (b.issuedDate || '').localeCompare(a.issuedDate || ''));
+    const recent = docs.slice(0, 6);
+    if (recent.length === 0) { el.innerHTML = '<div class="empty-panel">// No citizens issued yet</div>'; return; }
+    el.innerHTML = recent.map(c => `
+      <div class="recent-row">
+        <span class="recent-row-id">${c.id}</span>
+        <span class="recent-row-name">${c.username || '—'}</span>
+        <span class="recent-row-date">${c.issuedDate || '—'}</span>
+      </div>
+    `).join('');
+  } catch (e) {
+    el.innerHTML = '<div class="empty-panel">// Failed to load</div>';
+  }
+}
+
+/* ══════════════════════════════════════════
+   ISSUE ID
+══════════════════════════════════════════ */
+async function issueID() {
+  const btn = document.getElementById('btnIssue');
+  const fb  = document.getElementById('issueFeedback');
+
+  const username  = document.getElementById('f_username').value.trim();
+  const tier      = document.getElementById('f_tier').value;
+  const issued    = document.getElementById('f_issued').value.trim();
+  const territory = document.getElementById('f_territory').value.trim() || 'Mainland Legiona';
+  const note      = document.getElementById('f_note').value.trim();
+  const status    = document.getElementById('f_status').value;
+
+  if (!username) { showFeedback(fb, 'err', '// ERROR: Minecraft username is required'); return; }
+  if (!issued)   { showFeedback(fb, 'err', '// ERROR: Date of issue is required'); return; }
+
+  btn.disabled = true;
+  showFeedback(fb, 'ok', '// Processing...');
+
+  try {
+    const { doc, setDoc, runTransaction, collection } = window._fire;
+    const db = window._db;
+    const year = new Date().getFullYear();
+
+    let newID;
+    await runTransaction(db, async tx => {
+      const counterRef = doc(db, 'meta', 'counter');
+      const counterSnap = await tx.get(counterRef);
+      const lastSeq = counterSnap.exists() ? (counterSnap.data().lastSequence || 0) : 0;
+      const newSeq = lastSeq + 1;
+      newID = `THELOL-${year}-${String(newSeq).padStart(5, '0')}`;
+
+      tx.set(counterRef, { lastSequence: newSeq, lastYear: String(year) });
+      tx.set(doc(db, 'citizens', newID), {
+        username, tier, issuedDate: issued, territory, status,
+        walletLinked: false,
+        publicNote: note || '',
+        issuedYear: year,
+      });
+    });
+
+    showFeedback(fb, 'ok', `// SUCCESS — ID Issued: ${newID} → ${username}`);
+    logActivity('', `ISSUED ${newID} → ${username}`);
+    showToast(`✓ ID Issued: ${newID}`, 'ok');
+
+    clearForm();
+    loadNextID();
+    loadDashboardStats();
+    loadRecentIssued();
+
+  } catch (e) {
+    showFeedback(fb, 'err', `// ERROR: ${e.message}`);
+    showToast('Failed to issue ID', 'err');
+  }
+
+  btn.disabled = false;
+}
+window.issueID = issueID;
+
+function showFeedback(el, type, msg) {
+  el.textContent = msg;
+  el.className   = `issue-feedback ${type} show`;
+}
+
+function clearForm() {
+  ['f_username','f_issued','f_territory','f_note'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('f_tier').value   = 'citizen';
+  document.getElementById('f_status').value = 'active';
+  const fb = document.getElementById('issueFeedback');
+  fb.className = 'issue-feedback';
+}
+window.clearForm = clearForm;
+
+/* ══════════════════════════════════════════
+   MANAGE — LOAD ALL
+══════════════════════════════════════════ */
+let allCitizens = [];
+
+async function loadAllCitizens() {
+  const body = document.getElementById('citizensBody');
+  body.innerHTML = '<tr><td colspan="7" class="table-loading">// Querying registry...</td></tr>';
+  try {
+    const { collection, getDocs } = window._fire;
+    const snap = await getDocs(collection(window._db, 'citizens'));
+    allCitizens = [];
+    snap.forEach(d => allCitizens.push({ id: d.id, ...d.data() }));
+    allCitizens.sort((a, b) => a.id.localeCompare(b.id));
+    filterTable();
+    logActivity('', `LOADED registry (${allCitizens.length} records)`);
+  } catch (e) {
+    body.innerHTML = `<tr><td colspan="7" class="table-loading" style="color:var(--red-l)">// ERROR: ${e.message}</td></tr>`;
+  }
+}
+window.loadAllCitizens = loadAllCitizens;
+
+function filterTable() {
+  const q  = (document.getElementById('manageSearch').value || '').toUpperCase();
+  const fs = document.getElementById('filterStatus').value;
+  const ft = document.getElementById('filterTier').value;
+
+  const filtered = allCitizens.filter(c => {
+    const matchQ = !q || c.id.includes(q) || (c.username || '').toUpperCase().includes(q);
+    const matchS = !fs || (c.status || 'active') === fs;
+    const matchT = !ft || (c.tier   || 'citizen') === ft;
+    return matchQ && matchS && matchT;
+  });
+
+  document.getElementById('manageCount').textContent = `${filtered.length} citizen${filtered.length !== 1 ? 's' : ''}`;
+
+  const body = document.getElementById('citizensBody');
+  if (filtered.length === 0) {
+    body.innerHTML = '<tr><td colspan="7" class="table-empty">// No citizens match this filter</td></tr>';
+    return;
+  }
+
+  body.innerHTML = filtered.map(c => {
+    const status    = (c.status || 'active').toLowerCase();
+    const tier      = (c.tier   || 'citizen').toLowerCase();
+    const tierLabel = { citizen: 'Citizen', senior: 'Senior', elder: 'Elder', founding: 'Founding' }[tier] || tier;
+
+    // Build action pills contextually
+    let actions = `<button class="action-pill edit" onclick="openEdit('${c.id}')">Edit</button>`;
+    if (status === 'active') {
+      actions += `<button class="action-pill suspend" onclick="quickStatus('${c.id}','suspended')">Suspend</button>`;
+      actions += `<button class="action-pill revoke"  onclick="quickStatus('${c.id}','revoked')">Revoke</button>`;
+    } else if (status === 'suspended') {
+      actions += `<button class="action-pill reinstate" onclick="quickStatus('${c.id}','active')">Reinstate</button>`;
+      actions += `<button class="action-pill revoke"    onclick="quickStatus('${c.id}','revoked')">Revoke</button>`;
+    } else if (status === 'revoked') {
+      actions += `<button class="action-pill reinstate" onclick="quickStatus('${c.id}','active')">Reinstate</button>`;
+    }
+
+    return `
+      <tr>
+        <td class="td-id">${c.id}</td>
+        <td class="td-name">${c.username || '—'}</td>
+        <td><span class="status-pill ${status}">${status}</span></td>
+        <td><span class="tier-chip ${tier}">${tierLabel}</span></td>
+        <td class="td-date">${c.issuedDate || '—'}</td>
+        <td class="td-territory">${c.territory || 'Mainland Legiona'}</td>
+        <td><div class="td-actions">${actions}</div></td>
+      </tr>
+    `;
+  }).join('');
+}
+window.filterTable = filterTable;
+
+/* ══════════════════════════════════════════
+   QUICK STATUS CHANGE
+══════════════════════════════════════════ */
+async function quickStatus(id, newStatus) {
+  const labels = { active: 'reinstate', suspended: 'suspend', revoked: 'revoke' };
+  if (!confirm(`${labels[newStatus]?.toUpperCase()} citizen ${id}?`)) return;
+  try {
+    const { doc, updateDoc } = window._fire;
+    await updateDoc(doc(window._db, 'citizens', id), { status: newStatus });
+    // Update local cache
+    const c = allCitizens.find(x => x.id === id);
+    if (c) c.status = newStatus;
+    filterTable();
+    loadDashboardStats();
+    logActivity(newStatus === 'revoked' ? 'danger' : (newStatus === 'suspended' ? 'warn' : ''),
+      `${newStatus.toUpperCase()} → ${id}`);
+    showToast(`${id} → ${newStatus}`, newStatus === 'active' ? 'ok' : 'err');
+  } catch (e) {
+    showToast(`Error: ${e.message}`, 'err');
+  }
+}
+window.quickStatus = quickStatus;
+
+/* ══════════════════════════════════════════
+   EDIT MODAL
+══════════════════════════════════════════ */
+function openEdit(id) {
+  const c = allCitizens.find(x => x.id === id);
+  if (!c) return;
+
+  document.getElementById('editModalTitle').textContent = id;
+  document.getElementById('edit_id').value          = id;
+  document.getElementById('edit_username').value    = c.username   || '';
+  document.getElementById('edit_status').value      = c.status     || 'active';
+  document.getElementById('edit_tier').value        = c.tier       || 'citizen';
+  document.getElementById('edit_territory').value   = c.territory  || '';
+  document.getElementById('edit_issued').value      = c.issuedDate || '';
+  document.getElementById('edit_wallet').value      = c.walletLinked ? 'true' : 'false';
+  document.getElementById('edit_note').value        = c.publicNote || '';
+
+  const fb = document.getElementById('editFeedback');
+  fb.className = 'modal-feedback';
+
+  document.getElementById('editModal').classList.add('open');
+}
+window.openEdit = openEdit;
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('open');
+}
+window.closeModal = closeModal;
+
+async function saveEdit() {
+  const id         = document.getElementById('edit_id').value;
+  const username   = document.getElementById('edit_username').value.trim();
+  const status     = document.getElementById('edit_status').value;
+  const tier       = document.getElementById('edit_tier').value;
+  const territory  = document.getElementById('edit_territory').value.trim();
+  const issued     = document.getElementById('edit_issued').value.trim();
+  const walletStr  = document.getElementById('edit_wallet').value;
+  const note       = document.getElementById('edit_note').value.trim();
+  const fb         = document.getElementById('editFeedback');
+
+  if (!username) { showModalFeedback(fb, 'err', '// Username is required'); return; }
+
+  showModalFeedback(fb, 'ok', '// Saving...');
+
+  try {
+    const { doc, updateDoc } = window._fire;
+    await updateDoc(doc(window._db, 'citizens', id), {
+      username, status, tier,
+      territory: territory || 'Mainland Legiona',
+      issuedDate: issued,
+      walletLinked: walletStr === 'true',
+      publicNote: note,
+    });
+
+    // Update local cache
+    const c = allCitizens.find(x => x.id === id);
+    if (c) Object.assign(c, { username, status, tier, territory: territory || 'Mainland Legiona', issuedDate: issued, walletLinked: walletStr === 'true', publicNote: note });
+
+    showModalFeedback(fb, 'ok', `// Saved — ${id} updated`);
+    logActivity('', `EDITED ${id} (${username})`);
+    showToast(`${id} updated`, 'ok');
+    filterTable();
+    loadDashboardStats();
+    setTimeout(closeModal, 800);
+
+  } catch (e) {
+    showModalFeedback(fb, 'err', `// ERROR: ${e.message}`);
+  }
+}
+window.saveEdit = saveEdit;
+
+function showModalFeedback(el, type, msg) {
+  el.textContent = msg;
+  el.className   = `modal-feedback ${type} show`;
+}
+
+// Close modal on backdrop click
+document.getElementById('editModal').addEventListener('click', function (e) {
+  if (e.target === this) closeModal();
+});
+</script>
+
+</body>
+</html>
