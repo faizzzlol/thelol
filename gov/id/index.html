@@ -852,7 +852,7 @@
       <div class="hero-id-sample">LOL-2026-<span>00001</span></div>
       <div class="hero-id-sample">LOL-2026-<span>00002</span></div>
       <div class="hero-id-sample">LOL-2026-<span>00003</span></div>
-      <div class="hero-id-sample" style="color:var(--text-dim)">LOL-????-<span>?????</span></div>
+      <div class="hero-id-sample" style="color:var(--text-dim)">THELOL-????-<span>?????</span></div>
     </div>
   </section>
 
@@ -866,7 +866,7 @@
           id="verifyInput"
           type="text"
           maxlength="13"
-          placeholder="LOL-2026-00001"
+          placeholder="THELOL-2026-00001"
           autocomplete="off"
           spellcheck="false"
         />
@@ -970,11 +970,11 @@
         </div>
         <div class="info-id-format">
           <div class="id-format-label">Standard Format</div>
-          <div class="id-format-display">LOL-YYYY-#####</div>
+          <div class="id-format-display">THELOL-YYYY-#####</div>
           <div class="id-format-parts">
             <div class="id-format-part">
               <div class="id-format-part-label">Prefix</div>
-              <div class="id-format-part-val">LOL</div>
+              <div class="id-format-part-val">THELOL</div>
             </div>
             <div class="id-format-part">
               <div class="id-format-part-label">Issuance Year</div>
@@ -1158,10 +1158,10 @@
         return;
       }
 
-      // Format check: LOL-YYYY-#####
-      const fmt = /^LOL-\d{4}-\d{5}$/;
+      // Format check: THELOL-YYYY-#####
+      const fmt = /^THELOL-\d{4}-\d{5}$/;
       if (!fmt.test(val)) {
-        res.textContent = '// INVALID FORMAT — Expected: LOL-YYYY-##### (e.g. LOL-2026-00001)';
+        res.textContent = '// INVALID FORMAT — Expected: THELOL-YYYY-##### (e.g. THELOL-2026-00001)';
         res.classList.add('show', 'err');
         return;
       }
