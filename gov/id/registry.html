@@ -422,7 +422,7 @@
     <div class="search-box">
       <label class="search-label" for="idInput">Enter The LoL ID Number</label>
       <div class="search-row">
-        <span class="search-prefix">LOL-</span>
+        <span class="search-prefix">THELOL-</span>
         <input
           class="search-input"
           id="idInput"
@@ -434,7 +434,7 @@
         />
         <button class="search-submit" onclick="lookupID()">VERIFY →</button>
       </div>
-      <p class="search-hint">// Format: YYYY-##### — e.g. 2026-00001 (prefix LOL- is auto-applied)</p>
+      <p class="search-hint">// Format: YYYY-##### — e.g. 2026-00001 (prefix THELOL- is auto-applied)</p>
     </div>
   </section>
 
@@ -483,7 +483,7 @@
               <span id="resBadgeText">VERIFIED · ACTIVE CITIZEN</span>
             </div>
             <div class="result-id-display">
-              <span class="dim">LOL-</span><span id="resIdYear"></span><span class="dim">-</span><span class="result-id-seq" id="resIdSeq"></span>
+              <span class="dim">THELOL-</span><span id="resIdYear"></span><span class="dim">-</span><span class="result-id-seq" id="resIdSeq"></span>
             </div>
           </div>
           <a id="viewCardBtn" href="#" class="view-card-btn">
@@ -652,7 +652,7 @@
         const div = document.createElement('div');
         div.className = 'recent-item';
         div.onclick = () => {
-          inp.value = r.id.replace('LOL-', '');
+          inp.value = r.id.replace('THELOL-', '');
           lookupID();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -670,7 +670,7 @@
        RENDER RESULT
     ══════════════════════════════ */
     function renderResult(id, data) {
-      const parts = id.split('-'); // ['LOL','2026','00001']
+      const parts = id.split('-'); // ['THELOL','2026','00001']
       const year  = parts[1] || '????';
       const seq   = parts[2] || '?????';
 
@@ -738,10 +738,10 @@
 
       // Build full ID
       let fullID;
-      if (/^LOL-\d{4}-\d{5}$/.test(raw)) {
+      if (/^THELOL-\d{4}-\d{5}$/.test(raw)) {
         fullID = raw;
       } else if (/^\d{4}-\d{5}$/.test(raw)) {
-        fullID = 'LOL-' + raw;
+        fullID = 'THELOL-' + raw;
       } else {
         showError('ERROR · INVALID FORMAT', 'Invalid ID Format', 'Expected format: YYYY-##### (e.g. 2026-00001)');
         return;
@@ -796,12 +796,12 @@
 
     /* ══════════════════════════════
        AUTO-RUN FROM URL QUERY
-       ?id=LOL-2026-00001
+       ?id=THELOL-2026-00001
     ══════════════════════════════ */
     const urlParams = new URLSearchParams(window.location.search);
     const queryID   = urlParams.get('id');
     if (queryID) {
-      const clean = queryID.toUpperCase().replace('LOL-', '');
+      const clean = queryID.toUpperCase().replace('THELOL-', '');
       inp.value = clean;
       // Slight delay so Firebase module loads
       setTimeout(() => lookupID(), 600);
