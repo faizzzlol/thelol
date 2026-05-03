@@ -33,6 +33,11 @@
       --blue:        #6a9fd4;
       --blue-bg:     rgba(80,120,180,0.08);
       --blue-border: rgba(80,120,180,0.25);
+      /* NIS accent — emerald to distinguish from citizenship gold */
+      --emerald:     #3d6b52;
+      --emerald-l:   #4e8f6b;
+      --emerald-bg:  rgba(61,107,82,0.08);
+      --emerald-border: rgba(61,107,82,0.3);
       --text:        #e8e8e8;
       --muted:       #888888;
       --dim:         #555555;
@@ -163,8 +168,6 @@
       color: var(--muted); line-height: 1.7;
       max-width: 500px;
     }
-
-    /* ─── REGISTRY META ─── */
     .registry-meta {
       display: flex; align-items: center; gap: 16px;
       margin-top: 16px; flex-wrap: wrap;
@@ -282,7 +285,6 @@
     .badge-under_review .dot { background: var(--blue); animation: pulse 1.5s infinite; }
     .badge-not_found   { color: var(--muted); border-color: var(--border); background: var(--surface-2); }
     .badge-not_found .dot { background: var(--dim); }
-
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
 
     .result-body { padding: 24px 28px; }
@@ -318,7 +320,6 @@
     }
     .result-message strong { color: var(--text); font-weight: 500; }
 
-    /* ─── PUBLIC NOTE (citizen-visible only) ─── */
     .result-public-note {
       font-family: var(--fm); font-size: 11px;
       letter-spacing: 0.05em; color: var(--muted);
@@ -349,6 +350,119 @@
     .action-btn-primary:hover { background: var(--gold); color: var(--bg); }
     .action-btn-ghost { border: 1px solid var(--border); color: var(--muted); background: transparent; }
     .action-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ══════════════════════════════════════════════
+       NIS INTEGRATION BLOCK
+       Shown when status = approved + thelol_id set
+    ══════════════════════════════════════════════ */
+    .nis-block {
+      margin-top: 24px;
+      border: 1px solid var(--emerald-border);
+      background: var(--emerald-bg);
+      overflow: hidden;
+      animation: fadeIn 0.4s ease 0.1s both;
+    }
+    .nis-block-header {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--emerald-border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nis-block-header-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--emerald-l);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+    .nis-block-header-label {
+      font-family: var(--fm); font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--emerald-l);
+    }
+    .nis-block-header-badge {
+      margin-left: auto;
+      font-family: var(--fm); font-size: 8px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--emerald-l);
+      border: 1px solid var(--emerald-border);
+      padding: 3px 10px;
+      background: rgba(61,107,82,0.12);
+    }
+    .nis-block-body {
+      padding: 20px 20px 22px;
+    }
+    .nis-id-label {
+      font-family: var(--fm); font-size: 9px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--dim); display: block; margin-bottom: 8px;
+    }
+    .nis-id-number {
+      font-family: var(--fm); font-size: 22px;
+      letter-spacing: 0.1em; color: var(--emerald-l);
+      display: block; margin-bottom: 8px;
+      word-break: break-all;
+    }
+    .nis-id-desc {
+      font-size: 12px; font-weight: 300;
+      color: var(--muted); line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .nis-actions {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding-top: 16px;
+      border-top: 1px solid rgba(61,107,82,0.2);
+    }
+    .nis-btn {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; padding: 9px 18px;
+      cursor: pointer; transition: all 0.2s; display: inline-block;
+      white-space: nowrap;
+    }
+    .nis-btn-primary {
+      border: 1px solid var(--emerald-l);
+      color: var(--emerald-l);
+      background: transparent;
+    }
+    .nis-btn-primary:hover {
+      background: var(--emerald-l);
+      color: #0a0a0a;
+    }
+    .nis-btn-ghost {
+      border: 1px solid rgba(61,107,82,0.3);
+      color: var(--muted);
+      background: transparent;
+    }
+    .nis-btn-ghost:hover {
+      border-color: var(--emerald-l);
+      color: var(--emerald-l);
+    }
+    .nis-copy-btn {
+      border: 1px solid rgba(61,107,82,0.3);
+      color: var(--dim);
+      background: transparent;
+      cursor: pointer;
+      margin-left: auto;
+    }
+    .nis-copy-btn:hover { border-color: var(--emerald-border); color: var(--emerald-l); }
+    .nis-copy-btn.copied { border-color: var(--emerald-l); color: var(--emerald-l); }
+
+    /* Pending NIS notice — shown when approved but no ID yet */
+    .nis-pending {
+      margin-top: 20px;
+      padding: 14px 18px;
+      border: 1px dashed rgba(212,164,76,0.25);
+      background: rgba(212,164,76,0.04);
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .nis-pending-icon {
+      font-family: var(--fm); font-size: 11px;
+      color: var(--amber); flex-shrink: 0; margin-top: 1px;
+    }
+    .nis-pending-text {
+      font-family: var(--fm); font-size: 10px;
+      letter-spacing: 0.06em; color: var(--muted); line-height: 1.65;
+    }
+    .nis-pending-text strong { color: var(--amber); }
 
     /* ─── HOW IT WORKS ─── */
     .how-section {
@@ -411,6 +525,8 @@
       .search-row { flex-direction: column; }
       .search-row input { border-right: 1px solid var(--border); border-bottom: none; }
       .result-top { flex-direction: column; }
+      .nis-actions { flex-direction: column; }
+      .nis-copy-btn { margin-left: 0; }
     }
   </style>
 </head>
@@ -424,7 +540,7 @@
 
   <!-- TOP NAV -->
   <nav class="topnav">
-    <a href="https://faizzzlol.github.io/thelol/" class="topnav-logo">THE <span>LOL</span></a>
+    <a href="https://faizzzlol.github.io/thelol/" class="topnav-logo">THE <span>LoL</span></a>
     <ul class="topnav-links">
       <li><a href="https://faizzzlol.github.io/thelol/">THE LOL</a></li>
       <li><a href="https://faizzzlol.github.io/thelol/gov/">GOVERNMENT</a></li>
@@ -466,7 +582,6 @@
         Reference numbers were issued upon successful submission — format:
         <code style="font-family:var(--fm);font-size:12px;color:var(--gold);">THELOL-CTZN-YYYY-####</code>
       </p>
-      <!-- Registry freshness indicator — populated by JS from JSON -->
       <div class="registry-meta" id="registryMeta" style="display:none;">
         <span class="meta-item">Registry Last Updated: <span id="lastUpdated">—</span></span>
         <span class="separator">·</span>
@@ -526,12 +641,9 @@
         <div class="how-item">
           <span class="how-n">04 //</span>
           <div>
-            <h4>Status Meanings</h4>
+            <h4>Your The LoL ID</h4>
             <p>
-              <strong style="color:var(--amber)">Pending</strong> — received, awaiting review &nbsp;·&nbsp;
-              <strong style="color:var(--blue)">Under Review</strong> — actively being processed &nbsp;·&nbsp;
-              <strong style="color:var(--green)">Approved</strong> — you're a citizen &nbsp;·&nbsp;
-              <strong style="color:var(--red)">Rejected</strong> — not accepted this era
+              When approved, your <strong style="color:var(--emerald-l)">The LoL National ID</strong> (THELOL-YYYY-#####) will appear here too — your singular key to all government services including the TL$ Digital Wallet.
             </p>
           </div>
         </div>
@@ -552,7 +664,7 @@
   </footer>
 
   <script>
-    // ── Hamburger ──
+    /* ══ HAMBURGER ══ */
     const burger = document.getElementById('burger');
     const mobileNav = document.getElementById('mobileNav');
     burger.addEventListener('click', () => {
@@ -566,7 +678,7 @@
       });
     });
 
-    // ── Status config ──
+    /* ══ STATUS CONFIG ══ */
     const STATUS_CONFIG = {
       approved: {
         label: 'Approved',
@@ -613,7 +725,7 @@
           &nbsp;&nbsp;· The reference number was entered incorrectly — check for typos<br>
           &nbsp;&nbsp;· Your application has not yet been entered into the registry<br>
           &nbsp;&nbsp;· The reference number does not exist<br><br>
-          If you submitted recently, allow some time before checking again. Registry data refreshes periodically — check the "Last Updated" date above.`,
+          If you submitted recently, allow some time before checking again.`,
         actions: [
           { label: 'Submit New Application →', href: '/thelol/gov/citizenship/apply', primary: true },
           { label: '← Citizenship Info', href: '/thelol/gov/citizenship/', primary: false }
@@ -621,54 +733,41 @@
       }
     };
 
-    // ── Cached JSON data ──
+    /* ══ FETCH REGISTRY ══ */
     let cachedData = null;
 
-    // ── Fetch JSON (with cache) ──
     async function fetchRegistry() {
       if (cachedData) return cachedData;
-      const url = '/thelol/gov/citizenship/status.json';
-      const res = await fetch(url + '?nocache=' + Date.now());
+      const res = await fetch('/thelol/gov/citizenship/status.json?nocache=' + Date.now());
       if (!res.ok) throw new Error('fetch_failed');
       cachedData = await res.json();
-
-      // Show registry freshness in page header
       if (cachedData._info && cachedData._info.last_updated) {
         document.getElementById('lastUpdated').textContent = cachedData._info.last_updated;
         document.getElementById('registryMeta').style.display = 'flex';
       }
-
       return cachedData;
     }
 
-    // ── Prefetch registry on load (silent, warms cache) ──
-    window.addEventListener('load', () => {
-      fetchRegistry().catch(() => {}); // silent — errors handled per-search
-    });
+    window.addEventListener('load', () => fetchRegistry().catch(() => {}));
 
-    // ── Auto-fill ref from URL param ──
+    /* ══ URL PARAM AUTO-FILL ══ */
     (function () {
       const params = new URLSearchParams(window.location.search);
       const ref = params.get('ref');
       if (ref) {
         document.getElementById('refInput').value = ref.toUpperCase();
-        // Small delay to let page settle then search
         setTimeout(checkStatus, 100);
       }
     })();
 
-    // ── Main check function ──
+    /* ══ MAIN CHECK ══ */
     async function checkStatus() {
       const input = document.getElementById('refInput').value.trim().toUpperCase();
       const btn   = document.getElementById('checkBtn');
       const panel = document.getElementById('resultPanel');
 
-      if (!input) {
-        document.getElementById('refInput').focus();
-        return;
-      }
+      if (!input) { document.getElementById('refInput').focus(); return; }
 
-      // Format validation
       if (!input.match(/^THELOL-CTZN-\d{4}-\d{4}$/)) {
         renderResult({ status: 'not_found', ref: input, public_note: 'The format entered does not match a valid reference number. Expected: THELOL-CTZN-YYYY-####' });
         return;
@@ -680,20 +779,11 @@
 
       try {
         const data = await fetchRegistry();
-        const apps = data.applications || [];
-        const match = apps.find(a => a.ref.toUpperCase() === input);
-
-        if (match) {
-          renderResult(match);
-        } else {
-          renderResult({ status: 'not_found', ref: input });
-        }
-
+        const match = (data.applications || []).find(a => a.ref.toUpperCase() === input);
+        renderResult(match || { status: 'not_found', ref: input });
       } catch (err) {
-        // Registry unavailable — show informative pending rather than false positive
         renderResult({
-          status: 'not_found',
-          ref: input,
+          status: 'not_found', ref: input,
           public_note: 'The status registry is currently unavailable. If you submitted recently, your application is being processed. Please try again shortly.'
         });
       }
@@ -702,18 +792,82 @@
       btn.disabled = false;
     }
 
-    // ── Render result card ──
+    /* ══ NIS BLOCK BUILDER ══ */
+    function buildNisBlock(entry) {
+      /* Case 1: approved + thelol_id present → full NIS block */
+      if (entry.status === 'approved' && entry.thelol_id) {
+        const id = entry.thelol_id.toUpperCase();
+        return `
+          <div class="nis-block">
+            <div class="nis-block-header">
+              <span class="nis-block-header-dot"></span>
+              <span class="nis-block-header-label">THELOLGOV-NIS · National ID Issued</span>
+              <span class="nis-block-header-badge">ACTIVE</span>
+            </div>
+            <div class="nis-block-body">
+              <span class="nis-id-label">Your The LoL National ID Number</span>
+              <span class="nis-id-number" id="nisIdDisplay">${id}</span>
+              <p class="nis-id-desc">
+                This is your permanent National Identification number for The Legend of Legiona.
+                Use it to access your Digital ID Card and all linked government services including the TL$ Digital Wallet.
+              </p>
+              <div class="nis-actions">
+                <a href="/thelol/gov/id/id-card?id=${encodeURIComponent(id)}" class="nis-btn nis-btn-primary">View Digital ID Card →</a>
+                <a href="/thelol/gov/id/registry?id=${encodeURIComponent(id)}" class="nis-btn nis-btn-ghost">Verify in Registry →</a>
+                <button class="nis-btn nis-copy-btn" onclick="copyNisId('${id}', this)">⧉ Copy ID</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      /* Case 2: approved but no thelol_id yet → pending notice */
+      if (entry.status === 'approved') {
+        return `
+          <div class="nis-pending">
+            <span class="nis-pending-icon">⏳</span>
+            <span class="nis-pending-text">
+              <strong>National ID Pending Issuance —</strong>
+              Your citizenship has been approved. The Black House will issue your The LoL National ID shortly.
+              Check back here — your ID number will appear once issued. You will also be notified via your contact details.
+            </span>
+          </div>
+        `;
+      }
+
+      return '';
+    }
+
+    /* ══ COPY NIS ID ══ */
+    function copyNisId(id, btn) {
+      navigator.clipboard.writeText(id).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = '⧉ Copy ID';
+        }, 2400);
+      }).catch(() => {
+        const el = document.createElement('textarea');
+        el.value = id;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+      });
+    }
+
+    /* ══ RENDER RESULT ══ */
     function renderResult(entry) {
       const panel  = document.getElementById('resultPanel');
       const config = STATUS_CONFIG[entry.status] || STATUS_CONFIG['not_found'];
       const how    = document.getElementById('howSection');
 
-      // Update URL so result is bookmarkable / shareable
       if (entry.ref && entry.ref.match(/^THELOL-CTZN-\d{4}-\d{4}$/)) {
         history.replaceState(null, '', `?ref=${encodeURIComponent(entry.ref)}`);
       }
 
-      // Build meta cells — NEVER expose admin_note
+      /* Meta cells */
       const cells = [];
       if (entry.ref)       cells.push({ lbl: 'Reference', val: entry.ref });
       if (entry.ign)       cells.push({ lbl: 'IGN',       val: entry.ign });
@@ -728,7 +882,7 @@
         </div>
       ` : '';
 
-      // Only render public_note — admin_note is never shown
+      /* Public note — admin_note is NEVER shown */
       const publicNote = (entry.public_note || '').trim();
       const noteHTML = publicNote ? `
         <div class="result-public-note">
@@ -741,11 +895,14 @@
         `<a href="${a.href}" class="action-btn ${a.primary ? 'action-btn-primary' : 'action-btn-ghost'}">${a.label}</a>`
       ).join('');
 
+      /* NIS integration block */
+      const nisHTML = buildNisBlock(entry);
+
       panel.innerHTML = `
         <div class="result-card ${config.cardClass}">
           <div class="result-top">
             <div>
-              <div class="result-ref">${entry.ref}</div>
+              <div class="result-ref">${entry.ref || '—'}</div>
               <div class="result-title">Citizenship Application</div>
             </div>
             <div class="status-badge ${config.badgeClass}">
@@ -757,6 +914,7 @@
             ${metaHTML}
             <div class="result-message">${config.message}</div>
             ${noteHTML}
+            ${nisHTML}
             <div class="result-actions">
               ${actionsHTML}
               <button onclick="resetSearch()" class="action-btn action-btn-ghost">Check Another</button>
@@ -773,7 +931,6 @@
     function resetSearch() {
       const panel = document.getElementById('resultPanel');
       const how   = document.getElementById('howSection');
-      // Clear URL param so the page is clean again
       history.replaceState(null, '', location.pathname);
       panel.classList.remove('show');
       panel.innerHTML = '';
@@ -783,7 +940,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ── Auto-uppercase input ──
+    /* ══ AUTO-UPPERCASE INPUT ══ */
     document.getElementById('refInput').addEventListener('input', function () {
       const pos = this.selectionStart;
       this.value = this.value.toUpperCase();
